@@ -1,0 +1,1 @@
+# xquare-onpremise-project-gitops-repo
