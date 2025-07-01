@@ -1,0 +1,12 @@
+# Default values for infrastructure chart
+# This is a YAML-formatted file.
+
+project: ""
+nameOverride: ""
+fullnameOverride: ""
+
+# Environments configuration
+environments:
+  # Will be populated dynamically based on existing values files
+  stag: false
+  prod: false

@@ -1,0 +1,252 @@
+{{- $fullname := (printf "%s-%s" .Values.name .Values.environment) }}
+{{- $githubFullname := printf "%s_%s" .Values.name .Values.environment | replace "-" "_" | lower }}
+{{- $namespace := (printf "%s-%s" .Values.project .Values.environment) }}
+{{- $githubAppID := 1172114 }}
+{{- $githubInstallationID := .Values.githubInstallationID | int }}
+{{- $ecrRegistry := "786584124104.dkr.ecr.ap-northeast-2.amazonaws.com" }}
+{{- $gitopsRepo := "team-xquare/xquare-onpremise-project-gitops-repo" }}
+{{- $useLatestTag := empty .Values.imageTag }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: {{ $fullname }}-sensor
+  namespace: {{ $namespace }}
+  annotations:
+    sidecar.istio.io/inject: "false"
+spec:
+  dependencies:
+    - name: {{ $fullname }}-github-push
+      eventName: {{ $githubFullname }}
+      eventSourceName: {{ $fullname }}-github-webhook
+      filters:
+        data:
+          - path: body.ref
+            type: string
+            value:
+              - "refs/heads/{{ .Values.branch }}"
+          {{- if $useLatestTag }}
+          - path: body.X-GitHub-Event
+            type: string
+            value:
+              - "ping"
+          {{- end }}
+        dataLogicalOperator: "or"
+  eventBusName: ci-eventbus
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "false"
+    container:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 30Mi
+        limits:
+          cpu: 50m
+          memory: 60Mi
+    serviceAccountName: kaniko-sa
+    tolerations:
+      - key: xquare/ci-server
+        operator: Equal
+        value: 'true'
+        effect: NoSchedule
+  triggers:
+    - retryStrategy:
+        steps: 3
+      template:
+        k8s:
+          operation: create
+          {{- if not $useLatestTag }}
+          parameters:
+            - src:
+                dependencyName: {{ $fullname }}-github-push
+                dataKey: body.after
+              dest: spec.arguments.parameters.0.value
+          {{- end }}
+          source:
+            resource:
+              apiVersion: argoproj.io/v1alpha1
+              kind: Workflow
+              metadata:
+                generateName: {{ $fullname }}-ci-
+                namespace: {{ $namespace }}
+                annotations:
+                  sidecar.istio.io/inject: "false"
+                labels:
+                  xquare/full-name: {{ $fullname }}
+              spec:
+                {{- if not $useLatestTag }}
+                arguments:
+                  parameters:
+                    - name: git-sha
+                {{- end }}
+                entrypoint: ci-pipeline
+                podGC:
+                  strategy: OnPodCompletion
+                  deleteDelayDuration: 72h
+                serviceAccountName: kaniko-sa
+                templates:
+                  - name: ci-pipeline
+                    dag:
+                      tasks:
+                        - name: build
+                          {{- if not $useLatestTag }}
+                          arguments:
+                            parameters:
+                              - name: sha
+                                value: "{{`{{workflow.parameters.git-sha}}`}}"
+                          {{- end }}
+                          template: docker-build
+                        - name: update-gitops
+                          arguments:
+                            parameters:
+                              - name: image-tag
+                                {{- if $useLatestTag }}
+                                value: "latest"
+                                {{- else }}
+                                value: "{{`{{workflow.parameters.git-sha}}`}}"
+                                {{- end }}
+                          dependencies: [build]
+                          template: update-gitops
+
+                  - name: docker-build
+                    metadata:
+                      annotations:
+                        sidecar.istio.io/inject: "false"
+                    tolerations:
+                      - key: xquare/ci-server
+                        operator: Equal
+                        value: 'true'
+                        effect: NoSchedule
+                    {{- if not $useLatestTag }}
+                    inputs:
+                      parameters:
+                        - name: sha
+                    {{- end }}
+                    container:
+                      image: gcr.io/kaniko-project/executor:latest
+                      args:
+                        - "--context=/workspace/repo"
+                        - "--dockerfile=/workspace/repo/Dockerfile"
+                        - "--destination={{ $ecrRegistry }}/{{ $namespace }}/{{ .Values.name }}:latest"
+                        {{- if not $useLatestTag }}
+                        - "--destination={{ $ecrRegistry }}/{{ $namespace }}/{{ .Values.name }}:{{`{{inputs.parameters.sha}}`}}"
+                        {{- end }}
+                        - "--cache=true"
+                        - "--cache-repo={{ $ecrRegistry }}/cache"
+                        - "--compressed-caching=false"
+                        - "--snapshotMode=time"
+                        - "--cleanup"
+                      env:
+                        - name: AWS_SDK_LOAD_CONFIG
+                          value: "true"
+                      resources:
+                        requests:
+                          cpu: 1
+                          memory: 7Gi
+                        limits:
+                          cpu: 2
+                          memory: 8Gi
+                      volumeMounts:
+                        - name: workspace
+                          mountPath: /workspace
+                    initContainers:
+                      - name: checkout-and-prepare
+                        image: alpine:3.18
+                        command: ["/bin/sh", "-c"]
+                        args:
+                          - |
+                            set -e
+                            apk add --no-cache git jq curl openssl py3-jinja2
+
+                            APP_ID={{ $githubAppID }}
+                            INSTALL_ID={{ $githubInstallationID }}
+                            echo "$GITHUB_PRIVATE_KEY" > /tmp/key.pem
+                            chmod 600 /tmp/key.pem
+                            now=$(date +%s); iat=$((now-60)); exp=$((now+600))
+                            b64enc() { openssl base64 | tr -d '=' | tr '/+' '_-' | tr -d '\n'; }
+                            header_encoded=$(echo -n '{"typ":"JWT","alg":"RS256"}' | b64enc)
+                            payload_encoded=$(echo -n "{\"iat\":${iat},\"exp\":${exp},\"iss\":\"${APP_ID}\"}" | b64enc)
+                            JWT="${header_encoded}.${payload_encoded}.$(openssl dgst -sha256 -sign /tmp/key.pem <(echo -n "${header_encoded}.${payload_encoded}") | b64enc)"
+                            TOKEN=$(curl -s -X POST -H "Authorization: Bearer ${JWT}" -H "Accept: application/vnd.github+json" "https://api.github.com/app/installations/${INSTALL_ID}/access_tokens" | jq -r '.token')
+                            [ -z "$TOKEN" ] || [ "$TOKEN" = "null" ] && { echo "ERROR: Failed to get GitHub token"; exit 1; }
+                            
+                            git clone -b {{ .Values.branch }} --single-branch https://x-access-token:${TOKEN}@github.com/{{ .Values.organization }}/{{ .Values.repository }}.git /workspace/repo || exit 1
+                            cd /workspace/repo
+                            {{- if not $useLatestTag }}
+                            git checkout "{{`{{inputs.parameters.sha}}`}}" || exit 1
+                            {{- end }}
+                            
+                            echo '{{ .Values.buildConfig }}' > /tmp/config.json
+                            BUILDER=$(jq -r '.builder // "default"' /tmp/config.json)
+                            
+                            if [ "$BUILDER" != "dockerfile" ]; then
+                                curl -s "https://raw.githubusercontent.com/team-xquare/xquare-onpremise-project-gitops-repo/refs/heads/main/templates/dockerfile/templates/${BUILDER}.template" -o /tmp/template.j2 || echo "FROM alpine:latest" > /tmp/template.j2
+                                python3 -c "import jinja2; import json; print(jinja2.Template(open('/tmp/template.j2').read()).render(**json.load(open('/tmp/config.json'))))" > /workspace/repo/Dockerfile || exit 1
+                            fi
+                        env:
+                          - name: GITHUB_PRIVATE_KEY
+                            valueFrom:
+                              secretKeyRef:
+                                name: github-app-pem
+                                key: privateKey.pem
+                        resources:
+                          requests:
+                            cpu: 1000m
+                            memory: 7G
+                          limits:
+                            cpu: 2000m
+                            memory: 8G
+                        volumeMounts:
+                          - name: workspace
+                            mountPath: /workspace
+
+                  - name: update-gitops
+                    metadata:
+                      annotations:
+                        sidecar.istio.io/inject: "false"
+                    tolerations:
+                      - key: xquare/ci-server
+                        operator: Equal
+                        value: 'true'
+                        effect: NoSchedule
+                    inputs:
+                      parameters:
+                        - name: image-tag
+                    container:
+                      image: curlimages/curl:latest
+                      command: ["/bin/sh", "-c"]
+                      args:
+                        - |
+                          curl -X POST \
+                            -H "Authorization: token ${GITHUB_TOKEN}" \
+                            -H "Accept: application/vnd.github.v3+json" \
+                            https://api.github.com/repos/{{ $gitopsRepo }}/dispatches \
+                            -d '{
+                              "event_type": "config-api",
+                              "client_payload": {
+                                "path": "{{ .Values.project }}/{{ .Values.name }}/{{ .Values.environment }}",
+                                "action": "apply",
+                                "spec": {
+                                  "imageTag": "'"{{`{{inputs.parameters.image-tag}}`}}"'"
+                                }
+                              }
+                            }'
+                      env:
+                        - name: GITHUB_TOKEN
+                          valueFrom:
+                            secretKeyRef:
+                              key: token
+                              name: github-token
+                      resources:
+                        requests:
+                          cpu: 10m
+                          memory: 20Mi
+                        limits:
+                          cpu: 30m
+                          memory: 40Mi
+                volumes:
+                  - name: workspace
+                    emptyDir: {}
+        name: {{ $fullname }}-workflow-trigger

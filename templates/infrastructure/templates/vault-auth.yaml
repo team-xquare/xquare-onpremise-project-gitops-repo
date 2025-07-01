@@ -1,0 +1,45 @@
+{{- if .Values.environments.stag }}
+---
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultAuth
+metadata:
+  name: {{ .Values.project }}-stag-vault-auth
+  namespace: {{ include "infrastructure.namespace" . }}-stag
+spec:
+  method: kubernetes
+  mount: kubernetes
+  kubernetes:
+    role: xquare
+    serviceAccount: {{ .Values.project }}-stag-vault-service-account
+    audiences:
+      - vault
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ .Values.project }}-stag-vault-service-account
+  namespace: {{ include "infrastructure.namespace" . }}-stag
+{{- end }}
+
+{{- if .Values.environments.prod }}
+---
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultAuth
+metadata:
+  name: {{ .Values.project }}-prod-vault-auth
+  namespace: {{ include "infrastructure.namespace" . }}-prod
+spec:
+  method: kubernetes
+  mount: kubernetes
+  kubernetes:
+    role: xquare
+    serviceAccount: {{ .Values.project }}-prod-vault-service-account
+    audiences:
+      - vault
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ .Values.project }}-prod-vault-service-account
+  namespace: {{ include "infrastructure.namespace" . }}-prod
+{{- end }}

@@ -1,0 +1,63 @@
+{{- $fullname := (printf "%s-%s" .Values.name .Values.environment) }}
+{{- $namespace := (printf "%s-%s" .Values.project .Values.environment) }}
+
+{{- if .Values.imageTag }}
+{{- if not .Values.privateService }}
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{ $fullname }}-domain-ingress
+  namespace: {{ $namespace }}
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: {{ .Values.domain }}
+  labels:
+    app.kubernetes.io/instance: xquare-ingress
+    app.kubernetes.io/name: {{ $fullname }}
+spec:
+  gateways:
+    - istio-system/xquare-ingressgateway
+  hosts:
+    - {{ .Values.domain }}
+  http:
+    - name: {{ .Values.name }}
+      route:
+        - destination:
+            host: '{{ $fullname }}.{{ $namespace }}.svc.cluster.local'
+            port:
+              number: {{ .Values.containerPort }}
+      timeout: 3600s
+      corsPolicy:
+        allowOrigins:
+          - regex: ".*"
+        allowMethods:
+          - POST
+          - GET
+          - PUT
+          - PATCH
+          - DELETE
+          - OPTIONS
+        allowCredentials: true
+        allowHeaders:
+          - content-type
+          - authorization
+          - accept
+          - accept-encoding
+          - Refresh-Token
+          - X-Not-Using-Xquare-Auth
+          - Oauth-Token
+          - oa-token
+          - Request-User-Id
+          - Request-User-Role
+          - X-Refresh-Token
+          - x-identifier
+          - last-event-id
+          - cache-control
+          - connection
+        exposeHeaders:
+          - content-type
+          - cache-control
+          - connection
+        maxAge: "24h"
+{{- end }}
+{{- end }}

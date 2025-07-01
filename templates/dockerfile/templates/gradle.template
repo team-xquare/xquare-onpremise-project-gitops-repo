@@ -1,0 +1,30 @@
+FROM amazoncorretto:{{ jdk_version }} AS build
+
+WORKDIR /app
+
+COPY {{ build_dir }}/ .
+RUN chmod +x gradlew
+
+ENV KOTLIN_COMPILER_EXECUTION_STRATEGY="in-process"
+ENV KOTLIN_USER_HOME="/workspace/repo/.kotlin"
+ENV KOTLIN_DAEMON_DISABLED=true
+
+
+{% for command in build_commands %}
+RUN {{ command }}
+{% endfor %}
+
+FROM amazoncorretto:{{ jdk_version }}
+
+ENV TZ=Asia/Seoul
+ENV JAVA_OPTS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
+
+WORKDIR /app
+
+COPY --from=build /app{{ output_dir }} /tmp/libs/
+RUN find /tmp/libs -name "*.jar" ! -name "*-plain.jar" -exec cp {} /app/app.jar \; && \
+    rm -rf /tmp/libs
+
+EXPOSE {{ port }}
+
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar /app/app.jar"]
