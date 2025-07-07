@@ -2,17 +2,17 @@
 Project namespace pattern
 */}}
 {{- define "project.namespace" -}}
-{{ .Values.project }}-dsm-project
+{{ .Values.project | default "xquare" }}-dsm-project
 {{- end }}
 
 {{/*
 Common labels
 */}}
 {{- define "project.labels" -}}
-app.kubernetes.io/name: {{ .Values.project }}
-app.kubernetes.io/instance: {{ .Values.project }}
+app.kubernetes.io/name: {{ .Values.project | default "xquare" | quote }}
+app.kubernetes.io/instance: {{ .Values.project | default "xquare" | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | default .Chart.Version }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | default .Chart.Version | quote }}
 app.kubernetes.io/component: project
 helm.sh/chart: {{ printf "%s-%s" .Chart.Name (.Chart.Version | replace "+" "_") }}
 {{- end }}
@@ -28,14 +28,14 @@ harbor-xquare-infra.dsmhs.kr
 Vault service account name
 */}}
 {{- define "project.vaultServiceAccount" -}}
-{{ .Values.project }}-dsm-project-vault-service-account
+{{ .Values.project | default "xquare" }}-dsm-project-vault-service-account
 {{- end }}
 
 {{/*
 Vault auth name
 */}}
 {{- define "project.vaultAuth" -}}
-{{ .Values.project }}-dsm-project-vault-auth
+{{ .Values.project | default "xquare" }}-dsm-project-vault-auth
 {{- end }}
 
 {{/*
@@ -46,16 +46,16 @@ Application-specific helpers
 {{- end }}
 
 {{- define "app.labels" -}}
-app.kubernetes.io/name: {{ .name }}
-app.kubernetes.io/instance: {{ .name }}
+app.kubernetes.io/name: {{ .name | quote }}
+app.kubernetes.io/instance: {{ .name | quote }}
 app.kubernetes.io/managed-by: Helm
 app.kubernetes.io/version: "1.0.0"
 helm.sh/chart: project-1.0.0
 {{- end }}
 
 {{- define "app.selectorLabels" -}}
-app.kubernetes.io/name: {{ .name }}
-app.kubernetes.io/instance: {{ .name }}
+app.kubernetes.io/name: {{ .name | quote }}
+app.kubernetes.io/instance: {{ .name | quote }}
 {{- end }}
 
 {{- define "app.image" -}}
