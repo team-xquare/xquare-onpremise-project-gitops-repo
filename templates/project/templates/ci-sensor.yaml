@@ -121,7 +121,7 @@ spec:
                       args:
                         - "--context=/workspace/repo"
                         - "--dockerfile=/workspace/repo/Dockerfile"
-                        - "--destination={{ include "app.image" . | replace ":latest" ":latest" }}"
+                        - "--destination={{ include "app.image" (dict "harborRegistry" (include "project.harborRegistry" $) "projectNamespace" (include "project.namespace" $) "name" (include "app.serviceName" .) "imageTag" (.imageTag | default "latest")) | replace ":latest" ":latest" }}"
                         {{- if .imageTag }}
                         - "--destination={{ include "project.harborRegistry" $ }}/xquare/{{ include "project.namespace" $ }}-{{ include "app.serviceName" . }}:{{`{{inputs.parameters.sha}}`}}"
                         {{- end }}

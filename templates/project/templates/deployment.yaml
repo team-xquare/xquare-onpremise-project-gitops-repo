@@ -45,7 +45,7 @@ spec:
                 topologyKey: kubernetes.io/hostname
       containers:
         - name: {{ include "app.serviceName" . }}
-          image: {{ include "app.image" . }}
+          image: {{ include "app.image" (dict "harborRegistry" (include "project.harborRegistry" $) "projectNamespace" (include "project.namespace" $) "name" (include "app.serviceName" .) "imageTag" (.imageTag | default "latest")) }}
           imagePullPolicy: Always
           ports:
             - containerPort: {{ .containerPort }}
@@ -55,7 +55,7 @@ spec:
               value: "{{ .containerPort }}"
           envFrom:
             - secretRef:
-                name: {{ include "app.vaultSecretName" . }}
+                name: {{ include "app.vaultSecretName" (dict "project" $.Values.project "name" (include "app.serviceName" .)) }}
           resources:
             {{- if eq .instanceType "x3.nano" }}
             requests:

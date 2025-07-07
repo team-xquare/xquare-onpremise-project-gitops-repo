@@ -48,9 +48,9 @@ Application-specific helpers
 {{- define "app.labels" -}}
 app.kubernetes.io/name: {{ .name }}
 app.kubernetes.io/instance: {{ .name }}
-app.kubernetes.io/managed-by: {{ $.Release.Service }}
-app.kubernetes.io/version: {{ $.Chart.AppVersion | default $.Chart.Version }}
-helm.sh/chart: {{ printf "%s-%s" $.Chart.Name ($.Chart.Version | replace "+" "_") }}
+app.kubernetes.io/managed-by: Helm
+app.kubernetes.io/version: "1.0.0"
+helm.sh/chart: project-1.0.0
 {{- end }}
 
 {{- define "app.selectorLabels" -}}
@@ -59,15 +59,15 @@ app.kubernetes.io/instance: {{ .name }}
 {{- end }}
 
 {{- define "app.image" -}}
-{{ include "project.harborRegistry" $ }}/xquare/{{ include "project.namespace" $ }}-{{ .name }}:{{ .imageTag | default "latest" }}
+{{ .harborRegistry }}/xquare/{{ .projectNamespace }}-{{ .name }}:{{ .imageTag | default "latest" }}
 {{- end }}
 
 {{- define "app.vaultSecretName" -}}
-{{ $.Values.project }}-{{ .name }}
+{{ .project }}-{{ .name }}
 {{- end }}
 
 {{- define "app.vaultAuthRef" -}}
-{{ include "project.namespace" $ }}/{{ include "project.vaultAuth" $ }}
+{{ .projectNamespace }}/{{ .vaultAuth }}
 {{- end }}
 
 {{/*
