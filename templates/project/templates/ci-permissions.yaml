@@ -8,7 +8,7 @@ metadata:
     {{- include "project.labels" . | nindent 4 }}
     app.kubernetes.io/component: ci-service-account
   annotations:
-    secrets.hashicorp.com/vso-kv-path: avp/ci-cd-pipeline
+    secrets.hashicorp.com/vso-kv-path: avp/data/ci-cd-pipeline
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role

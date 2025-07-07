@@ -9,7 +9,7 @@ metadata:
     {{- include "app.labels" . | nindent 4 }}
     app.kubernetes.io/component: harbor-project
   annotations:
-    secrets.hashicorp.com/vso-kv-path: avp/ci-cd-pipeline
+    secrets.hashicorp.com/vso-kv-path: avp/data/ci-cd-pipeline
 type: Opaque
 stringData:
   project: {{ include "project.namespace" $ }}
