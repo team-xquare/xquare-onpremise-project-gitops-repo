@@ -56,10 +56,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install yq
+      - name: Install yq and jq
         run: |
           wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/local/bin/yq
           chmod +x /usr/local/bin/yq
+          sudo apt-get update && sudo apt-get install -y jq
 
       - name: Process Request
         run: |
@@ -91,21 +92,21 @@ jobs:
               SERVICE_INDEX=$(yq eval ".applications | to_entries | map(select(.value.name == \"$SERVICE_NAME\")) | .[0].key" "$PROJECT_FILE")
               
               if [ "$SERVICE_INDEX" != "null" ]; then
-                # Update existing service
-                echo "$SPEC" | yq eval -P > /tmp/spec.yaml
+                # Update existing service - write JSON to file first
+                echo "$SPEC" > /tmp/spec.json
                 
                 # Merge the spec into the existing application
                 while IFS= read -r key; do
-                  if [ "$key" != "null" ]; then
-                    value=$(yq eval ".$key" /tmp/spec.yaml)
-                    # Handle string values by properly quoting them
-                    if yq eval ".$key | type" /tmp/spec.yaml | grep -q "string"; then
-                      VALUE="$value" yq eval ".applications[$SERVICE_INDEX].$key = strenv(VALUE)" -i "$PROJECT_FILE"
+                  if [ "$key" != "null" ] && [ "$key" != "" ]; then
+                    value=$(jq -r ".$key" /tmp/spec.json)
+                    # Use jq to determine if it's a string and update accordingly
+                    if jq -e ".$key | type == \"string\"" /tmp/spec.json > /dev/null; then
+                      yq eval ".applications[$SERVICE_INDEX].$key = \"$value\"" -i "$PROJECT_FILE"
                     else
                       yq eval ".applications[$SERVICE_INDEX].$key = $value" -i "$PROJECT_FILE"
                     fi
                   fi
-                done < <(yq eval 'keys | .[]' /tmp/spec.yaml)
+                done < <(jq -r 'keys | .[]' /tmp/spec.json)
               else
                 echo "Error: Service $SERVICE_NAME not found in project $PROJECT"
                 exit 1
