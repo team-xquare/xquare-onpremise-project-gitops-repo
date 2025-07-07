@@ -1,0 +1,118 @@
+{{- range .Values.applications }}
+{{- if .imageTag }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "app.serviceName" . }}
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "app.labels" . | nindent 4 }}
+    app.kubernetes.io/component: application
+spec:
+  selector:
+    matchLabels:
+      {{- include "app.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "app.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: application
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/actuator/prometheus"
+        prometheus.io/port: "{{ .containerPort }}"
+        sidecar.istio.io/inject: "true"
+        sidecar.istio.io/proxyCPU: 10m
+        sidecar.istio.io/proxyMemory: 30Mi
+        sidecar.istio.io/proxyCPULimit: 50m
+        sidecar.istio.io/proxyMemoryLimit: 60Mi
+        traffic.sidecar.istio.io/includeInboundPorts: "{{ .containerPort }}"
+        cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
+    spec:
+      serviceAccountName: {{ include "project.vaultServiceAccount" $ }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app.kubernetes.io/name
+                      operator: In
+                      values:
+                        - {{ include "app.serviceName" . }}
+                topologyKey: kubernetes.io/hostname
+      containers:
+        - name: {{ include "app.serviceName" . }}
+          image: {{ include "app.image" . }}
+          imagePullPolicy: Always
+          ports:
+            - containerPort: {{ .containerPort }}
+              protocol: TCP
+          env:
+            - name: PORT
+              value: "{{ .containerPort }}"
+          envFrom:
+            - secretRef:
+                name: {{ include "app.vaultSecretName" . }}
+          resources:
+            {{- if eq .instanceType "x3.nano" }}
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
+            {{- else if eq .instanceType "x3.micro" }}
+            requests:
+              cpu: 200m
+              memory: 256Mi
+            limits:
+              cpu: 400m
+              memory: 512Mi
+            {{- else if eq .instanceType "x3.small" }}
+            requests:
+              cpu: 400m
+              memory: 512Mi
+            limits:
+              cpu: 800m
+              memory: 1Gi
+            {{- else if eq .instanceType "x3.medium" }}
+            requests:
+              cpu: 800m
+              memory: 1Gi
+            limits:
+              cpu: 1600m
+              memory: 2Gi
+            {{- else if eq .instanceType "x3.large" }}
+            requests:
+              cpu: 1600m
+              memory: 2Gi
+            limits:
+              cpu: 3200m
+              memory: 4Gi
+            {{- else }}
+            requests:
+              cpu: 200m
+              memory: 256Mi
+            limits:
+              cpu: 400m
+              memory: 512Mi
+            {{- end }}
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: {{ .containerPort }}
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: {{ .containerPort }}
+            initialDelaySeconds: 5
+            periodSeconds: 5
+      imagePullSecrets:
+        - name: {{ include "app.serviceName" . }}-imagepullsecrets
+{{- end }}
+{{- end }}

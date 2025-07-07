@@ -1,0 +1,41 @@
+{{- range .Values.applications }}
+{{- if .imageTag }}
+{{- if .scaling }}
+{{- if .scaling.enabled }}
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ include "app.serviceName" . }}-hpa
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "app.labels" . | nindent 4 }}
+    app.kubernetes.io/component: autoscaler
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ include "app.serviceName" . }}
+  minReplicas: {{ .scaling.minReplicas | default 1 }}
+  maxReplicas: {{ .scaling.maxReplicas | default 10 }}
+  metrics:
+    {{- if .scaling.targetCPUUtilizationPercentage }}
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: {{ .scaling.targetCPUUtilizationPercentage }}
+    {{- end }}
+    {{- if .scaling.targetMemoryUtilizationPercentage }}
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: {{ .scaling.targetMemoryUtilizationPercentage }}
+    {{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}

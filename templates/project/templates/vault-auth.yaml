@@ -1,0 +1,26 @@
+---
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultAuth
+metadata:
+  name: {{ include "project.vaultAuth" . }}
+  namespace: {{ include "project.namespace" . }}
+  labels:
+    {{- include "project.labels" . | nindent 4 }}
+    app.kubernetes.io/component: vault-auth
+spec:
+  method: kubernetes
+  mount: kubernetes
+  kubernetes:
+    role: xquare-app
+    serviceAccount: {{ include "project.vaultServiceAccount" . }}
+    audiences:
+      - vault
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ include "project.vaultServiceAccount" . }}
+  namespace: {{ include "project.namespace" . }}
+  labels:
+    {{- include "project.labels" . | nindent 4 }}
+    app.kubernetes.io/component: vault-service-account

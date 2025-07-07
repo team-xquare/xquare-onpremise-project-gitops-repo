@@ -1,31 +1,27 @@
-{{- $fullname := (printf "%s-%s" .Values.name .Values.environment) }}
-{{- $githubFullname := printf "%s_%s" .Values.name .Values.environment | replace "-" "_" | lower }}
-{{- $namespace := (printf "%s-%s" .Values.project .Values.environment) }}
-{{- $githubAppID := 1172114 }}
-{{- $githubInstallationID := .Values.githubInstallationID | int }}
-{{- $ecrRegistry := "786584124104.dkr.ecr.ap-northeast-2.amazonaws.com" }}
-{{- $gitopsRepo := "team-xquare/xquare-onpremise-project-gitops-repo" }}
-{{- $useLatestTag := empty .Values.imageTag }}
+{{- range .Values.applications }}
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Sensor
 metadata:
-  name: {{ $fullname }}-sensor
-  namespace: {{ $namespace }}
+  name: {{ include "app.serviceName" . }}-sensor
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "app.labels" . | nindent 4 }}
+    app.kubernetes.io/component: ci-sensor
   annotations:
     sidecar.istio.io/inject: "false"
 spec:
   dependencies:
-    - name: {{ $fullname }}-github-push
-      eventName: {{ $githubFullname }}
-      eventSourceName: {{ $fullname }}-github-webhook
+    - name: {{ include "app.serviceName" . }}-github-push
+      eventName: {{ include "ci.githubFullname" . }}
+      eventSourceName: {{ include "app.serviceName" . }}-github-webhook
       filters:
         data:
           - path: body.ref
             type: string
             value:
-              - "refs/heads/{{ .Values.branch }}"
-          {{- if $useLatestTag }}
+              - "refs/heads/{{ .branch }}"
+          {{- if empty .imageTag }}
           - path: body.X-GitHub-Event
             type: string
             value:
@@ -46,21 +42,16 @@ spec:
           cpu: 50m
           memory: 60Mi
     serviceAccountName: kaniko-sa
-    tolerations:
-      - key: xquare/ci-server
-        operator: Equal
-        value: 'true'
-        effect: NoSchedule
   triggers:
     - retryStrategy:
         steps: 3
       template:
         k8s:
           operation: create
-          {{- if not $useLatestTag }}
+          {{- if .imageTag }}
           parameters:
             - src:
-                dependencyName: {{ $fullname }}-github-push
+                dependencyName: {{ include "app.serviceName" . }}-github-push
                 dataKey: body.after
               dest: spec.arguments.parameters.0.value
           {{- end }}
@@ -69,14 +60,15 @@ spec:
               apiVersion: argoproj.io/v1alpha1
               kind: Workflow
               metadata:
-                generateName: {{ $fullname }}-ci-
-                namespace: {{ $namespace }}
+                generateName: {{ include "app.serviceName" . }}-ci-
+                namespace: {{ include "project.namespace" $ }}
                 annotations:
                   sidecar.istio.io/inject: "false"
                 labels:
-                  xquare/full-name: {{ $fullname }}
+                  {{- include "app.selectorLabels" . | nindent 18 }}
+                  app.kubernetes.io/component: ci-workflow
               spec:
-                {{- if not $useLatestTag }}
+                {{- if .imageTag }}
                 arguments:
                   parameters:
                     - name: git-sha
@@ -91,7 +83,7 @@ spec:
                     dag:
                       tasks:
                         - name: build
-                          {{- if not $useLatestTag }}
+                          {{- if .imageTag }}
                           arguments:
                             parameters:
                               - name: sha
@@ -102,7 +94,7 @@ spec:
                           arguments:
                             parameters:
                               - name: image-tag
-                                {{- if $useLatestTag }}
+                                {{- if empty .imageTag }}
                                 value: "latest"
                                 {{- else }}
                                 value: "{{`{{workflow.parameters.git-sha}}`}}"
@@ -119,7 +111,7 @@ spec:
                         operator: Equal
                         value: 'true'
                         effect: NoSchedule
-                    {{- if not $useLatestTag }}
+                    {{- if .imageTag }}
                     inputs:
                       parameters:
                         - name: sha
@@ -129,18 +121,18 @@ spec:
                       args:
                         - "--context=/workspace/repo"
                         - "--dockerfile=/workspace/repo/Dockerfile"
-                        - "--destination={{ $ecrRegistry }}/{{ $namespace }}/{{ .Values.name }}:latest"
-                        {{- if not $useLatestTag }}
-                        - "--destination={{ $ecrRegistry }}/{{ $namespace }}/{{ .Values.name }}:{{`{{inputs.parameters.sha}}`}}"
+                        - "--destination={{ include "app.image" . | replace ":latest" ":latest" }}"
+                        {{- if .imageTag }}
+                        - "--destination={{ include "project.harborRegistry" $ }}/xquare/{{ include "project.namespace" $ }}-{{ include "app.serviceName" . }}:{{`{{inputs.parameters.sha}}`}}"
                         {{- end }}
                         - "--cache=true"
-                        - "--cache-repo={{ $ecrRegistry }}/cache"
+                        - "--cache-repo={{ include "project.harborRegistry" $ }}/xquare/cache"
                         - "--compressed-caching=false"
                         - "--snapshotMode=time"
                         - "--cleanup"
                       env:
-                        - name: AWS_SDK_LOAD_CONFIG
-                          value: "true"
+                        - name: DOCKER_CONFIG
+                          value: "/kaniko/.docker"
                       resources:
                         requests:
                           cpu: 1
@@ -151,6 +143,8 @@ spec:
                       volumeMounts:
                         - name: workspace
                           mountPath: /workspace
+                        - name: docker-config
+                          mountPath: /kaniko/.docker
                     initContainers:
                       - name: checkout-and-prepare
                         image: alpine:3.18
@@ -160,8 +154,8 @@ spec:
                             set -e
                             apk add --no-cache git jq curl openssl py3-jinja2
 
-                            APP_ID={{ $githubAppID }}
-                            INSTALL_ID={{ $githubInstallationID }}
+                            APP_ID={{ include "ci.githubAppID" $ }}
+                            INSTALL_ID={{ .githubInstallationID }}
                             echo "$GITHUB_PRIVATE_KEY" > /tmp/key.pem
                             chmod 600 /tmp/key.pem
                             now=$(date +%s); iat=$((now-60)); exp=$((now+600))
@@ -172,17 +166,17 @@ spec:
                             TOKEN=$(curl -s -X POST -H "Authorization: Bearer ${JWT}" -H "Accept: application/vnd.github+json" "https://api.github.com/app/installations/${INSTALL_ID}/access_tokens" | jq -r '.token')
                             [ -z "$TOKEN" ] || [ "$TOKEN" = "null" ] && { echo "ERROR: Failed to get GitHub token"; exit 1; }
                             
-                            git clone -b {{ .Values.branch }} --single-branch https://x-access-token:${TOKEN}@github.com/{{ .Values.organization }}/{{ .Values.repository }}.git /workspace/repo || exit 1
+                            git clone -b {{ .branch }} --single-branch https://x-access-token:${TOKEN}@github.com/{{ .organization }}/{{ .repository }}.git /workspace/repo || exit 1
                             cd /workspace/repo
-                            {{- if not $useLatestTag }}
+                            {{- if .imageTag }}
                             git checkout "{{`{{inputs.parameters.sha}}`}}" || exit 1
                             {{- end }}
                             
-                            echo '{{ .Values.buildConfig }}' > /tmp/config.json
+                            echo '{{ .buildConfig }}' > /tmp/config.json
                             BUILDER=$(jq -r '.builder // "default"' /tmp/config.json)
                             
                             if [ "$BUILDER" != "dockerfile" ]; then
-                                curl -s "https://raw.githubusercontent.com/team-xquare/xquare-onpremise-project-gitops-repo/refs/heads/main/templates/dockerfile/templates/${BUILDER}.template" -o /tmp/template.j2 || echo "FROM alpine:latest" > /tmp/template.j2
+                                curl -s "https://raw.githubusercontent.com/{{ include "ci.gitopsRepo" $ }}/refs/heads/main/templates/dockerfile/templates/${BUILDER}.template" -o /tmp/template.j2 || echo "FROM alpine:latest" > /tmp/template.j2
                                 python3 -c "import jinja2; import json; print(jinja2.Template(open('/tmp/template.j2').read()).render(**json.load(open('/tmp/config.json'))))" > /workspace/repo/Dockerfile || exit 1
                             fi
                         env:
@@ -222,11 +216,11 @@ spec:
                           curl -X POST \
                             -H "Authorization: token ${GITHUB_TOKEN}" \
                             -H "Accept: application/vnd.github.v3+json" \
-                            https://api.github.com/repos/{{ $gitopsRepo }}/dispatches \
+                            https://api.github.com/repos/{{ include "ci.gitopsRepo" $ }}/dispatches \
                             -d '{
                               "event_type": "config-api",
                               "client_payload": {
-                                "path": "{{ .Values.project }}/{{ .Values.name }}/{{ .Values.environment }}",
+                                "path": "projects/{{ $.Values.project }}/applications/{{ include "app.serviceName" . }}",
                                 "action": "apply",
                                 "spec": {
                                   "imageTag": "'"{{`{{inputs.parameters.image-tag}}`}}"'"
@@ -249,4 +243,11 @@ spec:
                 volumes:
                   - name: workspace
                     emptyDir: {}
-        name: {{ $fullname }}-workflow-trigger
+                  - name: docker-config
+                    secret:
+                      secretName: harbor-registry-credentials
+                      items:
+                        - key: .dockerconfigjson
+                          path: config.json
+        name: {{ include "app.serviceName" . }}-workflow-trigger
+{{- end }}

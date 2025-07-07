@@ -1,0 +1,41 @@
+{{- range .Values.applications }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: EventSource
+metadata:
+  name: {{ include "app.serviceName" . }}-github-webhook
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "app.labels" . | nindent 4 }}
+    app.kubernetes.io/component: ci-webhook
+  annotations:
+    sidecar.istio.io/inject: "false"
+spec:
+  service:
+    ports:
+      - port: {{ include "ci.webhookPort" $ }}
+        targetPort: {{ include "ci.webhookPort" $ }}
+  github:
+    {{ include "ci.githubFullname" . }}:
+      repositories:
+        - owner: {{ .organization }}
+          names:
+            - {{ .repository }}
+      webhook:
+        endpoint: /webhooks/{{ include "app.serviceName" . }}
+        port: "{{ include "ci.webhookPort" $ }}"
+        method: POST
+        url: https://{{ include "ci.webhookHost" $ }}
+      events:
+        - push
+        - ping
+      apiToken:
+        name: github-token
+        key: token
+      webhookSecret:
+        name: github-token
+        key: token
+      insecure: false
+      active: true
+      contentType: json
+{{- end }}

@@ -1,0 +1,20 @@
+{{- range .Values.applications }}
+{{- if .imageTag }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "app.serviceName" . }}
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "app.labels" . | nindent 4 }}
+    app.kubernetes.io/component: service
+spec:
+  selector:
+    {{- include "app.selectorLabels" . | nindent 4 }}
+  ports:
+    - port: {{ .containerPort }}
+      targetPort: {{ .containerPort }}
+      protocol: TCP
+{{- end }}
+{{- end }}

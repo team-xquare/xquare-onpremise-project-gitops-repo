@@ -1,0 +1,24 @@
+applications:
+  - name: mozu-server-prod
+    imageTag: "latest"
+    containerPort: 8080
+    instanceType: "x3.small"
+    privateService: false
+    domain: "mozu.dsmhs.kr"
+    organization: "team-xquare"
+    repository: "mozu-server"
+    branch: "main"
+    githubInstallationID: "12345678"
+    buildConfig: "{\"builder\": \"spring\"}"
+    
+  - name: mozu-server-stag
+    imageTag: "latest"
+    containerPort: 8080
+    instanceType: "x3.small"
+    privateService: false
+    domain: "mozu-stag.dsmhs.kr"
+    organization: "team-xquare"
+    repository: "mozu-server"
+    branch: "develop"
+    githubInstallationID: "12345678"
+    buildConfig: "{\"builder\": \"spring\"}"

@@ -1,0 +1,17 @@
+{{- range .Values.applications }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "app.serviceName" . }}-harbor-project
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "app.labels" . | nindent 4 }}
+    app.kubernetes.io/component: harbor-project
+  annotations:
+    secrets.hashicorp.com/vso-kv-path: avp/ci-cd-pipeline
+type: Opaque
+stringData:
+  project: {{ include "project.namespace" $ }}
+  service: {{ include "app.serviceName" . }}
+{{- end }}

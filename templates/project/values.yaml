@@ -1,0 +1,23 @@
+# Project name is automatically derived from the filename (e.g., mozu.yaml -> project: mozu)
+# No need to specify project field in this file
+
+applications: []
+# Example application structure:
+# applications:
+#   - name: example-service-prod
+#     imageTag: "latest"
+#     containerPort: 8080
+#     instanceType: "x3.small"
+#     privateService: false
+#     domain: "example.dsmhs.kr"
+#     organization: "team-xquare"
+#     repository: "example-service"
+#     branch: "main"
+#     githubInstallationID: "12345678"
+#     buildConfig: "{\"builder\": \"spring\"}"
+#     scaling:
+#       enabled: true
+#       minReplicas: 1
+#       maxReplicas: 5
+#       targetCPUUtilizationPercentage: 70
+#       targetMemoryUtilizationPercentage: 80

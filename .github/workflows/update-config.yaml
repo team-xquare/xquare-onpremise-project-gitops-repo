@@ -7,35 +7,37 @@
 # 필요한 작업을 수행합니다.
 #
 # 지원되는 액션:
-#  - apply: 지정된 애플리케이션과 환경에 대한 설정을 추가하거나 업데이트합니다.
-#  - remove: 특정 환경 또는 애플리케이션/프로젝트 전체의 설정을 제거합니다.
+#  - apply: 지정된 애플리케이션의 설정을 추가하거나 업데이트합니다.
+#  - remove: 특정 애플리케이션의 설정을 제거합니다.
 #
-# 사용 예시:
-#  - prod 환경에 특정 애플리케이션의 설정을 적용하는 경우:
-#      github.event.client_payload.path: "project1/app1/prod"
+# 새로운 구조에서 사용 예시:
+#  - 애플리케이션의 imageTag를 업데이트하는 경우:
+#      github.event.client_payload.path: "projects/project-name/applications/service-name"
 #      github.event.client_payload.action: "apply"
 #      github.event.client_payload.spec:
 #        {
-#          "organization": "CuberLabs",
-#          "repository": "cuberpin-server",
-#          "branch": "develop"
+#          "imageTag": "abc123def"
 #        }
 #
-#  - 특정 환경의 설정을 제거하는 경우:
-#      github.event.client_payload.path: "project1/app1/prod"
-#      github.event.client_payload.action: "remove"
+#  - 애플리케이션의 전체 설정을 업데이트하는 경우:
+#      github.event.client_payload.path: "projects/project-name/applications/service-name"
+#      github.event.client_payload.action: "apply"
+#      github.event.client_payload.spec:
+#        {
+#          "imageTag": "latest",
+#          "containerPort": 8080,
+#          "instanceType": "x3.small",
+#          "privateService": false,
+#          "domain": "service.dsmhs.kr"
+#        }
 #
-#  - 애플리케이션의 모든 설정을 제거하는 경우:
-#      github.event.client_payload.path: "project1/app1"
-#      github.event.client_payload.action: "remove"
-#
-#  - 프로젝트와 그 안에 포함된 모든 애플리케이션 설정을 제거하는 경우:
-#      github.event.client_payload.path: "project1"
+#  - 애플리케이션 설정을 제거하는 경우:
+#      github.event.client_payload.path: "projects/project-name/applications/service-name"
 #      github.event.client_payload.action: "remove"
 #
 # 이 워크플로우는 아래와 같은 절차로 작업을 수행합니다:
 #  1. 페이로드에서 지정된 액션을 확인합니다.
-#  2. 해당 액션에 맞춰 설정을 적용하거나 제거합니다.
+#  2. projects/{project}.yaml 파일에서 해당 애플리케이션을 찾아 설정을 적용하거나 제거합니다.
 #  3. 변경 사항을 커밋하고 푸시하여 변경된 내용을 저장합니다.
 # ------------------------------
 
@@ -69,49 +71,59 @@ jobs:
           echo "Spec: $SPEC"
 
           IFS='/' read -r -a PATH_ARRAY <<< "$PATH_PARAMS"
-          PROJECT="${PATH_ARRAY[0]}"
-          APP_NAME="${PATH_ARRAY[1]}"
-          ENV="${PATH_ARRAY[2]:-prod}"
+          # PATH_PARAMS format: projects/project-name/applications/service-name
+          PROJECT="${PATH_ARRAY[1]}"
+          SERVICE_NAME="${PATH_ARRAY[3]}"
+
+          PROJECT_FILE="projects/$PROJECT.yaml"
 
           case "$ACTION" in
             "apply")
-              mkdir -p "project/$PROJECT/$APP_NAME"
-              
-              VALUES_FILE="project/$PROJECT/$APP_NAME/$ENV.values.yaml"
-              
-              if [ ! -f "$VALUES_FILE" ]; then
-                echo "{}" | yq eval -P > "$VALUES_FILE"
+              if [ ! -f "$PROJECT_FILE" ]; then
+                echo "Error: Project file $PROJECT_FILE does not exist"
+                exit 1
               fi
               
-              echo "$SPEC" | yq eval -P > /tmp/spec.yaml
-              yq eval-all 'select(fileIndex == 0) * select(fileIndex == 1)' "$VALUES_FILE" /tmp/spec.yaml -i "$VALUES_FILE"
+              # Find the application in the applications array and update it
+              TEMP_FILE=$(mktemp)
               
-              yq -P "$VALUES_FILE" > /tmp/formatted.yaml
-              mv /tmp/formatted.yaml "$VALUES_FILE"
+              # Check if the service exists in the applications array
+              SERVICE_INDEX=$(yq eval ".applications | to_entries | map(select(.value.name == \"$SERVICE_NAME\")) | .[0].key" "$PROJECT_FILE")
+              
+              if [ "$SERVICE_INDEX" != "null" ]; then
+                # Update existing service
+                echo "$SPEC" | yq eval -P > /tmp/spec.yaml
+                
+                # Merge the spec into the existing application
+                while IFS= read -r key; do
+                  if [ "$key" != "null" ]; then
+                    value=$(yq eval ".$key" /tmp/spec.yaml)
+                    yq eval ".applications[$SERVICE_INDEX].$key = $value" -i "$PROJECT_FILE"
+                  fi
+                done < <(yq eval 'keys | .[]' /tmp/spec.yaml)
+              else
+                echo "Error: Service $SERVICE_NAME not found in project $PROJECT"
+                exit 1
+              fi
+              
+              # Format the file
+              yq -P "$PROJECT_FILE" > "$TEMP_FILE"
+              mv "$TEMP_FILE" "$PROJECT_FILE"
               ;;
 
             "remove")
-              if [ -z "$APP_NAME" ]; then
-                rm -rf "project/$PROJECT"
-              else
-                if [ -d "project/$PROJECT/$APP_NAME" ]; then
-                  if [ -n "$ENV" ] && [ "$ENV" != "all" ]; then
-                    VALUES_FILE="project/$PROJECT/$APP_NAME/$ENV.values.yaml"
-                    if [ -f "$VALUES_FILE" ]; then
-                      rm "$VALUES_FILE"
-                    fi
-                    
-                    if [ -z "$(ls -A "project/$PROJECT/$APP_NAME/")" ]; then
-                      rm -rf "project/$PROJECT/$APP_NAME"
-                    fi
-                  else
-                    rm -rf "project/$PROJECT/$APP_NAME"
-                  fi
-                fi
-                
-                if [ -d "project/$PROJECT" ] && [ -z "$(ls -A "project/$PROJECT/")" ]; then
-                  rm -rf "project/$PROJECT"
-                fi
+              if [ ! -f "$PROJECT_FILE" ]; then
+                echo "Project file $PROJECT_FILE does not exist, nothing to remove"
+                exit 0
+              fi
+              
+              # Remove the application from the applications array
+              yq eval ".applications = (.applications | map(select(.name != \"$SERVICE_NAME\")))" -i "$PROJECT_FILE"
+              
+              # If no applications left, remove the project file
+              APP_COUNT=$(yq eval ".applications | length" "$PROJECT_FILE")
+              if [ "$APP_COUNT" = "0" ]; then
+                rm "$PROJECT_FILE"
               fi
               ;;
               
