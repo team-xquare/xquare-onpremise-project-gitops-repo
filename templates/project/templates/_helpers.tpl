@@ -74,7 +74,7 @@ app.kubernetes.io/instance: {{ .name }}
 CI-specific helpers
 */}}
 {{- define "ci.githubAppID" -}}
-1172114
+"1172114"
 {{- end }}
 
 {{- define "ci.webhookHost" -}}
@@ -86,7 +86,7 @@ team-xquare/xquare-onpremise-project-gitops-repo
 {{- end }}
 
 {{- define "ci.webhookPort" -}}
-12000
+"12000"
 {{- end }}
 
 {{- define "ci.eventSourceServiceName" -}}

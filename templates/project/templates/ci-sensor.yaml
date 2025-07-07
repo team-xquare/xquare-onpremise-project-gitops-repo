@@ -9,7 +9,6 @@ metadata:
     {{- include "app.labels" . | nindent 4 }}
     app.kubernetes.io/component: ci-sensor
   annotations:
-    sidecar.istio.io/inject: "false"
 spec:
   dependencies:
     - name: {{ include "app.serviceName" . }}-github-push
@@ -32,8 +31,7 @@ spec:
   template:
     metadata:
       annotations:
-        sidecar.istio.io/inject: "false"
-    container:
+        container:
       resources:
         requests:
           cpu: 10m
@@ -63,8 +61,7 @@ spec:
                 generateName: {{ include "app.serviceName" . }}-ci-
                 namespace: {{ include "project.namespace" $ }}
                 annotations:
-                  sidecar.istio.io/inject: "false"
-                labels:
+                              labels:
                   {{- include "app.selectorLabels" . | nindent 18 }}
                   app.kubernetes.io/component: ci-workflow
               spec:
@@ -105,8 +102,7 @@ spec:
                   - name: docker-build
                     metadata:
                       annotations:
-                        sidecar.istio.io/inject: "false"
-                    tolerations:
+                                        tolerations:
                       - key: xquare/ci-server
                         operator: Equal
                         value: 'true'
@@ -199,8 +195,7 @@ spec:
                   - name: update-gitops
                     metadata:
                       annotations:
-                        sidecar.istio.io/inject: "false"
-                    tolerations:
+                                        tolerations:
                       - key: xquare/ci-server
                         operator: Equal
                         value: 'true'

@@ -9,7 +9,6 @@ metadata:
     {{- include "app.labels" . | nindent 4 }}
     app.kubernetes.io/component: ci-webhook
   annotations:
-    sidecar.istio.io/inject: "false"
 spec:
   service:
     ports:

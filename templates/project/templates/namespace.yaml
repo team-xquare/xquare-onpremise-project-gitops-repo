@@ -6,4 +6,3 @@ metadata:
   labels:
     {{- include "project.labels" . | nindent 4 }}
     name: {{ include "project.namespace" . }}
-    istio-injection: enabled
