@@ -1,8 +1,6 @@
 applications:
   - branch: main
-    buildConfig:
-      '{"builder":"react","node_version":"22","build_dir":"/","build_commands":["npm
-      run build"],"output_dir":"/build","port":3000}'
+    buildConfig: '{"builder":"react","node_version":"22","build_dir":"/","build_commands":["npm run build"],"output_dir":"/build","port":3000}'
     containerPort: 3000
     domain: test321.dsmhs.kr
     githubInstallationID: 62433388

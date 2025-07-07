@@ -10,7 +10,7 @@ spec:
   nats:
     native:
       metadata:
-        annotations:
+        annotations: {}
       replicas: 3
       antiAffinity: false
       auth: none

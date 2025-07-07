@@ -8,7 +8,7 @@ metadata:
   labels:
     {{- include "app.labels" . | nindent 4 }}
     app.kubernetes.io/component: ci-webhook
-  annotations:
+  annotations: {}
 spec:
   service:
     ports:

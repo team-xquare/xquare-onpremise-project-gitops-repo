@@ -8,7 +8,7 @@ metadata:
   labels:
     {{- include "app.labels" . | nindent 4 }}
     app.kubernetes.io/component: ci-sensor
-  annotations:
+  annotations: {}
 spec:
   dependencies:
     - name: {{ include "app.serviceName" . }}-github-push
@@ -30,8 +30,8 @@ spec:
   eventBusName: ci-eventbus
   template:
     metadata:
-      annotations:
-        container:
+      annotations: {}
+    container:
       resources:
         requests:
           cpu: 10m
@@ -99,7 +99,7 @@ spec:
                           template: update-gitops
 
                   - name: docker-build
-                    metadata:
+                    metadata: {}
                     tolerations:
                       - key: xquare/ci-server
                         operator: Equal
@@ -191,7 +191,7 @@ spec:
                             mountPath: /workspace
 
                   - name: update-gitops
-                    metadata:
+                    metadata: {}
                     tolerations:
                       - key: xquare/ci-server
                         operator: Equal
