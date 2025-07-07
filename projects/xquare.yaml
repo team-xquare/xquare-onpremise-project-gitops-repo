@@ -1,3 +1,4 @@
+project: xquare
 applications:
   - branch: main
     buildConfig:
@@ -5,7 +6,7 @@ applications:
       run build"],"output_dir":"/build","port":3000}'
     containerPort: 3000
     domain: test321.dsmhs.kr
-    githubInstallationID: 62433388
+    githubInstallationID: "62433388"
     instanceType: x3.small
     language: react
     name: xquaretest
