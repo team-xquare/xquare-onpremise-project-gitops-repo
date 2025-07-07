@@ -122,7 +122,7 @@ spec:
                         - "--cache=true"
                         - "--cache-repo={{ include "project.harborRegistry" $ }}/xquare/cache"
                         - "--compressed-caching=false"
-                        - "--snapshotMode=time"
+                        - "--snapshot-mode=time"
                         - "--cleanup"
                       env:
                         - name: DOCKER_CONFIG
