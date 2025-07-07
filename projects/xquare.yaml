@@ -3,12 +3,12 @@ applications:
     buildConfig:
       '{"builder":"react","node_version":"22","build_dir":"/","build_commands":["npm
       run build"],"output_dir":"/build","port":3000}'
-    containerPort: 3000
+    containerPort: "3000"
     domain: test321.dsmhs.kr
     githubInstallationID: "62433388"
     instanceType: x3.small
     language: react
     name: xquaretest
     organization: team-xquare
-    privateService: false
+    privateService: "false"
     repository: test321
