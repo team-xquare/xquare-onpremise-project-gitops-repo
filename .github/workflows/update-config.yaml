@@ -100,7 +100,8 @@ jobs:
                     value=$(yq eval ".$key" /tmp/spec.yaml)
                     # Handle string values by properly quoting them
                     if yq eval ".$key | type" /tmp/spec.yaml | grep -q "string"; then
-                      yq eval ".applications[$SERVICE_INDEX].$key = \"$value\"" -i "$PROJECT_FILE"
+                      yq eval ".applications[$SERVICE_INDEX].$key = strenv(VALUE)" -i "$PROJECT_FILE" \
+                        --arg VALUE "$value"
                     else
                       yq eval ".applications[$SERVICE_INDEX].$key = $value" -i "$PROJECT_FILE"
                     fi
