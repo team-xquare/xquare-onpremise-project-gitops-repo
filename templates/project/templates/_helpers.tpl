@@ -2,15 +2,15 @@
 Project namespace pattern
 */}}
 {{- define "project.namespace" -}}
-{{ .Values.project | default "xquare" }}-dsm-project
+{{ .Values.project }}-dsm-project
 {{- end }}
 
 {{/*
 Common labels
 */}}
 {{- define "project.labels" -}}
-app.kubernetes.io/name: {{ .Values.project | default "xquare" | quote }}
-app.kubernetes.io/instance: {{ .Values.project | default "xquare" | quote }}
+app.kubernetes.io/name: {{ .Values.project | quote }}
+app.kubernetes.io/instance: {{ .Values.project | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | default .Chart.Version | quote }}
 app.kubernetes.io/component: project
@@ -28,14 +28,14 @@ harbor-xquare-infra.dsmhs.kr
 Vault service account name
 */}}
 {{- define "project.vaultServiceAccount" -}}
-{{ .Values.project | default "xquare" }}-dsm-project-vault-service-account
+{{ .Values.project }}-dsm-project-vault-service-account
 {{- end }}
 
 {{/*
 Vault auth name
 */}}
 {{- define "project.vaultAuth" -}}
-{{ .Values.project | default "xquare" }}-dsm-project-vault-auth
+{{ .Values.project }}-dsm-project-vault-auth
 {{- end }}
 
 {{/*
@@ -100,3 +100,4 @@ team-xquare/xquare-onpremise-project-gitops-repo
 {{- define "ci.githubInstallationID" -}}
 {{- .githubInstallationID | int }}
 {{- end }}
+

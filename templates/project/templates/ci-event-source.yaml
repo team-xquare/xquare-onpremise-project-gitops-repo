@@ -22,7 +22,7 @@ spec:
           names:
             - {{ .repository }}
       webhook:
-        endpoint: /webhooks/{{ include "app.serviceName" . }}
+        endpoint: /webhooks/{{ $.Values.project }}-{{ include "app.serviceName" . }}
         port: "{{ include "ci.webhookPort" $ }}"
         method: POST
         url: https://{{ include "ci.webhookHost" $ }}

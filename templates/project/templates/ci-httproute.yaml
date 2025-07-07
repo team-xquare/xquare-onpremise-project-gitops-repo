@@ -22,7 +22,7 @@ spec:
     - matches:
         - path:
             type: PathPrefix
-            value: /webhooks/{{ include "app.serviceName" . }}
+            value: /webhooks/{{ $.Values.project }}-{{ include "app.serviceName" . }}
       backendRefs:
         - name: {{ include "ci.eventSourceServiceName" . }}
           port: {{ include "ci.webhookPort" $ }}
