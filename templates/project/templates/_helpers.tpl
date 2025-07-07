@@ -86,7 +86,7 @@ team-xquare/xquare-onpremise-project-gitops-repo
 {{- end }}
 
 {{- define "ci.webhookPort" -}}
-"12000"
+12000
 {{- end }}
 
 {{- define "ci.eventSourceServiceName" -}}
