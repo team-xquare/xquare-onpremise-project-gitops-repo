@@ -10,6 +10,7 @@ metadata:
     app.kubernetes.io/component: ci-webhook
   annotations: {}
 spec:
+  eventBusName: ci-eventbus
   service:
     ports:
       - port: {{ include "ci.webhookPort" $ }}
