@@ -10,3 +10,4 @@ applications:
     organization: team-xquare
     privateService: false
     repository: test321
+    imageTag: latest
