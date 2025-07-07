@@ -60,8 +60,7 @@ spec:
               metadata:
                 generateName: {{ include "app.serviceName" . }}-ci-
                 namespace: {{ include "project.namespace" $ }}
-                annotations:
-                              labels:
+                labels:
                   {{- include "app.selectorLabels" . | nindent 18 }}
                   app.kubernetes.io/component: ci-workflow
               spec:
@@ -101,8 +100,7 @@ spec:
 
                   - name: docker-build
                     metadata:
-                      annotations:
-                                        tolerations:
+                    tolerations:
                       - key: xquare/ci-server
                         operator: Equal
                         value: 'true'
@@ -194,8 +192,7 @@ spec:
 
                   - name: update-gitops
                     metadata:
-                      annotations:
-                                        tolerations:
+                    tolerations:
                       - key: xquare/ci-server
                         operator: Equal
                         value: 'true'
