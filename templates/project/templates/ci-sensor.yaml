@@ -115,9 +115,9 @@ spec:
                       args:
                         - "--context=/workspace/repo"
                         - "--dockerfile=/workspace/repo/Dockerfile"
-                        - "--destination={{ include "app.image" (dict "harborRegistry" (include "project.harborRegistry" $) "projectNamespace" (include "project.namespace" $) "name" (include "app.serviceName" .) "imageTag" (.imageTag | default "latest")) | replace ":latest" ":latest" }}"
+                        - "--destination={{ include "project.harborRegistry" $ }}/xquare/{{ $.Values.project }}-{{ include "app.serviceName" . }}:latest"
                         {{- if .imageTag }}
-                        - "--destination={{ include "project.harborRegistry" $ }}/xquare/{{ include "project.namespace" $ }}-{{ include "app.serviceName" . }}:{{`{{inputs.parameters.sha}}`}}"
+                        - "--destination={{ include "project.harborRegistry" $ }}/xquare/{{ $.Values.project }}-{{ include "app.serviceName" . }}:{{`{{inputs.parameters.sha}}`}}"
                         {{- end }}
                         - "--cache=true"
                         - "--cache-repo={{ include "project.harborRegistry" $ }}/xquare/cache"

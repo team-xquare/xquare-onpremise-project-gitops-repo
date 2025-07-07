@@ -39,7 +39,7 @@ spec:
                 topologyKey: kubernetes.io/hostname
       containers:
         - name: {{ include "app.serviceName" . }}
-          image: {{ include "app.image" (dict "harborRegistry" (include "project.harborRegistry" $) "projectNamespace" (include "project.namespace" $) "name" (include "app.serviceName" .) "imageTag" (.imageTag | default "latest")) }}
+          image: {{ include "project.harborRegistry" $ }}/xquare/{{ $.Values.project }}-{{ include "app.serviceName" . }}:{{ .imageTag | default "latest" }}
           imagePullPolicy: Always
           ports:
             - containerPort: {{ .containerPort }}

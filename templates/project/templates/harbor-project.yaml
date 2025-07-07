@@ -12,6 +12,6 @@ metadata:
     secrets.hashicorp.com/vso-kv-path: avp/data/ci-cd-pipeline
 type: Opaque
 stringData:
-  project: {{ include "project.namespace" $ }}
+  project: {{ $.Values.project }}-{{ include "app.serviceName" . }}
   service: {{ include "app.serviceName" . }}
 {{- end }}
