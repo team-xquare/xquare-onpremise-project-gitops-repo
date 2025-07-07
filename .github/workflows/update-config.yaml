@@ -98,7 +98,12 @@ jobs:
                 while IFS= read -r key; do
                   if [ "$key" != "null" ]; then
                     value=$(yq eval ".$key" /tmp/spec.yaml)
-                    yq eval ".applications[$SERVICE_INDEX].$key = $value" -i "$PROJECT_FILE"
+                    # Handle string values by properly quoting them
+                    if yq eval ".$key | type" /tmp/spec.yaml | grep -q "string"; then
+                      yq eval ".applications[$SERVICE_INDEX].$key = \"$value\"" -i "$PROJECT_FILE"
+                    else
+                      yq eval ".applications[$SERVICE_INDEX].$key = $value" -i "$PROJECT_FILE"
+                    fi
                   fi
                 done < <(yq eval 'keys | .[]' /tmp/spec.yaml)
               else
