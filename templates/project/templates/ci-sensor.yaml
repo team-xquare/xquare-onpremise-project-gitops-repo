@@ -149,7 +149,7 @@ spec:
                             apk add --no-cache git jq curl openssl py3-jinja2
 
                             APP_ID={{ include "ci.githubAppID" $ }}
-                            INSTALL_ID="{{ .githubInstallationID }}"
+                            INSTALL_ID={{ include "ci.githubInstallationID" . }}
                             echo "$GITHUB_PRIVATE_KEY" > /tmp/key.pem
                             chmod 600 /tmp/key.pem
                             now=$(date +%s); iat=$((now-60)); exp=$((now+600))

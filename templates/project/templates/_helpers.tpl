@@ -74,7 +74,7 @@ app.kubernetes.io/instance: {{ .name | quote }}
 CI-specific helpers
 */}}
 {{- define "ci.githubAppID" -}}
-"1172114"
+1172114
 {{- end }}
 
 {{- define "ci.webhookHost" -}}
@@ -95,4 +95,8 @@ team-xquare/xquare-onpremise-project-gitops-repo
 
 {{- define "ci.githubFullname" -}}
 {{- .name | replace "-" "_" | lower }}
+{{- end }}
+
+{{- define "ci.githubInstallationID" -}}
+{{- .githubInstallationID | int }}
 {{- end }}
