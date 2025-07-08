@@ -10,7 +10,7 @@ applications:
     organization: DaemaCoin
     privateService: false
     repository: deama_coin_backend
-    imageTag: a754e36b3641e148b43aa55271938777d9a095e6
+    imageTag: b0f9bec1ef4db2c2171d31006cf7ccffa7564ea4
   - branch: main
     buildConfig: '{"node_version":"22","build_commands":["npm install && npm run build"],"builder":"nodejs","build_dir":"/","command":"npm run start","port":8080}'
     containerPort: 3000
