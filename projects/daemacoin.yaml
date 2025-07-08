@@ -22,4 +22,4 @@ applications:
     organization: DaemaCoin
     privateService: false
     repository: daema_coin_frontend
-    imageTag: 894f1d7fbdc3c8abd65510bcf70aa23a2154dc10
+    imageTag: b2389c0f54760d56b4db36b8098454e33ab9df9b
