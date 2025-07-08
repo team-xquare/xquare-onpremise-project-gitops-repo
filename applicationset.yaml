@@ -14,7 +14,7 @@ spec:
           - path: "projects/*.yaml"
   template:
     metadata:
-      name: '{{.path.filenameNormalized | trimSuffix ".yaml"}}-project'
+      name: '{{.path.filenameNormalized | trimSuffix ".yaml"}}-dsm-project'
       labels:
         project: '{{.path.filenameNormalized | trimSuffix ".yaml"}}'
     spec:
