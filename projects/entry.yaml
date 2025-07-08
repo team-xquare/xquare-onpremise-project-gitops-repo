@@ -1,0 +1,121 @@
+applications:
+- branch: main
+  buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew
+    build -x test --build-cache"],"output_dir":"/application-infrastructure/build/libs/application-infrastructure-0.0.1-SNAPSHOT.jar","port":8080}'
+  containerPort: 8080
+  domain: equus-application.xquare.app
+  githubInstallationID: '62368670'
+  instanceType: x3.large
+  language: java
+  name: equus-application-prod
+  organization: EntryDSM
+  privateService: false
+  repository: Equus-Application
+- branch: main
+  buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew
+    build -x test --build-cache"],"output_dir":"/build/libs/Equus-Api-Gateway-0.0.1-SNAPSHOT.jar","port":8080}'
+  containerPort: 8080
+  domain: equus.xquare.app
+  githubInstallationID: '62368670'
+  instanceType: x3.large
+  language: java
+  name: equus-api-gateway-prod
+  organization: EntryDSM
+  privateService: false
+  repository: Equus-Api-Gateway
+- branch: main
+  buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":"/","build_commands":["./gradlew
+    build -x test"],"output_dir":"/build/libs/Equus-Github-Auth-0.0.1-SNAPSHOT.jar","port":8080}'
+  containerPort: 8080
+  domain: prod-entry-casper-recruitment.xquare.app
+  githubInstallationID: '62368670'
+  instanceType: x3.large
+  language: java
+  name: casper-recruitment-prod
+  organization: EntryDSM
+  privateService: false
+  repository: Casper-Recruitment
+- branch: main
+  buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":"/","build_commands":["./gradlew
+    build -x test"],"output_dir":"/build/libs/Equus-Github-Auth-0.0.1-SNAPSHOT.jar","port":8080}'
+  containerPort: 8080
+  domain: stag-entry-casper-recruitment.xquare.app
+  githubInstallationID: '62368670'
+  instanceType: x3.large
+  language: java
+  name: casper-recruitment-stag
+  organization: EntryDSM
+  privateService: false
+  repository: Casper-Recruitment
+- branch: main
+  buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew
+    build -x test --build-cache"],"output_dir":"/build/libs/Equus-User-0.0.0.jar","port":8080}'
+  containerPort: 8080
+  domain: equus-feed.xquare.app
+  githubInstallationID: '62368670'
+  instanceType: x3.large
+  language: java
+  name: equus-user-prod
+  organization: EntryDSM
+  privateService: false
+  repository: Equus-User
+- branch: main
+  buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew
+    build -x test --build-cache"],"output_dir":"/build/libs/Equus-Feed-0.0.1-SNAPSHOT.jar","port":8080}'
+  containerPort: 8080
+  domain: equus-feed.xquare.app
+  githubInstallationID: '62368670'
+  instanceType: x3.large
+  language: java
+  name: equus-feed-prod
+  organization: EntryDSM
+  privateService: false
+  repository: Equus-Feed
+- branch: develop
+  buildConfig: '{"builder":"vite","node_version":"22","build_dir":"/","build_commands":["yarn
+    install && npx nx run @entry-internship/entry-user:build"],"output_dir":"/apps/entry-user/dist","port":4200}'
+  containerPort: 4200
+  domain: entry-recruit.xquare.app
+  githubInstallationID: '62368670'
+  instanceType: x3.small
+  language: vite
+  name: entry-internship-user-prod
+  organization: EntryDSM
+  privateService: false
+  repository: Entry-Internship
+- branch: develop
+  buildConfig: '{"builder":"vite","node_version":"22","build_dir":"/","build_commands":["yarn
+    install", "npx nx run @entry-internship/entry-admin:build"],"output_dir":"/apps/entry-admin/dist","port":4200}'
+  containerPort: 4200
+  domain: entry-recruit-admin.xquare.app
+  githubInstallationID: '62368670'
+  instanceType: x3.small
+  language: vite
+  name: entry-internship-admin-stag
+  organization: EntryDSM
+  privateService: false
+  repository: Entry-Internship
+- branch: main
+  buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew
+    build -x test --build-cache"],"output_dir":"/build/libs/Equus-Status-0.0.0.jar","port":8080}'
+  containerPort: 8080
+  domain: equus-status.xquare.app
+  githubInstallationID: '62368670'
+  instanceType: x3.large
+  language: java
+  name: equus-status-prod
+  organization: EntryDSM
+  privateService: false
+  repository: Equus-Status
+- branch: main
+  buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew
+    build -x test --build-cache"],"output_dir":"/build/libs/Equus-Schedule-0.0.0.jar","port":8080}'
+  containerPort: 8080
+  domain: equus-schedule.xquare.app
+  githubInstallationID: '62368670'
+  instanceType: x3.large
+  language: java
+  name: equus-schedule-prod
+  organization: EntryDSM
+  privateService: false
+  repository: Equus-Schedule

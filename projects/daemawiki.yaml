@@ -1,0 +1,25 @@
+applications:
+- branch: main
+  buildConfig: '{"builder":"gradle","jdk_version":21,"build_dir":".","build_commands":["./gradlew
+    build -x test --build-cache"],"output_dir":"/build/libs/*.jar","port":8080}'
+  containerPort: 8080
+  domain: daemawiki-server.xquare.app
+  githubInstallationID: '64110837'
+  instanceType: x3.large
+  language: java
+  name: daemawiki-prod
+  organization: daemawiki
+  privateService: false
+  repository: Claude
+- branch: develop
+  buildConfig: '{"builder":"gradle","jdk_version":21,"build_dir":".","build_commands":["./gradlew
+    build -x test --build-cache"],"output_dir":"/build/libs/*.jar","port":8080}'
+  containerPort: 8080
+  domain: daemawiki-server-stag.xquare.app
+  githubInstallationID: '64110837'
+  instanceType: x3.large
+  language: java
+  name: daemawiki-stag
+  organization: daemawiki
+  privateService: false
+  repository: Claude
