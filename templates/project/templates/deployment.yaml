@@ -96,7 +96,7 @@ spec:
             {{- end }}
           readinessProbe:
             tcpSocket:
-              port: {{ .Values.containerPort }}
+              port: {{ .containerPort }}
             initialDelaySeconds: 20
             periodSeconds: 10
             successThreshold: 3
