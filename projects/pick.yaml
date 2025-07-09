@@ -22,3 +22,4 @@ applications:
     organization: DSM-PICK
     privateService: false
     repository: PICK_CORE_SERVER
+    imageTag: latest
