@@ -1,25 +1,24 @@
 applications:
-- branch: main
-  buildConfig: '{"builder":"gradle","jdk_version":21,"build_dir":".","build_commands":["export
-    _JAVA_OPTIONS=\"-XX:-UsePerfData\" && ./gradlew build -x test --build-cache --no-daemon"],"output_dir":"/dms-infrastructure/build/libs/*.jar","port":8080}'
-  containerPort: 8080
-  domain: api.dms-dsm.com
-  githubInstallationID: '64597732'
-  instanceType: x3.large
-  language: java
-  name: dms-backend-prod
-  organization: team-aliens
-  privateService: false
-  repository: DMS-Backend
-- branch: develop
-  buildConfig: '{"builder":"gradle","jdk_version":21,"build_dir":".","build_commands":["export
-    _JAVA_OPTIONS=\"-XX:-UsePerfData\" && ./gradlew build -x test --build-cache --no-daemon"],"output_dir":"/dms-infrastructure/build/libs/*.jar","port":8080}'
-  containerPort: 8080
-  domain: dev-api.dms-dsm.com
-  githubInstallationID: '64597732'
-  instanceType: x3.large
-  language: java
-  name: dms-backend-stag
-  organization: team-aliens
-  privateService: false
-  repository: DMS-Backend
+  - branch: main
+    buildConfig: '{"builder":"gradle","jdk_version":21,"build_dir":".","build_commands":["export _JAVA_OPTIONS=\"-XX:-UsePerfData\" && ./gradlew build -x test --build-cache --no-daemon"],"output_dir":"/dms-infrastructure/build/libs/*.jar","port":8080}'
+    containerPort: 8080
+    domain: api.dms-dsm.com
+    githubInstallationID: "64597732"
+    instanceType: x3.large
+    language: java
+    name: dms-backend-prod
+    organization: team-aliens
+    privateService: false
+    repository: DMS-Backend
+  - branch: develop
+    buildConfig: '{"builder":"gradle","jdk_version":21,"build_dir":".","build_commands":["export _JAVA_OPTIONS=\"-XX:-UsePerfData\" && ./gradlew build -x test --build-cache --no-daemon"],"output_dir":"/dms-infrastructure/build/libs/*.jar","port":8080}'
+    containerPort: 8080
+    domain: dev-api.dms-dsm.com
+    githubInstallationID: "64597732"
+    instanceType: x3.large
+    language: java
+    name: dms-backend-stag
+    organization: team-aliens
+    privateService: false
+    repository: DMS-Backend
+    imageTag: latest
