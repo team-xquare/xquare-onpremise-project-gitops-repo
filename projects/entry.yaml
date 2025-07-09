@@ -116,3 +116,4 @@ applications:
     organization: EntryDSM
     privateService: false
     repository: Equus-Schedule
+    imageTag: latest
