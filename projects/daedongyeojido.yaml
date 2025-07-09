@@ -1,13 +1,13 @@
 applications:
-- branch: main
-  buildConfig: '{"jdk_version":17,"output_dir":"/build/libs/*.jar","builder":"gradle","build_dir":".","build_commands":["./gradlew
-    clean build -x test"],"port":8080}'
-  containerPort: 8080
-  domain: whispy.xquare.app
-  githubInstallationID: '63841363'
-  instanceType: x3.medium
-  language: java
-  name: whispy-prod
-  organization: Team-jeong-ho-kim
-  privateService: false
-  repository: Whispy_BE
+  - branch: main
+    buildConfig: '{"jdk_version":17,"output_dir":"/build/libs/*.jar","builder":"gradle","build_dir":".","build_commands":["./gradlew clean build -x test"],"port":8080}'
+    containerPort: 8080
+    domain: whispy.xquare.app
+    githubInstallationID: "63841363"
+    instanceType: x3.medium
+    language: java
+    name: whispy-prod
+    organization: Team-jeong-ho-kim
+    privateService: false
+    repository: Whispy_BE
+    imageTag: latest
