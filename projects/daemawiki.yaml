@@ -22,3 +22,4 @@ applications:
     organization: daemawiki
     privateService: false
     repository: Claude
+    imageTag: latest
