@@ -45,6 +45,7 @@ applications:
     organization: EntryDSM
     privateService: false
     repository: Casper-Recruitment
+    imageTag: latest
   - branch: main
     buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew build -x test --build-cache"],"output_dir":"/build/libs/Equus-User-0.0.0.jar","port":8080}'
     containerPort: 8080
