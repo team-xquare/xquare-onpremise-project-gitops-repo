@@ -21,6 +21,12 @@ spec:
         - owner: {{ .organization }}
           names:
             - {{ .repository }}
+      githubApp:
+        privateKey:
+          name: github-app-pem
+          key: privateKey.pem
+        appID: {{ include "ci.githubAppID" $ }}
+        installationID: {{ include "ci.githubInstallationID" . }}
       webhook:
         endpoint: /webhooks/{{ $.Values.project }}-{{ include "app.serviceName" . }}
         port: "{{ include "ci.webhookPort" $ }}"
@@ -29,12 +35,6 @@ spec:
       events:
         - push
         - ping
-      apiToken:
-        name: github-token
-        key: token
-      webhookSecret:
-        name: github-token
-        key: token
       insecure: false
       active: true
       contentType: json
