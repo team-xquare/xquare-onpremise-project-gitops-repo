@@ -1,0 +1,34 @@
+{{- range .Values.applications }}
+{{- if not .disableNetworkPolicy }}
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: {{ include "app.serviceName" . }}-network-policy
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "app.labels" . | nindent 4 }}
+    app.kubernetes.io/component: network-policy
+spec:
+  endpointSelector:
+    matchExpressions:
+      - key: io.kubernetes.pod.namespace
+        operator: NotIn
+        values: ["kube-system", "gateway"]
+  
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+    - toEntities:
+        - world
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: {{ include "project.namespace" $ }}
+{{- end }}
+{{- end }}
