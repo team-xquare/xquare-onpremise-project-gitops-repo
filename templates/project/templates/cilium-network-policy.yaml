@@ -11,10 +11,9 @@ metadata:
     app.kubernetes.io/component: network-policy
 spec:
   endpointSelector:
-    matchExpressions:
-      - key: io.kubernetes.pod.namespace
-        operator: NotIn
-        values: ["kube-system", "gateway"]
+    matchLabels:
+      {{- include "app.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: application
   
   egress:
     - toEndpoints:
