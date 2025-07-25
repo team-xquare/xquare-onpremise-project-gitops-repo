@@ -32,6 +32,7 @@ applications:
     organization: team-xquare
     privateService: false
     repository: xquare-frontend-v2
+    imageTag: latest
   - branch: main
     buildConfig: '{"node_version":"22","build_commands":["npm install && npm run build"],"builder":"nodejs","build_dir":"/","command":"npm run start","port":3000}'
     containerPort: 3000
