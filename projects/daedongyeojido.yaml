@@ -10,3 +10,4 @@ applications:
     organization: Team-jeong-ho-kim
     privateService: false
     repository: Whispy_BE
+    imageTag: latest
