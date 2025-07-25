@@ -10,3 +10,4 @@ applications:
     organization: Team-LoopCat
     privateService: false
     repository: Helper_Backend
+    imageTag: latest
