@@ -10,7 +10,6 @@ applications:
     organization: DSM-PICK
     privateService: false
     repository: PICK_CORE_SERVER
-    imageTag: latest
   - branch: develop
     buildConfig: '{"jdk_version":17,"output_dir":"/build/libs/PICK2024_SERVER-0.0.1-SNAPSHOT.jar","builder":"gradle","build_dir":"/","build_commands":["./gradlew build -x test"], "port" : 8080}'
     containerPort: 8080
@@ -22,4 +21,3 @@ applications:
     organization: DSM-PICK
     privateService: false
     repository: PICK_CORE_SERVER
-    imageTag: latest

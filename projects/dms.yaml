@@ -21,4 +21,3 @@ applications:
     organization: team-aliens
     privateService: false
     repository: DMS-Backend
-    imageTag: latest

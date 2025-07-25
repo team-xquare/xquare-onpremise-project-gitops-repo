@@ -10,7 +10,6 @@ applications:
     organization: EntryDSM
     privateService: false
     repository: Equus-Application
-    imageTag: latest
   - branch: main
     buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew build -x test --build-cache"],"output_dir":"/build/libs/Equus-Api-Gateway-0.0.1-SNAPSHOT.jar","port":8080}'
     containerPort: 8080
@@ -22,7 +21,6 @@ applications:
     organization: EntryDSM
     privateService: false
     repository: Equus-Api-Gateway
-    imageTag: latest
   - branch: main
     buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":"/","build_commands":["./gradlew build -x test"],"output_dir":"/build/libs/Equus-Github-Auth-0.0.1-SNAPSHOT.jar","port":8080}'
     containerPort: 8080
@@ -34,7 +32,6 @@ applications:
     organization: EntryDSM
     privateService: false
     repository: Casper-Recruitment
-    imageTag: latest
   - branch: main
     buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":"/","build_commands":["./gradlew build -x test"],"output_dir":"/build/libs/Equus-Github-Auth-0.0.1-SNAPSHOT.jar","port":8080}'
     containerPort: 8080
@@ -46,7 +43,6 @@ applications:
     organization: EntryDSM
     privateService: false
     repository: Casper-Recruitment
-    imageTag: latest
   - branch: main
     buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew build -x test --build-cache"],"output_dir":"/build/libs/Equus-User-0.0.0.jar","port":8080}'
     containerPort: 8080
@@ -58,7 +54,6 @@ applications:
     organization: EntryDSM
     privateService: false
     repository: Equus-User
-    imageTag: latest
   - branch: main
     buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew build -x test --build-cache"],"output_dir":"/build/libs/Equus-Feed-0.0.1-SNAPSHOT.jar","port":8080}'
     containerPort: 8080
@@ -70,7 +65,6 @@ applications:
     organization: EntryDSM
     privateService: false
     repository: Equus-Feed
-    imageTag: latest
   - branch: develop
     buildConfig: '{"builder":"vite","node_version":"22","build_dir":"/","build_commands":["yarn install && npx nx run @entry-internship/entry-user:build"],"output_dir":"/apps/entry-user/dist","port":4200}'
     containerPort: 4200
@@ -93,7 +87,6 @@ applications:
     organization: EntryDSM
     privateService: false
     repository: Entry-Internship
-    imageTag: latest
   - branch: main
     buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew build -x test --build-cache"],"output_dir":"/build/libs/Equus-Status-0.0.0.jar","port":8080}'
     containerPort: 8080
@@ -105,7 +98,6 @@ applications:
     organization: EntryDSM
     privateService: false
     repository: Equus-Status
-    imageTag: latest
   - branch: main
     buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew build -x test --build-cache"],"output_dir":"/build/libs/Equus-Schedule-0.0.0.jar","port":8080}'
     containerPort: 8080
@@ -117,4 +109,3 @@ applications:
     organization: EntryDSM
     privateService: false
     repository: Equus-Schedule
-    imageTag: latest

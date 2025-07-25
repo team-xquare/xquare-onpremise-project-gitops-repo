@@ -10,4 +10,3 @@ applications:
     organization: Team-jeong-ho-kim
     privateService: false
     repository: Sillok_BE
-    imageTag: latest

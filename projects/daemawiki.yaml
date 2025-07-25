@@ -10,7 +10,6 @@ applications:
     organization: daemawiki
     privateService: false
     repository: Claude
-    imageTag: latest
   - branch: develop
     buildConfig: '{"builder":"gradle","jdk_version":21,"build_dir":".","build_commands":["./gradlew build -x test --build-cache"],"output_dir":"/build/libs/*.jar","port":8080}'
     containerPort: 8080
@@ -22,4 +21,3 @@ applications:
     organization: daemawiki
     privateService: false
     repository: Claude
-    imageTag: latest

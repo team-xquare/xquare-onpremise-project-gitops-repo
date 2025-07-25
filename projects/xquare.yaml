@@ -10,7 +10,6 @@ applications:
     organization: team-dsm-lol
     privateService: false
     repository: dsm-lol-server
-    imageTag: latest
   - branch: main
     buildConfig: '{"builder":"react","node_version":"22","build_dir":"/","build_commands":["npm run build"],"output_dir":"/build","port":3000}'
     containerPort: 3000
@@ -33,7 +32,6 @@ applications:
     organization: team-xquare
     privateService: false
     repository: xquare-frontend-v2
-    imageTag: latest
   - branch: main
     buildConfig: '{"node_version":"22","build_commands":["npm install && npm run build"],"builder":"nodejs","build_dir":"/","command":"npm run start","port":3000}'
     containerPort: 3000
@@ -45,7 +43,6 @@ applications:
     organization: HyunSu1768
     privateService: false
     repository: DaekTalk-Homepage
-    imageTag: latest
   - branch: main
     buildConfig: '{"jdk_version":21,"output_dir":"/build/libs/DaekTalk-0.0.1-SNAPSHOT.jar","builder":"gradle","build_dir":"/","build_commands":["./gradlew build -x test"],"port":8080}'
     containerPort: 8080
@@ -57,7 +54,6 @@ applications:
     organization: Daeke-Talk
     privateService: false
     repository: DaekeTalk-Server
-    imageTag: latest
   - branch: main
     buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew build -x test"],"output_dir":"/build/libs/xquare-infra-0.0.1-SNAPSHOT.jar","port":8080}'
     containerPort: 8080
@@ -69,7 +65,6 @@ applications:
     organization: team-xquare
     privateService: false
     repository: xquare-infra-backend
-    imageTag: latest
   - branch: develop
     buildConfig: '{"jdk_version":17,"output_dir":"/build/libs/xquare-infra-0.0.1-SNAPSHOT.jar","builder":"gradle","build_dir":"/","build_commands":["./gradlew build -x test"],"port":8080}'
     containerPort: 8080
@@ -81,7 +76,6 @@ applications:
     organization: team-xquare
     privateService: false
     repository: xquare-infra-backend
-    imageTag: latest
   - branch: main
     buildConfig: '{"builder":"react","node_version":"22","build_dir":"/","build_commands":["npm install && npm run build"],"output_dir":"/dist","port":3000}'
     containerPort: 3000
@@ -93,4 +87,3 @@ applications:
     organization: team-dsm-lol
     privateService: false
     repository: dsm-lol-frontend
-    imageTag: latest

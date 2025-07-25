@@ -10,4 +10,3 @@ applications:
     organization: Silent-flowers-bloom-gracefully
     privateService: false
     repository: backend
-    imageTag: latest
