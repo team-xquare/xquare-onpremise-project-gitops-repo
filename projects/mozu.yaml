@@ -10,6 +10,7 @@ applications:
     organization: team-mozu
     privateService: false
     repository: mozu-BE
+    imageTag: latest
   - branch: develop
     buildConfig: '{"node_version":"20.16","build_commands":["npm install && npm run build"],"builder":"nodejs","build_dir":"/","port":3000,"command":"npm run start"}'
     containerPort: 3000
