@@ -87,3 +87,4 @@ applications:
     organization: team-dsm-lol
     privateService: false
     repository: dsm-lol-frontend
+    imageTag: latest
