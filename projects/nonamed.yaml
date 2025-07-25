@@ -10,6 +10,7 @@ applications:
     organization: team-osj
     privateService: false
     repository: Lotura_BackEnd_V2
+    imageTag: latest
   - branch: develop
     buildConfig: '{"builder":"nodejs","node_version":"22.5.1","build_dir":"","build_commands":["yarn && yarn build"],"command":"yarn start","port":3000}'
     containerPort: 3000
