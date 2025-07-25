@@ -21,3 +21,4 @@ applications:
     organization: Keep-DSM
     privateService: false
     repository: keep-Backend
+    imageTag: latest
