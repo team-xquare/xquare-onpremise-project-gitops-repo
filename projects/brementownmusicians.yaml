@@ -10,3 +10,4 @@ applications:
     organization: BremenMusicians
     privateService: false
     repository: WeMeet_BE
+    imageTag: latest
