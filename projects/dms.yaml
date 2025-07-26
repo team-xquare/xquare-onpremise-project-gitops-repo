@@ -10,6 +10,7 @@ applications:
     organization: team-aliens
     privateService: false
     repository: DMS-Backend
+    imageTag: latest
   - branch: develop
     buildConfig: '{"builder":"gradle","jdk_version":21,"build_dir":".","build_commands":["export _JAVA_OPTIONS=\"-XX:-UsePerfData\" && ./gradlew build -x test --build-cache --no-daemon"],"output_dir":"/dms-infrastructure/build/libs/*.jar","port":8080}'
     containerPort: 8080
