@@ -10,3 +10,4 @@ applications:
     organization: taeyang-s-playGround
     privateService: false
     repository: Nuneddine
+    imageTag: latest
