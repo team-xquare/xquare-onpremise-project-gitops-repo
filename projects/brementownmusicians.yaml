@@ -1,13 +1,15 @@
 applications:
-  - branch: main
-    buildConfig: '{"jdk_version":17,"output_dir":"/build/libs/WeMeet-0.0.1-SNAPSHOT.jar","builder":"gradle","build_dir":"/","build_commands":["./gradlew build -x test"],"port":8080}'
+  - name: wemeet-stag
+    organization: BremenMusicians
+    repository: WeMeet_BE
+    branch: main
+    language: java
+    buildConfig:
+      '{"jdk_version":17,"output_dir":"/build/libs/WeMeet-0.0.1-SNAPSHOT.jar","builder":"gradle","build_dir":"/","build_commands":["./gradlew
+      build -x test"],"port":8080}'
     containerPort: 8080
     domain: wemeet-prod.xquare.app
     githubInstallationID: "64195567"
     instanceType: x3.medium
-    language: java
-    name: wemeet-stag
-    organization: BremenMusicians
     privateService: false
-    repository: WeMeet_BE
     imageTag: latest

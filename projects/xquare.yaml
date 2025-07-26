@@ -1,48 +1,56 @@
 applications:
-  - branch: main
-    buildConfig: '{"builder":"react","node_version":"22","build_dir":"/","build_commands":["npm run build"],"output_dir":"/build","port":3000}'
+  - name: xquare-frontend-prod
+    organization: team-xquare
+    repository: xquare-frontend-v2
+    branch: main
+    language: react
+    buildConfig:
+      '{"builder":"react","node_version":"22","build_dir":"/","build_commands":["npm
+      run build"],"output_dir":"/build","port":3000}'
     containerPort: 3000
     domain: infra.xquare.app
     githubInstallationID: "62433388"
     instanceType: x3.small
-    language: react
-    name: xquare-frontend-prod
-    organization: team-xquare
     privateService: false
+  - name: xquare-frontend-stag
+    organization: team-xquare
     repository: xquare-frontend-v2
-  - branch: develop
-    buildConfig: '{"builder":"react","node_version":"22","build_dir":"/","build_commands":["npm run build"],"output_dir":"/build","port":3000}'
+    branch: develop
+    language: react
+    buildConfig:
+      '{"builder":"react","node_version":"22","build_dir":"/","build_commands":["npm
+      run build"],"output_dir":"/build","port":3000}'
     containerPort: 3000
     domain: infra-stag.xquare.app
     githubInstallationID: "62433388"
     instanceType: x3.small
-    language: react
-    name: xquare-frontend-stag
-    organization: team-xquare
     privateService: false
-    repository: xquare-frontend-v2
     imageTag: latest
-  - branch: main
-    buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew build -x test"],"output_dir":"/build/libs/xquare-infra-0.0.1-SNAPSHOT.jar","port":8080}'
+  - name: xquare-infra-prod
+    organization: team-xquare
+    repository: xquare-infra-backend
+    branch: main
+    language: java
+    buildConfig:
+      '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew
+      build -x test"],"output_dir":"/build/libs/xquare-infra-0.0.1-SNAPSHOT.jar","port":8080}'
     containerPort: 8080
     domain: xquare-infra-backend.xquare.app
     githubInstallationID: "62433388"
     instanceType: x3.large
-    language: java
-    name: xquare-infra-prod
-    organization: team-xquare
     privateService: false
-    repository: xquare-infra-backend
     imageTag: latest
-  - branch: develop
-    buildConfig: '{"jdk_version":17,"output_dir":"/build/libs/xquare-infra-0.0.1-SNAPSHOT.jar","builder":"gradle","build_dir":"/","build_commands":["./gradlew build -x test"],"port":8080}'
+  - name: xquare-infra-stag
+    organization: team-xquare
+    repository: xquare-infra-backend
+    branch: develop
+    language: java
+    buildConfig:
+      '{"jdk_version":17,"output_dir":"/build/libs/xquare-infra-0.0.1-SNAPSHOT.jar","builder":"gradle","build_dir":"/","build_commands":["./gradlew
+      build -x test"],"port":8080}'
     containerPort: 8080
     domain: xquare-infra-backend-stag.xquare.app
     githubInstallationID: "62433388"
     instanceType: x3.large
-    language: java
-    name: xquare-infra-stag
-    organization: team-xquare
     privateService: false
-    repository: xquare-infra-backend
     imageTag: latest

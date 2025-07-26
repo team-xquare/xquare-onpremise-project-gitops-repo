@@ -1,25 +1,29 @@
 applications:
-  - branch: main
-    buildConfig: '{"node_version":"20.16","build_commands":["npm install && npm run build"],"builder":"nodejs","build_dir":"/","port":3000,"command":"npm run start"}'
+  - name: mozu-server-prod
+    organization: team-mozu
+    repository: mozu-BE
+    branch: main
+    language: nodejs
+    buildConfig:
+      '{"node_version":"20.16","build_commands":["npm install && npm run
+      build"],"builder":"nodejs","build_dir":"/","port":3000,"command":"npm run start"}'
     containerPort: 3000
     domain: mozu-prod.xquare.app
     githubInstallationID: "64125603"
     instanceType: x3.large
-    language: nodejs
-    name: mozu-server-prod
-    organization: team-mozu
     privateService: false
-    repository: mozu-BE
     imageTag: latest
-  - branch: develop
-    buildConfig: '{"node_version":"20.16","build_commands":["npm install && npm run build"],"builder":"nodejs","build_dir":"/","port":3000,"command":"npm run start"}'
+  - name: mozu-server-stag
+    organization: team-mozu
+    repository: mozu-BE
+    branch: develop
+    language: nodejs
+    buildConfig:
+      '{"node_version":"20.16","build_commands":["npm install && npm run
+      build"],"builder":"nodejs","build_dir":"/","port":3000,"command":"npm run start"}'
     containerPort: 3000
     domain: mozu-stag.xquare.app
     githubInstallationID: "64125603"
     instanceType: x3.large
-    language: nodejs
-    name: mozu-server-stag
-    organization: team-mozu
     privateService: false
-    repository: mozu-BE
     imageTag: latest

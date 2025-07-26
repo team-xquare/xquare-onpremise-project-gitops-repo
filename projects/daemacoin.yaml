@@ -1,25 +1,29 @@
 applications:
-  - branch: main
-    buildConfig: '{"builder":"nodejs","node_version":"22.5.1","build_dir":"/","build_commands":["npm install && npm run build"],"command":"npm run start","port":3000}'
+  - name: daemacoin-server-prod
+    organization: DaemaCoin
+    repository: deama_coin_backend
+    branch: main
+    language: nodejs
+    buildConfig:
+      '{"builder":"nodejs","node_version":"22.5.1","build_dir":"/","build_commands":["npm
+      install && npm run build"],"command":"npm run start","port":3000}'
     containerPort: 3000
     domain: daemacoin-server.xquare.app
     githubInstallationID: "63879080"
     instanceType: x3.large
-    language: nodejs
-    name: daemacoin-server-prod
-    organization: DaemaCoin
     privateService: false
-    repository: deama_coin_backend
     imageTag: latest
-  - branch: main
-    buildConfig: '{"node_version":"22","build_commands":["npm install && npm run build"],"builder":"nodejs","build_dir":"/","command":"npm run start","port":8080}'
+  - name: daemacoin-frontend-prod
+    organization: DaemaCoin
+    repository: daema_coin_frontend
+    branch: main
+    language: nodejs
+    buildConfig:
+      '{"node_version":"22","build_commands":["npm install && npm run build"],"builder":"nodejs","build_dir":"/","command":"npm
+      run start","port":8080}'
     containerPort: 3000
     domain: dsm-coin.xquare.app
     githubInstallationID: "63879080"
     instanceType: x3.large
-    language: nodejs
-    name: daemacoin-frontend-prod
-    organization: DaemaCoin
     privateService: false
-    repository: daema_coin_frontend
     imageTag: latest
