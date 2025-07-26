@@ -21,3 +21,4 @@ applications:
     organization: DaemaCoin
     privateService: false
     repository: daema_coin_frontend
+    imageTag: latest
