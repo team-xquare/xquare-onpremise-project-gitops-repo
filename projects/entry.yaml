@@ -70,6 +70,7 @@ applications:
     organization: EntryDSM
     privateService: false
     repository: Equus-Feed
+    imageTag: latest
   - branch: develop
     buildConfig: '{"builder":"vite","node_version":"22","build_dir":"/","build_commands":["yarn install && npx nx run @entry-internship/entry-user:build"],"output_dir":"/apps/entry-user/dist","port":4200}'
     containerPort: 4200
