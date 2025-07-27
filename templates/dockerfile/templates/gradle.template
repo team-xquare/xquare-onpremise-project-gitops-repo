@@ -1,20 +1,23 @@
-FROM amazoncorretto:{{ jdk_version }} AS build
+FROM eclipse-temurin:{{ jdk_version }}-jdk AS build
 
 WORKDIR /app
 
+ENV GRADLE_USER_HOME="/app/.gradle"
+ENV KOTLIN_USER_HOME="/app/.kotlin"
+ENV KOTLIN_COMPILER_EXECUTION_STRATEGY="in-process"
+ENV KOTLIN_DAEMON_DISABLED=true
+ENV GRADLE_OPTS="-Dkotlin.daemon.enabled=false -Dorg.gradle.daemon=false"
+
 COPY {{ build_dir }}/ .
 RUN chmod +x gradlew
-
-ENV KOTLIN_COMPILER_EXECUTION_STRATEGY="in-process"
-ENV KOTLIN_USER_HOME="/workspace/repo/.kotlin"
-ENV KOTLIN_DAEMON_DISABLED=true
-
 
 {% for command in build_commands %}
 RUN {{ command }}
 {% endfor %}
 
-FROM amazoncorretto:{{ jdk_version }}
+RUN rm -rf .gradle .kotlin /root/.gradle /root/.kotlin
+
+FROM eclipse-temurin:{{ jdk_version }}-jre-alpine
 
 ENV TZ=Asia/Seoul
 ENV JAVA_OPTS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
