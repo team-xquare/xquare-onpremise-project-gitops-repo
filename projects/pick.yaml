@@ -8,7 +8,7 @@ applications:
       '{"jdk_version":17,"output_dir":"/build/libs/PICK2024_SERVER-0.0.1-SNAPSHOT.jar","builder":"gradle","build_dir":"/","build_commands":["./gradlew
       build -x test"], "port" : 8080}'
     containerPort: 8080
-    domain: pick-core.xquare.app
+    domain: pick-core.dsmhs.kr
     githubInstallationID: "64595989"
     instanceType: x3.large
     privateService: false
@@ -22,7 +22,7 @@ applications:
       '{"jdk_version":17,"output_dir":"/build/libs/PICK2024_SERVER-0.0.1-SNAPSHOT.jar","builder":"gradle","build_dir":"/","build_commands":["./gradlew
       build -x test"], "port" : 8080}'
     containerPort: 8080
-    domain: pick-core-stag.xquare.app
+    domain: pick-core-stag.dsmhs.kr
     githubInstallationID: "64595989"
     instanceType: x3.large
     privateService: false
