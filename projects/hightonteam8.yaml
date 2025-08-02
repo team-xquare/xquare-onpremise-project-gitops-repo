@@ -1,0 +1,14 @@
+applications:
+  - name: backend
+    organization: HighTon-Team-8
+    repository: Team8_BE
+    branch: main
+    language: java
+    buildConfig:
+      '{"jdk_version":17,"output_dir":"/build/libs/*.jar","builder":"gradle","build_dir":".","build_commands":["./gradlew
+      clean build -x test"],"port":8080}'
+    containerPort: 8080
+    domain: high-ton-team-8.dsmhs.kr
+    githubInstallationID: "78893207"
+    instanceType: x3.medium
+    privateService: false
