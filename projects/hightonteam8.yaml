@@ -11,3 +11,12 @@ applications:
     instanceType: x3.medium
     privateService: false
     imageTag: 014ab4df9acc1bc370db14e5a3c615622d81fa35
+  - name: redis
+    organization: HighTon-Team-8
+    repository: redis-docker
+    branch: main
+    buildConfig: '{"builder":"dockerfile"}'
+    containerPort: 6379
+    githubInstallationID: "78893207"
+    instanceType: x3.medium
+    privateService: true
