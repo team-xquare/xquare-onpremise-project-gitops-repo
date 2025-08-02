@@ -10,7 +10,7 @@ applications:
     githubInstallationID: "78893207"
     instanceType: x3.medium
     privateService: false
-    imageTag: d2d633425016dc298090dcd4937817db18416b25
+    imageTag: a6525e271e287e2d7d593975bf8815577086f347
   - name: redis
     organization: HighTon-Team-8
     repository: redis-docker
