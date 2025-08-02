@@ -10,4 +10,4 @@ applications:
     githubInstallationID: "78893207"
     instanceType: x3.medium
     privateService: false
-    imageTag: 3eb39587391537c15e809027e77418810d5247c7
+    imageTag: 014ab4df9acc1bc370db14e5a3c615622d81fa35
