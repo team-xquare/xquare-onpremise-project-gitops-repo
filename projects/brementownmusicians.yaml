@@ -10,6 +10,6 @@ applications:
     containerPort: 8080
     domain: wemeet-prod.xquare.app
     githubInstallationID: "64195567"
-    instanceType: x3.nano
+    instanceType: x3.micro
     privateService: false
     imageTag: latest

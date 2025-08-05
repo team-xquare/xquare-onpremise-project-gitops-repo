@@ -23,6 +23,6 @@ applications:
     containerPort: 3000
     domain: keep-stag.xquare.app
     githubInstallationID: "66778564"
-    instanceType: x3.nano
+    instanceType: x3.micro
     privateService: false
     imageTag: latest

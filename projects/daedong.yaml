@@ -10,6 +10,6 @@ applications:
     containerPort: 8080
     domain: sillok-api.xquare.app
     githubInstallationID: "63841363"
-    instanceType: x3.nano
+    instanceType: x3.small
     privateService: false
     imageTag: latest
