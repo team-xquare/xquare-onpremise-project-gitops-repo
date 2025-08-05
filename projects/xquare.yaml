@@ -37,7 +37,7 @@ applications:
     containerPort: 8080
     domain: xquare-infra-backend.xquare.app
     githubInstallationID: "62433388"
-    instanceType: x3.large
+    instanceType: x3.small
     privateService: false
     imageTag: latest
   - name: xquare-infra-stag
@@ -51,6 +51,6 @@ applications:
     containerPort: 8080
     domain: xquare-infra-backend-stag.xquare.app
     githubInstallationID: "62433388"
-    instanceType: x3.large
+    instanceType: x3.small
     privateService: false
     imageTag: latest

@@ -8,7 +8,7 @@ applications:
     containerPort: 8080
     domain: dms-api.dsmhs.kr
     githubInstallationID: "64597732"
-    instanceType: x3.large
+    instanceType: x3.micro
     privateService: false
     imageTag: latest
   - name: dms-backend-stag
@@ -20,6 +20,6 @@ applications:
     containerPort: 8080
     domain: dms-dev-api.dsmhs.kr
     githubInstallationID: "64597732"
-    instanceType: x3.large
+    instanceType: x3.micro
     privateService: false
     imageTag: latest

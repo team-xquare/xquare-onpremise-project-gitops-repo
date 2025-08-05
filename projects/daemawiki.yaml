@@ -10,7 +10,7 @@ applications:
     containerPort: 8080
     domain: daemawiki-server.xquare.app
     githubInstallationID: "64110837"
-    instanceType: x3.large
+    instanceType: x3.nano
     privateService: false
     imageTag: latest
   - name: daemawiki-stag
@@ -24,6 +24,6 @@ applications:
     containerPort: 8080
     domain: daemawiki-server-stag.xquare.app
     githubInstallationID: "64110837"
-    instanceType: x3.large
+    instanceType: x3.nano
     privateService: false
     imageTag: latest

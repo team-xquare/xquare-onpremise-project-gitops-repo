@@ -10,6 +10,6 @@ applications:
     containerPort: 8080
     domain: silent-flowers.xquare.app
     githubInstallationID: "68917128"
-    instanceType: x3.large
+    instanceType: x3.micro
     privateService: false
     imageTag: latest

@@ -10,7 +10,7 @@ applications:
     containerPort: 3000
     domain: keep-prod.xquare.app
     githubInstallationID: "66778564"
-    instanceType: x3.large
+    instanceType: x3.nano
     privateService: false
   - name: keep-deployment-stag
     organization: Keep-DSM
@@ -23,6 +23,6 @@ applications:
     containerPort: 3000
     domain: keep-stag.xquare.app
     githubInstallationID: "66778564"
-    instanceType: x3.large
+    instanceType: x3.nano
     privateService: false
     imageTag: latest

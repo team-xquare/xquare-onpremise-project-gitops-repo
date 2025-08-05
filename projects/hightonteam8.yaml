@@ -8,7 +8,7 @@ applications:
     containerPort: 8080
     domain: high-ton-team-8.dsmhs.kr
     githubInstallationID: "78893207"
-    instanceType: x3.medium
+    instanceType: x3.nano
     privateService: false
     imageTag: 08b27ab770dc9070424a81fc7ed5e1ee255a30d3
   - name: redis
@@ -18,6 +18,6 @@ applications:
     buildConfig: '{"builder":"dockerfile"}'
     containerPort: 6379
     githubInstallationID: "78893207"
-    instanceType: x3.medium
+    instanceType: x3.nano
     privateService: true
     imageTag: latest

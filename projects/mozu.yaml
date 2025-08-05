@@ -10,7 +10,7 @@ applications:
     containerPort: 3000
     domain: mozu-prod.xquare.app
     githubInstallationID: "64125603"
-    instanceType: x3.large
+    instanceType: x3.nano
     privateService: false
     imageTag: latest
   - name: mozu-server-stag
@@ -24,6 +24,6 @@ applications:
     containerPort: 3000
     domain: mozu-stag.xquare.app
     githubInstallationID: "64125603"
-    instanceType: x3.large
+    instanceType: x3.nano
     privateService: false
     imageTag: latest

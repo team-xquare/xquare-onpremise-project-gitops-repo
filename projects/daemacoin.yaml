@@ -10,7 +10,7 @@ applications:
     containerPort: 3000
     domain: daemacoin-server.xquare.app
     githubInstallationID: "63879080"
-    instanceType: x3.large
+    instanceType: x3.nano
     privateService: false
     imageTag: latest
   - name: daemacoin-frontend-prod
@@ -24,6 +24,6 @@ applications:
     containerPort: 3000
     domain: dsm-coin.xquare.app
     githubInstallationID: "63879080"
-    instanceType: x3.large
+    instanceType: x3.nano
     privateService: false
     imageTag: latest

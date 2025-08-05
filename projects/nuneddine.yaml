@@ -8,6 +8,6 @@ applications:
     containerPort: 8080
     domain: nuneddine.xquare.app
     githubInstallationID: "64042787"
-    instanceType: x3.medium
+    instanceType: x3.nano
     privateService: false
     imageTag: 45705abdf34dd0442007efe2bf2bf0eaa5649c4c
