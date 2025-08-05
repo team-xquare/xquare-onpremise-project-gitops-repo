@@ -10,7 +10,7 @@ applications:
     containerPort: 3000
     domain: lotura-prod.xquare.app
     githubInstallationID: "64110126"
-    instanceType: x3.small
+    instanceType: x3.micro
     privateService: false
     imageTag: latest
   - name: lotura-stag
