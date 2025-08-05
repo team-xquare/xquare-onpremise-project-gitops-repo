@@ -10,7 +10,7 @@ applications:
     containerPort: 3000
     domain: keep-prod.xquare.app
     githubInstallationID: "66778564"
-    instanceType: x3.nano
+    instanceType: x3.micro
     privateService: false
   - name: keep-deployment-stag
     organization: Keep-DSM
