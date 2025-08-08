@@ -13,7 +13,7 @@ applications:
   endpoints:
   - port: 8080
     routes:
-    - dms-api.dsmhs.kr
+    - dms-api.dsm-dms.com
 - name: dms-backend-stag
   github:
     owner: team-aliens
@@ -28,4 +28,4 @@ applications:
   endpoints:
   - port: 8080
     routes:
-    - dms-dev-api.dsmhs.kr
+    - dms-dev-api.dsm-dms.com
