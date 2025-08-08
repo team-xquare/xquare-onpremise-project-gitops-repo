@@ -5,7 +5,7 @@ applications:
       owner: EntryDSM
       repo: Equus-Application
       branch: main
-      installationId: "62368670"
+      installationId: "77967720"
       hash: latest
     build:
       gradle:
@@ -23,7 +23,7 @@ applications:
       owner: EntryDSM
       repo: Equus-Api-Gateway
       branch: main
-      installationId: "62368670"
+      installationId: "77967720"
       hash: latest
     build:
       gradle:
@@ -41,7 +41,7 @@ applications:
       owner: EntryDSM
       repo: Casper-Recruitment
       branch: main
-      installationId: "62368670"
+      installationId: "77967720"
       hash: latest
     build:
       gradle:
@@ -59,7 +59,7 @@ applications:
       owner: EntryDSM
       repo: Casper-Recruitment
       branch: main
-      installationId: "62368670"
+      installationId: "77967720"
       hash: latest
     build:
       gradle:
@@ -77,7 +77,7 @@ applications:
       owner: EntryDSM
       repo: Equus-User
       branch: main
-      installationId: "62368670"
+      installationId: "77967720"
       hash: latest
     build:
       gradle:
@@ -95,7 +95,7 @@ applications:
       owner: EntryDSM
       repo: Equus-Feed
       branch: main
-      installationId: "62368670"
+      installationId: "77967720"
       hash: latest
     build:
       gradle:
@@ -113,7 +113,7 @@ applications:
       owner: EntryDSM
       repo: Entry-Internship
       branch: develop
-      installationId: "62368670"
+      installationId: "77967720"
       hash: latest
     build:
       vite:
@@ -132,7 +132,7 @@ applications:
       owner: EntryDSM
       repo: Entry-Internship
       branch: develop
-      installationId: "62368670"
+      installationId: "77967720"
     build:
       vite:
         nodeVersion: "22"
@@ -150,7 +150,7 @@ applications:
       owner: EntryDSM
       repo: Equus-Status
       branch: main
-      installationId: "62368670"
+      installationId: "77967720"
       hash: latest
     build:
       gradle:
@@ -168,7 +168,7 @@ applications:
       owner: EntryDSM
       repo: Equus-Schedule
       branch: main
-      installationId: "62368670"
+      installationId: "77967720"
       hash: latest
     build:
       gradle:
@@ -186,7 +186,7 @@ applications:
       owner: EntryDSM
       repo: Entry-Mono
       branch: main
-      installationId: "62368670"
+      installationId: "77967720"
     build:
       react:
         nodeVersion: "18"
@@ -202,7 +202,7 @@ applications:
       owner: EntryDSM
       repo: Entry-Mono
       branch: main
-      installationId: "62368670"
+      installationId: "77967720"
     build:
       react:
         nodeVersion: "18"
@@ -218,7 +218,7 @@ applications:
       owner: EntryDSM
       repo: Entry-Mono
       branch: main
-      installationId: "62368670"
+      installationId: "77967720"
     build:
       react:
         nodeVersion: "18"
@@ -234,7 +234,7 @@ applications:
       owner: EntryDSM
       repo: Entry-Mono
       branch: main
-      installationId: "62368670"
+      installationId: "77967720"
     build:
       react:
         nodeVersion: "18"
@@ -250,7 +250,7 @@ applications:
       owner: EntryDSM
       repo: Equus-Config-Server
       branch: main
-      installationId: "62368670"
+      installationId: "77967720"
     build:
       gradle:
         jdkVersion: 11
