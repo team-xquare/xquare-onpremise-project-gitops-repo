@@ -1,28 +1,38 @@
 applications:
-- name: lotura-prod
-  github:
-    owner: team-osj
-    repo: Lotura_BackEnd_V2
-    branch: main
-    installationId: '64110126'
-    hash: latest
-  buildConfig: '{"builder":"nodejs","node_version":"22.5.1","build_dir":"/","build_commands":["yarn
-    && yarn build"],"command":"yarn start","port":3000}'
-  tier: x3.micro
-  endpoints:
-  - port: 3000
-    routes:
-    - lotura-prod.xquare.app
-- name: lotura-stag
-  github:
-    owner: team-osj
-    repo: Lotura_BackEnd_V2
-    branch: develop
-    installationId: '64110126'
-  buildConfig: '{"builder":"nodejs","node_version":"22.5.1","build_dir":"","build_commands":["yarn
-    && yarn build"],"command":"yarn start","port":3000}'
-  tier: x3.nano
-  endpoints:
-  - port: 3000
-    routes:
-    - lotura-stag.xquare.app
+  - name: lotura-prod
+    tier: x3.micro
+    github:
+      owner: team-osj
+      repo: Lotura_BackEnd_V2
+      branch: main
+      installationId: "64110126"
+      hash: latest
+    build:
+      nodejs:
+        nodeVersion: 22.5.1
+        buildDir: /
+        command: yarn start
+        port: 3000
+        buildCommand: yarn && yarn build
+    endpoints:
+      - port: 3000
+        routes:
+          - lotura-prod.xquare.app
+  - name: lotura-stag
+    tier: x3.nano
+    github:
+      owner: team-osj
+      repo: Lotura_BackEnd_V2
+      branch: develop
+      installationId: "64110126"
+    build:
+      nodejs:
+        nodeVersion: 22.5.1
+        buildDir: ""
+        command: yarn start
+        port: 3000
+        buildCommand: yarn && yarn build
+    endpoints:
+      - port: 3000
+        routes:
+          - lotura-stag.xquare.app

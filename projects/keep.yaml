@@ -1,28 +1,38 @@
 applications:
-- name: keep-deployment-prod
-  github:
-    owner: Keep-DSM
-    repo: keep-Backend
-    branch: main
-    installationId: '66778564'
-  buildConfig: '{"node_version":"22","build_commands":["npm install && npm run build"],"builder":"nodejs","build_dir":"/","command":"npm
-    run start","port":3000}'
-  tier: x3.small
-  endpoints:
-  - port: 3000
-    routes:
-    - keep-prod.xquare.app
-- name: keep-deployment-stag
-  github:
-    owner: Keep-DSM
-    repo: keep-Backend
-    branch: develop
-    installationId: '66778564'
-    hash: latest
-  buildConfig: '{"node_version":"22","build_commands":["npm install && npm run build"],"builder":"nodejs","build_dir":"/","command":"npm
-    run start","port":3000}'
-  tier: x3.small
-  endpoints:
-  - port: 3000
-    routes:
-    - keep-stag.xquare.app
+  - name: keep-deployment-prod
+    tier: x3.small
+    github:
+      owner: Keep-DSM
+      repo: keep-Backend
+      branch: main
+      installationId: "66778564"
+    build:
+      nodejs:
+        nodeVersion: "22"
+        buildDir: /
+        command: npm run start
+        port: 3000
+        buildCommand: npm install && npm run build
+    endpoints:
+      - port: 3000
+        routes:
+          - keep-prod.xquare.app
+  - name: keep-deployment-stag
+    tier: x3.small
+    github:
+      owner: Keep-DSM
+      repo: keep-Backend
+      branch: develop
+      installationId: "66778564"
+      hash: latest
+    build:
+      nodejs:
+        nodeVersion: "22"
+        buildDir: /
+        command: npm run start
+        port: 3000
+        buildCommand: npm install && npm run build
+    endpoints:
+      - port: 3000
+        routes:
+          - keep-stag.xquare.app

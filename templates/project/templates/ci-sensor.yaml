@@ -146,7 +146,7 @@ spec:
                         args:
                           - |
                             set -e
-                            apk add --no-cache git jq curl openssl py3-jinja2
+                            apk add --no-cache git jq curl openssl
 
                             APP_ID={{ include "ci.githubAppID" $ }}
                             INSTALL_ID={{ include "ci.installationId" . }}
@@ -166,13 +166,13 @@ spec:
                             git checkout "{{`{{inputs.parameters.sha}}`}}" || exit 1
                             {{- end }}
                             
-                            echo '{{ .buildConfig }}' > /tmp/config.json
-                            BUILDER=$(jq -r '.builder // "default"' /tmp/config.json)
-                            
-                            if [ "$BUILDER" != "dockerfile" ]; then
-                                curl -s "https://raw.githubusercontent.com/{{ include "ci.gitopsRepo" $ }}/refs/heads/main/templates/dockerfile/templates/${BUILDER}.template" -o /tmp/template.j2 || echo "FROM alpine:latest" > /tmp/template.j2
-                                python3 -c "import jinja2; import json; print(jinja2.Template(open('/tmp/template.j2').read()).render(**json.load(open('/tmp/config.json'))))" > /workspace/repo/Dockerfile || exit 1
-                            fi
+                            {{- if .build.dockerfile }}
+                            # Use existing Dockerfile from repository
+                            echo "Using existing Dockerfile from repository"
+                            {{- else }}
+                            # Use generated Dockerfile from ConfigMap
+                            cp /app-dockerfile/Dockerfile /workspace/repo/Dockerfile || exit 1
+                            {{- end }}
                         env:
                           - name: GITHUB_PRIVATE_KEY
                             valueFrom:
@@ -189,6 +189,8 @@ spec:
                         volumeMounts:
                           - name: workspace
                             mountPath: /workspace
+                          - name: app-dockerfile
+                            mountPath: /app-dockerfile
 
                   - name: update-gitops
                     metadata: {}
@@ -241,5 +243,8 @@ spec:
                       items:
                         - key: .dockerconfigjson
                           path: config.json
+                  - name: app-dockerfile
+                    configMap:
+                      name: {{ include "app.serviceName" . }}-dockerfile
         name: {{ include "app.serviceName" . }}-workflow-trigger
 {{- end }}

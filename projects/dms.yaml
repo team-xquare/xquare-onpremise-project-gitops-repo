@@ -1,31 +1,41 @@
 applications:
-- name: dms-backend-prod
-  github:
-    owner: team-aliens
-    repo: DMS-Backend
-    branch: main
-    installationId: '64597732'
-    hash: latest
-  buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["export
-    _JAVA_OPTIONS=\"-XX:-UsePerfData\" && ./gradlew build -x test -x detekt --build-cache
-    --no-daemon"],"output_dir":"/dms-infrastructure/build/libs/*.jar","port":8080}'
-  tier: x3.micro
-  endpoints:
-  - port: 8080
-    routes:
-    - dms-api.dsm-dms.com
-- name: dms-backend-stag
-  github:
-    owner: team-aliens
-    repo: DMS-Backend
-    branch: develop
-    installationId: '64597732'
-    hash: latest
-  buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["export
-    _JAVA_OPTIONS=\"-XX:-UsePerfData\" && ./gradlew build -x test -x detekt --build-cache
-    --no-daemon"],"output_dir":"/dms-infrastructure/build/libs/*.jar","port":8080}'
-  tier: x3.micro
-  endpoints:
-  - port: 8080
-    routes:
-    - dms-dev-api.dsm-dms.com
+  - name: dms-backend-prod
+    tier: x3.micro
+    github:
+      owner: team-aliens
+      repo: DMS-Backend
+      branch: main
+      installationId: "64597732"
+      hash: latest
+    build:
+      gradle:
+        jdkVersion: 17
+        buildDir: .
+        outputDir: /dms-infrastructure/build/libs/*.jar
+        buildCommand:
+          export _JAVA_OPTIONS="-XX:-UsePerfData" && ./gradlew build -x
+          test -x detekt --build-cache --no-daemon
+    endpoints:
+      - port: 8080
+        routes:
+          - dms-api.dsm-dms.com
+  - name: dms-backend-stag
+    tier: x3.micro
+    github:
+      owner: team-aliens
+      repo: DMS-Backend
+      branch: develop
+      installationId: "64597732"
+      hash: latest
+    build:
+      gradle:
+        jdkVersion: 17
+        buildDir: .
+        outputDir: /dms-infrastructure/build/libs/*.jar
+        buildCommand:
+          export _JAVA_OPTIONS="-XX:-UsePerfData" && ./gradlew build -x
+          test -x detekt --build-cache --no-daemon
+    endpoints:
+      - port: 8080
+        routes:
+          - dms-dev-api.dsm-dms.com

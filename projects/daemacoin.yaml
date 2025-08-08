@@ -1,29 +1,39 @@
 applications:
-- name: daemacoin-server-prod
-  github:
-    owner: DaemaCoin
-    repo: deama_coin_backend
-    branch: main
-    installationId: '63879080'
-    hash: latest
-  buildConfig: '{"builder":"nodejs","node_version":"22.5.1","build_dir":"/","build_commands":["npm
-    install && npm run build"],"command":"npm run start","port":3000}'
-  tier: x3.micro
-  endpoints:
-  - port: 3000
-    routes:
-    - daemacoin-server.xquare.app
-- name: daemacoin-frontend-prod
-  github:
-    owner: DaemaCoin
-    repo: daema_coin_frontend
-    branch: main
-    installationId: '63879080'
-    hash: latest
-  buildConfig: '{"node_version":"22","build_commands":["npm install && npm run build"],"builder":"nodejs","build_dir":"/","command":"npm
-    run start","port":8080}'
-  tier: x3.nano
-  endpoints:
-  - port: 3000
-    routes:
-    - dsm-coin.xquare.app
+  - name: daemacoin-server-prod
+    tier: x3.micro
+    github:
+      owner: DaemaCoin
+      repo: deama_coin_backend
+      branch: main
+      installationId: "63879080"
+      hash: latest
+    build:
+      nodejs:
+        nodeVersion: 22.5.1
+        buildDir: /
+        command: npm run start
+        port: 3000
+        buildCommand: npm install && npm run build
+    endpoints:
+      - port: 3000
+        routes:
+          - daemacoin-server.xquare.app
+  - name: daemacoin-frontend-prod
+    tier: x3.nano
+    github:
+      owner: DaemaCoin
+      repo: daema_coin_frontend
+      branch: main
+      installationId: "63879080"
+      hash: latest
+    build:
+      nodejs:
+        nodeVersion: "22"
+        buildDir: /
+        command: npm run start
+        port: 8080
+        buildCommand: npm install && npm run build
+    endpoints:
+      - port: 3000
+        routes:
+          - dsm-coin.xquare.app

@@ -1,29 +1,37 @@
 applications:
-- name: pick-core-prod
-  github:
-    owner: DSM-PICK
-    repo: PICK_CORE_SERVER
-    branch: main
-    installationId: '64595989'
-    hash: latest
-  buildConfig: '{"jdk_version":17,"output_dir":"/build/libs/PICK2024_SERVER-0.0.1-SNAPSHOT.jar","builder":"gradle","build_dir":"/","build_commands":["./gradlew
-    build -x test"], "port" : 8080}'
-  tier: x3.micro
-  endpoints:
-  - port: 8080
-    routes:
-    - pick-core.dsmhs.kr
-- name: pick-core-stag
-  github:
-    owner: DSM-PICK
-    repo: PICK_CORE_SERVER
-    branch: develop
-    installationId: '64595989'
-    hash: latest
-  buildConfig: '{"jdk_version":17,"output_dir":"/build/libs/PICK2024_SERVER-0.0.1-SNAPSHOT.jar","builder":"gradle","build_dir":"/","build_commands":["./gradlew
-    build -x test"], "port" : 8080}'
-  tier: x3.micro
-  endpoints:
-  - port: 8080
-    routes:
-    - pick-core-stag.dsmhs.kr
+  - name: pick-core-prod
+    tier: x3.micro
+    github:
+      owner: DSM-PICK
+      repo: PICK_CORE_SERVER
+      branch: main
+      installationId: "64595989"
+      hash: latest
+    build:
+      gradle:
+        jdkVersion: 17
+        buildDir: /
+        outputDir: /build/libs/PICK2024_SERVER-0.0.1-SNAPSHOT.jar
+        buildCommand: ./gradlew build -x test
+    endpoints:
+      - port: 8080
+        routes:
+          - pick-core.dsmhs.kr
+  - name: pick-core-stag
+    tier: x3.micro
+    github:
+      owner: DSM-PICK
+      repo: PICK_CORE_SERVER
+      branch: develop
+      installationId: "64595989"
+      hash: latest
+    build:
+      gradle:
+        jdkVersion: 17
+        buildDir: /
+        outputDir: /build/libs/PICK2024_SERVER-0.0.1-SNAPSHOT.jar
+        buildCommand: ./gradlew build -x test
+    endpoints:
+      - port: 8080
+        routes:
+          - pick-core-stag.dsmhs.kr

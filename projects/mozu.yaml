@@ -1,29 +1,39 @@
 applications:
-- name: mozu-server-prod
-  github:
-    owner: team-mozu
-    repo: mozu-BE
-    branch: main
-    installationId: '64125603'
-    hash: latest
-  buildConfig: '{"node_version":"20.16","build_commands":["npm install && npm run
-    build"],"builder":"nodejs","build_dir":"/","port":3000,"command":"npm run start"}'
-  tier: x3.micro
-  endpoints:
-  - port: 3000
-    routes:
-    - mozu-prod.xquare.app
-- name: mozu-server-stag
-  github:
-    owner: team-mozu
-    repo: mozu-BE
-    branch: develop
-    installationId: '64125603'
-    hash: latest
-  buildConfig: '{"node_version":"20.16","build_commands":["npm install && npm run
-    build"],"builder":"nodejs","build_dir":"/","port":3000,"command":"npm run start"}'
-  tier: x3.micro
-  endpoints:
-  - port: 3000
-    routes:
-    - mozu-stag.xquare.app
+  - name: mozu-server-prod
+    tier: x3.micro
+    github:
+      owner: team-mozu
+      repo: mozu-BE
+      branch: main
+      installationId: "64125603"
+      hash: latest
+    build:
+      nodejs:
+        nodeVersion: "20.16"
+        buildDir: /
+        command: npm run start
+        port: 3000
+        buildCommand: npm install && npm run build
+    endpoints:
+      - port: 3000
+        routes:
+          - mozu-prod.xquare.app
+  - name: mozu-server-stag
+    tier: x3.micro
+    github:
+      owner: team-mozu
+      repo: mozu-BE
+      branch: develop
+      installationId: "64125603"
+      hash: latest
+    build:
+      nodejs:
+        nodeVersion: "20.16"
+        buildDir: /
+        command: npm run start
+        port: 3000
+        buildCommand: npm install && npm run build
+    endpoints:
+      - port: 3000
+        routes:
+          - mozu-stag.xquare.app
