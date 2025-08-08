@@ -8,7 +8,7 @@ applications:
       install && npm run build"],"command":"npm run start","port":3000}'
     containerPort: 3000
     domain: daemacoin-server.xquare.app
-    githubInstallationID: "63879080"
+    installationId: "63879080"
     instanceType: x3.micro
     privateService: false
     hash: latest
@@ -21,7 +21,7 @@ applications:
       run start","port":8080}'
     containerPort: 3000
     domain: dsm-coin.xquare.app
-    githubInstallationID: "63879080"
+    installationId: "63879080"
     instanceType: x3.nano
     privateService: false
     hash: latest

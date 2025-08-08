@@ -8,7 +8,7 @@ applications:
       build -x test --build-cache"],"output_dir":"/application-infrastructure/build/libs/application-infrastructure-0.0.1-SNAPSHOT.jar","port":8080}'
     containerPort: 8080
     domain: equus-application.xquare.app
-    githubInstallationID: "62368670"
+    installationId: "62368670"
     instanceType: x3.small
     privateService: false
     hash: latest
@@ -21,7 +21,7 @@ applications:
       build -x test --build-cache"],"output_dir":"/build/libs/Equus-Api-Gateway-0.0.1-SNAPSHOT.jar","port":8080}'
     containerPort: 8080
     domain: equus.xquare.app
-    githubInstallationID: "62368670"
+    installationId: "62368670"
     instanceType: x3.micro
     privateService: false
     hash: latest
@@ -34,7 +34,7 @@ applications:
       build -x test"],"output_dir":"/build/libs/Equus-Github-Auth-0.0.1-SNAPSHOT.jar","port":8080}'
     containerPort: 8080
     domain: prod-entry-casper-recruitment.xquare.app
-    githubInstallationID: "62368670"
+    installationId: "62368670"
     instanceType: x3.micro
     privateService: false
     hash: latest
@@ -47,7 +47,7 @@ applications:
       build -x test"],"output_dir":"/build/libs/Equus-Github-Auth-0.0.1-SNAPSHOT.jar","port":8080}'
     containerPort: 8080
     domain: stag-entry-casper-recruitment.xquare.app
-    githubInstallationID: "62368670"
+    installationId: "62368670"
     instanceType: x3.micro
     privateService: false
     hash: latest
@@ -60,7 +60,7 @@ applications:
       build -x test --build-cache"],"output_dir":"/build/libs/Equus-User-0.0.0.jar","port":8080}'
     containerPort: 8080
     domain: equus-feed.xquare.app
-    githubInstallationID: "62368670"
+    installationId: "62368670"
     instanceType: x3.micro
     privateService: false
     hash: latest
@@ -73,7 +73,7 @@ applications:
       build -x test --build-cache"],"output_dir":"/build/libs/Equus-Feed-0.0.1-SNAPSHOT.jar","port":8080}'
     containerPort: 8080
     domain: equus-feed.xquare.app
-    githubInstallationID: "62368670"
+    installationId: "62368670"
     instanceType: x3.micro
     privateService: false
     hash: latest
@@ -86,7 +86,7 @@ applications:
       install && npx nx run @entry-internship/entry-user:build"],"output_dir":"/apps/entry-user/dist","port":4200}'
     containerPort: 4200
     domain: entry-recruit.xquare.app
-    githubInstallationID: "62368670"
+    installationId: "62368670"
     instanceType: x3.small
     privateService: false
     hash: latest
@@ -99,7 +99,7 @@ applications:
       install", "npx nx run @entry-internship/entry-admin:build"],"output_dir":"/apps/entry-admin/dist","port":4200}'
     containerPort: 4200
     domain: entry-recruit-admin.xquare.app
-    githubInstallationID: "62368670"
+    installationId: "62368670"
     instanceType: x3.small
     privateService: false
   - name: equus-status-prod
@@ -111,7 +111,7 @@ applications:
       build -x test --build-cache"],"output_dir":"/build/libs/Equus-Status-0.0.0.jar","port":8080}'
     containerPort: 8080
     domain: equus-status.xquare.app
-    githubInstallationID: "62368670"
+    installationId: "62368670"
     instanceType: x3.micro
     privateService: false
     hash: latest
@@ -124,7 +124,7 @@ applications:
       build -x test --build-cache"],"output_dir":"/build/libs/Equus-Schedule-0.0.0.jar","port":8080}'
     containerPort: 8080
     domain: equus-schedule.xquare.app
-    githubInstallationID: "62368670"
+    installationId: "62368670"
     instanceType: x3.micro
     privateService: false
     hash: latest

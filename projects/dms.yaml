@@ -6,7 +6,7 @@ applications:
     buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["export _JAVA_OPTIONS=\"-XX:-UsePerfData\" && ./gradlew build -x test -x detekt --build-cache --no-daemon"],"output_dir":"/dms-infrastructure/build/libs/*.jar","port":8080}'
     containerPort: 8080
     domain: dms-api.dsmhs.kr
-    githubInstallationID: "64597732"
+    installationId: "64597732"
     instanceType: x3.micro
     privateService: false
     hash: latest
@@ -17,7 +17,7 @@ applications:
     buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["export _JAVA_OPTIONS=\"-XX:-UsePerfData\" && ./gradlew build -x test -x detekt --build-cache --no-daemon"],"output_dir":"/dms-infrastructure/build/libs/*.jar","port":8080}'
     containerPort: 8080
     domain: dms-dev-api.dsmhs.kr
-    githubInstallationID: "64597732"
+    installationId: "64597732"
     instanceType: x3.micro
     privateService: false
     hash: latest

@@ -8,7 +8,7 @@ applications:
       build -x test"],"output_dir":"/helper-infrastructure/build/libs/helper-infrastructure-0.0.1-SNAPSHOT.jar","port":8080}'
     containerPort: 8080
     domain: helper.xquare.app
-    githubInstallationID: "64110152"
+    installationId: "64110152"
     instanceType: x3.nano
     privateService: false
     hash: latest

@@ -8,7 +8,7 @@ applications:
       build -x test"], "port" : 8080}'
     containerPort: 8080
     domain: pick-core.dsmhs.kr
-    githubInstallationID: "64595989"
+    installationId: "64595989"
     instanceType: x3.micro
     privateService: false
     hash: latest
@@ -21,7 +21,7 @@ applications:
       build -x test"], "port" : 8080}'
     containerPort: 8080
     domain: pick-core-stag.dsmhs.kr
-    githubInstallationID: "64595989"
+    installationId: "64595989"
     instanceType: x3.micro
     privateService: false
     hash: latest

@@ -8,7 +8,7 @@ applications:
       run start","port":3000}'
     containerPort: 3000
     domain: keep-prod.xquare.app
-    githubInstallationID: "66778564"
+    installationId: "66778564"
     instanceType: x3.small
     privateService: false
   - name: keep-deployment-stag
@@ -20,7 +20,7 @@ applications:
       run start","port":3000}'
     containerPort: 3000
     domain: keep-stag.xquare.app
-    githubInstallationID: "66778564"
+    installationId: "66778564"
     instanceType: x3.small
     privateService: false
     hash: latest

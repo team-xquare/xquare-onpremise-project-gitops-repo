@@ -97,7 +97,7 @@ team-xquare/xquare-onpremise-project-gitops-repo
 {{- .name | replace "-" "_" | lower }}
 {{- end }}
 
-{{- define "ci.githubInstallationID" -}}
-{{- .githubInstallationID | int }}
+{{- define "ci.installationId" -}}
+{{- .installationId | int }}
 {{- end }}
 

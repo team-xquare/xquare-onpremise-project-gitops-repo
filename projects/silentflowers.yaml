@@ -8,7 +8,7 @@ applications:
       build -x test"],"port":8080}'
     containerPort: 8080
     domain: silent-flowers.xquare.app
-    githubInstallationID: "68917128"
+    installationId: "68917128"
     instanceType: x3.micro
     privateService: false
     hash: latest

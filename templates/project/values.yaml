@@ -13,7 +13,7 @@ applications: []
 #     owner: "team-xquare"
 #     repo: "example-service"
 #     branch: "main"
-#     githubInstallationID: "12345678"
+#     installationId: "12345678"
 #     buildConfig: "{\"builder\": \"spring\"}"
 #     scaling:
 #       enabled: true

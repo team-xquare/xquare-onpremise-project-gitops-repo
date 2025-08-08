@@ -8,7 +8,7 @@ applications:
       && yarn build"],"command":"yarn start","port":3000}'
     containerPort: 3000
     domain: lotura-prod.xquare.app
-    githubInstallationID: "64110126"
+    installationId: "64110126"
     instanceType: x3.micro
     privateService: false
     hash: latest
@@ -21,6 +21,6 @@ applications:
       && yarn build"],"command":"yarn start","port":3000}'
     containerPort: 3000
     domain: lotura-stag.xquare.app
-    githubInstallationID: "64110126"
+    installationId: "64110126"
     instanceType: x3.nano
     privateService: false

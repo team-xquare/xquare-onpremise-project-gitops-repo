@@ -8,7 +8,7 @@ applications:
       build"],"builder":"nodejs","build_dir":"/","port":3000,"command":"npm run start"}'
     containerPort: 3000
     domain: mozu-prod.xquare.app
-    githubInstallationID: "64125603"
+    installationId: "64125603"
     instanceType: x3.micro
     privateService: false
     hash: latest
@@ -21,7 +21,7 @@ applications:
       build"],"builder":"nodejs","build_dir":"/","port":3000,"command":"npm run start"}'
     containerPort: 3000
     domain: mozu-stag.xquare.app
-    githubInstallationID: "64125603"
+    installationId: "64125603"
     instanceType: x3.micro
     privateService: false
     hash: latest

@@ -8,7 +8,7 @@ applications:
       build -x test"],"port":8080}'
     containerPort: 8080
     domain: wemeet-prod.xquare.app
-    githubInstallationID: "64195567"
+    installationId: "64195567"
     instanceType: x3.micro
     privateService: false
     hash: latest

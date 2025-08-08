@@ -8,7 +8,7 @@ applications:
       clean build -x test"],"port":8080}'
     containerPort: 8080
     domain: whispy.xquare.app
-    githubInstallationID: "63841363"
+    installationId: "63841363"
     instanceType: x3.nano
     privateService: false
     hash: latest
