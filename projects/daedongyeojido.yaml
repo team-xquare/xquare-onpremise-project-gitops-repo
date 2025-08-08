@@ -3,7 +3,6 @@ applications:
     organization: Team-jeong-ho-kim
     repository: Whispy_BE
     branch: main
-    language: java
     buildConfig:
       '{"jdk_version":17,"output_dir":"/build/libs/*.jar","builder":"gradle","build_dir":".","build_commands":["./gradlew
       clean build -x test"],"port":8080}'

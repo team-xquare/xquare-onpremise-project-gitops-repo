@@ -3,7 +3,6 @@ applications:
     organization: taeyang-s-playGround
     repository: Nuneddine
     branch: main
-    language: java
     buildConfig: '{"jdk_version":17,"output_dir":"/build/libs/capstone-0.0.1-SNAPSHOT.jar","builder":"gradle","build_dir":"/","build_commands":["./gradlew build -x test"], "port" : 8080}'
     containerPort: 8080
     domain: nuneddine.xquare.app

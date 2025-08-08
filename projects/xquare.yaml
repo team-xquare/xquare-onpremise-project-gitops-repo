@@ -3,7 +3,6 @@ applications:
     organization: team-xquare
     repository: xquare-frontend-v2
     branch: main
-    language: react
     buildConfig:
       '{"builder":"react","node_version":"22","build_dir":"/","build_commands":["npm
       run build"],"output_dir":"/build","port":3000}'
@@ -16,7 +15,6 @@ applications:
     organization: team-xquare
     repository: xquare-frontend-v2
     branch: develop
-    language: react
     buildConfig:
       '{"builder":"react","node_version":"22","build_dir":"/","build_commands":["npm
       run build"],"output_dir":"/build","port":3000}'
@@ -30,7 +28,6 @@ applications:
     organization: team-xquare
     repository: xquare-infra-backend
     branch: main
-    language: java
     buildConfig:
       '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew
       build -x test"],"output_dir":"/build/libs/xquare-infra-0.0.1-SNAPSHOT.jar","port":8080}'
@@ -44,7 +41,6 @@ applications:
     organization: team-xquare
     repository: xquare-infra-backend
     branch: develop
-    language: java
     buildConfig:
       '{"jdk_version":17,"output_dir":"/build/libs/xquare-infra-0.0.1-SNAPSHOT.jar","builder":"gradle","build_dir":"/","build_commands":["./gradlew
       build -x test"],"port":8080}'

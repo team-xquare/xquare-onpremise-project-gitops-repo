@@ -3,7 +3,6 @@ applications:
     organization: DaemaCoin
     repository: deama_coin_backend
     branch: main
-    language: nodejs
     buildConfig:
       '{"builder":"nodejs","node_version":"22.5.1","build_dir":"/","build_commands":["npm
       install && npm run build"],"command":"npm run start","port":3000}'
@@ -17,7 +16,6 @@ applications:
     organization: DaemaCoin
     repository: daema_coin_frontend
     branch: main
-    language: nodejs
     buildConfig:
       '{"node_version":"22","build_commands":["npm install && npm run build"],"builder":"nodejs","build_dir":"/","command":"npm
       run start","port":8080}'
