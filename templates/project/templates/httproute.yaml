@@ -39,7 +39,7 @@ spec:
           urlRewrite:
             path:
               type: ReplacePrefixMatch
-              replacePrefixMatch: /
+              replacePrefixMatch: ""
       {{- end }}
       backendRefs:
         - name: {{ $app.name }}
