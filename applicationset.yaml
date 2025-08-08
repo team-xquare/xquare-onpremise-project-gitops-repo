@@ -22,7 +22,7 @@ spec:
       source:
         repoURL: https://github.com/team-xquare/xquare-onpremise-project-gitops-repo
         targetRevision: HEAD
-        path: templates/project
+        path: chart
         plugin:
           name: argocd-vault-plugin-helm
           env:
