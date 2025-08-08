@@ -1,19 +1,19 @@
 applications:
-- name: sillok-be-prod
-  tier: x3.small
-  github:
-    owner: Team-jeong-ho-kim
-    repo: Sillok_BE
-    branch: main
-    installationId: '63841363'
-    hash: latest
-  build:
-    gradle:
-      jdkVersion: 17
-      buildDir: .
-      outputDir: /build/libs/Sillok_server-0.0.1-SNAPSHOT.jar
-      buildCommand: ./gradlew build -x test
-  endpoints:
-  - port: 8080
-    routes:
-    - sillok-api.xquare.app
+  - name: sillok-be-prod
+    tier: x3.small
+    github:
+      owner: Team-jeong-ho-kim
+      repo: Sillok_BE
+      branch: main
+      installationId: "63841363"
+      hash: latest
+    build:
+      gradle:
+        jdkVersion: 17
+        buildDir: .
+        outputDir: /build/libs/Sillok_server-0.0.1-SNAPSHOT.jar
+        buildCommand: ./gradlew build -x test
+    endpoints:
+      - port: 8080
+        routes:
+          - sillok-api.xquare.app
