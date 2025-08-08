@@ -10,13 +10,15 @@
 #  - apply: 지정된 애플리케이션의 설정을 추가하거나 업데이트합니다.
 #  - remove: 특정 애플리케이션의 설정을 제거합니다.
 #
-# 새로운 구조에서 사용 예시:
-#  - 애플리케이션의 imageTag를 업데이트하는 경우:
+# 사용 예시:
+#  - 애플리케이션의 hash를 업데이트하는 경우:
 #      github.event.client_payload.path: "projects/project-name/applications/service-name"
 #      github.event.client_payload.action: "apply"
 #      github.event.client_payload.spec:
 #        {
-#          "imageTag": "abc123def"
+#          "github": {
+#            "hash": "abc123def"
+#          }
 #        }
 #
 #  - 애플리케이션의 전체 설정을 업데이트하는 경우:
@@ -24,21 +26,26 @@
 #      github.event.client_payload.action: "apply"
 #      github.event.client_payload.spec:
 #        {
-#          "imageTag": "latest",
-#          "containerPort": 8080,
-#          "instanceType": "x3.small",
-#          "privateService": false,
-#          "domain": "service.dsmhs.kr"
+#          "tier": "x3.small",
+#          "github": {
+#            "hash": "latest"
+#          },
+#          "endpoints": [
+#            {
+#              "port": 8080,
+#              "routes": ["service.dsmhs.kr"]
+#            }
+#          ]
 #        }
 #
 #  - 애플리케이션 설정을 제거하는 경우:
 #      github.event.client_payload.path: "projects/project-name/applications/service-name"
 #      github.event.client_payload.action: "remove"
 #
-# 이 워크플로우는 아래와 같은 절차로 작업을 수행합니다:
-#  1. 페이로드에서 지정된 액션을 확인합니다.
-#  2. projects/{project}.yaml 파일에서 해당 애플리케이션을 찾아 설정을 적용하거나 제거합니다.
-#  3. 변경 사항을 커밋하고 푸시하여 변경된 내용을 저장합니다.
+#  - 프로젝트 전체를 삭제하는 경우:
+#      github.event.client_payload.path: "projects/project-name"
+#      github.event.client_payload.action: "remove"
+#
 # ------------------------------
 
 name: Configuration API
@@ -56,11 +63,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install yq and jq
+      - name: Install yq
         run: |
           wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/local/bin/yq
           chmod +x /usr/local/bin/yq
-          sudo apt-get update && sudo apt-get install -y jq
 
       - name: Process Request
         run: |
@@ -68,74 +74,36 @@ jobs:
           ACTION="${{ github.event.client_payload.action }}"
           SPEC='${{ toJson(github.event.client_payload.spec) }}'
 
-          echo "Processing request: $ACTION $PATH_PARAMS"
-          echo "Spec: $SPEC"
-
           IFS='/' read -r -a PATH_ARRAY <<< "$PATH_PARAMS"
-          # PATH_PARAMS format: projects/project-name/applications/service-name
+          RESOURCE_TYPE="${PATH_ARRAY[0]}"
           PROJECT="${PATH_ARRAY[1]}"
-          SERVICE_NAME="${PATH_ARRAY[3]}"
+          SUB_RESOURCE="${PATH_ARRAY[2]}"
+          NAME="${PATH_ARRAY[3]}"
 
-          PROJECT_FILE="projects/$PROJECT.yaml"
+          FILE="projects/$PROJECT.yaml"
 
           case "$ACTION" in
             "apply")
-              if [ ! -f "$PROJECT_FILE" ]; then
-                echo "Error: Project file $PROJECT_FILE does not exist"
-                exit 1
+              mkdir -p $(dirname $FILE)
+              if [ "$RESOURCE_TYPE" = "projects" ] && [ ! -f "$FILE" ]; then
+                echo "applications: []" > $FILE
               fi
-              
-              # Find the application in the applications array and update it
-              TEMP_FILE=$(mktemp)
-              
-              # Check if the service exists in the applications array
-              SERVICE_INDEX=$(yq eval ".applications | to_entries | map(select(.value.name == \"$SERVICE_NAME\")) | .[0].key" "$PROJECT_FILE")
-              
-              if [ "$SERVICE_INDEX" != "null" ]; then
-                # Update existing service - write JSON to file first
-                echo "$SPEC" > /tmp/spec.json
-                
-                # Merge the spec into the existing application
-                while IFS= read -r key; do
-                  if [ "$key" != "null" ] && [ "$key" != "" ]; then
-                    value=$(jq -r ".$key" /tmp/spec.json)
-                    # Use jq to determine if it's a string and update accordingly
-                    if jq -e ".$key | type == \"string\"" /tmp/spec.json > /dev/null; then
-                      yq eval ".applications[$SERVICE_INDEX].$key = \"$value\"" -i "$PROJECT_FILE"
-                    else
-                      yq eval ".applications[$SERVICE_INDEX].$key = $value" -i "$PROJECT_FILE"
-                    fi
-                  fi
-                done < <(jq -r 'keys | .[]' /tmp/spec.json)
-              else
-                echo "Error: Service $SERVICE_NAME not found in project $PROJECT"
-                exit 1
+
+              if [ -f "$FILE" ]; then
+                if [ "$SUB_RESOURCE" = "applications" ]; then
+                  yq eval "(.applications[] | select(.name == \"$NAME\")) *= ${SPEC}" -i $FILE
+                fi
               fi
-              
-              # Format the file
-              yq -P "$PROJECT_FILE" > "$TEMP_FILE"
-              mv "$TEMP_FILE" "$PROJECT_FILE"
               ;;
 
             "remove")
-              if [ ! -f "$PROJECT_FILE" ]; then
-                echo "Project file $PROJECT_FILE does not exist, nothing to remove"
-                exit 0
+              if [ -f "$FILE" ]; then
+                if [ "$SUB_RESOURCE" = "applications" ]; then
+                  yq eval "del(.applications[] | select(.name == \"$NAME\"))" -i $FILE
+                elif [ -z "$SUB_RESOURCE" ]; then
+                  rm $FILE
+                fi
               fi
-              
-              # Remove the application from the applications array
-              yq eval ".applications = (.applications | map(select(.name != \"$SERVICE_NAME\")))" -i "$PROJECT_FILE"
-              
-              # If no applications left, remove the project file
-              APP_COUNT=$(yq eval ".applications | length" "$PROJECT_FILE")
-              if [ "$APP_COUNT" = "0" ]; then
-                rm "$PROJECT_FILE"
-              fi
-              ;;
-              
-            *)
-              echo "Unsupported action: $ACTION"
-              exit 1
               ;;
           esac
 
