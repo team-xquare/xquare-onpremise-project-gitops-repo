@@ -5,19 +5,31 @@ applications: []
 # Example application structure:
 # applications:
 #   - name: example-service-prod
-#     hash: "latest"
-#     containerPort: 8080
-#     tier: "x3.small"
-#     privateService: false
-#     domain: "example.dsmhs.kr"
-#     owner: "team-xquare"
-#     repo: "example-service"
-#     branch: "main"
-#     installationId: "12345678"
-#     buildConfig: "{\"builder\": \"spring\"}"
-#     scaling:
-#       enabled: true
-#       minReplicas: 1
-#       maxReplicas: 5
-#       targetCPUUtilizationPercentage: 70
-#       targetMemoryUtilizationPercentage: 80
+#     tier: x3.small
+#     github:
+#       owner: team-xquare
+#       repo: example-service
+#       branch: main
+#       installationId: "12345678"
+#       hash: latest
+#     build:
+#       gradle:
+#         jdkVersion: 17
+#         buildDir: .
+#         outputDir: /build/libs/*.jar
+#         buildCommand: ./gradlew build -x test --build-cache --no-daemon
+#       # or nodejs:
+#       #   nodeVersion: 18
+#       #   buildDir: /
+#       #   command: npm run start
+#       #   port: 3000
+#       #   buildCommand: npm install && npm run build
+#       # or react:
+#       #   nodeVersion: 18
+#       #   port: 3000
+#       #   buildCommand: npm install && npm run build
+#       # or dockerfile: {}  # Use existing Dockerfile from repository
+#     endpoints:
+#       - port: 8080
+#         routes:
+#           - example.dsmhs.kr
