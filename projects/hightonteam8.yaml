@@ -24,7 +24,7 @@ applications:
       repo: redis-docker
       branch: main
       installationId: "78893207"
-      hash: 28e953b2a88b2bbd744a03ae724969d0367ad77d
+      hash: f7cfa4b5a7c88409534d3526be7c78607aab8f0d
     build:
       docker: {}
     endpoints:
