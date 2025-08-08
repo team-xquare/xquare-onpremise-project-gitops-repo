@@ -180,3 +180,84 @@ applications:
       - port: 8080
         routes:
           - equus-schedule.xquare.app
+  - name: entry-lts-prod
+    tier: x3.small
+    github:
+      owner: EntryDSM
+      repo: Entry-Mono
+      branch: main
+      installationId: "62368670"
+    build:
+      react:
+        nodeVersion: "18"
+        buildDir: /packages/Entry-LTS
+        buildCommand: cd packages/Entry-LTS && npm install && npm run build
+    endpoints:
+      - port: 8080
+        routes:
+          - www.entrydsm.hs.kr
+  - name: entry-auth-prod
+    tier: x3.small
+    github:
+      owner: EntryDSM
+      repo: Entry-Mono
+      branch: main
+      installationId: "62368670"
+    build:
+      react:
+        nodeVersion: "18"
+        buildDir: /packages/Entry-Auth
+        buildCommand: cd packages/Entry-Auth && npm install && npm run build
+    endpoints:
+      - port: 8080
+        routes:
+          - auth.entrydsm.hs.kr
+  - name: entry-admission-lts-prod
+    tier: x3.small
+    github:
+      owner: EntryDSM
+      repo: Entry-Mono
+      branch: main
+      installationId: "62368670"
+    build:
+      react:
+        nodeVersion: "18"
+        buildDir: /packages/Admission-LTS
+        buildCommand: cd packages/Admission-LTS && npm install && npm run build
+    endpoints:
+      - port: 8080
+        routes:
+          - apply.entrydsm.hs.kr
+  - name: entry-admission-admin-lts-prod
+    tier: x3.small
+    github:
+      owner: EntryDSM
+      repo: Entry-Mono
+      branch: main
+      installationId: "62368670"
+    build:
+      react:
+        nodeVersion: "18"
+        buildDir: /packages/Admission-Admin-LTS
+        buildCommand: cd packages/Admission-Admin-LTS && npm install && npm run build
+    endpoints:
+      - port: 8080
+        routes:
+          - admin.entrydsm.hs.kr
+  - name: equus-config-server-stag
+    tier: x3.micro
+    github:
+      owner: EntryDSM
+      repo: Equus-Config-Server
+      branch: main
+      installationId: "62368670"
+    build:
+      gradle:
+        jdkVersion: 11
+        buildDir: .
+        outputDir: /build/libs/*.jar
+        buildCommand: ./gradlew build -x test
+    endpoints:
+      - port: 8888
+        routes:
+          - equus-config.xquare.app
