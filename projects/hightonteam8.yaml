@@ -17,7 +17,6 @@ applications:
       - port: 8080
         routes:
           - high-ton-team-8.dsmhs.kr
-    hash: 3ea151e3f6a908e8509728ef0b7e1427bbc90b71
   - name: redis
     tier: x3.nano
     github:
