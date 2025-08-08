@@ -1,7 +1,7 @@
 applications:
   - name: backend
-    organization: HighTon-Team-8
-    repository: Team8_BE
+    owner: HighTon-Team-8
+    repo: Team8_BE
     branch: main
     buildConfig: '{"jdk_version":17,"output_dir":"/build/libs/*.jar","builder":"gradle","build_dir":".","build_commands":["./gradlew clean build -x test"],"port":8080}'
     containerPort: 8080
@@ -11,8 +11,8 @@ applications:
     privateService: false
     hash: 08b27ab770dc9070424a81fc7ed5e1ee255a30d3
   - name: redis
-    organization: HighTon-Team-8
-    repository: redis-docker
+    owner: HighTon-Team-8
+    repo: redis-docker
     branch: main
     buildConfig: '{"builder":"dockerfile"}'
     containerPort: 6379

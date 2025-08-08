@@ -1,7 +1,7 @@
 applications:
   - name: daemacoin-server-prod
-    organization: DaemaCoin
-    repository: deama_coin_backend
+    owner: DaemaCoin
+    repo: deama_coin_backend
     branch: main
     buildConfig:
       '{"builder":"nodejs","node_version":"22.5.1","build_dir":"/","build_commands":["npm
@@ -13,8 +13,8 @@ applications:
     privateService: false
     hash: latest
   - name: daemacoin-frontend-prod
-    organization: DaemaCoin
-    repository: daema_coin_frontend
+    owner: DaemaCoin
+    repo: daema_coin_frontend
     branch: main
     buildConfig:
       '{"node_version":"22","build_commands":["npm install && npm run build"],"builder":"nodejs","build_dir":"/","command":"npm

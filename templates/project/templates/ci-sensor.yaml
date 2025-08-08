@@ -160,7 +160,7 @@ spec:
                             TOKEN=$(curl -s -X POST -H "Authorization: Bearer ${JWT}" -H "Accept: application/vnd.github+json" "https://api.github.com/app/installations/${INSTALL_ID}/access_tokens" | jq -r '.token')
                             [ -z "$TOKEN" ] || [ "$TOKEN" = "null" ] && { echo "ERROR: Failed to get GitHub token"; exit 1; }
                             
-                            git clone -b {{ .branch }} --single-branch https://x-access-token:${TOKEN}@github.com/{{ .organization }}/{{ .repository }}.git /workspace/repo || exit 1
+                            git clone -b {{ .branch }} --single-branch https://x-access-token:${TOKEN}@github.com/{{ .owner }}/{{ .repo }}.git /workspace/repo || exit 1
                             cd /workspace/repo
                             {{- if .hash }}
                             git checkout "{{`{{inputs.parameters.sha}}`}}" || exit 1

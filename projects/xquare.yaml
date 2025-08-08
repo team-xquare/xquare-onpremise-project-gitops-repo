@@ -1,7 +1,7 @@
 applications:
   - name: xquare-frontend-prod
-    organization: team-xquare
-    repository: xquare-frontend-v2
+    owner: team-xquare
+    repo: xquare-frontend-v2
     branch: main
     buildConfig:
       '{"builder":"react","node_version":"22","build_dir":"/","build_commands":["npm
@@ -12,8 +12,8 @@ applications:
     instanceType: x3.small
     privateService: false
   - name: xquare-frontend-stag
-    organization: team-xquare
-    repository: xquare-frontend-v2
+    owner: team-xquare
+    repo: xquare-frontend-v2
     branch: develop
     buildConfig:
       '{"builder":"react","node_version":"22","build_dir":"/","build_commands":["npm
@@ -25,8 +25,8 @@ applications:
     privateService: false
     hash: latest
   - name: xquare-infra-prod
-    organization: team-xquare
-    repository: xquare-infra-backend
+    owner: team-xquare
+    repo: xquare-infra-backend
     branch: main
     buildConfig:
       '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew
@@ -38,8 +38,8 @@ applications:
     privateService: false
     hash: latest
   - name: xquare-infra-stag
-    organization: team-xquare
-    repository: xquare-infra-backend
+    owner: team-xquare
+    repo: xquare-infra-backend
     branch: develop
     buildConfig:
       '{"jdk_version":17,"output_dir":"/build/libs/xquare-infra-0.0.1-SNAPSHOT.jar","builder":"gradle","build_dir":"/","build_commands":["./gradlew

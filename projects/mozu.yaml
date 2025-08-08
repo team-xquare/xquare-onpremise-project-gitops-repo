@@ -1,7 +1,7 @@
 applications:
   - name: mozu-server-prod
-    organization: team-mozu
-    repository: mozu-BE
+    owner: team-mozu
+    repo: mozu-BE
     branch: main
     buildConfig:
       '{"node_version":"20.16","build_commands":["npm install && npm run
@@ -13,8 +13,8 @@ applications:
     privateService: false
     hash: latest
   - name: mozu-server-stag
-    organization: team-mozu
-    repository: mozu-BE
+    owner: team-mozu
+    repo: mozu-BE
     branch: develop
     buildConfig:
       '{"node_version":"20.16","build_commands":["npm install && npm run

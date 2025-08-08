@@ -1,7 +1,7 @@
 applications:
   - name: daemawiki-prod
-    organization: daemawiki
-    repository: Claude
+    owner: daemawiki
+    repo: Claude
     branch: main
     buildConfig:
       '{"builder":"gradle","jdk_version":21,"build_dir":".","build_commands":["./gradlew
@@ -13,8 +13,8 @@ applications:
     privateService: false
     hash: latest
   - name: daemawiki-stag
-    organization: daemawiki
-    repository: Claude
+    owner: daemawiki
+    repo: Claude
     branch: develop
     buildConfig:
       '{"builder":"gradle","jdk_version":21,"build_dir":".","build_commands":["./gradlew

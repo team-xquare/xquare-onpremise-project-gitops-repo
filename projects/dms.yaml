@@ -1,7 +1,7 @@
 applications:
   - name: dms-backend-prod
-    organization: team-aliens
-    repository: DMS-Backend
+    owner: team-aliens
+    repo: DMS-Backend
     branch: main
     buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["export _JAVA_OPTIONS=\"-XX:-UsePerfData\" && ./gradlew build -x test -x detekt --build-cache --no-daemon"],"output_dir":"/dms-infrastructure/build/libs/*.jar","port":8080}'
     containerPort: 8080
@@ -11,8 +11,8 @@ applications:
     privateService: false
     hash: latest
   - name: dms-backend-stag
-    organization: team-aliens
-    repository: DMS-Backend
+    owner: team-aliens
+    repo: DMS-Backend
     branch: develop
     buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["export _JAVA_OPTIONS=\"-XX:-UsePerfData\" && ./gradlew build -x test -x detekt --build-cache --no-daemon"],"output_dir":"/dms-infrastructure/build/libs/*.jar","port":8080}'
     containerPort: 8080

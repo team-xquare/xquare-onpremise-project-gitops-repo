@@ -10,8 +10,8 @@ applications: []
 #     instanceType: "x3.small"
 #     privateService: false
 #     domain: "example.dsmhs.kr"
-#     organization: "team-xquare"
-#     repository: "example-service"
+#     owner: "team-xquare"
+#     repo: "example-service"
 #     branch: "main"
 #     githubInstallationID: "12345678"
 #     buildConfig: "{\"builder\": \"spring\"}"

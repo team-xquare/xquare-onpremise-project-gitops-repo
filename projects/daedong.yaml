@@ -1,7 +1,7 @@
 applications:
   - name: sillok-be-prod
-    organization: Team-jeong-ho-kim
-    repository: Sillok_BE
+    owner: Team-jeong-ho-kim
+    repo: Sillok_BE
     branch: main
     buildConfig:
       '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew

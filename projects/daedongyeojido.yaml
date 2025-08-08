@@ -1,7 +1,7 @@
 applications:
   - name: whispy-prod
-    organization: Team-jeong-ho-kim
-    repository: Whispy_BE
+    owner: Team-jeong-ho-kim
+    repo: Whispy_BE
     branch: main
     buildConfig:
       '{"jdk_version":17,"output_dir":"/build/libs/*.jar","builder":"gradle","build_dir":".","build_commands":["./gradlew

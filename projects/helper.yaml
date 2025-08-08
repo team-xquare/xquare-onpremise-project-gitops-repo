@@ -1,7 +1,7 @@
 applications:
   - name: helper-prod
-    organization: Team-LoopCat
-    repository: Helper_Backend
+    owner: Team-LoopCat
+    repo: Helper_Backend
     branch: main
     buildConfig:
       '{"builder":"gradle","jdk_version":17,"build_dir":"/","build_commands":["./gradlew

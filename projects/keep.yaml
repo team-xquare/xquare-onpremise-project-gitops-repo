@@ -1,7 +1,7 @@
 applications:
   - name: keep-deployment-prod
-    organization: Keep-DSM
-    repository: keep-Backend
+    owner: Keep-DSM
+    repo: keep-Backend
     branch: main
     buildConfig:
       '{"node_version":"22","build_commands":["npm install && npm run build"],"builder":"nodejs","build_dir":"/","command":"npm
@@ -12,8 +12,8 @@ applications:
     instanceType: x3.small
     privateService: false
   - name: keep-deployment-stag
-    organization: Keep-DSM
-    repository: keep-Backend
+    owner: Keep-DSM
+    repo: keep-Backend
     branch: develop
     buildConfig:
       '{"node_version":"22","build_commands":["npm install && npm run build"],"builder":"nodejs","build_dir":"/","command":"npm

@@ -1,7 +1,7 @@
 applications:
   - name: equus-application-prod
-    organization: EntryDSM
-    repository: Equus-Application
+    owner: EntryDSM
+    repo: Equus-Application
     branch: main
     buildConfig:
       '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew
@@ -13,8 +13,8 @@ applications:
     privateService: false
     hash: latest
   - name: equus-api-gateway-prod
-    organization: EntryDSM
-    repository: Equus-Api-Gateway
+    owner: EntryDSM
+    repo: Equus-Api-Gateway
     branch: main
     buildConfig:
       '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew
@@ -26,8 +26,8 @@ applications:
     privateService: false
     hash: latest
   - name: casper-recruitment-prod
-    organization: EntryDSM
-    repository: Casper-Recruitment
+    owner: EntryDSM
+    repo: Casper-Recruitment
     branch: main
     buildConfig:
       '{"builder":"gradle","jdk_version":17,"build_dir":"/","build_commands":["./gradlew
@@ -39,8 +39,8 @@ applications:
     privateService: false
     hash: latest
   - name: casper-recruitment-stag
-    organization: EntryDSM
-    repository: Casper-Recruitment
+    owner: EntryDSM
+    repo: Casper-Recruitment
     branch: main
     buildConfig:
       '{"builder":"gradle","jdk_version":17,"build_dir":"/","build_commands":["./gradlew
@@ -52,8 +52,8 @@ applications:
     privateService: false
     hash: latest
   - name: equus-user-prod
-    organization: EntryDSM
-    repository: Equus-User
+    owner: EntryDSM
+    repo: Equus-User
     branch: main
     buildConfig:
       '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew
@@ -65,8 +65,8 @@ applications:
     privateService: false
     hash: latest
   - name: equus-feed-prod
-    organization: EntryDSM
-    repository: Equus-Feed
+    owner: EntryDSM
+    repo: Equus-Feed
     branch: main
     buildConfig:
       '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew
@@ -78,8 +78,8 @@ applications:
     privateService: false
     hash: latest
   - name: entry-internship-user-prod
-    organization: EntryDSM
-    repository: Entry-Internship
+    owner: EntryDSM
+    repo: Entry-Internship
     branch: develop
     buildConfig:
       '{"builder":"vite","node_version":"22","build_dir":"/","build_commands":["yarn
@@ -91,8 +91,8 @@ applications:
     privateService: false
     hash: latest
   - name: entry-internship-admin-stag
-    organization: EntryDSM
-    repository: Entry-Internship
+    owner: EntryDSM
+    repo: Entry-Internship
     branch: develop
     buildConfig:
       '{"builder":"vite","node_version":"22","build_dir":"/","build_commands":["yarn
@@ -103,8 +103,8 @@ applications:
     instanceType: x3.small
     privateService: false
   - name: equus-status-prod
-    organization: EntryDSM
-    repository: Equus-Status
+    owner: EntryDSM
+    repo: Equus-Status
     branch: main
     buildConfig:
       '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew
@@ -116,8 +116,8 @@ applications:
     privateService: false
     hash: latest
   - name: equus-schedule-prod
-    organization: EntryDSM
-    repository: Equus-Schedule
+    owner: EntryDSM
+    repo: Equus-Schedule
     branch: main
     buildConfig:
       '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew

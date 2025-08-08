@@ -1,7 +1,7 @@
 applications:
   - name: lotura-prod
-    organization: team-osj
-    repository: Lotura_BackEnd_V2
+    owner: team-osj
+    repo: Lotura_BackEnd_V2
     branch: main
     buildConfig:
       '{"builder":"nodejs","node_version":"22.5.1","build_dir":"/","build_commands":["yarn
@@ -13,8 +13,8 @@ applications:
     privateService: false
     hash: latest
   - name: lotura-stag
-    organization: team-osj
-    repository: Lotura_BackEnd_V2
+    owner: team-osj
+    repo: Lotura_BackEnd_V2
     branch: develop
     buildConfig:
       '{"builder":"nodejs","node_version":"22.5.1","build_dir":"","build_commands":["yarn
