@@ -20,11 +20,7 @@ applications:
   - name: redis
     tier: x3.nano
     github:
-      owner: HighTon-Team-8
-      repo: redis-docker
-      branch: main
-      installationId: "78893207"
-      hash: latest
+      hash: 28e953b2a88b2bbd744a03ae724969d0367ad77d
     build:
       docker: {}
     endpoints:
