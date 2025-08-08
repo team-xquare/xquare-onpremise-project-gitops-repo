@@ -217,7 +217,9 @@ spec:
                                 "path": "projects/{{ $.Values.project }}/applications/{{ include "app.serviceName" . }}",
                                 "action": "apply",
                                 "spec": {
-                                  "hash": "'"{{`{{inputs.parameters.image-tag}}`}}"'"
+                                  "github": {
+                                    "hash": "'"{{`{{inputs.parameters.image-tag}}`}}"'"
+                                  }
                                 }
                               }
                             }'
