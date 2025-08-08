@@ -11,4 +11,4 @@ applications:
     githubInstallationID: "68917128"
     instanceType: x3.micro
     privateService: false
-    imageTag: latest
+    hash: latest

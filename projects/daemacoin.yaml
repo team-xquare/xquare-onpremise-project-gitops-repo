@@ -11,7 +11,7 @@ applications:
     githubInstallationID: "63879080"
     instanceType: x3.micro
     privateService: false
-    imageTag: latest
+    hash: latest
   - name: daemacoin-frontend-prod
     organization: DaemaCoin
     repository: daema_coin_frontend
@@ -24,4 +24,4 @@ applications:
     githubInstallationID: "63879080"
     instanceType: x3.nano
     privateService: false
-    imageTag: latest
+    hash: latest

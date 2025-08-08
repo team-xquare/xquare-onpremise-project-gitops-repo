@@ -11,7 +11,7 @@ applications:
     githubInstallationID: "64595989"
     instanceType: x3.micro
     privateService: false
-    imageTag: latest
+    hash: latest
   - name: pick-core-stag
     organization: DSM-PICK
     repository: PICK_CORE_SERVER
@@ -24,4 +24,4 @@ applications:
     githubInstallationID: "64595989"
     instanceType: x3.micro
     privateService: false
-    imageTag: latest
+    hash: latest

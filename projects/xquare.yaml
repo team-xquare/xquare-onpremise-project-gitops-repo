@@ -23,7 +23,7 @@ applications:
     githubInstallationID: "62433388"
     instanceType: x3.small
     privateService: false
-    imageTag: latest
+    hash: latest
   - name: xquare-infra-prod
     organization: team-xquare
     repository: xquare-infra-backend
@@ -36,7 +36,7 @@ applications:
     githubInstallationID: "62433388"
     instanceType: x3.small
     privateService: false
-    imageTag: latest
+    hash: latest
   - name: xquare-infra-stag
     organization: team-xquare
     repository: xquare-infra-backend
@@ -49,4 +49,4 @@ applications:
     githubInstallationID: "62433388"
     instanceType: x3.small
     privateService: false
-    imageTag: latest
+    hash: latest

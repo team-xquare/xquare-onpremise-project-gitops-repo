@@ -11,7 +11,7 @@ applications:
     githubInstallationID: "62368670"
     instanceType: x3.small
     privateService: false
-    imageTag: latest
+    hash: latest
   - name: equus-api-gateway-prod
     organization: EntryDSM
     repository: Equus-Api-Gateway
@@ -24,7 +24,7 @@ applications:
     githubInstallationID: "62368670"
     instanceType: x3.micro
     privateService: false
-    imageTag: latest
+    hash: latest
   - name: casper-recruitment-prod
     organization: EntryDSM
     repository: Casper-Recruitment
@@ -37,7 +37,7 @@ applications:
     githubInstallationID: "62368670"
     instanceType: x3.micro
     privateService: false
-    imageTag: latest
+    hash: latest
   - name: casper-recruitment-stag
     organization: EntryDSM
     repository: Casper-Recruitment
@@ -50,7 +50,7 @@ applications:
     githubInstallationID: "62368670"
     instanceType: x3.micro
     privateService: false
-    imageTag: latest
+    hash: latest
   - name: equus-user-prod
     organization: EntryDSM
     repository: Equus-User
@@ -63,7 +63,7 @@ applications:
     githubInstallationID: "62368670"
     instanceType: x3.micro
     privateService: false
-    imageTag: latest
+    hash: latest
   - name: equus-feed-prod
     organization: EntryDSM
     repository: Equus-Feed
@@ -76,7 +76,7 @@ applications:
     githubInstallationID: "62368670"
     instanceType: x3.micro
     privateService: false
-    imageTag: latest
+    hash: latest
   - name: entry-internship-user-prod
     organization: EntryDSM
     repository: Entry-Internship
@@ -89,7 +89,7 @@ applications:
     githubInstallationID: "62368670"
     instanceType: x3.small
     privateService: false
-    imageTag: latest
+    hash: latest
   - name: entry-internship-admin-stag
     organization: EntryDSM
     repository: Entry-Internship
@@ -114,7 +114,7 @@ applications:
     githubInstallationID: "62368670"
     instanceType: x3.micro
     privateService: false
-    imageTag: latest
+    hash: latest
   - name: equus-schedule-prod
     organization: EntryDSM
     repository: Equus-Schedule
@@ -127,4 +127,4 @@ applications:
     githubInstallationID: "62368670"
     instanceType: x3.micro
     privateService: false
-    imageTag: latest
+    hash: latest

@@ -11,7 +11,7 @@ applications:
     githubInstallationID: "64110837"
     instanceType: x3.nano
     privateService: false
-    imageTag: latest
+    hash: latest
   - name: daemawiki-stag
     organization: daemawiki
     repository: Claude
@@ -24,4 +24,4 @@ applications:
     githubInstallationID: "64110837"
     instanceType: x3.nano
     privateService: false
-    imageTag: latest
+    hash: latest

@@ -5,7 +5,7 @@ applications: []
 # Example application structure:
 # applications:
 #   - name: example-service-prod
-#     imageTag: "latest"
+#     hash: "latest"
 #     containerPort: 8080
 #     instanceType: "x3.small"
 #     privateService: false

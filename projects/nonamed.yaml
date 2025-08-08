@@ -11,7 +11,7 @@ applications:
     githubInstallationID: "64110126"
     instanceType: x3.micro
     privateService: false
-    imageTag: latest
+    hash: latest
   - name: lotura-stag
     organization: team-osj
     repository: Lotura_BackEnd_V2

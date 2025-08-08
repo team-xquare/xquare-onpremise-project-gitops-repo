@@ -11,7 +11,7 @@ applications:
     githubInstallationID: "64125603"
     instanceType: x3.micro
     privateService: false
-    imageTag: latest
+    hash: latest
   - name: mozu-server-stag
     organization: team-mozu
     repository: mozu-BE
@@ -24,4 +24,4 @@ applications:
     githubInstallationID: "64125603"
     instanceType: x3.micro
     privateService: false
-    imageTag: latest
+    hash: latest

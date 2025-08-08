@@ -59,7 +59,7 @@ app.kubernetes.io/instance: {{ .name | quote }}
 {{- end }}
 
 {{- define "app.image" -}}
-{{ .harborRegistry }}/xquare/{{ .project }}-{{ .name }}:{{ .imageTag | default "latest" }}
+{{ .harborRegistry }}/xquare/{{ .project }}-{{ .name }}:{{ .hash | default "latest" }}
 {{- end }}
 
 {{- define "app.vaultSecretName" -}}

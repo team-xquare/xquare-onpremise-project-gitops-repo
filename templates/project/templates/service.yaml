@@ -1,5 +1,5 @@
 {{- range .Values.applications }}
-{{- if .imageTag }}
+{{- if .hash }}
 ---
 apiVersion: v1
 kind: Service
