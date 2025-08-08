@@ -59,7 +59,7 @@ app.kubernetes.io/instance: {{ .name | quote }}
 {{- end }}
 
 {{- define "app.image" -}}
-{{ .harborRegistry }}/xquare/{{ .project }}-{{ .name }}:{{ .hash | default "latest" }}
+{{ .harborRegistry }}/xquare/{{ .project }}-{{ .name }}:{{ .github.hash | default "latest" }}
 {{- end }}
 
 {{- define "app.vaultSecretName" -}}
@@ -98,6 +98,6 @@ team-xquare/xquare-onpremise-project-gitops-repo
 {{- end }}
 
 {{- define "ci.installationId" -}}
-{{- .installationId | int }}
+{{- .github.installationId | int }}
 {{- end }}
 

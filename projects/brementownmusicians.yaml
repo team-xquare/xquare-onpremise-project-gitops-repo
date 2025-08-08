@@ -1,14 +1,14 @@
 applications:
-  - name: wemeet-stag
+- name: wemeet-stag
+  github:
     owner: BremenMusicians
     repo: WeMeet_BE
     branch: main
-    buildConfig:
-      '{"jdk_version":17,"output_dir":"/build/libs/WeMeet-0.0.1-SNAPSHOT.jar","builder":"gradle","build_dir":"/","build_commands":["./gradlew
-      build -x test"],"port":8080}'
-    containerPort: 8080
-    domain: wemeet-prod.xquare.app
-    installationId: "64195567"
-    instanceType: x3.micro
-    privateService: false
+    installationId: '64195567'
     hash: latest
+  buildConfig: '{"jdk_version":17,"output_dir":"/build/libs/WeMeet-0.0.1-SNAPSHOT.jar","builder":"gradle","build_dir":"/","build_commands":["./gradlew
+    build -x test"],"port":8080}'
+  containerPort: 8080
+  domain: wemeet-prod.xquare.app
+  instanceType: x3.micro
+  privateService: false

@@ -1,14 +1,14 @@
 applications:
-  - name: helper-prod
+- name: helper-prod
+  github:
     owner: Team-LoopCat
     repo: Helper_Backend
     branch: main
-    buildConfig:
-      '{"builder":"gradle","jdk_version":17,"build_dir":"/","build_commands":["./gradlew
-      build -x test"],"output_dir":"/helper-infrastructure/build/libs/helper-infrastructure-0.0.1-SNAPSHOT.jar","port":8080}'
-    containerPort: 8080
-    domain: helper.xquare.app
-    installationId: "64110152"
-    instanceType: x3.nano
-    privateService: false
+    installationId: '64110152'
     hash: latest
+  buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":"/","build_commands":["./gradlew
+    build -x test"],"output_dir":"/helper-infrastructure/build/libs/helper-infrastructure-0.0.1-SNAPSHOT.jar","port":8080}'
+  containerPort: 8080
+  domain: helper.xquare.app
+  instanceType: x3.nano
+  privateService: false

@@ -1,23 +1,29 @@
 applications:
-  - name: dms-backend-prod
+- name: dms-backend-prod
+  github:
     owner: team-aliens
     repo: DMS-Backend
     branch: main
-    buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["export _JAVA_OPTIONS=\"-XX:-UsePerfData\" && ./gradlew build -x test -x detekt --build-cache --no-daemon"],"output_dir":"/dms-infrastructure/build/libs/*.jar","port":8080}'
-    containerPort: 8080
-    domain: dms-api.dsmhs.kr
-    installationId: "64597732"
-    instanceType: x3.micro
-    privateService: false
+    installationId: '64597732'
     hash: latest
-  - name: dms-backend-stag
+  buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["export
+    _JAVA_OPTIONS=\"-XX:-UsePerfData\" && ./gradlew build -x test -x detekt --build-cache
+    --no-daemon"],"output_dir":"/dms-infrastructure/build/libs/*.jar","port":8080}'
+  containerPort: 8080
+  domain: dms-api.dsmhs.kr
+  instanceType: x3.micro
+  privateService: false
+- name: dms-backend-stag
+  github:
     owner: team-aliens
     repo: DMS-Backend
     branch: develop
-    buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["export _JAVA_OPTIONS=\"-XX:-UsePerfData\" && ./gradlew build -x test -x detekt --build-cache --no-daemon"],"output_dir":"/dms-infrastructure/build/libs/*.jar","port":8080}'
-    containerPort: 8080
-    domain: dms-dev-api.dsmhs.kr
-    installationId: "64597732"
-    instanceType: x3.micro
-    privateService: false
+    installationId: '64597732'
     hash: latest
+  buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["export
+    _JAVA_OPTIONS=\"-XX:-UsePerfData\" && ./gradlew build -x test -x detekt --build-cache
+    --no-daemon"],"output_dir":"/dms-infrastructure/build/libs/*.jar","port":8080}'
+  containerPort: 8080
+  domain: dms-dev-api.dsmhs.kr
+  instanceType: x3.micro
+  privateService: false

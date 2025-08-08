@@ -1,26 +1,26 @@
 applications:
-  - name: keep-deployment-prod
+- name: keep-deployment-prod
+  github:
     owner: Keep-DSM
     repo: keep-Backend
     branch: main
-    buildConfig:
-      '{"node_version":"22","build_commands":["npm install && npm run build"],"builder":"nodejs","build_dir":"/","command":"npm
-      run start","port":3000}'
-    containerPort: 3000
-    domain: keep-prod.xquare.app
-    installationId: "66778564"
-    instanceType: x3.small
-    privateService: false
-  - name: keep-deployment-stag
+    installationId: '66778564'
+  buildConfig: '{"node_version":"22","build_commands":["npm install && npm run build"],"builder":"nodejs","build_dir":"/","command":"npm
+    run start","port":3000}'
+  containerPort: 3000
+  domain: keep-prod.xquare.app
+  instanceType: x3.small
+  privateService: false
+- name: keep-deployment-stag
+  github:
     owner: Keep-DSM
     repo: keep-Backend
     branch: develop
-    buildConfig:
-      '{"node_version":"22","build_commands":["npm install && npm run build"],"builder":"nodejs","build_dir":"/","command":"npm
-      run start","port":3000}'
-    containerPort: 3000
-    domain: keep-stag.xquare.app
-    installationId: "66778564"
-    instanceType: x3.small
-    privateService: false
+    installationId: '66778564'
     hash: latest
+  buildConfig: '{"node_version":"22","build_commands":["npm install && npm run build"],"builder":"nodejs","build_dir":"/","command":"npm
+    run start","port":3000}'
+  containerPort: 3000
+  domain: keep-stag.xquare.app
+  instanceType: x3.small
+  privateService: false

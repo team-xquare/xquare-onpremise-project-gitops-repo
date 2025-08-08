@@ -1,22 +1,25 @@
 applications:
-  - name: backend
+- name: backend
+  github:
     owner: HighTon-Team-8
     repo: Team8_BE
     branch: main
-    buildConfig: '{"jdk_version":17,"output_dir":"/build/libs/*.jar","builder":"gradle","build_dir":".","build_commands":["./gradlew clean build -x test"],"port":8080}'
-    containerPort: 8080
-    domain: high-ton-team-8.dsmhs.kr
-    installationId: "78893207"
-    instanceType: x3.small
-    privateService: false
+    installationId: '78893207'
     hash: 08b27ab770dc9070424a81fc7ed5e1ee255a30d3
-  - name: redis
+  buildConfig: '{"jdk_version":17,"output_dir":"/build/libs/*.jar","builder":"gradle","build_dir":".","build_commands":["./gradlew
+    clean build -x test"],"port":8080}'
+  containerPort: 8080
+  domain: high-ton-team-8.dsmhs.kr
+  instanceType: x3.small
+  privateService: false
+- name: redis
+  github:
     owner: HighTon-Team-8
     repo: redis-docker
     branch: main
-    buildConfig: '{"builder":"dockerfile"}'
-    containerPort: 6379
-    installationId: "78893207"
-    instanceType: x3.nano
-    privateService: true
+    installationId: '78893207'
     hash: latest
+  buildConfig: '{"builder":"dockerfile"}'
+  containerPort: 6379
+  instanceType: x3.nano
+  privateService: true

@@ -1,130 +1,130 @@
 applications:
-  - name: equus-application-prod
+- name: equus-application-prod
+  github:
     owner: EntryDSM
     repo: Equus-Application
     branch: main
-    buildConfig:
-      '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew
-      build -x test --build-cache"],"output_dir":"/application-infrastructure/build/libs/application-infrastructure-0.0.1-SNAPSHOT.jar","port":8080}'
-    containerPort: 8080
-    domain: equus-application.xquare.app
-    installationId: "62368670"
-    instanceType: x3.small
-    privateService: false
+    installationId: '62368670'
     hash: latest
-  - name: equus-api-gateway-prod
+  buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew
+    build -x test --build-cache"],"output_dir":"/application-infrastructure/build/libs/application-infrastructure-0.0.1-SNAPSHOT.jar","port":8080}'
+  containerPort: 8080
+  domain: equus-application.xquare.app
+  instanceType: x3.small
+  privateService: false
+- name: equus-api-gateway-prod
+  github:
     owner: EntryDSM
     repo: Equus-Api-Gateway
     branch: main
-    buildConfig:
-      '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew
-      build -x test --build-cache"],"output_dir":"/build/libs/Equus-Api-Gateway-0.0.1-SNAPSHOT.jar","port":8080}'
-    containerPort: 8080
-    domain: equus.xquare.app
-    installationId: "62368670"
-    instanceType: x3.micro
-    privateService: false
+    installationId: '62368670'
     hash: latest
-  - name: casper-recruitment-prod
+  buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew
+    build -x test --build-cache"],"output_dir":"/build/libs/Equus-Api-Gateway-0.0.1-SNAPSHOT.jar","port":8080}'
+  containerPort: 8080
+  domain: equus.xquare.app
+  instanceType: x3.micro
+  privateService: false
+- name: casper-recruitment-prod
+  github:
     owner: EntryDSM
     repo: Casper-Recruitment
     branch: main
-    buildConfig:
-      '{"builder":"gradle","jdk_version":17,"build_dir":"/","build_commands":["./gradlew
-      build -x test"],"output_dir":"/build/libs/Equus-Github-Auth-0.0.1-SNAPSHOT.jar","port":8080}'
-    containerPort: 8080
-    domain: prod-entry-casper-recruitment.xquare.app
-    installationId: "62368670"
-    instanceType: x3.micro
-    privateService: false
+    installationId: '62368670'
     hash: latest
-  - name: casper-recruitment-stag
+  buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":"/","build_commands":["./gradlew
+    build -x test"],"output_dir":"/build/libs/Equus-Github-Auth-0.0.1-SNAPSHOT.jar","port":8080}'
+  containerPort: 8080
+  domain: prod-entry-casper-recruitment.xquare.app
+  instanceType: x3.micro
+  privateService: false
+- name: casper-recruitment-stag
+  github:
     owner: EntryDSM
     repo: Casper-Recruitment
     branch: main
-    buildConfig:
-      '{"builder":"gradle","jdk_version":17,"build_dir":"/","build_commands":["./gradlew
-      build -x test"],"output_dir":"/build/libs/Equus-Github-Auth-0.0.1-SNAPSHOT.jar","port":8080}'
-    containerPort: 8080
-    domain: stag-entry-casper-recruitment.xquare.app
-    installationId: "62368670"
-    instanceType: x3.micro
-    privateService: false
+    installationId: '62368670'
     hash: latest
-  - name: equus-user-prod
+  buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":"/","build_commands":["./gradlew
+    build -x test"],"output_dir":"/build/libs/Equus-Github-Auth-0.0.1-SNAPSHOT.jar","port":8080}'
+  containerPort: 8080
+  domain: stag-entry-casper-recruitment.xquare.app
+  instanceType: x3.micro
+  privateService: false
+- name: equus-user-prod
+  github:
     owner: EntryDSM
     repo: Equus-User
     branch: main
-    buildConfig:
-      '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew
-      build -x test --build-cache"],"output_dir":"/build/libs/Equus-User-0.0.0.jar","port":8080}'
-    containerPort: 8080
-    domain: equus-feed.xquare.app
-    installationId: "62368670"
-    instanceType: x3.micro
-    privateService: false
+    installationId: '62368670'
     hash: latest
-  - name: equus-feed-prod
+  buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew
+    build -x test --build-cache"],"output_dir":"/build/libs/Equus-User-0.0.0.jar","port":8080}'
+  containerPort: 8080
+  domain: equus-feed.xquare.app
+  instanceType: x3.micro
+  privateService: false
+- name: equus-feed-prod
+  github:
     owner: EntryDSM
     repo: Equus-Feed
     branch: main
-    buildConfig:
-      '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew
-      build -x test --build-cache"],"output_dir":"/build/libs/Equus-Feed-0.0.1-SNAPSHOT.jar","port":8080}'
-    containerPort: 8080
-    domain: equus-feed.xquare.app
-    installationId: "62368670"
-    instanceType: x3.micro
-    privateService: false
+    installationId: '62368670'
     hash: latest
-  - name: entry-internship-user-prod
+  buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew
+    build -x test --build-cache"],"output_dir":"/build/libs/Equus-Feed-0.0.1-SNAPSHOT.jar","port":8080}'
+  containerPort: 8080
+  domain: equus-feed.xquare.app
+  instanceType: x3.micro
+  privateService: false
+- name: entry-internship-user-prod
+  github:
     owner: EntryDSM
     repo: Entry-Internship
     branch: develop
-    buildConfig:
-      '{"builder":"vite","node_version":"22","build_dir":"/","build_commands":["yarn
-      install && npx nx run @entry-internship/entry-user:build"],"output_dir":"/apps/entry-user/dist","port":4200}'
-    containerPort: 4200
-    domain: entry-recruit.xquare.app
-    installationId: "62368670"
-    instanceType: x3.small
-    privateService: false
+    installationId: '62368670'
     hash: latest
-  - name: entry-internship-admin-stag
+  buildConfig: '{"builder":"vite","node_version":"22","build_dir":"/","build_commands":["yarn
+    install && npx nx run @entry-internship/entry-user:build"],"output_dir":"/apps/entry-user/dist","port":4200}'
+  containerPort: 4200
+  domain: entry-recruit.xquare.app
+  instanceType: x3.small
+  privateService: false
+- name: entry-internship-admin-stag
+  github:
     owner: EntryDSM
     repo: Entry-Internship
     branch: develop
-    buildConfig:
-      '{"builder":"vite","node_version":"22","build_dir":"/","build_commands":["yarn
-      install", "npx nx run @entry-internship/entry-admin:build"],"output_dir":"/apps/entry-admin/dist","port":4200}'
-    containerPort: 4200
-    domain: entry-recruit-admin.xquare.app
-    installationId: "62368670"
-    instanceType: x3.small
-    privateService: false
-  - name: equus-status-prod
+    installationId: '62368670'
+  buildConfig: '{"builder":"vite","node_version":"22","build_dir":"/","build_commands":["yarn
+    install", "npx nx run @entry-internship/entry-admin:build"],"output_dir":"/apps/entry-admin/dist","port":4200}'
+  containerPort: 4200
+  domain: entry-recruit-admin.xquare.app
+  instanceType: x3.small
+  privateService: false
+- name: equus-status-prod
+  github:
     owner: EntryDSM
     repo: Equus-Status
     branch: main
-    buildConfig:
-      '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew
-      build -x test --build-cache"],"output_dir":"/build/libs/Equus-Status-0.0.0.jar","port":8080}'
-    containerPort: 8080
-    domain: equus-status.xquare.app
-    installationId: "62368670"
-    instanceType: x3.micro
-    privateService: false
+    installationId: '62368670'
     hash: latest
-  - name: equus-schedule-prod
+  buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew
+    build -x test --build-cache"],"output_dir":"/build/libs/Equus-Status-0.0.0.jar","port":8080}'
+  containerPort: 8080
+  domain: equus-status.xquare.app
+  instanceType: x3.micro
+  privateService: false
+- name: equus-schedule-prod
+  github:
     owner: EntryDSM
     repo: Equus-Schedule
     branch: main
-    buildConfig:
-      '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew
-      build -x test --build-cache"],"output_dir":"/build/libs/Equus-Schedule-0.0.0.jar","port":8080}'
-    containerPort: 8080
-    domain: equus-schedule.xquare.app
-    installationId: "62368670"
-    instanceType: x3.micro
-    privateService: false
+    installationId: '62368670'
     hash: latest
+  buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew
+    build -x test --build-cache"],"output_dir":"/build/libs/Equus-Schedule-0.0.0.jar","port":8080}'
+  containerPort: 8080
+  domain: equus-schedule.xquare.app
+  instanceType: x3.micro
+  privateService: false

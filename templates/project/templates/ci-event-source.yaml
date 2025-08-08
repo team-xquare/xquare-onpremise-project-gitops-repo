@@ -18,9 +18,9 @@ spec:
   github:
     {{ include "ci.githubFullname" . }}:
       repositories:
-        - owner: {{ .owner }}
+        - owner: {{ .github.owner }}
           names:
-            - {{ .repo }}
+            - {{ .github.repo }}
       githubApp:
         privateKey:
           name: github-app-pem

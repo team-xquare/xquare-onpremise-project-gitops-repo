@@ -19,8 +19,8 @@ spec:
           - path: body.ref
             type: string
             value:
-              - "refs/heads/{{ .branch }}"
-          {{- if empty .hash }}
+              - "refs/heads/{{ .github.branch }}"
+          {{- if empty .github.hash }}
           - path: body.X-GitHub-Event
             type: string
             value:
@@ -46,7 +46,7 @@ spec:
       template:
         k8s:
           operation: create
-          {{- if .hash }}
+          {{- if .github.hash }}
           parameters:
             - src:
                 dependencyName: {{ include "app.serviceName" . }}-github-push
@@ -64,7 +64,7 @@ spec:
                   {{- include "app.selectorLabels" . | nindent 18 }}
                   app.kubernetes.io/component: ci-workflow
               spec:
-                {{- if .hash }}
+                {{- if .github.hash }}
                 arguments:
                   parameters:
                     - name: git-sha
@@ -79,7 +79,7 @@ spec:
                     dag:
                       tasks:
                         - name: build
-                          {{- if .hash }}
+                          {{- if .github.hash }}
                           arguments:
                             parameters:
                               - name: sha
@@ -90,7 +90,7 @@ spec:
                           arguments:
                             parameters:
                               - name: image-tag
-                                {{- if empty .hash }}
+                                {{- if empty .github.hash }}
                                 value: "latest"
                                 {{- else }}
                                 value: "{{`{{workflow.parameters.git-sha}}`}}"
@@ -105,7 +105,7 @@ spec:
                         operator: Equal
                         value: 'true'
                         effect: NoSchedule
-                    {{- if .hash }}
+                    {{- if .github.hash }}
                     inputs:
                       parameters:
                         - name: sha
@@ -116,7 +116,7 @@ spec:
                         - "--context=/workspace/repo"
                         - "--dockerfile=/workspace/repo/Dockerfile"
                         - "--destination={{ include "project.harborRegistry" $ }}/xquare/{{ $.Values.project }}-{{ include "app.serviceName" . }}:latest"
-                        {{- if .hash }}
+                        {{- if .github.hash }}
                         - "--destination={{ include "project.harborRegistry" $ }}/xquare/{{ $.Values.project }}-{{ include "app.serviceName" . }}:{{`{{inputs.parameters.sha}}`}}"
                         {{- end }}
                         - "--cache=true"
@@ -160,9 +160,9 @@ spec:
                             TOKEN=$(curl -s -X POST -H "Authorization: Bearer ${JWT}" -H "Accept: application/vnd.github+json" "https://api.github.com/app/installations/${INSTALL_ID}/access_tokens" | jq -r '.token')
                             [ -z "$TOKEN" ] || [ "$TOKEN" = "null" ] && { echo "ERROR: Failed to get GitHub token"; exit 1; }
                             
-                            git clone -b {{ .branch }} --single-branch https://x-access-token:${TOKEN}@github.com/{{ .owner }}/{{ .repo }}.git /workspace/repo || exit 1
+                            git clone -b {{ .github.branch }} --single-branch https://x-access-token:${TOKEN}@github.com/{{ .github.owner }}/{{ .github.repo }}.git /workspace/repo || exit 1
                             cd /workspace/repo
-                            {{- if .hash }}
+                            {{- if .github.hash }}
                             git checkout "{{`{{inputs.parameters.sha}}`}}" || exit 1
                             {{- end }}
                             

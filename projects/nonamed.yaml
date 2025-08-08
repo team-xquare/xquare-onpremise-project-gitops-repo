@@ -1,26 +1,26 @@
 applications:
-  - name: lotura-prod
+- name: lotura-prod
+  github:
     owner: team-osj
     repo: Lotura_BackEnd_V2
     branch: main
-    buildConfig:
-      '{"builder":"nodejs","node_version":"22.5.1","build_dir":"/","build_commands":["yarn
-      && yarn build"],"command":"yarn start","port":3000}'
-    containerPort: 3000
-    domain: lotura-prod.xquare.app
-    installationId: "64110126"
-    instanceType: x3.micro
-    privateService: false
+    installationId: '64110126'
     hash: latest
-  - name: lotura-stag
+  buildConfig: '{"builder":"nodejs","node_version":"22.5.1","build_dir":"/","build_commands":["yarn
+    && yarn build"],"command":"yarn start","port":3000}'
+  containerPort: 3000
+  domain: lotura-prod.xquare.app
+  instanceType: x3.micro
+  privateService: false
+- name: lotura-stag
+  github:
     owner: team-osj
     repo: Lotura_BackEnd_V2
     branch: develop
-    buildConfig:
-      '{"builder":"nodejs","node_version":"22.5.1","build_dir":"","build_commands":["yarn
-      && yarn build"],"command":"yarn start","port":3000}'
-    containerPort: 3000
-    domain: lotura-stag.xquare.app
-    installationId: "64110126"
-    instanceType: x3.nano
-    privateService: false
+    installationId: '64110126'
+  buildConfig: '{"builder":"nodejs","node_version":"22.5.1","build_dir":"","build_commands":["yarn
+    && yarn build"],"command":"yarn start","port":3000}'
+  containerPort: 3000
+  domain: lotura-stag.xquare.app
+  instanceType: x3.nano
+  privateService: false

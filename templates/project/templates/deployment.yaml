@@ -1,5 +1,5 @@
 {{- range .Values.applications }}
-{{- if .hash }}
+{{- if .github.hash }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -39,7 +39,7 @@ spec:
                 topologyKey: kubernetes.io/hostname
       containers:
         - name: {{ include "app.serviceName" . }}
-          image: {{ include "project.harborRegistry" $ }}/xquare/{{ $.Values.project }}-{{ include "app.serviceName" . }}:{{ .hash | default "latest" }}
+          image: {{ include "project.harborRegistry" $ }}/xquare/{{ $.Values.project }}-{{ include "app.serviceName" . }}:{{ .github.hash | default "latest" }}
           imagePullPolicy: Always
           ports:
             - containerPort: {{ .containerPort }}

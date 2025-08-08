@@ -1,27 +1,27 @@
 applications:
-  - name: pick-core-prod
+- name: pick-core-prod
+  github:
     owner: DSM-PICK
     repo: PICK_CORE_SERVER
     branch: main
-    buildConfig:
-      '{"jdk_version":17,"output_dir":"/build/libs/PICK2024_SERVER-0.0.1-SNAPSHOT.jar","builder":"gradle","build_dir":"/","build_commands":["./gradlew
-      build -x test"], "port" : 8080}'
-    containerPort: 8080
-    domain: pick-core.dsmhs.kr
-    installationId: "64595989"
-    instanceType: x3.micro
-    privateService: false
+    installationId: '64595989'
     hash: latest
-  - name: pick-core-stag
+  buildConfig: '{"jdk_version":17,"output_dir":"/build/libs/PICK2024_SERVER-0.0.1-SNAPSHOT.jar","builder":"gradle","build_dir":"/","build_commands":["./gradlew
+    build -x test"], "port" : 8080}'
+  containerPort: 8080
+  domain: pick-core.dsmhs.kr
+  instanceType: x3.micro
+  privateService: false
+- name: pick-core-stag
+  github:
     owner: DSM-PICK
     repo: PICK_CORE_SERVER
     branch: develop
-    buildConfig:
-      '{"jdk_version":17,"output_dir":"/build/libs/PICK2024_SERVER-0.0.1-SNAPSHOT.jar","builder":"gradle","build_dir":"/","build_commands":["./gradlew
-      build -x test"], "port" : 8080}'
-    containerPort: 8080
-    domain: pick-core-stag.dsmhs.kr
-    installationId: "64595989"
-    instanceType: x3.micro
-    privateService: false
+    installationId: '64595989'
     hash: latest
+  buildConfig: '{"jdk_version":17,"output_dir":"/build/libs/PICK2024_SERVER-0.0.1-SNAPSHOT.jar","builder":"gradle","build_dir":"/","build_commands":["./gradlew
+    build -x test"], "port" : 8080}'
+  containerPort: 8080
+  domain: pick-core-stag.dsmhs.kr
+  instanceType: x3.micro
+  privateService: false
