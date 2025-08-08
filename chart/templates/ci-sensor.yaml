@@ -100,11 +100,6 @@ spec:
 
                   - name: docker-build
                     metadata: {}
-                    tolerations:
-                      - key: xquare/ci-server
-                        operator: Equal
-                        value: 'true'
-                        effect: NoSchedule
                     {{- if .github.hash }}
                     inputs:
                       parameters:
@@ -194,11 +189,6 @@ spec:
 
                   - name: update-gitops
                     metadata: {}
-                    tolerations:
-                      - key: xquare/ci-server
-                        operator: Equal
-                        value: 'true'
-                        effect: NoSchedule
                     inputs:
                       parameters:
                         - name: image-tag
