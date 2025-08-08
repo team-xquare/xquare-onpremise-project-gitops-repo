@@ -35,3 +35,63 @@ applications:
       - port: 8080
         routes:
           - pick-core-stag.dsmhs.kr
+  - name: pick-admin-prod
+    tier: x3.small
+    github:
+      owner: DSM-PICK
+      repo: PiCK2024_FRONT_V2
+      branch: main
+      installationId: "64595989"
+    build:
+      react:
+        nodeVersion: "18"
+        buildCommand: npm install && npm run build
+    endpoints:
+      - port: 8080
+        routes:
+          - pick-admin.xquare.app
+  - name: pick-admin-stag
+    tier: x3.small
+    github:
+      owner: DSM-PICK
+      repo: PiCK2024_FRONT_V2
+      branch: develop
+      installationId: "64595989"
+    build:
+      react:
+        nodeVersion: "18"
+        buildCommand: npm install && npm run build
+    endpoints:
+      - port: 8080
+        routes:
+          - pick-admin-stag.xquare.app
+  - name: pick-teacher-prod
+    tier: x3.small
+    github:
+      owner: DSM-PICK
+      repo: PiCK2024_FRONT_TEACHER_V2
+      branch: main
+      installationId: "64595989"
+    build:
+      react:
+        nodeVersion: "18"
+        buildCommand: npm install && npm run build
+    endpoints:
+      - port: 8080
+        routes:
+          - pick-teacher.xquare.app
+  - name: pick-teacher-stag
+    tier: x3.small
+    github:
+      owner: DSM-PICK
+      repo: PiCK2024_FRONT_TEACHER_V2
+      branch: develop
+      installationId: "64595989"
+    build:
+      react:
+        nodeVersion: "18"
+        buildCommand: npm install && npm run build
+    endpoints:
+      - port: 8080
+        routes:
+          - pick-teacher-stag.xquare.app
