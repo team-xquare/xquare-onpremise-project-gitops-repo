@@ -8,10 +8,11 @@ applications:
     hash: latest
   buildConfig: '{"builder":"gradle","jdk_version":21,"build_dir":".","build_commands":["./gradlew
     build -x test --build-cache"],"output_dir":"/build/libs/*.jar","port":8080}'
-  containerPort: 8080
-  domain: daemawiki-server.xquare.app
   instanceType: x3.nano
-  privateService: false
+  endpoints:
+  - port: 8080
+    routes:
+    - daemawiki-server.xquare.app
 - name: daemawiki-stag
   github:
     owner: daemawiki
@@ -21,7 +22,8 @@ applications:
     hash: latest
   buildConfig: '{"builder":"gradle","jdk_version":21,"build_dir":".","build_commands":["./gradlew
     build -x test --build-cache"],"output_dir":"/build/libs/*.jar","port":8080}'
-  containerPort: 8080
-  domain: daemawiki-server-stag.xquare.app
   instanceType: x3.nano
-  privateService: false
+  endpoints:
+  - port: 8080
+    routes:
+    - daemawiki-server-stag.xquare.app

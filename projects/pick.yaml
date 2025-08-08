@@ -8,10 +8,11 @@ applications:
     hash: latest
   buildConfig: '{"jdk_version":17,"output_dir":"/build/libs/PICK2024_SERVER-0.0.1-SNAPSHOT.jar","builder":"gradle","build_dir":"/","build_commands":["./gradlew
     build -x test"], "port" : 8080}'
-  containerPort: 8080
-  domain: pick-core.dsmhs.kr
   instanceType: x3.micro
-  privateService: false
+  endpoints:
+  - port: 8080
+    routes:
+    - pick-core.dsmhs.kr
 - name: pick-core-stag
   github:
     owner: DSM-PICK
@@ -21,7 +22,8 @@ applications:
     hash: latest
   buildConfig: '{"jdk_version":17,"output_dir":"/build/libs/PICK2024_SERVER-0.0.1-SNAPSHOT.jar","builder":"gradle","build_dir":"/","build_commands":["./gradlew
     build -x test"], "port" : 8080}'
-  containerPort: 8080
-  domain: pick-core-stag.dsmhs.kr
   instanceType: x3.micro
-  privateService: false
+  endpoints:
+  - port: 8080
+    routes:
+    - pick-core-stag.dsmhs.kr

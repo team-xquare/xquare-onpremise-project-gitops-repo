@@ -9,10 +9,11 @@ applications:
   buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["export
     _JAVA_OPTIONS=\"-XX:-UsePerfData\" && ./gradlew build -x test -x detekt --build-cache
     --no-daemon"],"output_dir":"/dms-infrastructure/build/libs/*.jar","port":8080}'
-  containerPort: 8080
-  domain: dms-api.dsmhs.kr
   instanceType: x3.micro
-  privateService: false
+  endpoints:
+  - port: 8080
+    routes:
+    - dms-api.dsmhs.kr
 - name: dms-backend-stag
   github:
     owner: team-aliens
@@ -23,7 +24,8 @@ applications:
   buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["export
     _JAVA_OPTIONS=\"-XX:-UsePerfData\" && ./gradlew build -x test -x detekt --build-cache
     --no-daemon"],"output_dir":"/dms-infrastructure/build/libs/*.jar","port":8080}'
-  containerPort: 8080
-  domain: dms-dev-api.dsmhs.kr
   instanceType: x3.micro
-  privateService: false
+  endpoints:
+  - port: 8080
+    routes:
+    - dms-dev-api.dsmhs.kr

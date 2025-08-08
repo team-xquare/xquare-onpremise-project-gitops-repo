@@ -8,10 +8,11 @@ applications:
     hash: latest
   buildConfig: '{"builder":"nodejs","node_version":"22.5.1","build_dir":"/","build_commands":["yarn
     && yarn build"],"command":"yarn start","port":3000}'
-  containerPort: 3000
-  domain: lotura-prod.xquare.app
   instanceType: x3.micro
-  privateService: false
+  endpoints:
+  - port: 3000
+    routes:
+    - lotura-prod.xquare.app
 - name: lotura-stag
   github:
     owner: team-osj
@@ -20,7 +21,8 @@ applications:
     installationId: '64110126'
   buildConfig: '{"builder":"nodejs","node_version":"22.5.1","build_dir":"","build_commands":["yarn
     && yarn build"],"command":"yarn start","port":3000}'
-  containerPort: 3000
-  domain: lotura-stag.xquare.app
   instanceType: x3.nano
-  privateService: false
+  endpoints:
+  - port: 3000
+    routes:
+    - lotura-stag.xquare.app

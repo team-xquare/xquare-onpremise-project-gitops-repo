@@ -21,7 +21,7 @@ spec:
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/path: "/actuator/prometheus"
-        prometheus.io/port: "{{ .containerPort }}"
+        prometheus.io/port: "{{ (index .endpoints 0).port }}"
         cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
     spec:
       serviceAccountName: {{ include "project.vaultServiceAccount" $ }}
@@ -42,11 +42,13 @@ spec:
           image: {{ include "project.harborRegistry" $ }}/xquare/{{ $.Values.project }}-{{ include "app.serviceName" . }}:{{ .github.hash | default "latest" }}
           imagePullPolicy: Always
           ports:
-            - containerPort: {{ .containerPort }}
+          {{- range $endpoint := .endpoints }}
+            - containerPort: {{ $endpoint.port }}
               protocol: TCP
+          {{- end }}
           env:
             - name: PORT
-              value: "{{ .containerPort }}"
+              value: "{{ (index .endpoints 0).port }}"
           envFrom:
             - secretRef:
                 name: {{ include "app.vaultSecretName" (dict "project" $.Values.project "name" (include "app.serviceName" .)) }}
@@ -96,7 +98,7 @@ spec:
             {{- end }}
           readinessProbe:
             tcpSocket:
-              port: {{ .containerPort }}
+              port: {{ (index .endpoints 0).port }}
             initialDelaySeconds: 20
             periodSeconds: 10
             successThreshold: 3

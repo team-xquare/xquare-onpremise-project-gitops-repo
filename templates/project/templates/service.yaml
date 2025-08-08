@@ -13,8 +13,10 @@ spec:
   selector:
     {{- include "app.selectorLabels" . | nindent 4 }}
   ports:
-    - port: {{ .containerPort }}
-      targetPort: {{ .containerPort }}
+  {{- range $endpoint := .endpoints }}
+    - port: {{ $endpoint.port }}
+      targetPort: {{ $endpoint.port }}
       protocol: TCP
+  {{- end }}
 {{- end }}
 {{- end }}

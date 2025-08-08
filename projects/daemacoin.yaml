@@ -8,10 +8,11 @@ applications:
     hash: latest
   buildConfig: '{"builder":"nodejs","node_version":"22.5.1","build_dir":"/","build_commands":["npm
     install && npm run build"],"command":"npm run start","port":3000}'
-  containerPort: 3000
-  domain: daemacoin-server.xquare.app
   instanceType: x3.micro
-  privateService: false
+  endpoints:
+  - port: 3000
+    routes:
+    - daemacoin-server.xquare.app
 - name: daemacoin-frontend-prod
   github:
     owner: DaemaCoin
@@ -21,7 +22,8 @@ applications:
     hash: latest
   buildConfig: '{"node_version":"22","build_commands":["npm install && npm run build"],"builder":"nodejs","build_dir":"/","command":"npm
     run start","port":8080}'
-  containerPort: 3000
-  domain: dsm-coin.xquare.app
   instanceType: x3.nano
-  privateService: false
+  endpoints:
+  - port: 3000
+    routes:
+    - dsm-coin.xquare.app

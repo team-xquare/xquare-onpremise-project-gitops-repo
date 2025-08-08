@@ -7,10 +7,11 @@ applications:
     installationId: '66778564'
   buildConfig: '{"node_version":"22","build_commands":["npm install && npm run build"],"builder":"nodejs","build_dir":"/","command":"npm
     run start","port":3000}'
-  containerPort: 3000
-  domain: keep-prod.xquare.app
   instanceType: x3.small
-  privateService: false
+  endpoints:
+  - port: 3000
+    routes:
+    - keep-prod.xquare.app
 - name: keep-deployment-stag
   github:
     owner: Keep-DSM
@@ -20,7 +21,8 @@ applications:
     hash: latest
   buildConfig: '{"node_version":"22","build_commands":["npm install && npm run build"],"builder":"nodejs","build_dir":"/","command":"npm
     run start","port":3000}'
-  containerPort: 3000
-  domain: keep-stag.xquare.app
   instanceType: x3.small
-  privateService: false
+  endpoints:
+  - port: 3000
+    routes:
+    - keep-stag.xquare.app
