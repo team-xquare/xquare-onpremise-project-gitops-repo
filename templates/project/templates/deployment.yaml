@@ -53,35 +53,35 @@ spec:
             - secretRef:
                 name: {{ include "app.vaultSecretName" (dict "project" $.Values.project "name" (include "app.serviceName" .)) }}
           resources:
-            {{- if eq .instanceType "x3.nano" }}
+            {{- if eq .tier "x3.nano" }}
             requests:
               cpu: 100m
               memory: 128Mi
             limits:
               cpu: 200m
               memory: 256Mi
-            {{- else if eq .instanceType "x3.micro" }}
+            {{- else if eq .tier "x3.micro" }}
             requests:
               cpu: 200m
               memory: 256Mi
             limits:
               cpu: 400m
               memory: 512Mi
-            {{- else if eq .instanceType "x3.small" }}
+            {{- else if eq .tier "x3.small" }}
             requests:
               cpu: 400m
               memory: 512Mi
             limits:
               cpu: 800m
               memory: 1Gi
-            {{- else if eq .instanceType "x3.medium" }}
+            {{- else if eq .tier "x3.medium" }}
             requests:
               cpu: 800m
               memory: 1Gi
             limits:
               cpu: 1600m
               memory: 2Gi
-            {{- else if eq .instanceType "x3.large" }}
+            {{- else if eq .tier "x3.large" }}
             requests:
               cpu: 1600m
               memory: 2Gi

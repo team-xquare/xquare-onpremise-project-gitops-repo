@@ -8,7 +8,7 @@ applications:
     hash: latest
   buildConfig: '{"builder":"nodejs","node_version":"22.5.1","build_dir":"/","build_commands":["npm
     install && npm run build"],"command":"npm run start","port":3000}'
-  instanceType: x3.micro
+  tier: x3.micro
   endpoints:
   - port: 3000
     routes:
@@ -22,7 +22,7 @@ applications:
     hash: latest
   buildConfig: '{"node_version":"22","build_commands":["npm install && npm run build"],"builder":"nodejs","build_dir":"/","command":"npm
     run start","port":8080}'
-  instanceType: x3.nano
+  tier: x3.nano
   endpoints:
   - port: 3000
     routes:

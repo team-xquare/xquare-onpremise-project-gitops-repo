@@ -7,7 +7,7 @@ applications:
     installationId: '62433388'
   buildConfig: '{"builder":"react","node_version":"22","build_dir":"/","build_commands":["npm
     run build"],"output_dir":"/build","port":3000}'
-  instanceType: x3.small
+  tier: x3.small
   endpoints:
   - port: 3000
     routes:
@@ -21,7 +21,7 @@ applications:
     hash: latest
   buildConfig: '{"builder":"react","node_version":"22","build_dir":"/","build_commands":["npm
     run build"],"output_dir":"/build","port":3000}'
-  instanceType: x3.small
+  tier: x3.small
   endpoints:
   - port: 3000
     routes:
@@ -35,7 +35,7 @@ applications:
     hash: latest
   buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew
     build -x test"],"output_dir":"/build/libs/xquare-infra-0.0.1-SNAPSHOT.jar","port":8080}'
-  instanceType: x3.small
+  tier: x3.small
   endpoints:
   - port: 8080
     routes:
@@ -49,7 +49,7 @@ applications:
     hash: latest
   buildConfig: '{"jdk_version":17,"output_dir":"/build/libs/xquare-infra-0.0.1-SNAPSHOT.jar","builder":"gradle","build_dir":"/","build_commands":["./gradlew
     build -x test"],"port":8080}'
-  instanceType: x3.small
+  tier: x3.small
   endpoints:
   - port: 8080
     routes:

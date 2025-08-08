@@ -8,7 +8,7 @@ applications:
     hash: latest
   buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew
     build -x test --build-cache"],"output_dir":"/application-infrastructure/build/libs/application-infrastructure-0.0.1-SNAPSHOT.jar","port":8080}'
-  instanceType: x3.small
+  tier: x3.small
   endpoints:
   - port: 8080
     routes:
@@ -22,7 +22,7 @@ applications:
     hash: latest
   buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew
     build -x test --build-cache"],"output_dir":"/build/libs/Equus-Api-Gateway-0.0.1-SNAPSHOT.jar","port":8080}'
-  instanceType: x3.micro
+  tier: x3.micro
   endpoints:
   - port: 8080
     routes:
@@ -36,7 +36,7 @@ applications:
     hash: latest
   buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":"/","build_commands":["./gradlew
     build -x test"],"output_dir":"/build/libs/Equus-Github-Auth-0.0.1-SNAPSHOT.jar","port":8080}'
-  instanceType: x3.micro
+  tier: x3.micro
   endpoints:
   - port: 8080
     routes:
@@ -50,7 +50,7 @@ applications:
     hash: latest
   buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":"/","build_commands":["./gradlew
     build -x test"],"output_dir":"/build/libs/Equus-Github-Auth-0.0.1-SNAPSHOT.jar","port":8080}'
-  instanceType: x3.micro
+  tier: x3.micro
   endpoints:
   - port: 8080
     routes:
@@ -64,7 +64,7 @@ applications:
     hash: latest
   buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew
     build -x test --build-cache"],"output_dir":"/build/libs/Equus-User-0.0.0.jar","port":8080}'
-  instanceType: x3.micro
+  tier: x3.micro
   endpoints:
   - port: 8080
     routes:
@@ -78,7 +78,7 @@ applications:
     hash: latest
   buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew
     build -x test --build-cache"],"output_dir":"/build/libs/Equus-Feed-0.0.1-SNAPSHOT.jar","port":8080}'
-  instanceType: x3.micro
+  tier: x3.micro
   endpoints:
   - port: 8080
     routes:
@@ -92,7 +92,7 @@ applications:
     hash: latest
   buildConfig: '{"builder":"vite","node_version":"22","build_dir":"/","build_commands":["yarn
     install && npx nx run @entry-internship/entry-user:build"],"output_dir":"/apps/entry-user/dist","port":4200}'
-  instanceType: x3.small
+  tier: x3.small
   endpoints:
   - port: 4200
     routes:
@@ -105,7 +105,7 @@ applications:
     installationId: '62368670'
   buildConfig: '{"builder":"vite","node_version":"22","build_dir":"/","build_commands":["yarn
     install", "npx nx run @entry-internship/entry-admin:build"],"output_dir":"/apps/entry-admin/dist","port":4200}'
-  instanceType: x3.small
+  tier: x3.small
   endpoints:
   - port: 4200
     routes:
@@ -119,7 +119,7 @@ applications:
     hash: latest
   buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew
     build -x test --build-cache"],"output_dir":"/build/libs/Equus-Status-0.0.0.jar","port":8080}'
-  instanceType: x3.micro
+  tier: x3.micro
   endpoints:
   - port: 8080
     routes:
@@ -133,7 +133,7 @@ applications:
     hash: latest
   buildConfig: '{"builder":"gradle","jdk_version":17,"build_dir":".","build_commands":["./gradlew
     build -x test --build-cache"],"output_dir":"/build/libs/Equus-Schedule-0.0.0.jar","port":8080}'
-  instanceType: x3.micro
+  tier: x3.micro
   endpoints:
   - port: 8080
     routes:

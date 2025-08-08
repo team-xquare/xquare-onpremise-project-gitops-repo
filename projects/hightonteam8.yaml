@@ -8,7 +8,7 @@ applications:
     hash: 08b27ab770dc9070424a81fc7ed5e1ee255a30d3
   buildConfig: '{"jdk_version":17,"output_dir":"/build/libs/*.jar","builder":"gradle","build_dir":".","build_commands":["./gradlew
     clean build -x test"],"port":8080}'
-  instanceType: x3.small
+  tier: x3.small
   endpoints:
   - port: 8080
     routes:
@@ -21,6 +21,6 @@ applications:
     installationId: '78893207'
     hash: latest
   buildConfig: '{"builder":"dockerfile"}'
-  instanceType: x3.nano
+  tier: x3.nano
   endpoints:
   - port: 6379

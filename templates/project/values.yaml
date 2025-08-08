@@ -7,7 +7,7 @@ applications: []
 #   - name: example-service-prod
 #     hash: "latest"
 #     containerPort: 8080
-#     instanceType: "x3.small"
+#     tier: "x3.small"
 #     privateService: false
 #     domain: "example.dsmhs.kr"
 #     owner: "team-xquare"
