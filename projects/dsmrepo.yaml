@@ -1,0 +1,66 @@
+applications:
+  - name: whopper-prod
+    tier: x3.micro
+    github:
+      owner: DSM-Repo
+      repo: Whopper
+      branch: main
+      installationId: "79908920"
+    build:
+      gradle:
+        jdkVersion: 11
+        buildDir: .
+        outputDir: /build/libs/*.jar
+        buildCommand: ./gradlew build -x test
+    endpoints:
+      - port: 8080
+        routes:
+          - whopper.xquare.app
+  - name: repo-main-prod
+    tier: x3.small
+    github:
+      owner: DSM-Repo
+      repo: repo
+      branch: main
+      installationId: "79908920"
+    build:
+      react:
+        nodeVersion: "18"
+        buildDir: /packages/main
+        buildCommand: cd packages/main && npm install && npm run build
+    endpoints:
+      - port: 8080
+        routes:
+          - www.dsm-repo.com
+  - name: repo-teacher-prod
+    tier: x3.small
+    github:
+      owner: DSM-Repo
+      repo: repo
+      branch: main
+      installationId: "79908920"
+    build:
+      react:
+        nodeVersion: "18"
+        buildDir: /packages/teacher
+        buildCommand: cd packages/teacher && npm install && npm run build
+    endpoints:
+      - port: 8080
+        routes:
+          - teacher.dsm-repo.com
+  - name: repo-user-prod
+    tier: x3.small
+    github:
+      owner: DSM-Repo
+      repo: repo
+      branch: main
+      installationId: "79908920"
+    build:
+      react:
+        nodeVersion: "18"
+        buildDir: /packages/student
+        buildCommand: cd packages/student && npm install && npm run build
+    endpoints:
+      - port: 8080
+        routes:
+          - user.dsm-repo.com
