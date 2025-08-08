@@ -33,6 +33,14 @@ spec:
         - path:
             type: PathPrefix
             value: {{ $path }}
+      {{- if ne $path "/" }}
+      filters:
+        - type: URLRewrite
+          urlRewrite:
+            path:
+              type: ReplacePrefixMatch
+              replacePrefixMatch: /
+      {{- end }}
       backendRefs:
         - name: {{ $app.name }}
           port: {{ $endpoint.port }}
