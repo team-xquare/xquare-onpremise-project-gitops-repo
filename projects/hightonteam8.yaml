@@ -26,6 +26,7 @@ applications:
       installationId: "78893207"
       hash: f7cfa4b5a7c88409534d3526be7c78607aab8f0d
     build:
-      docker: {}
+      docker:
+        sourcePath: ""
     endpoints:
       - port: 6379
