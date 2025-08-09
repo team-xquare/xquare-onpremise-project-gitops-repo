@@ -119,6 +119,7 @@ spec:
                         - "--compressed-caching=false"
                         - "--snapshot-mode=time"
                         - "--cleanup"
+                        - "--registry-mirror=mirror.gcr.io"
                       env:
                         - name: DOCKER_CONFIG
                           value: "/kaniko/.docker"
