@@ -108,8 +108,8 @@ spec:
                     container:
                       image: gcr.io/kaniko-project/executor:latest
                       args:
-                        - "--context=/workspace/repo"
-                        - "--dockerfile=/workspace/repo/Dockerfile"
+                        - "--context=/workspace/repo{{ .build.docker.sourcePath | default "" }}"
+                        - "--dockerfile=/workspace/repo{{ .build.docker.sourcePath | default "" }}/Dockerfile"
                         - "--destination={{ include "project.harborRegistry" $ }}/xquare/{{ $.Values.project }}-{{ include "app.serviceName" . }}:latest"
                         {{- if .github.hash }}
                         - "--destination={{ include "project.harborRegistry" $ }}/xquare/{{ $.Values.project }}-{{ include "app.serviceName" . }}:{{`{{inputs.parameters.sha}}`}}"
@@ -161,11 +161,9 @@ spec:
                             git checkout "{{`{{inputs.parameters.sha}}`}}" || exit 1
                             {{- end }}
                             
-                            {{- if .build.dockerfile }}
-                            # Use existing Dockerfile from repository
+                            {{- if .build.docker }}
                             echo "Using existing Dockerfile from repository"
                             {{- else }}
-                            # Use generated Dockerfile from ConfigMap
                             cp /app-dockerfile/Dockerfile /workspace/repo/Dockerfile || exit 1
                             {{- end }}
                         env:

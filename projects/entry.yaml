@@ -9,10 +9,10 @@ applications:
       hash: latest
     build:
       gradle:
-        jdkVersion: 17
-        buildDir: .
-        outputDir: /application-infrastructure/build/libs/application-infrastructure-0.0.1-SNAPSHOT.jar
-        buildCommand: ./gradlew build -x test --build-cache
+        version: 17
+        outputPath: /application-infrastructure/build/libs/application-infrastructure-0.0.1-SNAPSHOT.jar
+        sourcePath: .
+        buildCmd: ./gradlew build -x test --build-cache
     endpoints:
       - port: 8080
         routes:
@@ -27,10 +27,10 @@ applications:
       hash: latest
     build:
       gradle:
-        jdkVersion: 17
-        buildDir: .
-        outputDir: /build/libs/Equus-Api-Gateway-0.0.1-SNAPSHOT.jar
-        buildCommand: ./gradlew build -x test --build-cache
+        version: 17
+        outputPath: /build/libs/Equus-Api-Gateway-0.0.1-SNAPSHOT.jar
+        sourcePath: .
+        buildCmd: ./gradlew build -x test --build-cache
     endpoints:
       - port: 8080
         routes:
@@ -45,10 +45,10 @@ applications:
       hash: latest
     build:
       gradle:
-        jdkVersion: 17
-        buildDir: /
-        outputDir: /build/libs/Equus-Github-Auth-0.0.1-SNAPSHOT.jar
-        buildCommand: ./gradlew build -x test
+        version: 17
+        outputPath: /build/libs/Equus-Github-Auth-0.0.1-SNAPSHOT.jar
+        sourcePath: /
+        buildCmd: ./gradlew build -x test
     endpoints:
       - port: 8080
         routes:
@@ -63,10 +63,10 @@ applications:
       hash: latest
     build:
       gradle:
-        jdkVersion: 17
-        buildDir: /
-        outputDir: /build/libs/Equus-Github-Auth-0.0.1-SNAPSHOT.jar
-        buildCommand: ./gradlew build -x test
+        version: 17
+        outputPath: /build/libs/Equus-Github-Auth-0.0.1-SNAPSHOT.jar
+        sourcePath: /
+        buildCmd: ./gradlew build -x test
     endpoints:
       - port: 8080
         routes:
@@ -81,10 +81,10 @@ applications:
       hash: latest
     build:
       gradle:
-        jdkVersion: 17
-        buildDir: .
-        outputDir: /build/libs/Equus-User-0.0.0.jar
-        buildCommand: ./gradlew build -x test --build-cache
+        version: 17
+        outputPath: /build/libs/Equus-User-0.0.0.jar
+        sourcePath: .
+        buildCmd: ./gradlew build -x test --build-cache
     endpoints:
       - port: 8080
         routes:
@@ -99,10 +99,10 @@ applications:
       hash: latest
     build:
       gradle:
-        jdkVersion: 17
-        buildDir: .
-        outputDir: /build/libs/Equus-Feed-0.0.1-SNAPSHOT.jar
-        buildCommand: ./gradlew build -x test --build-cache
+        version: 17
+        outputPath: /build/libs/Equus-Feed-0.0.1-SNAPSHOT.jar
+        sourcePath: .
+        buildCmd: ./gradlew build -x test --build-cache
     endpoints:
       - port: 8080
         routes:
@@ -117,10 +117,10 @@ applications:
       hash: latest
     build:
       vite:
-        nodeVersion: "22"
-        buildDir: /
-        outputDir: /apps/entry-user/dist
-        buildCommand: yarn install && npx nx run @entry-internship/entry-user:build
+        version: "22"
+        outputPath: /apps/entry-user/dist
+        sourcePath: /
+        buildCmd: npx nx run @entry-internship/entry-user:build
     endpoints:
       - port: 8080
         routes:
@@ -134,10 +134,10 @@ applications:
       installationId: "77967720"
     build:
       vite:
-        nodeVersion: "22"
-        buildDir: /
-        outputDir: /apps/entry-admin/dist
-        buildCommand: yarn install && npx nx run @entry-internship/entry-admin:build
+        version: "22"
+        outputPath: /apps/entry-admin/dist
+        sourcePath: /
+        buildCmd: npx nx run @entry-internship/entry-admin:build
     endpoints:
       - port: 8080
         routes:
@@ -152,10 +152,10 @@ applications:
       hash: latest
     build:
       gradle:
-        jdkVersion: 17
-        buildDir: .
-        outputDir: /build/libs/Equus-Status-0.0.0.jar
-        buildCommand: ./gradlew build -x test --build-cache
+        version: 17
+        outputPath: /build/libs/Equus-Status-0.0.0.jar
+        sourcePath: .
+        buildCmd: ./gradlew build -x test --build-cache
     endpoints:
       - port: 8080
         routes:
@@ -170,10 +170,10 @@ applications:
       hash: latest
     build:
       gradle:
-        jdkVersion: 17
-        buildDir: .
-        outputDir: /build/libs/Equus-Schedule-0.0.0.jar
-        buildCommand: ./gradlew build -x test --build-cache
+        version: 17
+        outputPath: /build/libs/Equus-Schedule-0.0.0.jar
+        sourcePath: .
+        buildCmd: ./gradlew build -x test --build-cache
     endpoints:
       - port: 8080
         routes:
@@ -187,9 +187,9 @@ applications:
       installationId: "77967720"
     build:
       react:
-        nodeVersion: "18"
-        buildDir: /packages/Entry-LTS
-        buildCommand: cd packages/Entry-LTS && npm install && npm run build
+        version: "18"
+        sourcePath: /packages/Entry-LTS
+        buildCmd: npm run build
     endpoints:
       - port: 8080
         routes:
@@ -203,9 +203,9 @@ applications:
       installationId: "77967720"
     build:
       react:
-        nodeVersion: "18"
-        buildDir: /packages/Entry-Auth
-        buildCommand: cd packages/Entry-Auth && npm install && npm run build
+        version: "18"
+        sourcePath: /packages/Entry-Auth
+        buildCmd: npm run build
     endpoints:
       - port: 8080
         routes:
@@ -219,9 +219,9 @@ applications:
       installationId: "77967720"
     build:
       react:
-        nodeVersion: "18"
-        buildDir: /packages/Admission-LTS
-        buildCommand: cd packages/Admission-LTS && npm install && npm run build
+        version: "18"
+        sourcePath: /packages/Admission-LTS
+        buildCmd: npm run build
     endpoints:
       - port: 8080
         routes:
@@ -235,9 +235,9 @@ applications:
       installationId: "77967720"
     build:
       react:
-        nodeVersion: "18"
-        buildDir: /packages/Admission-Admin-LTS
-        buildCommand: cd packages/Admission-Admin-LTS && npm install && npm run build
+        version: "18"
+        sourcePath: /packages/Admission-Admin-LTS
+        buildCmd: npm run build
     endpoints:
       - port: 8080
         routes:
@@ -251,10 +251,10 @@ applications:
       installationId: "77967720"
     build:
       gradle:
-        jdkVersion: 11
-        buildDir: .
-        outputDir: /build/libs/*.jar
-        buildCommand: ./gradlew build -x test
+        version: 11
+        outputPath: /build/libs/*.jar
+        sourcePath: .
+        buildCmd: ./gradlew build -x test
     endpoints:
       - port: 8080
         routes:

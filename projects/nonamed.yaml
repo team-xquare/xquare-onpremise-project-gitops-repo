@@ -9,10 +9,10 @@ applications:
       hash: latest
     build:
       nodejs:
-        nodeVersion: 22.5.1
-        buildDir: /
-        command: yarn start
-        buildCommand: yarn && yarn build
+        version: 22.5.1
+        sourcePath: /
+        buildCmd: yarn build
+        startCmd: yarn start
     endpoints:
       - port: 3000
         routes:
@@ -26,10 +26,10 @@ applications:
       installationId: "64110126"
     build:
       nodejs:
-        nodeVersion: 22.5.1
-        buildDir: ""
-        command: yarn start
-        buildCommand: yarn && yarn build
+        version: 22.5.1
+        sourcePath: ""
+        buildCmd: yarn build
+        startCmd: yarn start
     endpoints:
       - port: 3000
         routes:

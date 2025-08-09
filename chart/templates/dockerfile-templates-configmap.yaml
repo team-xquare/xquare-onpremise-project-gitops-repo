@@ -11,199 +11,181 @@ metadata:
 data:
   Dockerfile: |
 {{- if .build.gradle }}
-    FROM eclipse-temurin:{{ .build.gradle.jdkVersion }}-jdk AS build
-    
+    FROM eclipse-temurin:{{ .build.gradle.version }}-jdk-alpine AS build
     WORKDIR /app
-    
-    ENV GRADLE_USER_HOME="/app/.gradle"
-    ENV KOTLIN_USER_HOME="/app/.kotlin"
-    ENV KOTLIN_COMPILER_EXECUTION_STRATEGY="in-process"
-    ENV KOTLIN_DAEMON_DISABLED=true
-    ENV GRADLE_OPTS="-Dkotlin.daemon.enabled=false -Dorg.gradle.daemon=false"
-    
-    COPY {{ .build.gradle.buildDir }}/ .
-    RUN chmod +x gradlew
-    
-    RUN {{ .build.gradle.buildCommand }}
-    
-    RUN rm -rf .gradle .kotlin /root/.gradle /root/.kotlin
-    
-    FROM eclipse-temurin:{{ .build.gradle.jdkVersion }}-jre-alpine
-    
-    ENV TZ=Asia/Seoul
-    ENV JAVA_OPTS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
-    
+    RUN apk add --no-cache bash findutils
+    ENV GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.parallel=true -Dorg.gradle.configureondemand=true" GRADLE_USER_HOME="/app/.gradle"
+    COPY {{ .build.gradle.sourcePath | default "." }}/ .
+    RUN chmod +x gradlew && {{ .build.gradle.buildCmd }} && rm -rf .gradle /root/.gradle
+    FROM eclipse-temurin:{{ .build.gradle.version }}-jre-alpine
+    RUN apk add --no-cache tzdata && addgroup -g 1000 appgroup && adduser -u 1000 -G appgroup -s /bin/sh -D appuser
     WORKDIR /app
-    
-    COPY --from=build /app{{ .build.gradle.outputDir }} /tmp/libs/
-    RUN find /tmp/libs -name "*.jar" ! -name "*-plain.jar" -exec cp {} /app/app.jar \; && \
-        rm -rf /tmp/libs
-    
-    
+    ENV TZ=Asia/Seoul JAVA_OPTS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -XX:+UseG1GC -XX:G1HeapRegionSize=16m -XX:+UseStringDeduplication"
+    COPY --from=build --chown=appuser:appgroup /app{{ .build.gradle.outputPath | default "/build/libs/*.jar" }} /tmp/libs/
+    RUN find /tmp/libs -name "*.jar" ! -name "*-plain.jar" -exec cp {} /app/app.jar \; && rm -rf /tmp/libs && chown appuser:appgroup /app/app.jar
+    USER appuser
     ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar /app/app.jar"]
 {{- else if .build.nodejs }}
-    FROM node:{{ .build.nodejs.nodeVersion }} AS build
-    
+    FROM node:{{ .build.nodejs.version }}-alpine AS build
+    RUN apk add --no-cache python3 make g++ git
     WORKDIR /app
-    
+    COPY package*.json ./
+    {{- if .build.nodejs.buildDir != "/" }}
+    COPY {{ .build.nodejs.buildDir }}/package*.json {{ .build.nodejs.buildDir }}/
+    {{- end }}
+    RUN npm ci --only=production --no-audit --no-fund
     COPY . .
-    
-    RUN {{ .build.nodejs.buildCommand }}
-    
-    FROM node:{{ .build.nodejs.nodeVersion }}
-    
+    RUN {{ .build.nodejs.buildCmd }}
+    FROM node:{{ .build.nodejs.version }}-alpine
+    RUN apk add --no-cache dumb-init && addgroup -g 1000 appgroup && adduser -u 1000 -G appgroup -s /bin/sh -D appuser
     WORKDIR /app
-    
-    COPY --from=build /app .
-    
-    
-    CMD {{ .build.nodejs.command | split " " | toJson }}
+    COPY --from=build --chown=appuser:appgroup /app .
+    USER appuser
+    ENTRYPOINT ["dumb-init", "--"]
+    CMD {{ .build.nodejs.startCmd | default "npm start" | split " " | toJson }}
 {{- else if .build.react }}
-    FROM node:{{ .build.react.nodeVersion }} AS build
-    
+    FROM node:{{ .build.react.version }}-alpine AS build
+    RUN apk add --no-cache python3 make g++ git
     WORKDIR /app
-    
+    COPY {{ .build.react.dependencies | default "package*.json" }} ./
+    {{- if and .build.react.sourcePath (ne .build.react.sourcePath "/") }}
+    COPY {{ .build.react.sourcePath }}/{{ .build.react.dependencies | default "package*.json" }} {{ .build.react.sourcePath }}/
+    {{- end }}
+    RUN npm ci --no-audit --no-fund
     COPY . .
-    
-    RUN {{ .build.react.buildCommand }}
-    
+    RUN {{ .build.react.buildCmd }}
     FROM nginx:alpine
-    
-    COPY --from=build /app/build /usr/share/nginx/html
-    
-    RUN echo 'server { listen 8080; location / { root /usr/share/nginx/html; index index.html; try_files $uri $uri/ /index.html; } }' > /etc/nginx/conf.d/default.conf
-    
+    RUN apk add --no-cache tzdata wget && addgroup -g 101 nginx-group || true && adduser -u 101 -G nginx-group -s /bin/sh -D nginx-user || true
+    COPY --from=build /app{{ .build.react.outputPath | default "/build" }} /usr/share/nginx/html
+    RUN echo 'server { listen 8080; server_name _; root /usr/share/nginx/html; index index.html; add_header X-Frame-Options "SAMEORIGIN" always; add_header X-Content-Type-Options "nosniff" always; add_header X-XSS-Protection "1; mode=block" always; gzip on; gzip_vary on; gzip_types text/plain text/css application/json application/javascript text/xml application/xml text/javascript; location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ { expires 1y; add_header Cache-Control "public, immutable"; } location / { try_files $uri $uri/ /index.html; } location /health { access_log off; return 200 "healthy\\n"; add_header Content-Type text/plain; } }' > /etc/nginx/conf.d/default.conf
+    RUN rm -f /etc/nginx/conf.d/default.conf.default
     CMD ["nginx", "-g", "daemon off;"]
 {{- else if .build.vite }}
-    FROM node:{{ .build.vite.nodeVersion }} AS build
-    
+    FROM node:{{ .build.vite.version }}-alpine AS build
+    RUN apk add --no-cache python3 make g++ git
     WORKDIR /app
-    
+    COPY {{ .build.vite.dependencies | default "package*.json" }} ./
+    {{- if and .build.vite.sourcePath (ne .build.vite.sourcePath "/") }}
+    COPY {{ .build.vite.sourcePath }}/{{ .build.vite.dependencies | default "package*.json" }} {{ .build.vite.sourcePath }}/
+    {{- end }}
+    RUN npm ci --no-audit --no-fund
     COPY . .
-    
-    RUN {{ .build.vite.buildCommand }}
-    
+    RUN {{ .build.vite.buildCmd }}
     FROM nginx:alpine
-    
-    COPY --from=build /app/dist /usr/share/nginx/html
-    
-    RUN echo 'server { listen 8080; location / { root /usr/share/nginx/html; index index.html; try_files $uri $uri/ /index.html; } }' > /etc/nginx/conf.d/default.conf
-    
+    RUN apk add --no-cache tzdata wget
+    COPY --from=build /app{{ .build.vite.outputPath | default "/dist" }} /usr/share/nginx/html
+    RUN echo 'server { listen 8080; server_name _; root /usr/share/nginx/html; index index.html; add_header X-Frame-Options "SAMEORIGIN" always; add_header X-Content-Type-Options "nosniff" always; add_header X-XSS-Protection "1; mode=block" always; gzip on; gzip_vary on; gzip_types text/plain text/css application/json application/javascript text/xml application/xml text/javascript; location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ { expires 1y; add_header Cache-Control "public, immutable"; } location / { try_files $uri $uri/ /index.html; } location /health { access_log off; return 200 "healthy\\n"; add_header Content-Type text/plain; } }' > /etc/nginx/conf.d/default.conf
+    RUN rm -f /etc/nginx/conf.d/default.conf.default
     CMD ["nginx", "-g", "daemon off;"]
 {{- else if .build.vue }}
-    FROM node:{{ .build.vue.nodeVersion }} AS build
-    
+    FROM node:{{ .build.vue.version }}-alpine AS build
+    RUN apk add --no-cache python3 make g++ git
     WORKDIR /app
-    
+    COPY package*.json ./
+    {{- if .build.vue.buildDir != "/" }}
+    COPY {{ .build.vue.buildDir }}/package*.json {{ .build.vue.buildDir }}/
+    {{- end }}
+    RUN npm ci --no-audit --no-fund
     COPY . .
-    
-    RUN {{ .build.vue.buildCommand }}
-    
+    RUN {{ .build.vue.buildCmd }}
     FROM nginx:alpine
-    
+    RUN apk add --no-cache tzdata wget
     COPY --from=build /app/dist /usr/share/nginx/html
-    
-    RUN echo 'server { listen 8080; location / { root /usr/share/nginx/html; index index.html; try_files $uri $uri/ /index.html; } }' > /etc/nginx/conf.d/default.conf
-    
+    RUN echo 'server { listen 8080; server_name _; root /usr/share/nginx/html; index index.html; add_header X-Frame-Options "SAMEORIGIN" always; add_header X-Content-Type-Options "nosniff" always; add_header X-XSS-Protection "1; mode=block" always; gzip on; gzip_vary on; gzip_types text/plain text/css application/json application/javascript text/xml application/xml text/javascript; location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ { expires 1y; add_header Cache-Control "public, immutable"; } location / { try_files $uri $uri/ /index.html; } location /health { access_log off; return 200 "healthy\\n"; add_header Content-Type text/plain; } }' > /etc/nginx/conf.d/default.conf
+    RUN rm -f /etc/nginx/conf.d/default.conf.default
     CMD ["nginx", "-g", "daemon off;"]
 {{- else if .build.nextjs }}
-    FROM node:{{ .build.nextjs.nodeVersion }} AS build
-    
+    FROM node:{{ .build.nextjs.version }}-alpine AS build
+    RUN apk add --no-cache python3 make g++ git
     WORKDIR /app
-    
+    COPY package*.json ./
+    {{- if .build.nextjs.buildDir != "/" }}
+    COPY {{ .build.nextjs.buildDir }}/package*.json {{ .build.nextjs.buildDir }}/
+    {{- end }}
+    RUN npm ci --no-audit --no-fund
     COPY . .
-    
-    RUN {{ .build.nextjs.buildCommand }}
-    
-    FROM node:{{ .build.nextjs.nodeVersion }}
-    
+    RUN {{ .build.nextjs.buildCmd }}
+    FROM node:{{ .build.nextjs.version }}-alpine
+    RUN apk add --no-cache dumb-init tzdata && addgroup -g 1000 appgroup && adduser -u 1000 -G appgroup -s /bin/sh -D appuser
     WORKDIR /app
-    
-    COPY --from=build /app/.next ./.next
-    COPY --from=build /app/public ./public
-    COPY --from=build /app/package*.json ./
-    
-    
+    COPY --from=build --chown=appuser:appgroup /app/.next ./.next
+    COPY --from=build --chown=appuser:appgroup /app/public ./public
+    COPY --from=build --chown=appuser:appgroup /app/package*.json ./
+    COPY --from=build --chown=appuser:appgroup /app/next.config.* ./ 2>/dev/null || true
+    RUN npm ci --only=production --no-audit --no-fund && npm cache clean --force
+    USER appuser
+    ENTRYPOINT ["dumb-init", "--"]
     CMD ["npm", "start"]
 {{- else if .build.go }}
-    FROM golang:{{ .build.go.goVersion }} AS build
-    
+    FROM golang:{{ .build.go.version }}-alpine AS build
+    RUN apk add --no-cache git ca-certificates tzdata
     WORKDIR /app
-    
+    COPY go.mod go.sum ./
+    RUN go mod download
     COPY . .
-    
-    RUN {{ .build.go.buildCommand }}
-    
+    RUN CGO_ENABLED=0 GOOS=linux {{ .build.go.buildCmd }}
     FROM alpine:latest
-    
-    RUN apk --no-cache add ca-certificates
-    
-    WORKDIR /root/
-    
-    COPY --from=build /app/main .
-    
-    
+    RUN apk --no-cache add ca-certificates tzdata wget && addgroup -g 1000 appgroup && adduser -u 1000 -G appgroup -s /bin/sh -D appuser
+    WORKDIR /app
+    COPY --from=build --chown=appuser:appgroup /app/main ./main
+    USER appuser
     CMD ["./main"]
 {{- else if .build.rust }}
-    FROM rust:{{ .build.rust.rustVersion }} AS build
-    
+    FROM rust:{{ .build.rust.version }}-alpine AS build
+    RUN apk add --no-cache musl-dev openssl-dev pkgconfig
     WORKDIR /app
-    
+    COPY Cargo.toml Cargo.lock ./
+    RUN mkdir src && echo "fn main() {}" > src/main.rs && cargo build --release && rm -rf src
     COPY . .
-    
-    RUN {{ .build.rust.buildCommand }}
-    
-    FROM debian:bookworm-slim
-    
+    RUN {{ .build.rust.buildCmd }}
+    FROM alpine:latest
+    RUN apk --no-cache add ca-certificates tzdata wget libgcc && addgroup -g 1000 appgroup && adduser -u 1000 -G appgroup -s /bin/sh -D appuser
     WORKDIR /app
-    
-    COPY --from=build /app/target/release/app .
-    
-    
+    COPY --from=build --chown=appuser:appgroup /app/target/release/app ./app
+    USER appuser
     CMD ["./app"]
 {{- else if .build.maven }}
-    FROM eclipse-temurin:{{ .build.maven.jdkVersion }}-jdk AS build
-    
+    FROM eclipse-temurin:{{ .build.maven.version }}-jdk-alpine AS build
+    RUN apk add --no-cache bash findutils
     WORKDIR /app
-    
+    COPY pom.xml ./
+    RUN mvn dependency:go-offline -B
     COPY . .
-    
-    RUN {{ .build.maven.buildCommand }}
-    
-    FROM eclipse-temurin:{{ .build.maven.jdkVersion }}-jre-alpine
-    
+    RUN {{ .build.maven.buildCmd }}
+    FROM eclipse-temurin:{{ .build.maven.version }}-jre-alpine
+    RUN apk add --no-cache tzdata wget && addgroup -g 1000 appgroup && adduser -u 1000 -G appgroup -s /bin/sh -D appuser
     WORKDIR /app
-    
-    COPY --from=build /app/target/*.jar app.jar
-    
-    
-    ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+    ENV TZ=Asia/Seoul JAVA_OPTS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -XX:+UseG1GC -XX:G1HeapRegionSize=16m -XX:+UseStringDeduplication"
+    COPY --from=build --chown=appuser:appgroup /app/target/*.jar app.jar
+    USER appuser
+    ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar /app/app.jar"]
 {{- else if .build.django }}
-    FROM python:{{ .build.django.pythonVersion }}
-    
+    FROM python:{{ .build.django.version }}-alpine
+    RUN apk add --no-cache gcc musl-dev postgresql-dev jpeg-dev zlib-dev freetype-dev lcms2-dev openjpeg-dev tiff-dev tk-dev tcl-dev
     WORKDIR /app
-    
-    COPY . .
-    
-    RUN {{ .build.django.buildCommand }}
-    
-    
-    CMD ["python", "manage.py", "runserver", "0.0.0.0:{{ .build.django.port }}"]
+    RUN addgroup -g 1000 appgroup && adduser -u 1000 -G appgroup -s /bin/sh -D appuser
+    COPY requirements*.txt ./
+    RUN pip install --no-cache-dir -r requirements.txt
+    COPY --chown=appuser:appgroup . .
+    RUN {{ .build.django.buildCmd }}
+    USER appuser
+    CMD ["python", "manage.py", "runserver", "0.0.0.0:8080"]
 {{- else if .build.flask }}
-    FROM python:{{ .build.flask.pythonVersion }}
-    
+    FROM python:{{ .build.flask.version }}-alpine
+    RUN apk add --no-cache gcc musl-dev
     WORKDIR /app
-    
-    COPY . .
-    
-    RUN {{ .build.flask.buildCommand }}
-    
-    
-    CMD ["python", "app.py"]
+    RUN addgroup -g 1000 appgroup && adduser -u 1000 -G appgroup -s /bin/sh -D appuser
+    COPY requirements*.txt ./
+    RUN pip install --no-cache-dir -r requirements.txt
+    COPY --chown=appuser:appgroup . .
+    RUN {{ .build.flask.buildCmd }}
+    USER appuser
+    CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:8080", "app:app"]
+{{- else if .build.docker }}
 {{- else }}
     FROM alpine:latest
-    
-    
-    CMD ["echo", "No build configuration found"]
+    RUN apk add --no-cache ca-certificates tzdata && addgroup -g 1000 appgroup && adduser -u 1000 -G appgroup -s /bin/sh -D appuser
+    USER appuser
+    CMD ["echo", "No build configuration found. Please specify a build type."]
 {{- end }}
 {{- end }}

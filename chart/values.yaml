@@ -14,19 +14,21 @@ applications: []
 #       hash: latest
 #     build:
 #       gradle:
-#         jdkVersion: 17
-#         buildDir: .
-#         outputDir: /build/libs/*.jar
-#         buildCommand: ./gradlew build -x test --build-cache --no-daemon
+#         version: "17"
+#         sourcePath: "."
+#         outputPath: "/build/libs/*.jar"
+#         buildCmd: "./gradlew build -x test --build-cache --no-daemon"
 #       # or nodejs:
-#       #   nodeVersion: 18
-#       #   buildDir: /
-#       #   command: npm run start
-#       #   buildCommand: npm install && npm run build
+#       #   version: "18"
+#       #   sourcePath: "/"
+#       #   startCmd: "npm start"
+#       #   buildCmd: "npm run build"
 #       # or react:
-#       #   nodeVersion: 18
-#       #   buildCommand: npm install && npm run build
-#       # or dockerfile: {}  # Use existing Dockerfile from repository
+#       #   version: "18"
+#       #   sourcePath: "/"
+#       #   outputPath: "/build"
+#       #   buildCmd: "npm run build"
+#       # or docker: {}  # Use existing Dockerfile from repository
 #     endpoints:
 #       - port: 8080
 #         routes:

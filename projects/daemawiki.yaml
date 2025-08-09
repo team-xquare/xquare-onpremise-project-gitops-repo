@@ -9,10 +9,10 @@ applications:
       hash: latest
     build:
       gradle:
-        jdkVersion: 21
-        buildDir: .
-        outputDir: /build/libs/*.jar
-        buildCommand: ./gradlew build -x test --build-cache
+        version: 21
+        outputPath: /build/libs/*.jar
+        sourcePath: .
+        buildCmd: ./gradlew build -x test --build-cache
     endpoints:
       - port: 8080
         routes:
@@ -27,10 +27,10 @@ applications:
       hash: latest
     build:
       gradle:
-        jdkVersion: 21
-        buildDir: .
-        outputDir: /build/libs/*.jar
-        buildCommand: ./gradlew build -x test --build-cache
+        version: 21
+        outputPath: /build/libs/*.jar
+        sourcePath: .
+        buildCmd: ./gradlew build -x test --build-cache
     endpoints:
       - port: 8080
         routes:

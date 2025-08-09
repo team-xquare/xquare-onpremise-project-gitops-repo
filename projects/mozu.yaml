@@ -9,10 +9,10 @@ applications:
       hash: latest
     build:
       nodejs:
-        nodeVersion: "20.16"
-        buildDir: /
-        command: npm run start
-        buildCommand: npm install && npm run build
+        version: "20.16"
+        sourcePath: /
+        buildCmd: npm run build
+        startCmd: npm run start
     endpoints:
       - port: 3000
         routes:
@@ -27,10 +27,10 @@ applications:
       hash: latest
     build:
       nodejs:
-        nodeVersion: "20.16"
-        buildDir: /
-        command: npm run start
-        buildCommand: npm install && npm run build
+        version: "20.16"
+        sourcePath: /
+        buildCmd: npm run build
+        startCmd: npm run start
     endpoints:
       - port: 3000
         routes:

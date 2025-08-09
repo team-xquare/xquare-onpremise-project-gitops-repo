@@ -8,10 +8,10 @@ applications:
       installationId: "79908920"
     build:
       gradle:
-        jdkVersion: 11
-        buildDir: .
-        outputDir: /build/libs/*.jar
-        buildCommand: ./gradlew build -x test
+        version: 11
+        outputPath: /build/libs/*.jar
+        sourcePath: .
+        buildCmd: ./gradlew build -x test
     endpoints:
       - port: 8080
         routes:
@@ -25,9 +25,9 @@ applications:
       installationId: "79908920"
     build:
       react:
-        nodeVersion: "18"
-        buildDir: /packages/main
-        buildCommand: cd packages/main && npm install && npm run build
+        version: "18"
+        sourcePath: /packages/main
+        buildCmd: npm run build
     endpoints:
       - port: 8080
         routes:
@@ -41,9 +41,9 @@ applications:
       installationId: "79908920"
     build:
       react:
-        nodeVersion: "18"
-        buildDir: /packages/teacher
-        buildCommand: cd packages/teacher && npm install && npm run build
+        version: "18"
+        sourcePath: /packages/teacher
+        buildCmd: npm run build
     endpoints:
       - port: 8080
         routes:
@@ -57,9 +57,9 @@ applications:
       installationId: "79908920"
     build:
       react:
-        nodeVersion: "18"
-        buildDir: /packages/student
-        buildCommand: cd packages/student && npm install && npm run build
+        version: "18"
+        sourcePath: /packages/student
+        buildCmd: npm run build
     endpoints:
       - port: 8080
         routes:

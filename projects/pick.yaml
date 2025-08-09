@@ -9,10 +9,10 @@ applications:
       hash: latest
     build:
       gradle:
-        jdkVersion: 17
-        buildDir: /
-        outputDir: /build/libs/PICK2024_SERVER-0.0.1-SNAPSHOT.jar
-        buildCommand: ./gradlew build -x test
+        version: 17
+        outputPath: /build/libs/PICK2024_SERVER-0.0.1-SNAPSHOT.jar
+        sourcePath: /
+        buildCmd: ./gradlew build -x test
     endpoints:
       - port: 8080
         routes:
@@ -27,10 +27,10 @@ applications:
       hash: latest
     build:
       gradle:
-        jdkVersion: 17
-        buildDir: /
-        outputDir: /build/libs/PICK2024_SERVER-0.0.1-SNAPSHOT.jar
-        buildCommand: ./gradlew build -x test
+        version: 17
+        outputPath: /build/libs/PICK2024_SERVER-0.0.1-SNAPSHOT.jar
+        sourcePath: /
+        buildCmd: ./gradlew build -x test
     endpoints:
       - port: 8080
         routes:
@@ -44,8 +44,8 @@ applications:
       installationId: "64595989"
     build:
       react:
-        nodeVersion: "18"
-        buildCommand: npm install && npm run build
+        version: "18"
+        buildCmd: npm run build
     endpoints:
       - port: 8080
         routes:
@@ -59,8 +59,8 @@ applications:
       installationId: "64595989"
     build:
       react:
-        nodeVersion: "18"
-        buildCommand: npm install && npm run build
+        version: "18"
+        buildCmd: npm run build
     endpoints:
       - port: 8080
         routes:
@@ -74,8 +74,8 @@ applications:
       installationId: "64595989"
     build:
       react:
-        nodeVersion: "18"
-        buildCommand: npm install && npm run build
+        version: "18"
+        buildCmd: npm run build
     endpoints:
       - port: 8080
         routes:
@@ -89,8 +89,8 @@ applications:
       installationId: "64595989"
     build:
       react:
-        nodeVersion: "18"
-        buildCommand: npm install && npm run build
+        version: "18"
+        buildCmd: npm run build
     endpoints:
       - port: 8080
         routes:

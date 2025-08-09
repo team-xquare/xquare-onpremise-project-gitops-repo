@@ -9,10 +9,10 @@ applications:
       hash: latest
     build:
       gradle:
-        jdkVersion: 17
-        buildDir: /
-        outputDir: /helper-infrastructure/build/libs/helper-infrastructure-0.0.1-SNAPSHOT.jar
-        buildCommand: ./gradlew build -x test
+        version: 17
+        outputPath: /helper-infrastructure/build/libs/helper-infrastructure-0.0.1-SNAPSHOT.jar
+        sourcePath: /
+        buildCmd: ./gradlew build -x test
     endpoints:
       - port: 8080
         routes:

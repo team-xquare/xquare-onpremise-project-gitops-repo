@@ -9,12 +9,12 @@ applications:
       hash: latest
     build:
       gradle:
-        jdkVersion: 17
-        buildDir: .
-        outputDir: /dms-infrastructure/build/libs/*.jar
-        buildCommand:
-          export _JAVA_OPTIONS="-XX:-UsePerfData" && ./gradlew build -x
-          test -x detekt --build-cache --no-daemon
+        version: 17
+        outputPath: /dms-infrastructure/build/libs/*.jar
+        sourcePath: .
+        buildCmd:
+          export _JAVA_OPTIONS="-XX:-UsePerfData" && ./gradlew build -x test
+          -x detekt --build-cache --no-daemon
     endpoints:
       - port: 8080
         routes:
@@ -29,12 +29,12 @@ applications:
       hash: latest
     build:
       gradle:
-        jdkVersion: 17
-        buildDir: .
-        outputDir: /dms-infrastructure/build/libs/*.jar
-        buildCommand:
-          export _JAVA_OPTIONS="-XX:-UsePerfData" && ./gradlew build -x
-          test -x detekt --build-cache --no-daemon
+        version: 17
+        outputPath: /dms-infrastructure/build/libs/*.jar
+        sourcePath: .
+        buildCmd:
+          export _JAVA_OPTIONS="-XX:-UsePerfData" && ./gradlew build -x test
+          -x detekt --build-cache --no-daemon
     endpoints:
       - port: 8080
         routes:
