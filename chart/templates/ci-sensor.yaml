@@ -122,13 +122,6 @@ spec:
                       env:
                         - name: DOCKER_CONFIG
                           value: "/kaniko/.docker"
-                      resources:
-                        requests:
-                          cpu: 1
-                          memory: 7Gi
-                        limits:
-                          cpu: 2
-                          memory: 8Gi
                       volumeMounts:
                         - name: workspace
                           mountPath: /workspace
@@ -172,13 +165,6 @@ spec:
                               secretKeyRef:
                                 name: github-app-pem
                                 key: privateKey.pem
-                        resources:
-                          requests:
-                            cpu: 1000m
-                            memory: 7G
-                          limits:
-                            cpu: 2000m
-                            memory: 8G
                         volumeMounts:
                           - name: workspace
                             mountPath: /workspace
@@ -217,13 +203,6 @@ spec:
                             secretKeyRef:
                               key: token
                               name: github-token
-                      resources:
-                        requests:
-                          cpu: 10m
-                          memory: 20Mi
-                        limits:
-                          cpu: 30m
-                          memory: 40Mi
                 volumes:
                   - name: workspace
                     emptyDir: {}
