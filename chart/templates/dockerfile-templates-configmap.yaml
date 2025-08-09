@@ -27,7 +27,6 @@ data:
     ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar /app/app.jar"]
 {{- else if .build.nodejs }}
     FROM node:{{ .build.nodejs.version }}-alpine AS build
-    RUN apk add --no-cache python3 make g++ git
     WORKDIR /app
     COPY package*.json ./
     {{- if ne .build.nodejs.buildDir "/" }}
@@ -45,7 +44,6 @@ data:
     CMD {{ .build.nodejs.startCmd | default "npm start" | split " " | toJson }}
 {{- else if .build.react }}
     FROM node:{{ .build.react.version }}-alpine AS build
-    RUN apk add --no-cache python3 make g++ git
     WORKDIR /app
     COPY {{ .build.react.dependencies | default "package*.json" }} ./
     {{- if and .build.react.sourcePath (ne .build.react.sourcePath "/") }}
@@ -62,7 +60,6 @@ data:
     CMD ["nginx", "-g", "daemon off;"]
 {{- else if .build.vite }}
     FROM node:{{ .build.vite.version }}-alpine AS build
-    RUN apk add --no-cache python3 make g++ git
     WORKDIR /app
     COPY {{ .build.vite.dependencies | default "package*.json" }} ./
     {{- if and .build.vite.sourcePath (ne .build.vite.sourcePath "/") }}
@@ -79,7 +76,6 @@ data:
     CMD ["nginx", "-g", "daemon off;"]
 {{- else if .build.vue }}
     FROM node:{{ .build.vue.version }}-alpine AS build
-    RUN apk add --no-cache python3 make g++ git
     WORKDIR /app
     COPY package*.json ./
     {{- if ne .build.vue.buildDir "/" }}
@@ -96,7 +92,6 @@ data:
     CMD ["nginx", "-g", "daemon off;"]
 {{- else if .build.nextjs }}
     FROM node:{{ .build.nextjs.version }}-alpine AS build
-    RUN apk add --no-cache python3 make g++ git
     WORKDIR /app
     COPY package*.json ./
     {{- if ne .build.nextjs.buildDir "/" }}
