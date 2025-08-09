@@ -22,7 +22,7 @@ data:
     WORKDIR /app
     ENV TZ=Asia/Seoul JAVA_OPTS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -XX:+UseG1GC -XX:G1HeapRegionSize=16m -XX:+UseStringDeduplication"
     COPY --from=build --chown=appuser:appgroup /app{{ .build.gradle.outputPath | default "/build/libs/*.jar" }} /tmp/libs/
-    RUN find /tmp/libs -name "*.jar" ! -name "*-plain.jar" -exec cp {} /app/app.jar \; && rm -rf /tmp/libs && chown appuser:appgroup /app/app.jar
+    RUN find /tmp/libs -name "*.jar" \\! -name "*-plain.jar" -exec cp {} /app/app.jar \\; && rm -rf /tmp/libs && chown appuser:appgroup /app/app.jar
     USER appuser
     ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar /app/app.jar"]
 {{- else if .build.nodejs }}
@@ -30,7 +30,7 @@ data:
     RUN apk add --no-cache python3 make g++ git
     WORKDIR /app
     COPY package*.json ./
-    {{- if .build.nodejs.buildDir != "/" }}
+    {{- if ne .build.nodejs.buildDir "/" }}
     COPY {{ .build.nodejs.buildDir }}/package*.json {{ .build.nodejs.buildDir }}/
     {{- end }}
     RUN npm ci --only=production --no-audit --no-fund
@@ -82,7 +82,7 @@ data:
     RUN apk add --no-cache python3 make g++ git
     WORKDIR /app
     COPY package*.json ./
-    {{- if .build.vue.buildDir != "/" }}
+    {{- if ne .build.vue.buildDir "/" }}
     COPY {{ .build.vue.buildDir }}/package*.json {{ .build.vue.buildDir }}/
     {{- end }}
     RUN npm ci --no-audit --no-fund
@@ -99,7 +99,7 @@ data:
     RUN apk add --no-cache python3 make g++ git
     WORKDIR /app
     COPY package*.json ./
-    {{- if .build.nextjs.buildDir != "/" }}
+    {{- if ne .build.nextjs.buildDir "/" }}
     COPY {{ .build.nextjs.buildDir }}/package*.json {{ .build.nextjs.buildDir }}/
     {{- end }}
     RUN npm ci --no-audit --no-fund

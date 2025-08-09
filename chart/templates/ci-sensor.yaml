@@ -108,8 +108,8 @@ spec:
                     container:
                       image: gcr.io/kaniko-project/executor:latest
                       args:
-                        - "--context=/workspace/repo{{ .build.docker.sourcePath | default "" }}"
-                        - "--dockerfile=/workspace/repo{{ .build.docker.sourcePath | default "" }}/Dockerfile"
+                        - "--context=/workspace/repo{{ if .build.docker }}{{ .build.docker.sourcePath | default "" }}{{ end }}"
+                        - "--dockerfile=/workspace/repo{{ if .build.docker }}{{ .build.docker.sourcePath | default "" }}{{ end }}/Dockerfile"
                         - "--destination={{ include "project.harborRegistry" $ }}/xquare/{{ $.Values.project }}-{{ include "app.serviceName" . }}:latest"
                         {{- if .github.hash }}
                         - "--destination={{ include "project.harborRegistry" $ }}/xquare/{{ $.Values.project }}-{{ include "app.serviceName" . }}:{{`{{inputs.parameters.sha}}`}}"
