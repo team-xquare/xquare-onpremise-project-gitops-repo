@@ -120,7 +120,7 @@ applications:
         version: "22"
         outputPath: /apps/entry-user/dist
         sourcePath: /
-        buildCmd: npm ci && npx nx run @entry-internship/entry-user:build
+        buildCmd: yarn install --frozen-lockfile && yarn nx run @entry-internship/entry-user:build
     endpoints:
       - port: 8080
         routes:
@@ -137,7 +137,7 @@ applications:
         version: "22"
         outputPath: /apps/entry-admin/dist
         sourcePath: /
-        buildCmd: npm ci && npx nx run @entry-internship/entry-admin:build
+        buildCmd: yarn install --frozen-lockfile && yarn nx run @entry-internship/entry-admin:build
     endpoints:
       - port: 8080
         routes:
@@ -186,10 +186,11 @@ applications:
       branch: main
       installationId: "77967720"
     build:
-      react:
+      vite:
         version: "18"
+        outputPath: /dist
         sourcePath: /packages/Entry-LTS
-        buildCmd: npm ci && npm run build
+        buildCmd: yarn install --frozen-lockfile && yarn build
     endpoints:
       - port: 8080
         routes:
@@ -202,10 +203,11 @@ applications:
       branch: main
       installationId: "77967720"
     build:
-      react:
+      vite:
         version: "18"
+        outputPath: /dist
         sourcePath: /packages/Entry-Auth
-        buildCmd: npm ci && npm run build
+        buildCmd: yarn install --frozen-lockfile && yarn build
     endpoints:
       - port: 8080
         routes:
@@ -218,10 +220,11 @@ applications:
       branch: main
       installationId: "77967720"
     build:
-      react:
+      vite:
         version: "18"
+        outputPath: /dist
         sourcePath: /packages/Admission-LTS
-        buildCmd: npm ci && npm run build
+        buildCmd: yarn install --frozen-lockfile && yarn build
     endpoints:
       - port: 8080
         routes:
@@ -234,10 +237,11 @@ applications:
       branch: main
       installationId: "77967720"
     build:
-      react:
+      vite:
         version: "18"
+        outputPath: /dist
         sourcePath: /packages/Admission-Admin-LTS
-        buildCmd: npm ci && npm run build
+        buildCmd: yarn install --frozen-lockfile && yarn build
     endpoints:
       - port: 8080
         routes:

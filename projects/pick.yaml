@@ -43,9 +43,11 @@ applications:
       branch: main
       installationId: "64595989"
     build:
-      react:
+      vite:
         version: "18"
-        buildCmd: npm ci && npm run build
+        outputPath: /dist
+        sourcePath: .
+        buildCmd: yarn install --frozen-lockfile && yarn build
     endpoints:
       - port: 8080
         routes:
@@ -58,9 +60,11 @@ applications:
       branch: develop
       installationId: "64595989"
     build:
-      react:
+      vite:
         version: "18"
-        buildCmd: npm ci && npm run build
+        outputPath: /dist
+        sourcePath: .
+        buildCmd: yarn install --frozen-lockfile && yarn build
     endpoints:
       - port: 8080
         routes:
@@ -73,9 +77,11 @@ applications:
       branch: main
       installationId: "64595989"
     build:
-      react:
+      vite:
         version: "18"
-        buildCmd: npm ci && npm run build
+        outputPath: /dist
+        sourcePath: .
+        buildCmd: yarn install --frozen-lockfile && yarn build
     endpoints:
       - port: 8080
         routes:
@@ -88,9 +94,11 @@ applications:
       branch: develop
       installationId: "64595989"
     build:
-      react:
+      vite:
         version: "18"
-        buildCmd: npm ci && npm run build
+        outputPath: /dist
+        sourcePath: .
+        buildCmd: yarn install --frozen-lockfile && yarn build
     endpoints:
       - port: 8080
         routes:
