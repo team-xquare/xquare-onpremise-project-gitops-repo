@@ -22,11 +22,9 @@ applications: []
 #       #   nodeVersion: 18
 #       #   buildDir: /
 #       #   command: npm run start
-#       #   port: 3000
 #       #   buildCommand: npm install && npm run build
 #       # or react:
 #       #   nodeVersion: 18
-#       #   port: 3000
 #       #   buildCommand: npm install && npm run build
 #       # or dockerfile: {}  # Use existing Dockerfile from repository
 #     endpoints:
