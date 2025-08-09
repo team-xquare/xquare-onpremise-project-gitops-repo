@@ -11,7 +11,7 @@ applications:
       nodejs:
         version: 22.5.1
         sourcePath: /
-        buildCmd: yarn build
+        buildCmd: yarn install --frozen-lockfile && yarn build
         startCmd: yarn start
     endpoints:
       - port: 3000

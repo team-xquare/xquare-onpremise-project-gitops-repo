@@ -27,7 +27,7 @@ applications:
       react:
         version: "18"
         sourcePath: /packages/main
-        buildCmd: npm run build
+        buildCmd: npm ci && npm run build
     endpoints:
       - port: 8080
         routes:
@@ -43,7 +43,7 @@ applications:
       react:
         version: "18"
         sourcePath: /packages/teacher
-        buildCmd: npm run build
+        buildCmd: npm ci && npm run build
     endpoints:
       - port: 8080
         routes:
@@ -59,7 +59,7 @@ applications:
       react:
         version: "18"
         sourcePath: /packages/student
-        buildCmd: npm run build
+        buildCmd: npm ci && npm run build
     endpoints:
       - port: 8080
         routes:

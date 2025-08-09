@@ -10,7 +10,7 @@ applications:
       nodejs:
         version: "22"
         sourcePath: /
-        buildCmd: npm run build
+        buildCmd: npm ci && npm run build
         startCmd: npm run start
     endpoints:
       - port: 3000
@@ -28,7 +28,7 @@ applications:
       nodejs:
         version: "22"
         sourcePath: /
-        buildCmd: npm run build
+        buildCmd: npm ci && npm run build
         startCmd: npm run start
     endpoints:
       - port: 3000
