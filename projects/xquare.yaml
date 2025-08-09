@@ -11,10 +11,9 @@ applications:
         nodeVersion: "22"
         buildDir: /
         outputDir: /build
-        port: 3000
         buildCommand: npm run build
     endpoints:
-      - port: 3000
+      - port: 8080
         routes:
           - infra.xquare.app
   - name: xquare-frontend-stag
@@ -30,10 +29,9 @@ applications:
         nodeVersion: "22"
         buildDir: /
         outputDir: /build
-        port: 3000
         buildCommand: npm run build
     endpoints:
-      - port: 3000
+      - port: 8080
         routes:
           - infra-stag.xquare.app
   - name: xquare-infra-prod

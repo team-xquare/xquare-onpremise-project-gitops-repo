@@ -12,7 +12,6 @@ applications:
         nodeVersion: "20.16"
         buildDir: /
         command: npm run start
-        port: 3000
         buildCommand: npm install && npm run build
     endpoints:
       - port: 3000
@@ -31,7 +30,6 @@ applications:
         nodeVersion: "20.16"
         buildDir: /
         command: npm run start
-        port: 3000
         buildCommand: npm install && npm run build
     endpoints:
       - port: 3000

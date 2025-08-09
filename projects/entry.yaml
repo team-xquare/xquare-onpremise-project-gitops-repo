@@ -120,10 +120,9 @@ applications:
         nodeVersion: "22"
         buildDir: /
         outputDir: /apps/entry-user/dist
-        port: 4200
         buildCommand: yarn install && npx nx run @entry-internship/entry-user:build
     endpoints:
-      - port: 4200
+      - port: 8080
         routes:
           - entry-recruit.xquare.app
   - name: entry-internship-admin-stag
@@ -138,10 +137,9 @@ applications:
         nodeVersion: "22"
         buildDir: /
         outputDir: /apps/entry-admin/dist
-        port: 4200
         buildCommand: yarn install && npx nx run @entry-internship/entry-admin:build
     endpoints:
-      - port: 4200
+      - port: 8080
         routes:
           - entry-recruit-admin.xquare.app
   - name: equus-status-prod
@@ -258,6 +256,6 @@ applications:
         outputDir: /build/libs/*.jar
         buildCommand: ./gradlew build -x test
     endpoints:
-      - port: 8888
+      - port: 8080
         routes:
           - equus-config.xquare.app
