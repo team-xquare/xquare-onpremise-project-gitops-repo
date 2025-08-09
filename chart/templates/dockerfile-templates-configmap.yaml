@@ -28,12 +28,7 @@ data:
 {{- else if .build.nodejs }}
     FROM node:{{ .build.nodejs.version }}-alpine AS build
     WORKDIR /app
-    COPY package*.json ./
-    {{- if ne .build.nodejs.buildDir "/" }}
-    COPY {{ .build.nodejs.buildDir }}/package*.json {{ .build.nodejs.buildDir }}/
-    {{- end }}
-    RUN npm ci --only=production --no-audit --no-fund
-    COPY . .
+    COPY {{ .build.nodejs.sourcePath | default "." }}/ .
     RUN {{ .build.nodejs.buildCmd }}
     FROM node:{{ .build.nodejs.version }}-alpine
     RUN apk add --no-cache dumb-init && addgroup -g 1000 appgroup && adduser -u 1000 -G appgroup -s /bin/sh -D appuser
@@ -45,12 +40,7 @@ data:
 {{- else if .build.react }}
     FROM node:{{ .build.react.version }}-alpine AS build
     WORKDIR /app
-    COPY {{ .build.react.dependencies | default "package*.json" }} ./
-    {{- if and .build.react.sourcePath (ne .build.react.sourcePath "/") }}
-    COPY {{ .build.react.sourcePath }}/{{ .build.react.dependencies | default "package*.json" }} {{ .build.react.sourcePath }}/
-    {{- end }}
-    RUN npm ci --no-audit --no-fund
-    COPY . .
+    COPY {{ .build.react.sourcePath | default "." }}/ .
     RUN {{ .build.react.buildCmd }}
     FROM nginx:alpine
     RUN apk add --no-cache tzdata wget && addgroup -g 101 nginx-group || true && adduser -u 101 -G nginx-group -s /bin/sh -D nginx-user || true
@@ -61,12 +51,7 @@ data:
 {{- else if .build.vite }}
     FROM node:{{ .build.vite.version }}-alpine AS build
     WORKDIR /app
-    COPY {{ .build.vite.dependencies | default "package*.json" }} ./
-    {{- if and .build.vite.sourcePath (ne .build.vite.sourcePath "/") }}
-    COPY {{ .build.vite.sourcePath }}/{{ .build.vite.dependencies | default "package*.json" }} {{ .build.vite.sourcePath }}/
-    {{- end }}
-    RUN npm ci --no-audit --no-fund
-    COPY . .
+    COPY {{ .build.vite.sourcePath | default "." }}/ .
     RUN {{ .build.vite.buildCmd }}
     FROM nginx:alpine
     RUN apk add --no-cache tzdata wget
@@ -77,12 +62,7 @@ data:
 {{- else if .build.vue }}
     FROM node:{{ .build.vue.version }}-alpine AS build
     WORKDIR /app
-    COPY package*.json ./
-    {{- if ne .build.vue.buildDir "/" }}
-    COPY {{ .build.vue.buildDir }}/package*.json {{ .build.vue.buildDir }}/
-    {{- end }}
-    RUN npm ci --no-audit --no-fund
-    COPY . .
+    COPY {{ .build.vue.sourcePath | default "." }}/ .
     RUN {{ .build.vue.buildCmd }}
     FROM nginx:alpine
     RUN apk add --no-cache tzdata wget
@@ -93,31 +73,23 @@ data:
 {{- else if .build.nextjs }}
     FROM node:{{ .build.nextjs.version }}-alpine AS build
     WORKDIR /app
-    COPY package*.json ./
-    {{- if ne .build.nextjs.buildDir "/" }}
-    COPY {{ .build.nextjs.buildDir }}/package*.json {{ .build.nextjs.buildDir }}/
-    {{- end }}
-    RUN npm ci --no-audit --no-fund
-    COPY . .
+    COPY {{ .build.nextjs.sourcePath | default "." }}/ .
     RUN {{ .build.nextjs.buildCmd }}
     FROM node:{{ .build.nextjs.version }}-alpine
     RUN apk add --no-cache dumb-init tzdata && addgroup -g 1000 appgroup && adduser -u 1000 -G appgroup -s /bin/sh -D appuser
     WORKDIR /app
     COPY --from=build --chown=appuser:appgroup /app/.next ./.next
-    COPY --from=build --chown=appuser:appgroup /app/public ./public
-    COPY --from=build --chown=appuser:appgroup /app/package*.json ./
-    COPY --from=build --chown=appuser:appgroup /app/next.config.* ./ 2>/dev/null || true
-    RUN npm ci --only=production --no-audit --no-fund && npm cache clean --force
+    COPY --from=build --chown=appuser:appgroup /app/public ./public 2>/dev/null || true
     USER appuser
     ENTRYPOINT ["dumb-init", "--"]
-    CMD ["npm", "start"]
+    CMD {{ .build.nextjs.startCmd | default "npm start" | split " " | toJson }}
 {{- else if .build.go }}
     FROM golang:{{ .build.go.version }}-alpine AS build
     RUN apk add --no-cache git ca-certificates tzdata
     WORKDIR /app
     COPY go.mod go.sum ./
     RUN go mod download
-    COPY . .
+    COPY {{ .build.go.sourcePath | default "." }}/ .
     RUN CGO_ENABLED=0 GOOS=linux {{ .build.go.buildCmd }}
     FROM alpine:latest
     RUN apk --no-cache add ca-certificates tzdata wget && addgroup -g 1000 appgroup && adduser -u 1000 -G appgroup -s /bin/sh -D appuser
@@ -131,7 +103,7 @@ data:
     WORKDIR /app
     COPY Cargo.toml Cargo.lock ./
     RUN mkdir src && echo "fn main() {}" > src/main.rs && cargo build --release && rm -rf src
-    COPY . .
+    COPY {{ .build.rust.sourcePath | default "." }}/ .
     RUN {{ .build.rust.buildCmd }}
     FROM alpine:latest
     RUN apk --no-cache add ca-certificates tzdata wget libgcc && addgroup -g 1000 appgroup && adduser -u 1000 -G appgroup -s /bin/sh -D appuser
@@ -145,7 +117,7 @@ data:
     WORKDIR /app
     COPY pom.xml ./
     RUN mvn dependency:go-offline -B
-    COPY . .
+    COPY {{ .build.maven.sourcePath | default "." }}/ .
     RUN {{ .build.maven.buildCmd }}
     FROM eclipse-temurin:{{ .build.maven.version }}-jre-alpine
     RUN apk add --no-cache tzdata wget && addgroup -g 1000 appgroup && adduser -u 1000 -G appgroup -s /bin/sh -D appuser
@@ -161,7 +133,7 @@ data:
     RUN addgroup -g 1000 appgroup && adduser -u 1000 -G appgroup -s /bin/sh -D appuser
     COPY requirements*.txt ./
     RUN pip install --no-cache-dir -r requirements.txt
-    COPY --chown=appuser:appgroup . .
+    COPY --chown=appuser:appgroup {{ .build.django.sourcePath | default "." }}/ .
     RUN {{ .build.django.buildCmd }}
     USER appuser
     CMD ["python", "manage.py", "runserver", "0.0.0.0:8080"]
@@ -172,7 +144,7 @@ data:
     RUN addgroup -g 1000 appgroup && adduser -u 1000 -G appgroup -s /bin/sh -D appuser
     COPY requirements*.txt ./
     RUN pip install --no-cache-dir -r requirements.txt
-    COPY --chown=appuser:appgroup . .
+    COPY --chown=appuser:appgroup {{ .build.django.sourcePath | default "." }}/ .
     RUN {{ .build.flask.buildCmd }}
     USER appuser
     CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:8080", "app:app"]
