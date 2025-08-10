@@ -1,6 +1,6 @@
 applications:
   - name: helper-prod
-    tier: x3.nano
+    tier: x3.small
     github:
       owner: Team-LoopCat
       repo: Helper_Backend
