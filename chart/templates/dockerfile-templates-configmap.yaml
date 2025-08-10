@@ -37,7 +37,8 @@ data:
     COPY --from=build --chown=appuser:appgroup /app .
     USER appuser
     ENTRYPOINT ["dumb-init", "--"]
-    CMD [{{- $cmds := (.build.nodejs.startCmd | default "npm start" | split " " | compact) }}{{- range $i, $cmd := $cmds }}{{if gt $i 0}}, {{end}}"{{ $cmd }}"{{- end }}]
+    {{- $startCmd := (splitList " " (.build.nodejs.startCmd | default "npm start")) }}
+    CMD [{{- range $i, $cmd := $startCmd }}{{if $i}}, {{end}}"{{ $cmd }}"{{- end }}]
 {{- else if .build.react }}
     FROM node:{{ .build.react.version }}-alpine AS build
     RUN corepack enable
@@ -87,7 +88,8 @@ data:
     COPY --from=build --chown=appuser:appgroup /app/public ./public 2>/dev/null || true
     USER appuser
     ENTRYPOINT ["dumb-init", "--"]
-    CMD [{{- $cmds := (.build.nextjs.startCmd | default "npm start" | split " " | compact) }}{{- range $i, $cmd := $cmds }}{{if gt $i 0}}, {{end}}"{{ $cmd }}"{{- end }}]
+    {{- $startCmd := (splitList " " (.build.nextjs.startCmd | default "npm start")) }}
+    CMD [{{- range $i, $cmd := $startCmd }}{{if $i}}, {{end}}"{{ $cmd }}"{{- end }}]
 {{- else if .build.go }}
     FROM golang:{{ .build.go.version }}-alpine AS build
     RUN apk add --no-cache git ca-certificates tzdata
