@@ -1,6 +1,6 @@
 applications:
   - name: lotura-prod
-    tier: x3.micro
+    tier: x3.small
     github:
       owner: team-osj
       repo: Lotura_BackEnd_V2
