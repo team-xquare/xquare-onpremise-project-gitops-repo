@@ -37,7 +37,7 @@ data:
     COPY --from=build --chown=appuser:appgroup /app .
     USER appuser
     ENTRYPOINT ["dumb-init", "--"]
-    CMD {{ .build.nodejs.startCmd | default "npm start" | split " " | toJson }}
+    CMD [{{- range $i, $cmd := (.build.nodejs.startCmd | default "npm start" | split " ") }}{{if $i}}, {{end}}"{{ $cmd }}"{{- end }}]
 {{- else if .build.react }}
     FROM node:{{ .build.react.version }}-alpine AS build
     RUN corepack enable
@@ -87,7 +87,7 @@ data:
     COPY --from=build --chown=appuser:appgroup /app/public ./public 2>/dev/null || true
     USER appuser
     ENTRYPOINT ["dumb-init", "--"]
-    CMD {{ .build.nextjs.startCmd | default "npm start" | split " " | toJson }}
+    CMD [{{- range $i, $cmd := (.build.nextjs.startCmd | default "npm start" | split " ") }}{{if $i}}, {{end}}"{{ $cmd }}"{{- end }}]
 {{- else if .build.go }}
     FROM golang:{{ .build.go.version }}-alpine AS build
     RUN apk add --no-cache git ca-certificates tzdata
