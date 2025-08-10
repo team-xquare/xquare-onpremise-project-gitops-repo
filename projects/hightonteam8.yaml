@@ -23,6 +23,7 @@ applications:
       repo: redis-docker
       branch: main
       installationId: "78893207"
+      hash: latest
     build:
       docker:
         sourcePath: ""
