@@ -14,13 +14,13 @@ data:
     FROM eclipse-temurin:{{ .build.gradle.version }}-jdk-alpine AS build
     WORKDIR /app
     RUN apk add --no-cache bash findutils
-    ENV GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.parallel=true -Dorg.gradle.configureondemand=true" GRADLE_USER_HOME="/app/.gradle"
+    ENV GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.parallel=true -Dorg.gradle.configureondemand=true -XX:-UsePerfData" GRADLE_USER_HOME="/app/.gradle"
     COPY {{ .build.gradle.sourcePath | default "." }}/ .
-    RUN chmod +x gradlew && {{ .build.gradle.buildCmd }} && rm -rf .gradle /root/.gradle
+    RUN chmod +x gradlew && {{ .build.gradle.buildCmd }} --no-daemon && rm -rf .gradle /root/.gradle /tmp/hsperfdata_* /tmp/.java_pid*
     FROM eclipse-temurin:{{ .build.gradle.version }}-jre-alpine
     RUN apk add --no-cache tzdata && addgroup -g 1001 appgroup && adduser -u 1001 -G appgroup -s /bin/sh -D appuser
     WORKDIR /app
-    ENV TZ=Asia/Seoul JAVA_OPTS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -XX:+UseG1GC -XX:G1HeapRegionSize=16m -XX:+UseStringDeduplication"
+    ENV TZ=Asia/Seoul JAVA_OPTS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -XX:+UseG1GC -XX:G1HeapRegionSize=16m -XX:+UseStringDeduplication -XX:-UsePerfData"
     COPY --from=build --chown=appuser:appgroup /app{{ .build.gradle.outputPath | default "/build/libs/*.jar" }} /tmp/libs/
     RUN find /tmp/libs -name "*.jar" ! -name "*-plain.jar" -exec cp {} /app/app.jar \; && rm -rf /tmp/libs && chown appuser:appgroup /app/app.jar
     USER appuser
@@ -120,14 +120,15 @@ data:
     FROM eclipse-temurin:{{ .build.maven.version }}-jdk-alpine AS build
     RUN apk add --no-cache bash findutils
     WORKDIR /app
+    ENV MAVEN_OPTS="-XX:-UsePerfData"
     COPY pom.xml ./
     RUN mvn dependency:go-offline -B
     COPY {{ .build.maven.sourcePath | default "." }}/ .
-    RUN {{ .build.maven.buildCmd }}
+    RUN {{ .build.maven.buildCmd }} && rm -rf /tmp/hsperfdata_* /tmp/.java_pid*
     FROM eclipse-temurin:{{ .build.maven.version }}-jre-alpine
     RUN apk add --no-cache tzdata wget && addgroup -g 1001 appgroup && adduser -u 1001 -G appgroup -s /bin/sh -D appuser
     WORKDIR /app
-    ENV TZ=Asia/Seoul JAVA_OPTS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -XX:+UseG1GC -XX:G1HeapRegionSize=16m -XX:+UseStringDeduplication"
+    ENV TZ=Asia/Seoul JAVA_OPTS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -XX:+UseG1GC -XX:G1HeapRegionSize=16m -XX:+UseStringDeduplication -XX:-UsePerfData"
     COPY --from=build --chown=appuser:appgroup /app/target/*.jar app.jar
     USER appuser
     ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar /app/app.jar"]
