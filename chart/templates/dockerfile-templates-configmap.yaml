@@ -27,6 +27,7 @@ data:
     ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar /app/app.jar"]
 {{- else if .build.nodejs }}
     FROM node:{{ .build.nodejs.version }}-alpine AS build
+    RUN corepack enable
     WORKDIR /app
     COPY {{ .build.nodejs.sourcePath | default "." }}/ .
     RUN {{ .build.nodejs.buildCmd }}
@@ -39,6 +40,7 @@ data:
     CMD {{ .build.nodejs.startCmd | default "npm start" | split " " | toJson }}
 {{- else if .build.react }}
     FROM node:{{ .build.react.version }}-alpine AS build
+    RUN corepack enable
     WORKDIR /app
     COPY {{ .build.react.sourcePath | default "." }}/ .
     RUN {{ .build.react.buildCmd }}
@@ -50,6 +52,7 @@ data:
     CMD ["nginx", "-g", "daemon off;"]
 {{- else if .build.vite }}
     FROM node:{{ .build.vite.version }}-alpine AS build
+    RUN corepack enable
     WORKDIR /app
     COPY {{ .build.vite.sourcePath | default "." }}/ .
     RUN {{ .build.vite.buildCmd }}
@@ -61,6 +64,7 @@ data:
     CMD ["nginx", "-g", "daemon off;"]
 {{- else if .build.vue }}
     FROM node:{{ .build.vue.version }}-alpine AS build
+    RUN corepack enable
     WORKDIR /app
     COPY {{ .build.vue.sourcePath | default "." }}/ .
     RUN {{ .build.vue.buildCmd }}
@@ -72,6 +76,7 @@ data:
     CMD ["nginx", "-g", "daemon off;"]
 {{- else if .build.nextjs }}
     FROM node:{{ .build.nextjs.version }}-alpine AS build
+    RUN corepack enable
     WORKDIR /app
     COPY {{ .build.nextjs.sourcePath | default "." }}/ .
     RUN {{ .build.nextjs.buildCmd }}
