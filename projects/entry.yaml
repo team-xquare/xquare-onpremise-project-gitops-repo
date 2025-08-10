@@ -153,7 +153,7 @@ applications:
       hash: latest
     build:
       vite:
-        version: "18"
+        version: "22"
         outputPath: /packages/Entry-LTS/build
         sourcePath: /
         buildCmd: yarn install && yarn workspace @entrydsm/main build
@@ -170,8 +170,8 @@ applications:
       installationId: "77967720"
     build:
       vite:
-        version: "18"
-        outputPath: /packages/Entry-Auth/dist
+        version: "22"
+        outputPath: /packages/Entry-Auth/build
         sourcePath: /
         buildCmd: yarn install && yarn workspace @entrydsm/auth build
     endpoints:
@@ -187,8 +187,8 @@ applications:
       installationId: "77967720"
     build:
       vite:
-        version: "18"
-        outputPath: /packages/Admission-LTS/dist
+        version: "22"
+        outputPath: /packages/Admission-LTS/build
         sourcePath: /
         buildCmd: yarn install && yarn workspace @entrydsm/admission build
     endpoints:
@@ -204,8 +204,8 @@ applications:
       installationId: "77967720"
     build:
       vite:
-        version: "18"
-        outputPath: /packages/Admission-Admin-LTS/dist
+        version: "22"
+        outputPath: /packages/Admission-Admin-LTS/build
         sourcePath: /
         buildCmd: yarn install && yarn workspace @entrydsm/admin build
     endpoints:
