@@ -18,7 +18,7 @@ data:
     COPY {{ .build.gradle.sourcePath | default "." }}/ .
     RUN chmod +x gradlew && {{ .build.gradle.buildCmd }} && rm -rf .gradle /root/.gradle
     FROM eclipse-temurin:{{ .build.gradle.version }}-jre-alpine
-    RUN apk add --no-cache tzdata && addgroup -g 1000 appgroup && adduser -u 1000 -G appgroup -s /bin/sh -D appuser
+    RUN apk add --no-cache tzdata && addgroup -g 1001 appgroup && adduser -u 1001 -G appgroup -s /bin/sh -D appuser
     WORKDIR /app
     ENV TZ=Asia/Seoul JAVA_OPTS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -XX:+UseG1GC -XX:G1HeapRegionSize=16m -XX:+UseStringDeduplication"
     COPY --from=build --chown=appuser:appgroup /app{{ .build.gradle.outputPath | default "/build/libs/*.jar" }} /tmp/libs/
@@ -32,7 +32,7 @@ data:
     COPY {{ .build.nodejs.sourcePath | default "." }}/ .
     RUN {{ .build.nodejs.buildCmd }}
     FROM node:{{ .build.nodejs.version }}-alpine
-    RUN apk add --no-cache dumb-init && addgroup -g 1000 appgroup && adduser -u 1000 -G appgroup -s /bin/sh -D appuser
+    RUN apk add --no-cache dumb-init && addgroup -g 1001 appgroup && adduser -u 1001 -G appgroup -s /bin/sh -D appuser
     WORKDIR /app
     COPY --from=build --chown=appuser:appgroup /app .
     USER appuser
@@ -81,7 +81,7 @@ data:
     COPY {{ .build.nextjs.sourcePath | default "." }}/ .
     RUN {{ .build.nextjs.buildCmd }}
     FROM node:{{ .build.nextjs.version }}-alpine
-    RUN apk add --no-cache dumb-init tzdata && addgroup -g 1000 appgroup && adduser -u 1000 -G appgroup -s /bin/sh -D appuser
+    RUN apk add --no-cache dumb-init tzdata && addgroup -g 1001 appgroup && adduser -u 1001 -G appgroup -s /bin/sh -D appuser
     WORKDIR /app
     COPY --from=build --chown=appuser:appgroup /app/.next ./.next
     COPY --from=build --chown=appuser:appgroup /app/public ./public 2>/dev/null || true
@@ -97,7 +97,7 @@ data:
     COPY {{ .build.go.sourcePath | default "." }}/ .
     RUN CGO_ENABLED=0 GOOS=linux {{ .build.go.buildCmd }}
     FROM alpine:latest
-    RUN apk --no-cache add ca-certificates tzdata wget && addgroup -g 1000 appgroup && adduser -u 1000 -G appgroup -s /bin/sh -D appuser
+    RUN apk --no-cache add ca-certificates tzdata wget && addgroup -g 1001 appgroup && adduser -u 1001 -G appgroup -s /bin/sh -D appuser
     WORKDIR /app
     COPY --from=build --chown=appuser:appgroup /app/main ./main
     USER appuser
@@ -111,7 +111,7 @@ data:
     COPY {{ .build.rust.sourcePath | default "." }}/ .
     RUN {{ .build.rust.buildCmd }}
     FROM alpine:latest
-    RUN apk --no-cache add ca-certificates tzdata wget libgcc && addgroup -g 1000 appgroup && adduser -u 1000 -G appgroup -s /bin/sh -D appuser
+    RUN apk --no-cache add ca-certificates tzdata wget libgcc && addgroup -g 1001 appgroup && adduser -u 1001 -G appgroup -s /bin/sh -D appuser
     WORKDIR /app
     COPY --from=build --chown=appuser:appgroup /app/target/release/app ./app
     USER appuser
@@ -125,7 +125,7 @@ data:
     COPY {{ .build.maven.sourcePath | default "." }}/ .
     RUN {{ .build.maven.buildCmd }}
     FROM eclipse-temurin:{{ .build.maven.version }}-jre-alpine
-    RUN apk add --no-cache tzdata wget && addgroup -g 1000 appgroup && adduser -u 1000 -G appgroup -s /bin/sh -D appuser
+    RUN apk add --no-cache tzdata wget && addgroup -g 1001 appgroup && adduser -u 1001 -G appgroup -s /bin/sh -D appuser
     WORKDIR /app
     ENV TZ=Asia/Seoul JAVA_OPTS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -XX:+UseG1GC -XX:G1HeapRegionSize=16m -XX:+UseStringDeduplication"
     COPY --from=build --chown=appuser:appgroup /app/target/*.jar app.jar
@@ -135,7 +135,7 @@ data:
     FROM python:{{ .build.django.version }}-alpine
     RUN apk add --no-cache gcc musl-dev postgresql-dev jpeg-dev zlib-dev freetype-dev lcms2-dev openjpeg-dev tiff-dev tk-dev tcl-dev
     WORKDIR /app
-    RUN addgroup -g 1000 appgroup && adduser -u 1000 -G appgroup -s /bin/sh -D appuser
+    RUN addgroup -g 1001 appgroup && adduser -u 1001 -G appgroup -s /bin/sh -D appuser
     COPY requirements*.txt ./
     RUN pip install --no-cache-dir -r requirements.txt
     COPY --chown=appuser:appgroup {{ .build.django.sourcePath | default "." }}/ .
@@ -146,7 +146,7 @@ data:
     FROM python:{{ .build.flask.version }}-alpine
     RUN apk add --no-cache gcc musl-dev
     WORKDIR /app
-    RUN addgroup -g 1000 appgroup && adduser -u 1000 -G appgroup -s /bin/sh -D appuser
+    RUN addgroup -g 1001 appgroup && adduser -u 1001 -G appgroup -s /bin/sh -D appuser
     COPY requirements*.txt ./
     RUN pip install --no-cache-dir -r requirements.txt
     COPY --chown=appuser:appgroup {{ .build.django.sourcePath | default "." }}/ .
@@ -156,7 +156,7 @@ data:
 {{- else if .build.docker }}
 {{- else }}
     FROM alpine:latest
-    RUN apk add --no-cache ca-certificates tzdata && addgroup -g 1000 appgroup && adduser -u 1000 -G appgroup -s /bin/sh -D appuser
+    RUN apk add --no-cache ca-certificates tzdata && addgroup -g 1001 appgroup && adduser -u 1001 -G appgroup -s /bin/sh -D appuser
     USER appuser
     CMD ["echo", "No build configuration found. Please specify a build type."]
 {{- end }}
