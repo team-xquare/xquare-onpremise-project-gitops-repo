@@ -1,6 +1,6 @@
 applications:
   - name: nuneddine-deployment-prod
-    tier: x3.nano
+    tier: x3.small
     github:
       owner: taeyang-s-playGround
       repo: Nuneddine
