@@ -6,6 +6,7 @@ applications:
       repo: Equus-Application
       branch: main
       installationId: "77967720"
+      hash: latest
     build:
       gradle:
         version: 17
