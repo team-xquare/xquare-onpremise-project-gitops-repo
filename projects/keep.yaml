@@ -24,6 +24,8 @@ applications:
       branch: develop
       installationId: "66778564"
       # hash: latest
+
+      hash: latest
     build:
       nodejs:
         version: "22"
