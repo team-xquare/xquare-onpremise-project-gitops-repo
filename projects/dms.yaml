@@ -6,12 +6,11 @@ applications:
       repo: DMS-Backend
       branch: main
       installationId: "64597732"
-      hash: latest
     build:
       gradle:
         version: 17
         outputPath: /dms-infrastructure/build/libs/*.jar
-        sourcePath: .
+        sourcePath: /
         buildCmd: export _JAVA_OPTIONS="-XX:-UsePerfData" && ./gradlew build -x test -x detekt --build-cache --no-daemon
     endpoints:
       - port: 8080
@@ -24,14 +23,81 @@ applications:
       repo: DMS-Backend
       branch: develop
       installationId: "64597732"
-      hash: latest
     build:
       gradle:
         version: 17
         outputPath: /dms-infrastructure/build/libs/*.jar
-        sourcePath: .
+        sourcePath: /
         buildCmd: export _JAVA_OPTIONS="-XX:-UsePerfData" && ./gradlew build -x test -x detekt --build-cache --no-daemon
     endpoints:
       - port: 8080
         routes:
           - dms-dev-api.dms-dsm.com
+  - name: dms-frontend-prod
+    tier: x3.small
+    github:
+      owner: team-aliens
+      repo: DMS-Frontend
+      branch: main
+      installationId: "64597732"
+    build:
+      react:
+        version: "22"
+        outputPath: /services/admin/build
+        sourcePath: /
+        buildCmd: yarn install && yarn workspace @service/admin build
+    endpoints:
+      - port: 8080
+        routes:
+          - admin.dms-dsm.com
+  - name: dms-frontend-stag
+    tier: x3.small
+    github:
+      owner: team-aliens
+      repo: DMS-Frontend
+      branch: dev
+      installationId: "64597732"
+    build:
+      react:
+        version: "22"
+        outputPath: /services/admin/build
+        sourcePath: /
+        buildCmd: yarn install && yarn workspace @service/admin build
+    endpoints:
+      - port: 8080
+        routes:
+          - admin-dev.dms-dsm.com
+  - name: dms-webview-prod
+    tier: x3.small
+    github:
+      owner: team-aliens
+      repo: dms-webview
+      branch: main
+      installationId: "64597732"
+    build:
+      react:
+        version: "22"
+        outputPath: /build
+        sourcePath: /
+        buildCmd: yarn install && yarn build
+    endpoints:
+      - port: 8080
+        routes:
+          - webview.dms-dsm.com
+  - name: dms-webview-stag
+    tier: x3.small
+    github:
+      owner: team-aliens
+      repo: dms-webview
+      branch: develop
+      installationId: "64597732"
+    build:
+      react:
+        version: "22"
+        outputPath: /build
+        sourcePath: /
+        buildCmd: yarn install && yarn build
+    endpoints:
+      - port: 8080
+        routes:
+          - webview-dev.dms-dsm.com
