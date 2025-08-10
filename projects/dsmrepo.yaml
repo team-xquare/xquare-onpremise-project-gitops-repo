@@ -1,6 +1,6 @@
 applications:
   - name: whopper-prod
-    tier: x3.micro
+    tier: x3.small
     github:
       owner: DSM-Repo
       repo: Whopper
