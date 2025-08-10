@@ -155,7 +155,7 @@ applications:
         version: "18"
         outputPath: /packages/Entry-LTS/dist
         sourcePath: /
-        buildCmd: yarn install && yarn workspace Entry-LTS build
+        buildCmd: yarn install && yarn workspace @entrydsm/main build
     endpoints:
       - port: 8080
         routes:
@@ -172,7 +172,7 @@ applications:
         version: "18"
         outputPath: /packages/Entry-Auth/dist
         sourcePath: /
-        buildCmd: yarn install && yarn workspace Entry-Auth build
+        buildCmd: yarn install && yarn workspace @entrydsm/auth build
     endpoints:
       - port: 8080
         routes:
@@ -189,7 +189,7 @@ applications:
         version: "18"
         outputPath: /packages/Admission-LTS/dist
         sourcePath: /
-        buildCmd: yarn install && yarn workspace Admission-LTS build
+        buildCmd: yarn install && yarn workspace @entrydsm/admission build
     endpoints:
       - port: 8080
         routes:
@@ -206,7 +206,7 @@ applications:
         version: "18"
         outputPath: /packages/Admission-Admin-LTS/dist
         sourcePath: /
-        buildCmd: yarn install && yarn workspace Admission-Admin-LTS build
+        buildCmd: yarn install && yarn workspace @entrydsm/admin build
     endpoints:
       - port: 8080
         routes:
