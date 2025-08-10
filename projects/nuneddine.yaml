@@ -6,7 +6,6 @@ applications:
       repo: Nuneddine
       branch: main
       installationId: "64042787"
-      hash: 355df203686c5b0aafe29db0c9bee0d97718f2ec
     build:
       gradle:
         version: 17

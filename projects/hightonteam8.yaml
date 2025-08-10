@@ -6,7 +6,6 @@ applications:
       repo: Team8_BE
       branch: main
       installationId: "78893207"
-      hash: 08b27ab770dc9070424a81fc7ed5e1ee255a30d3
     build:
       gradle:
         version: 17
@@ -24,7 +23,6 @@ applications:
       repo: redis-docker
       branch: main
       installationId: "78893207"
-      hash: f7cfa4b5a7c88409534d3526be7c78607aab8f0d
     build:
       docker:
         sourcePath: ""

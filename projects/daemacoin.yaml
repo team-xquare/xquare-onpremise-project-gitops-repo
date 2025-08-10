@@ -6,7 +6,6 @@ applications:
       repo: deama_coin_backend
       branch: main
       installationId: "63879080"
-      hash: latest
     build:
       nodejs:
         version: 22.5.1
@@ -24,7 +23,6 @@ applications:
       repo: daema_coin_frontend
       branch: main
       installationId: "63879080"
-      hash: latest
     build:
       nodejs:
         version: "22"

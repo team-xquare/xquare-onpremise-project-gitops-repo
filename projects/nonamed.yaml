@@ -6,7 +6,6 @@ applications:
       repo: Lotura_BackEnd_V2
       branch: main
       installationId: "64110126"
-      hash: latest
     build:
       nodejs:
         version: 22.5.1

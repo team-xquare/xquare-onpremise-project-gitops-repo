@@ -6,7 +6,6 @@ applications:
       repo: backend
       branch: master
       installationId: "68917128"
-      hash: latest
     build:
       gradle:
         version: 21
