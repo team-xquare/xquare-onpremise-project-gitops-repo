@@ -6,6 +6,7 @@ applications:
       repo: Whopper
       branch: main
       installationId: "79908920"
+      hash: latest
     build:
       gradle:
         version: 21

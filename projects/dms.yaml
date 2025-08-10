@@ -24,6 +24,7 @@ applications:
       repo: DMS-Backend
       branch: develop
       installationId: "64597732"
+      hash: latest
     build:
       gradle:
         version: 17

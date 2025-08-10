@@ -24,6 +24,7 @@ applications:
       repo: Equus-Api-Gateway
       branch: main
       installationId: "77967720"
+      hash: latest
     build:
       gradle:
         version: 17
@@ -59,6 +60,7 @@ applications:
       repo: Casper-Recruitment
       branch: main
       installationId: "77967720"
+      hash: latest
     build:
       gradle:
         version: 17
@@ -76,6 +78,7 @@ applications:
       repo: Equus-User
       branch: main
       installationId: "77967720"
+      hash: latest
     build:
       gradle:
         version: 17
@@ -129,6 +132,7 @@ applications:
       repo: Equus-Schedule
       branch: main
       installationId: "77967720"
+      hash: latest
     build:
       gradle:
         version: 17
@@ -146,6 +150,7 @@ applications:
       repo: Entry-Mono
       branch: main
       installationId: "77967720"
+      hash: latest
     build:
       vite:
         version: "22"
@@ -199,6 +204,7 @@ applications:
       repo: Entry-Mono
       branch: main
       installationId: "77967720"
+      hash: latest
     build:
       vite:
         version: "22"

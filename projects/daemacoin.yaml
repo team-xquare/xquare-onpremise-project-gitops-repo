@@ -24,6 +24,7 @@ applications:
       repo: daema_coin_frontend
       branch: main
       installationId: "63879080"
+      hash: latest
     build:
       nodejs:
         version: "22"

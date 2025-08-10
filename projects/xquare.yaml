@@ -6,6 +6,7 @@ applications:
       repo: xquare-frontend-v2
       branch: main
       installationId: "62433388"
+      hash: latest
     build:
       react:
         version: "22"
