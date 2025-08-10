@@ -155,7 +155,7 @@ applications:
         version: "18"
         outputPath: /packages/Entry-LTS/dist
         sourcePath: /
-        buildCmd: yarn install --frozen-lockfile && yarn workspace Entry-LTS build
+        buildCmd: yarn install --immutable && yarn workspace Entry-LTS build
     endpoints:
       - port: 8080
         routes:
@@ -172,7 +172,7 @@ applications:
         version: "18"
         outputPath: /packages/Entry-Auth/dist
         sourcePath: /
-        buildCmd: yarn install --frozen-lockfile && yarn workspace Entry-Auth build
+        buildCmd: yarn install --immutable && yarn workspace Entry-Auth build
     endpoints:
       - port: 8080
         routes:
@@ -189,7 +189,7 @@ applications:
         version: "18"
         outputPath: /packages/Admission-LTS/dist
         sourcePath: /
-        buildCmd: yarn install --frozen-lockfile && yarn workspace Admission-LTS build
+        buildCmd: yarn install --immutable && yarn workspace Admission-LTS build
     endpoints:
       - port: 8080
         routes:
@@ -206,7 +206,7 @@ applications:
         version: "18"
         outputPath: /packages/Admission-Admin-LTS/dist
         sourcePath: /
-        buildCmd: yarn install --frozen-lockfile && yarn workspace Admission-Admin-LTS build
+        buildCmd: yarn install --immutable && yarn workspace Admission-Admin-LTS build
     endpoints:
       - port: 8080
         routes:
