@@ -1,6 +1,6 @@
 applications:
   - name: whispy-prod
-    tier: x3.nano
+    tier: x3.small
     github:
       owner: Team-jeong-ho-kim
       repo: Whispy_BE
