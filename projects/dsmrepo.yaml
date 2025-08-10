@@ -8,7 +8,7 @@ applications:
       installationId: "79908920"
     build:
       gradle:
-        version: 11
+        version: 21
         outputPath: /build/libs/*.jar
         sourcePath: .
         buildCmd: ./gradlew build -x test
@@ -23,6 +23,7 @@ applications:
       repo: repo
       branch: main
       installationId: "79908920"
+      hash: latest
     build:
       vite:
         version: "18"
@@ -40,6 +41,7 @@ applications:
       repo: repo
       branch: main
       installationId: "79908920"
+      hash: latest
     build:
       vite:
         version: "18"
