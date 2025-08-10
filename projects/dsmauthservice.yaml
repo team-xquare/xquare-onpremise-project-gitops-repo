@@ -1,0 +1,19 @@
+applications:
+  - name: dsm-login-prod
+    tier: x3.small
+    github:
+      owner: DAS-DsmAuthService
+      repo: Dsm-login-server
+      branch: main
+      installationId: "[DAS-DsmAuthService-ID]"
+    build:
+      gradle:
+        version: 11
+        outputPath: /build/libs/*.jar
+        sourcePath: .
+        buildCmd: ./gradlew build -x test
+    endpoints:
+      - port: 8080
+        routes:
+          - prod-server.xquare.app/dsm-login
+          - dsm-login.xquare.app

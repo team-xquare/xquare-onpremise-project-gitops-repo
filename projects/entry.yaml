@@ -153,9 +153,9 @@ applications:
     build:
       vite:
         version: "18"
-        outputPath: /dist
-        sourcePath: /packages/Entry-LTS
-        buildCmd: yarn install --frozen-lockfile && yarn build
+        outputPath: /packages/Entry-LTS/dist
+        sourcePath: /
+        buildCmd: yarn install --frozen-lockfile && yarn workspace Entry-LTS build
     endpoints:
       - port: 8080
         routes:
@@ -170,9 +170,9 @@ applications:
     build:
       vite:
         version: "18"
-        outputPath: /dist
-        sourcePath: /packages/Entry-Auth
-        buildCmd: yarn install --frozen-lockfile && yarn build
+        outputPath: /packages/Entry-Auth/dist
+        sourcePath: /
+        buildCmd: yarn install --frozen-lockfile && yarn workspace Entry-Auth build
     endpoints:
       - port: 8080
         routes:
@@ -187,9 +187,9 @@ applications:
     build:
       vite:
         version: "18"
-        outputPath: /dist
-        sourcePath: /packages/Admission-LTS
-        buildCmd: yarn install --frozen-lockfile && yarn build
+        outputPath: /packages/Admission-LTS/dist
+        sourcePath: /
+        buildCmd: yarn install --frozen-lockfile && yarn workspace Admission-LTS build
     endpoints:
       - port: 8080
         routes:
@@ -204,9 +204,9 @@ applications:
     build:
       vite:
         version: "18"
-        outputPath: /dist
-        sourcePath: /packages/Admission-Admin-LTS
-        buildCmd: yarn install --frozen-lockfile && yarn build
+        outputPath: /packages/Admission-Admin-LTS/dist
+        sourcePath: /
+        buildCmd: yarn install --frozen-lockfile && yarn workspace Admission-Admin-LTS build
     endpoints:
       - port: 8080
         routes:
