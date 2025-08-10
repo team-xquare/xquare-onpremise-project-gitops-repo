@@ -153,7 +153,7 @@ applications:
     build:
       vite:
         version: "18"
-        outputPath: /packages/Entry-LTS/dist
+        outputPath: /packages/Entry-LTS/build
         sourcePath: /
         buildCmd: yarn install && yarn workspace @entrydsm/main build
     endpoints:
