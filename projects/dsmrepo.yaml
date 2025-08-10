@@ -26,9 +26,9 @@ applications:
     build:
       vite:
         version: "18"
-        outputPath: /dist
-        sourcePath: /packages/main
-        buildCmd: yarn install --frozen-lockfile && yarn build
+        outputPath: /packages/main/dist
+        sourcePath: .
+        buildCmd: yarn install --frozen-lockfile && yarn workspace main build
     endpoints:
       - port: 8080
         routes:
@@ -43,9 +43,9 @@ applications:
     build:
       vite:
         version: "18"
-        outputPath: /dist
-        sourcePath: /packages/teacher
-        buildCmd: yarn install --frozen-lockfile && yarn build
+        outputPath: /packages/teacher/dist
+        sourcePath: .
+        buildCmd: yarn install --frozen-lockfile && yarn workspace teacher build
     endpoints:
       - port: 8080
         routes:
@@ -60,9 +60,9 @@ applications:
     build:
       vite:
         version: "18"
-        outputPath: /dist
-        sourcePath: /packages/student
-        buildCmd: yarn install --frozen-lockfile && yarn build
+        outputPath: /packages/student/dist
+        sourcePath: .
+        buildCmd: yarn install --frozen-lockfile && yarn workspace student build
     endpoints:
       - port: 8080
         routes:
