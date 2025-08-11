@@ -7,8 +7,8 @@
 # 필요한 작업을 수행합니다.
 #
 # 지원되는 액션:
-#  - apply: 지정된 애플리케이션의 설정을 추가하거나 업데이트합니다.
-#  - remove: 특정 애플리케이션의 설정을 제거합니다.
+#  - apply: 지정된 애플리케이션/애드온의 설정을 추가하거나 업데이트합니다.
+#  - remove: 특정 애플리케이션/애드온의 설정을 제거합니다.
 #
 # 사용 예시:
 #  - 애플리케이션의 hash를 업데이트하는 경우:
@@ -38,8 +38,22 @@
 #          ]
 #        }
 #
+#  - 애드온을 추가하는 경우:
+#      github.event.client_payload.path: "projects/project-name/addons/redis-name"
+#      github.event.client_payload.action: "apply"
+#      github.event.client_payload.spec:
+#        {
+#          "type": "redis",
+#          "tier": "x3.micro",
+#          "storage": "1Gi"
+#        }
+#
 #  - 애플리케이션 설정을 제거하는 경우:
 #      github.event.client_payload.path: "projects/project-name/applications/service-name"
+#      github.event.client_payload.action: "remove"
+#
+#  - 애드온을 제거하는 경우:
+#      github.event.client_payload.path: "projects/project-name/addons/redis-name"
 #      github.event.client_payload.action: "remove"
 #
 #  - 프로젝트 전체를 삭제하는 경우:
@@ -92,6 +106,11 @@ jobs:
               if [ -f "$FILE" ]; then
                 if [ "$SUB_RESOURCE" = "applications" ]; then
                   yq eval "(.applications[] | select(.name == \"$NAME\")) *= ${SPEC}" -i $FILE
+                elif [ "$SUB_RESOURCE" = "addons" ]; then
+                  # Initialize addons array if it doesn't exist
+                  yq eval ".addons //= []" -i $FILE
+                  # Update existing addon or add new one
+                  yq eval "(.addons[] | select(.name == \"$NAME\")) *= ${SPEC} | if .addons | any(select(.name == \"$NAME\")) | not then .addons += [${SPEC} + {\"name\": \"$NAME\"}] else . end" -i $FILE
                 fi
               fi
               ;;
@@ -100,6 +119,8 @@ jobs:
               if [ -f "$FILE" ]; then
                 if [ "$SUB_RESOURCE" = "applications" ]; then
                   yq eval "del(.applications[] | select(.name == \"$NAME\"))" -i $FILE
+                elif [ "$SUB_RESOURCE" = "addons" ]; then
+                  yq eval "del(.addons[] | select(.name == \"$NAME\"))" -i $FILE
                 elif [ -z "$SUB_RESOURCE" ]; then
                   rm $FILE
                 fi
