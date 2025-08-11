@@ -1,16 +1,4 @@
-redis:
-  enabled: true
-  version: "22.0.1"
-  values:
-    auth:
-      enabled: false
-    replica:
-      replicaCount: 1
-    master:
-      persistence:
-        enabled: false
-    metrics:
-      enabled: false
+
 applications:
   - name: equus-application-prod
     tier: x3.small
