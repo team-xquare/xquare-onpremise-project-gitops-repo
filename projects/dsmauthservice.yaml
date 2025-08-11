@@ -8,7 +8,7 @@ applications:
       installationId: "80380806"
     build:
       gradle:
-        version: 11
+        version: 17
         outputPath: /build/libs/*.jar
         sourcePath: .
         buildCmd: ./gradlew build -x test
