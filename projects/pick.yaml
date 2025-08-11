@@ -1,9 +1,3 @@
-addons:
-  - name: pick-redis
-    type: redis
-    tier: x3.micro
-    storage: 10Gi
-
 applications:
   - name: pick-core-prod
     tier: x3.micro
@@ -113,3 +107,8 @@ applications:
       - port: 8080
         routes:
           - pick-teacher-stag.xquare.app
+addons:
+  - name: pick-redis
+    type: redis
+    tier: x3.micro
+    storage: 1Gi
