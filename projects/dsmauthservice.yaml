@@ -5,7 +5,7 @@ applications:
       owner: DAS-DsmAuthService
       repo: Dsm-login-server
       branch: main
-      installationId: "[DAS-DsmAuthService-ID]"
+      installationId: "80380806"
     build:
       gradle:
         version: 11
