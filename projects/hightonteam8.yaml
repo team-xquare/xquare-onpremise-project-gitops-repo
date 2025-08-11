@@ -17,19 +17,6 @@ applications:
       - port: 8080
         routes:
           - high-ton-team-8.dsmhs.kr
-  - name: redis
-    tier: x3.nano
-    github:
-      owner: HighTon-Team-8
-      repo: redis-docker
-      branch: main
-      installationId: "78893207"
-      hash: latest
-    build:
-      docker:
-        sourcePath: ""
-    endpoints:
-      - port: 6379
 addons:
   - name: hightonteam8-redis
     type: redis
