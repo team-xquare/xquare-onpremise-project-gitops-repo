@@ -33,19 +33,3 @@ applications: []
 #       - port: 8080
 #         routes:
 #           - example.dsmhs.kr
-#   - name: redis
-#     type: redis
-#     tier: x3.nano
-#     redis:
-#       version: "22.0.1"
-#       values:
-#         auth:
-#           enabled: false
-#         replica:
-#           replicaCount: 1
-#         master:
-#           persistence:
-#             enabled: false
-#         metrics:
-#           enabled: false
-
