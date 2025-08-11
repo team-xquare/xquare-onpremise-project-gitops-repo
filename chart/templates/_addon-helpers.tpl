@@ -16,7 +16,6 @@ Generate addon labels
 addon.xquare.io/name: {{ include "addon.name" . | quote }}
 addon.xquare.io/type: {{ .type | quote }}
 addon.xquare.io/tier: {{ .tier | quote }}
-{{ include "project.labels" $ }}
 {{- end }}
 
 {{/*
