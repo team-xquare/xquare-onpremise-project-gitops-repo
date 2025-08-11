@@ -2,20 +2,6 @@
 {{- if eq .type "postgresql" }}
 ---
 apiVersion: v1
-kind: Secret
-metadata:
-  name: {{ include "addon.name" . }}-secret
-  namespace: {{ include "project.namespace" $ }}
-  labels:
-    {{- include "addon.labels" . | nindent 4 }}
-    app.kubernetes.io/component: secret
-type: Opaque
-data:
-  POSTGRES_DB: {{ include "addon.databaseName" . | b64enc }}
-  POSTGRES_USER: {{ include "addon.databaseName" . | b64enc }}
-  POSTGRES_PASSWORD: {{ include "addon.password" . | b64enc }}
----
-apiVersion: v1
 kind: Service
 metadata:
   name: {{ include "addon.serviceName" . }}
@@ -74,50 +60,15 @@ spec:
             - containerPort: 5432
               name: postgres
           env:
+            - name: POSTGRES_HOST_AUTH_METHOD
+              value: trust
             - name: POSTGRES_DB
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "addon.name" . }}-secret
-                  key: POSTGRES_DB
-            - name: POSTGRES_USER
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "addon.name" . }}-secret
-                  key: POSTGRES_USER
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "addon.name" . }}-secret
-                  key: POSTGRES_PASSWORD
-            - name: PGDATA
-              value: /var/lib/postgresql/data/pgdata
+              value: {{ include "addon.databaseName" . | quote }}
           resources:
             {{- include "addon.resources" . | nindent 12 }}
           volumeMounts:
             - name: data
-              mountPath: /var/lib/postgresql/data
-          readinessProbe:
-            exec:
-              command:
-                - pg_isready
-                - -U
-                - $(POSTGRES_USER)
-                - -d
-                - $(POSTGRES_DB)
-            initialDelaySeconds: 30
-            periodSeconds: 10
-            timeoutSeconds: 5
-          livenessProbe:
-            exec:
-              command:
-                - pg_isready
-                - -U
-                - $(POSTGRES_USER)
-                - -d
-                - $(POSTGRES_DB)
-            initialDelaySeconds: 60
-            periodSeconds: 30
-            timeoutSeconds: 5
+              mountPath: /var/lib/mysql
       volumes:
         - name: data
           persistentVolumeClaim:

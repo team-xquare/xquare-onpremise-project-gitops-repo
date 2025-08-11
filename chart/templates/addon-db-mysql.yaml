@@ -2,21 +2,6 @@
 {{- if eq .type "mysql" }}
 ---
 apiVersion: v1
-kind: Secret
-metadata:
-  name: {{ include "addon.name" . }}-secret
-  namespace: {{ include "project.namespace" $ }}
-  labels:
-    {{- include "addon.labels" . | nindent 4 }}
-    app.kubernetes.io/component: secret
-type: Opaque
-data:
-  MYSQL_ROOT_PASSWORD: {{ include "addon.password" . | b64enc }}
-  MYSQL_DATABASE: {{ include "addon.databaseName" . | b64enc }}
-  MYSQL_USER: {{ include "addon.databaseName" . | b64enc }}
-  MYSQL_PASSWORD: {{ include "addon.password" . | b64enc }}
----
-apiVersion: v1
 kind: Service
 metadata:
   name: {{ include "addon.serviceName" . }}
@@ -75,51 +60,15 @@ spec:
             - containerPort: 3306
               name: mysql
           env:
-            - name: MYSQL_ROOT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "addon.name" . }}-secret
-                  key: MYSQL_ROOT_PASSWORD
+            - name: MYSQL_ALLOW_EMPTY_PASSWORD
+              value: "yes"
             - name: MYSQL_DATABASE
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "addon.name" . }}-secret
-                  key: MYSQL_DATABASE
-            - name: MYSQL_USER
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "addon.name" . }}-secret
-                  key: MYSQL_USER
-            - name: MYSQL_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "addon.name" . }}-secret
-                  key: MYSQL_PASSWORD
+              value: {{ include "addon.databaseName" . | quote }}
           resources:
             {{- include "addon.resources" . | nindent 12 }}
           volumeMounts:
             - name: data
               mountPath: /var/lib/mysql
-          readinessProbe:
-            exec:
-              command:
-                - mysqladmin
-                - ping
-                - -h
-                - localhost
-            initialDelaySeconds: 30
-            periodSeconds: 10
-            timeoutSeconds: 5
-          livenessProbe:
-            exec:
-              command:
-                - mysqladmin
-                - ping
-                - -h
-                - localhost
-            initialDelaySeconds: 60
-            periodSeconds: 30
-            timeoutSeconds: 5
       volumes:
         - name: data
           persistentVolumeClaim:

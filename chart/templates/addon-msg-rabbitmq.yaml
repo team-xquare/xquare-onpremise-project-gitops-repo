@@ -2,19 +2,6 @@
 {{- if eq .type "rabbitmq" }}
 ---
 apiVersion: v1
-kind: Secret
-metadata:
-  name: {{ include "addon.name" . }}-secret
-  namespace: {{ include "project.namespace" $ }}
-  labels:
-    {{- include "addon.labels" . | nindent 4 }}
-    app.kubernetes.io/component: secret
-type: Opaque
-data:
-  RABBITMQ_DEFAULT_USER: {{ include "addon.databaseName" . | b64enc }}
-  RABBITMQ_DEFAULT_PASS: {{ include "addon.password" . | b64enc }}
----
-apiVersion: v1
 kind: Service
 metadata:
   name: {{ include "addon.serviceName" . }}
@@ -28,9 +15,11 @@ spec:
   ports:
     - port: 5672
       targetPort: 5672
+      protocol: TCP
       name: amqp
     - port: 15672
       targetPort: 15672
+      protocol: TCP
       name: management
   type: ClusterIP
 ---
@@ -56,7 +45,7 @@ metadata:
   namespace: {{ include "project.namespace" $ }}
   labels:
     {{- include "addon.labels" . | nindent 4 }}
-    app.kubernetes.io/component: message-queue
+    app.kubernetes.io/component: database
 spec:
   serviceName: {{ include "addon.serviceName" . }}
   replicas: 1
@@ -76,42 +65,11 @@ spec:
               name: amqp
             - containerPort: 15672
               name: management
-          env:
-            - name: RABBITMQ_DEFAULT_USER
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "addon.name" . }}-secret
-                  key: RABBITMQ_DEFAULT_USER
-            - name: RABBITMQ_DEFAULT_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "addon.name" . }}-secret
-                  key: RABBITMQ_DEFAULT_PASS
-            - name: RABBITMQ_DEFAULT_VHOST
-              value: "/"
           resources:
             {{- include "addon.resources" . | nindent 12 }}
           volumeMounts:
             - name: data
               mountPath: /var/lib/rabbitmq
-          readinessProbe:
-            exec:
-              command:
-                - rabbitmq-diagnostics
-                - -q
-                - ping
-            initialDelaySeconds: 30
-            periodSeconds: 10
-            timeoutSeconds: 5
-          livenessProbe:
-            exec:
-              command:
-                - rabbitmq-diagnostics
-                - -q
-                - ping
-            initialDelaySeconds: 60
-            periodSeconds: 30
-            timeoutSeconds: 5
       volumes:
         - name: data
           persistentVolumeClaim:

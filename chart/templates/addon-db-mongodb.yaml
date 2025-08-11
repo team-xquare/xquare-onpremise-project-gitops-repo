@@ -2,20 +2,6 @@
 {{- if eq .type "mongodb" }}
 ---
 apiVersion: v1
-kind: Secret
-metadata:
-  name: {{ include "addon.name" . }}-secret
-  namespace: {{ include "project.namespace" $ }}
-  labels:
-    {{- include "addon.labels" . | nindent 4 }}
-    app.kubernetes.io/component: secret
-type: Opaque
-data:
-  MONGO_INITDB_ROOT_USERNAME: YWRtaW4=  # admin
-  MONGO_INITDB_ROOT_PASSWORD: {{ include "addon.password" . | b64enc }}
-  MONGO_INITDB_DATABASE: {{ include "addon.databaseName" . | b64enc }}
----
-apiVersion: v1
 kind: Service
 metadata:
   name: {{ include "addon.serviceName" . }}
@@ -74,44 +60,13 @@ spec:
             - containerPort: 27017
               name: mongodb
           env:
-            - name: MONGO_INITDB_ROOT_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "addon.name" . }}-secret
-                  key: MONGO_INITDB_ROOT_USERNAME
-            - name: MONGO_INITDB_ROOT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "addon.name" . }}-secret
-                  key: MONGO_INITDB_ROOT_PASSWORD
             - name: MONGO_INITDB_DATABASE
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "addon.name" . }}-secret
-                  key: MONGO_INITDB_DATABASE
+              value: {{ include "addon.databaseName" . | quote }}
           resources:
             {{- include "addon.resources" . | nindent 12 }}
           volumeMounts:
             - name: data
               mountPath: /data/db
-          readinessProbe:
-            exec:
-              command:
-                - mongosh
-                - --eval
-                - "db.adminCommand('ping')"
-            initialDelaySeconds: 30
-            periodSeconds: 10
-            timeoutSeconds: 5
-          livenessProbe:
-            exec:
-              command:
-                - mongosh
-                - --eval
-                - "db.adminCommand('ping')"
-            initialDelaySeconds: 60
-            periodSeconds: 30
-            timeoutSeconds: 5
       volumes:
         - name: data
           persistentVolumeClaim:
