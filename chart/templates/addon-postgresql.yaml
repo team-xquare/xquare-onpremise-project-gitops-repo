@@ -1,0 +1,126 @@
+{{- range .Values.addons }}
+{{- if eq .type "postgresql" }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "addon.name" . }}-secret
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+    app.kubernetes.io/component: secret
+type: Opaque
+data:
+  POSTGRES_DB: {{ include "addon.databaseName" . | b64enc }}
+  POSTGRES_USER: {{ include "addon.databaseName" . | b64enc }}
+  POSTGRES_PASSWORD: {{ include "addon.password" . | b64enc }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "addon.serviceName" . }}
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+    app.kubernetes.io/component: service
+spec:
+  selector:
+    {{- include "addon.selectorLabels" . | nindent 4 }}
+  ports:
+    - port: 5432
+      targetPort: 5432
+      protocol: TCP
+      name: postgres
+  type: ClusterIP
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "addon.name" . }}-data
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+    app.kubernetes.io/component: storage
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .storage }}
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "addon.name" . }}
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+    app.kubernetes.io/component: database
+spec:
+  serviceName: {{ include "addon.serviceName" . }}
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "addon.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "addon.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:15
+          ports:
+            - containerPort: 5432
+              name: postgres
+          env:
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "addon.name" . }}-secret
+                  key: POSTGRES_DB
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "addon.name" . }}-secret
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "addon.name" . }}-secret
+                  key: POSTGRES_PASSWORD
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          resources:
+            {{- include "addon.resources" . | nindent 12 }}
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+          readinessProbe:
+            exec:
+              command:
+                - pg_isready
+                - -U
+                - $(POSTGRES_USER)
+                - -d
+                - $(POSTGRES_DB)
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+          livenessProbe:
+            exec:
+              command:
+                - pg_isready
+                - -U
+                - $(POSTGRES_USER)
+                - -d
+                - $(POSTGRES_DB)
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            timeoutSeconds: 5
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ include "addon.name" . }}-data
+{{- end }}
+{{- end }}

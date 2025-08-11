@@ -33,3 +33,42 @@ applications: []
 #       - port: 8080
 #         routes:
 #           - example.dsmhs.kr
+
+addons: []
+# Example addon structures:
+# addons:
+#   # MySQL Database
+#   - name: example-mysql
+#     type: mysql
+#     tier: x3.small
+#     storage: 20Gi
+#
+#   # PostgreSQL Database  
+#   - name: example-postgres
+#     type: postgresql
+#     tier: x3.medium
+#     storage: 50Gi
+#
+#   # Redis Cache
+#   - name: example-redis
+#     type: redis
+#     tier: x3.micro
+#     storage: 10Gi
+#
+#   # MongoDB
+#   - name: example-mongodb  
+#     type: mongodb
+#     tier: x3.medium
+#     storage: 50Gi
+#
+#   # Apache Kafka
+#   - name: example-kafka
+#     type: kafka
+#     tier: x3.large
+#     storage: 100Gi
+#
+#   # RabbitMQ
+#   - name: example-rabbitmq
+#     type: rabbitmq
+#     tier: x3.medium
+#     storage: 20Gi

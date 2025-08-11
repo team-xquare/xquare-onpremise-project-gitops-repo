@@ -1,0 +1,128 @@
+{{- range .Values.addons }}
+{{- if eq .type "mysql" }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "addon.name" . }}-secret
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+    app.kubernetes.io/component: secret
+type: Opaque
+data:
+  MYSQL_ROOT_PASSWORD: {{ include "addon.password" . | b64enc }}
+  MYSQL_DATABASE: {{ include "addon.databaseName" . | b64enc }}
+  MYSQL_USER: {{ include "addon.databaseName" . | b64enc }}
+  MYSQL_PASSWORD: {{ include "addon.password" . | b64enc }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "addon.serviceName" . }}
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+    app.kubernetes.io/component: service
+spec:
+  selector:
+    {{- include "addon.selectorLabels" . | nindent 4 }}
+  ports:
+    - port: 3306
+      targetPort: 3306
+      protocol: TCP
+      name: mysql
+  type: ClusterIP
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "addon.name" . }}-data
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+    app.kubernetes.io/component: storage
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .storage }}
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "addon.name" . }}
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+    app.kubernetes.io/component: database
+spec:
+  serviceName: {{ include "addon.serviceName" . }}
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "addon.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "addon.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:8.0
+          ports:
+            - containerPort: 3306
+              name: mysql
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "addon.name" . }}-secret
+                  key: MYSQL_ROOT_PASSWORD
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "addon.name" . }}-secret
+                  key: MYSQL_DATABASE
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "addon.name" . }}-secret
+                  key: MYSQL_USER
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "addon.name" . }}-secret
+                  key: MYSQL_PASSWORD
+          resources:
+            {{- include "addon.resources" . | nindent 12 }}
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/mysql
+          readinessProbe:
+            exec:
+              command:
+                - mysqladmin
+                - ping
+                - -h
+                - localhost
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+          livenessProbe:
+            exec:
+              command:
+                - mysqladmin
+                - ping
+                - -h
+                - localhost
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            timeoutSeconds: 5
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ include "addon.name" . }}-data
+{{- end }}
+{{- end }}

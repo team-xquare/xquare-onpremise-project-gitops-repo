@@ -1,0 +1,120 @@
+{{- range .Values.addons }}
+{{- if eq .type "rabbitmq" }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "addon.name" . }}-secret
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+    app.kubernetes.io/component: secret
+type: Opaque
+data:
+  RABBITMQ_DEFAULT_USER: {{ include "addon.databaseName" . | b64enc }}
+  RABBITMQ_DEFAULT_PASS: {{ include "addon.password" . | b64enc }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "addon.serviceName" . }}
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+    app.kubernetes.io/component: service
+spec:
+  selector:
+    {{- include "addon.selectorLabels" . | nindent 4 }}
+  ports:
+    - port: 5672
+      targetPort: 5672
+      name: amqp
+    - port: 15672
+      targetPort: 15672
+      name: management
+  type: ClusterIP
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "addon.name" . }}-data
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+    app.kubernetes.io/component: storage
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .storage }}
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "addon.name" . }}
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+    app.kubernetes.io/component: message-queue
+spec:
+  serviceName: {{ include "addon.serviceName" . }}
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "addon.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "addon.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: rabbitmq
+          image: rabbitmq:3.12-management-alpine
+          ports:
+            - containerPort: 5672
+              name: amqp
+            - containerPort: 15672
+              name: management
+          env:
+            - name: RABBITMQ_DEFAULT_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "addon.name" . }}-secret
+                  key: RABBITMQ_DEFAULT_USER
+            - name: RABBITMQ_DEFAULT_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "addon.name" . }}-secret
+                  key: RABBITMQ_DEFAULT_PASS
+            - name: RABBITMQ_DEFAULT_VHOST
+              value: "/"
+          resources:
+            {{- include "addon.resources" . | nindent 12 }}
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/rabbitmq
+          readinessProbe:
+            exec:
+              command:
+                - rabbitmq-diagnostics
+                - -q
+                - ping
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+          livenessProbe:
+            exec:
+              command:
+                - rabbitmq-diagnostics
+                - -q
+                - ping
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            timeoutSeconds: 5
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ include "addon.name" . }}-data
+{{- end }}
+{{- end }}
