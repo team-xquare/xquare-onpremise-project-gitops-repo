@@ -17,3 +17,8 @@ applications:
       - port: 8080
         routes:
           - wemeet-prod.xquare.app
+addons:
+  - name: brementownmusicians-redis
+    type: redis
+    tier: x3.micro
+    storage: 1Gi

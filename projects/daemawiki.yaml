@@ -35,3 +35,8 @@ applications:
       - port: 8080
         routes:
           - daemawiki-server-stag.xquare.app
+addons:
+  - name: daemawiki-redis
+    type: redis
+    tier: x3.micro
+    storage: 1Gi

@@ -71,3 +71,8 @@ applications:
       - port: 8080
         routes:
           - xquare-infra-backend-stag.xquare.app
+addons:
+  - name: xquare-redis
+    type: redis
+    tier: x3.micro
+    storage: 1Gi

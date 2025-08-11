@@ -198,3 +198,8 @@ applications:
       - port: 8080
         routes:
           - equus-config.xquare.app
+addons:
+  - name: entry-redis
+    type: redis
+    tier: x3.micro
+    storage: 1Gi

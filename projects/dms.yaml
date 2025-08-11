@@ -89,3 +89,8 @@ applications:
       - port: 8080
         routes:
           - webview.dms-dsm.com
+addons:
+  - name: dms-redis
+    type: redis
+    tier: x3.micro
+    storage: 1Gi

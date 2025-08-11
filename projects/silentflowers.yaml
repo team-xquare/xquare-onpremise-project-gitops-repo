@@ -17,3 +17,8 @@ applications:
       - port: 8080
         routes:
           - silent-flowers.xquare.app
+addons:
+  - name: silentflowers-redis
+    type: redis
+    tier: x3.micro
+    storage: 1Gi

@@ -71,3 +71,8 @@ applications:
       - port: 8080
         routes:
           - user.dsm-repo.com
+addons:
+  - name: dsmrepo-redis
+    type: redis
+    tier: x3.micro
+    storage: 1Gi

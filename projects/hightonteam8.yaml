@@ -30,3 +30,8 @@ applications:
         sourcePath: ""
     endpoints:
       - port: 6379
+addons:
+  - name: hightonteam8-redis
+    type: redis
+    tier: x3.micro
+    storage: 1Gi
