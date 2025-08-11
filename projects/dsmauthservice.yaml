@@ -17,4 +17,5 @@ applications:
       - port: 8080
         routes:
           - prod-server.xquare.app/dsm-login
-          - dsm-login.xquare.app
+          - dsm-login.dsmhs.kr/test
+          - dsm-login.dsmhs.kr

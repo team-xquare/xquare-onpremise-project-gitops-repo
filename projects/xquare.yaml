@@ -17,6 +17,7 @@ applications:
       - port: 8080
         routes:
           - infra.xquare.app
+          - infra.dsmhs.kr
   - name: xquare-frontend-stag
     tier: x3.small
     github:
@@ -35,6 +36,7 @@ applications:
       - port: 8080
         routes:
           - infra-stag.xquare.app
+          - infra-stag.dsmhs.kr
   - name: xquare-infra-prod
     tier: x3.small
     github:
@@ -53,6 +55,7 @@ applications:
       - port: 8080
         routes:
           - xquare-infra-backend.xquare.app
+          - xquare-api.dsmhs.kr
   - name: xquare-infra-stag
     tier: x3.small
     github:
@@ -71,6 +74,7 @@ applications:
       - port: 8080
         routes:
           - xquare-infra-backend-stag.xquare.app
+          - xquare-api-stag.dsmhs.kr
 addons:
   - name: xquare-redis
     type: redis

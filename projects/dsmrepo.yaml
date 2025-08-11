@@ -17,6 +17,7 @@ applications:
       - port: 8080
         routes:
           - whopper.xquare.app
+          - api.dsm-repo.com
   - name: repo-main-prod
     tier: x3.small
     github:

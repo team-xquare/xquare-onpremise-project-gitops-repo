@@ -17,3 +17,4 @@ applications:
       - port: 3000
         routes:
           - lotura-prod.xquare.app
+          - lotura.dsmhs.kr

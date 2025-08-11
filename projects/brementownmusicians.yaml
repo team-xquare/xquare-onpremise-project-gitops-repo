@@ -17,6 +17,7 @@ applications:
       - port: 8080
         routes:
           - wemeet-prod.xquare.app
+          - wemeet.dsmhs.kr
 addons:
   - name: brementownmusicians-redis
     type: redis

@@ -17,6 +17,7 @@ applications:
       - port: 3000
         routes:
           - mozu-prod.xquare.app
+          - mozu.dsmhs.kr
   - name: mozu-server-stag
     tier: x3.micro
     github:
@@ -35,3 +36,4 @@ applications:
       - port: 3000
         routes:
           - mozu-stag.xquare.app
+          - mozu-stag.dsmhs.kr
