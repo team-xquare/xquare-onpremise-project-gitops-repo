@@ -1,6 +1,6 @@
 applications:
   - name: pick-core-prod
-    tier: x3.micro
+    tier: x3.small
     github:
       owner: DSM-PICK
       repo: PICK_CORE_SERVER
@@ -18,7 +18,7 @@ applications:
         routes:
           - pick-core.dsmhs.kr
   - name: pick-core-stag
-    tier: x3.micro
+    tier: x3.small
     github:
       owner: DSM-PICK
       repo: PICK_CORE_SERVER
