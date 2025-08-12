@@ -252,7 +252,7 @@ applications:
     build:
       vite:
         version: "22"
-        outputPath: /apps/admission-lts/dist
+        outputPath: /apps/Admission-LTS/dist
         sourcePath: /
         buildCmd: yarn install && yarn nx build @entry/design-token && yarn nx build @entry/ui && yarn nx build @entry/admission-lts
     endpoints:
