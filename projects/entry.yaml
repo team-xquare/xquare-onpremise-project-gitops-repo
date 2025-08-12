@@ -205,7 +205,7 @@ applications:
           - equus-config.xquare.app
           - config-stag.entrydsm.hs.kr
   - name: casper-recruitment-prod
-    tier: x3.large
+    tier: x3.small
     github:
       owner: EntryDSM
       repo: Casper-Recruitment
@@ -223,7 +223,7 @@ applications:
           - prod-entry-casper-recruitment.xquare.app
           - casper-recruitment.entrydsm.hs.kr
   - name: casper-recruitment-stag
-    tier: x3.large
+    tier: x3.small
     github:
       owner: EntryDSM
       repo: Casper-Recruitment
