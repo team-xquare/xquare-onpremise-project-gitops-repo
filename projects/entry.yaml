@@ -261,6 +261,24 @@ applications:
         routes:
           - entry-admission-admin-dev.xquare.app
           - admin-2025.entrydsm.hs.kr
+  - name: entry-admission-2025-admission-prod
+    tier: x3.small
+    github:
+      owner: EntryDSM
+      repo: Entry-Admission
+      branch: develop
+      installationId: "77967720"
+    build:
+      vite:
+        version: "22"
+        outputPath: /apps/admission-lts/dist
+        sourcePath: /
+        buildCmd: yarn install && yarn nx build @entry/design-token && yarn nx build @entry/ui && yarn nx build @entry/admission-lts
+    endpoints:
+      - port: 8080
+        routes:
+          - entry-admission-admission-dev.xquare.app
+          - apply-2025.entrydsm.hs.kr
   - name: entry-admission-2025-auth-prod
     tier: x3.small
     github:
