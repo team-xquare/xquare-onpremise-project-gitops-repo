@@ -77,3 +77,7 @@ addons:
     type: redis
     tier: x3.micro
     storage: 1Gi
+  - name: dsmrepo-mongodb
+    type: mongodb
+    tier: x3.micro
+    storage: 1Gi
