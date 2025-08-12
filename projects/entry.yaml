@@ -205,6 +205,78 @@ applications:
         routes:
           - equus-config.xquare.app
           - config-stag.entrydsm.hs.kr
+  - name: entry-admission-2025-admin-prod
+    tier: x3.small
+    github:
+      owner: EntryDSM
+      repo: Entry-Admission
+      branch: develop
+      installationId: "77967720"
+    build:
+      vite:
+        version: "22"
+        outputPath: /apps/entry-admin/dist
+        sourcePath: /
+        buildCmd: yarn install && yarn nx build @entry/design-token && yarn nx build @entry/ui && yarn nx build @entry/Entry-admin
+    endpoints:
+      - port: 8080
+        routes:
+          - entry-admission-admin-dev.xquare.app
+          - admin-2025.entrydsm.hs.kr
+  - name: entry-admission-2025-admission-prod
+    tier: x3.small
+    github:
+      owner: EntryDSM
+      repo: Entry-Admission
+      branch: develop
+      installationId: "77967720"
+    build:
+      vite:
+        version: "22"
+        outputPath: /apps/admission-lts/dist
+        sourcePath: /
+        buildCmd: yarn install && yarn nx build @entry/design-token && yarn nx build @entry/ui && yarn nx build @entry/admission-lts
+    endpoints:
+      - port: 8080
+        routes:
+          - entry-admission-admission-dev.xquare.app
+          - apply-2025.entrydsm.hs.kr
+  - name: entry-admission-2025-auth-prod
+    tier: x3.small
+    github:
+      owner: EntryDSM
+      repo: Entry-Admission
+      branch: develop
+      installationId: "77967720"
+    build:
+      vite:
+        version: "22"
+        outputPath: /apps/entry-auth/dist
+        sourcePath: /
+        buildCmd: yarn install && yarn nx build @entry/design-token && yarn nx build @entry/ui && yarn nx build @entry/Entry-auth
+    endpoints:
+      - port: 8080
+        routes:
+          - entry-admission-auth-dev.xquare.app
+          - auth-2025.entrydsm.hs.kr
+  - name: entry-admission-2025-user-prod
+    tier: x3.small
+    github:
+      owner: EntryDSM
+      repo: Entry-Admission
+      branch: develop
+      installationId: "77967720"
+    build:
+      vite:
+        version: "22"
+        outputPath: /apps/entry-user/dist
+        sourcePath: /
+        buildCmd: yarn install && yarn nx build @entry/design-token && yarn nx build @entry/ui && yarn nx build @entry/Entry-user
+    endpoints:
+      - port: 8080
+        routes:
+          - entry-admission-user-dev.xquare.app
+          - user-2025.entrydsm.hs.kr
 addons:
   - name: entry-redis
     type: redis
