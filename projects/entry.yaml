@@ -280,7 +280,7 @@ applications:
         routes:
           - entry-admission-user-dev.xquare.app
           - entry-admission-user-dev.entrydsm.hs.kr
-  - name: casper-config-server
+  - name: casper-config-server-prod
     tier: x3.small
     github:
       owner: EntryDSM
