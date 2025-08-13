@@ -16,7 +16,6 @@ applications:
     endpoints:
       - port: 8080
         routes:
-          - high-ton-team-8.dsmhs.kr
           - highton-team8.dsmhs.kr
 addons:
   - name: hightonteam8-redis
