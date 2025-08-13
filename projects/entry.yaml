@@ -222,7 +222,7 @@ applications:
       - port: 8080
         routes:
           - entry-admission-admission-dev.xquare.app
-          - apply-2025.entrydsm.hs.kr
+          - entry-admission-admission-dev.entrydsm.hs.kr
   - name: entry-admission-2025-admin-prod
     tier: x3.small
     github:
@@ -241,7 +241,7 @@ applications:
       - port: 8080
         routes:
           - entry-admission-admin-dev.xquare.app
-          - admin-2025.entrydsm.hs.kr
+          - entry-admission-admin-dev.entrydsm.hs.kr
   - name: entry-admission-2025-auth-prod
     tier: x3.small
     github:
@@ -260,7 +260,7 @@ applications:
       - port: 8080
         routes:
           - entry-admission-auth-dev.xquare.app
-          - auth-2025.entrydsm.hs.kr
+          - entry-admission-auth-dev.entrydsm.hs.kr
   - name: entry-admission-2025-user-prod
     tier: x3.small
     github:
@@ -279,7 +279,26 @@ applications:
       - port: 8080
         routes:
           - entry-admission-user-dev.xquare.app
-          - user-2025.entrydsm.hs.kr
+          - entry-admission-user-dev.entrydsm.hs.kr
+  - name: casper-config-server
+    tier: x3.small
+    github:
+      owner: EntryDSM
+      repo: Casper-Config-Server
+      branch: main
+      installationId: "77967720"
+      hash: latest
+    build:
+      gradle:
+        version: 21
+        outputPath: /build/libs/configserver-0.0.1-SNAPSHOT.jar
+        sourcePath: .
+        buildCmd: ./gradlew build -x test --build-cache
+    endpoints:
+      - port: 8080
+        routes:
+          - entry-admission-api-config-server-dev.xquare.app
+          - entry-admission-api-config-server-dev.entrydsm.hs.kr
 addons:
   - name: entry-redis
     type: redis
