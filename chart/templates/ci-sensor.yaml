@@ -86,6 +86,13 @@ spec:
                                 value: "{{`{{workflow.parameters.git-sha}}`}}"
                           {{- end }}
                           template: docker-build
+                          retryStrategy:
+                            limit: 3
+                            retryPolicy: "Always"
+                            backoff:
+                              duration: "30s"
+                              factor: 2
+                              maxDuration: "5m"
                         - name: update-gitops
                           arguments:
                             parameters:
