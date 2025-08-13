@@ -304,3 +304,7 @@ addons:
     type: redis
     tier: x3.micro
     storage: 1Gi
+  - name: entry-config-server
+    type: mysql
+    tier: x3.micro
+    storage: 1Gi
