@@ -37,3 +37,12 @@ applications:
         routes:
           - mozu-stag.xquare.app
           - mozu-stag.dsmhs.kr
+addons:
+  - name: mozu-mozu-server-prod-mysql
+    type: mysql
+    tier: x3.micro
+    storage: 1Gi
+  - name: mozu-mozu-server-stag-mysql
+    type: mysql
+    tier: x3.micro
+    storage: 1Gi

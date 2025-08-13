@@ -23,3 +23,7 @@ addons:
     type: redis
     tier: x3.micro
     storage: 1Gi
+  - name: hightonteam8-backend-mysql
+    type: mysql
+    tier: x3.micro
+    storage: 1Gi

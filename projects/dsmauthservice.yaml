@@ -18,3 +18,8 @@ applications:
         routes:
           - prod-server.xquare.app/dsm-login
           - dsm-login.dsmhs.kr
+addons:
+  - name: dsmauthservice-dsm-login-prod-mysql
+    type: mysql
+    tier: x3.micro
+    storage: 1Gi

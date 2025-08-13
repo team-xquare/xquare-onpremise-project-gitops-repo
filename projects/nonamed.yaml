@@ -18,3 +18,8 @@ applications:
         routes:
           - lotura-prod.xquare.app
           - lotura.dsmhs.kr
+addons:
+  - name: nonamed-lotura-prod-mysql
+    type: mysql
+    tier: x3.micro
+    storage: 1Gi

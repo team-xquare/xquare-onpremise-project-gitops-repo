@@ -18,3 +18,8 @@ applications:
         routes:
           - nuneddine.xquare.app
           - nuneddine.dsmhs.kr
+addons:
+  - name: nuneddine-nuneddine-deployment-prod-mysql
+    type: mysql
+    tier: x3.micro
+    storage: 1Gi

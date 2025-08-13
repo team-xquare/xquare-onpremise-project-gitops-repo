@@ -18,3 +18,8 @@ applications:
         routes:
           - whispy.xquare.app
           - whispy.dsmhs.kr
+addons:
+  - name: daedongyeojido-whispy-prod-mysql
+    type: mysql
+    tier: x3.micro
+    storage: 1Gi

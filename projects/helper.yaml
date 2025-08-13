@@ -18,3 +18,8 @@ applications:
         routes:
           - helper.xquare.app
           - helper.dsmhs.kr
+addons:
+  - name: helper-helper-prod-mysql
+    type: mysql
+    tier: x3.micro
+    storage: 1Gi

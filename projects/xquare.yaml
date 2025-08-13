@@ -80,3 +80,11 @@ addons:
     type: redis
     tier: x3.micro
     storage: 1Gi
+  - name: xquare-xquare-infra-prod-mysql
+    type: mysql
+    tier: x3.micro
+    storage: 1Gi
+  - name: xquare-xquare-infra-stag-mysql
+    type: mysql
+    tier: x3.micro
+    storage: 1Gi
