@@ -293,7 +293,7 @@ applications:
         version: 21
         outputPath: /build/libs/configserver-0.0.1-SNAPSHOT.jar
         sourcePath: .
-        buildCmd: ./gradlew build -x test --build-cache
+        buildCmd: ./gradlew build
     endpoints:
       - port: 8080
         routes:
