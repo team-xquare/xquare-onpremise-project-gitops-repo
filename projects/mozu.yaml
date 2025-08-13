@@ -16,7 +16,6 @@ applications:
     endpoints:
       - port: 3000
         routes:
-          - mozu-prod.xquare.app
           - mozu.dsmhs.kr
   - name: mozu-server-stag
     tier: x3.micro
@@ -35,7 +34,6 @@ applications:
     endpoints:
       - port: 3000
         routes:
-          - mozu-stag.xquare.app
           - mozu-stag.dsmhs.kr
 addons:
   - name: mozu-mozu-server-prod-mysql

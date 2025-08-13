@@ -52,7 +52,6 @@ applications:
     endpoints:
       - port: 8080
         routes:
-          - pick-admin.xquare.app
           - pick-admin.dsmhs.kr
   - name: pick-admin-stag
     tier: x3.small
@@ -71,7 +70,6 @@ applications:
     endpoints:
       - port: 8080
         routes:
-          - pick-admin-stag.xquare.app
           - pick-admin-stag.dsmhs.kr
   - name: pick-teacher-prod
     tier: x3.small
@@ -90,7 +88,6 @@ applications:
     endpoints:
       - port: 8080
         routes:
-          - pick-teacher.xquare.app
           - pick-teacher.dsmhs.kr
   - name: pick-teacher-stag
     tier: x3.small
@@ -109,7 +106,6 @@ applications:
     endpoints:
       - port: 8080
         routes:
-          - pick-teacher-stag.xquare.app
           - pick-teacher-stag.dsmhs.kr
 addons:
   - name: pick-redis

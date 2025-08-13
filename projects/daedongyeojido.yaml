@@ -16,7 +16,6 @@ applications:
     endpoints:
       - port: 8080
         routes:
-          - whispy.xquare.app
           - whispy.dsmhs.kr
 addons:
   - name: daedongyeojido-whispy-prod-mysql

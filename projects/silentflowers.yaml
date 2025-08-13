@@ -16,7 +16,6 @@ applications:
     endpoints:
       - port: 8080
         routes:
-          - silent-flowers.xquare.app
           - silent-flowers.dsmhs.kr
 addons:
   - name: silentflowers-redis

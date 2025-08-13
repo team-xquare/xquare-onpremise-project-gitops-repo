@@ -16,7 +16,6 @@ applications:
     endpoints:
       - port: 8080
         routes:
-          - nuneddine.xquare.app
           - nuneddine.dsmhs.kr
 addons:
   - name: nuneddine-nuneddine-deployment-prod-mysql

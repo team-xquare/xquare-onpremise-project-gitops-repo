@@ -16,7 +16,6 @@ applications:
     endpoints:
       - port: 8080
         routes:
-          - sillok-api.xquare.app
           - sillok-api.dsmhs.kr
 addons:
   - name: daedong-sillok-be-prod-mysql

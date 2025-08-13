@@ -16,7 +16,6 @@ applications:
     endpoints:
       - port: 3000
         routes:
-          - lotura-prod.xquare.app
           - lotura.dsmhs.kr
 addons:
   - name: nonamed-lotura-prod-mysql

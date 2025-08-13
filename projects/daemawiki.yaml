@@ -16,7 +16,6 @@ applications:
     endpoints:
       - port: 8080
         routes:
-          - daemawiki-server.xquare.app
           - daemawiki.dsmhs.kr
   - name: daemawiki-stag
     tier: x3.nano
@@ -35,7 +34,6 @@ applications:
     endpoints:
       - port: 8080
         routes:
-          - daemawiki-server-stag.xquare.app
           - daemawiki-stag.dsmhs.kr
 addons:
   - name: daemawiki-redis

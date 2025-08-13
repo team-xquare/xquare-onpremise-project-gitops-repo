@@ -16,7 +16,6 @@ applications:
     endpoints:
       - port: 8080
         routes:
-          - prod-server.xquare.app/dsm-login
           - dsm-login.dsmhs.kr
 addons:
   - name: dsmauthservice-dsm-login-prod-mysql
