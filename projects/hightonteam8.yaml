@@ -6,7 +6,6 @@ applications:
       repo: Team8_BE
       branch: main
       installationId: "78893207"
-      hash: latest
     build:
       gradle:
         version: 17

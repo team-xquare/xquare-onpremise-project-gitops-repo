@@ -6,7 +6,6 @@ applications:
       repo: xquare-frontend-v2
       branch: main
       installationId: "62433388"
-      hash: latest
     build:
       react:
         version: "22"
@@ -25,7 +24,6 @@ applications:
       repo: xquare-frontend-v2
       branch: develop
       installationId: "62433388"
-      hash: latest
     build:
       react:
         version: "22"
@@ -44,7 +42,6 @@ applications:
       repo: xquare-infra-backend
       branch: main
       installationId: "62433388"
-      hash: latest
     build:
       gradle:
         version: 17
@@ -63,7 +60,6 @@ applications:
       repo: xquare-infra-backend
       branch: develop
       installationId: "62433388"
-      hash: latest
     build:
       gradle:
         version: 17

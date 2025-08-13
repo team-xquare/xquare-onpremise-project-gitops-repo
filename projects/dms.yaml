@@ -6,7 +6,6 @@ applications:
       repo: DMS-Backend
       branch: main
       installationId: "64597732"
-      hash: latest
     build:
       gradle:
         version: 17
@@ -24,7 +23,6 @@ applications:
       repo: DMS-Backend
       branch: develop
       installationId: "64597732"
-      hash: latest
     build:
       gradle:
         version: 17
@@ -42,7 +40,6 @@ applications:
       repo: DMS-Frontend
       branch: main
       installationId: "64597732"
-      hash: latest
     build:
       react:
         version: "22"
@@ -60,7 +57,6 @@ applications:
       repo: DMS-Frontend
       branch: dev
       installationId: "64597732"
-      hash: latest
     build:
       react:
         version: "22"
@@ -78,7 +74,6 @@ applications:
       repo: dms-webview
       branch: main
       installationId: "64597732"
-      hash: latest
     build:
       react:
         version: "22"
