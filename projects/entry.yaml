@@ -295,7 +295,7 @@ applications:
         sourcePath: .
         buildCmd: ./gradlew build
     endpoints:
-      - port: 8080
+      - port: 8888
         routes:
           - entry-admission-api-config-server-dev.xquare.app
           - entry-admission-api-config-server-dev.entrydsm.hs.kr
