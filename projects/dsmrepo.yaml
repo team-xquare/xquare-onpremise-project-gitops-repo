@@ -6,6 +6,7 @@ applications:
       repo: Whopper
       branch: main
       installationId: "79908920"
+      hash: latest
     build:
       gradle:
         version: 21
@@ -24,6 +25,7 @@ applications:
       repo: repo
       branch: main
       installationId: "79908920"
+      hash: latest
     build:
       vite:
         version: "18"
@@ -41,6 +43,7 @@ applications:
       repo: repo
       branch: main
       installationId: "79908920"
+      hash: latest
     build:
       vite:
         version: "18"
@@ -58,6 +61,7 @@ applications:
       repo: repo
       branch: main
       installationId: "79908920"
+      hash: latest
     build:
       vite:
         version: "18"
