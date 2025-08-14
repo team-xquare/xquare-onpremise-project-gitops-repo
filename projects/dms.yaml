@@ -16,7 +16,7 @@ applications:
     endpoints:
       - port: 8080
         routes:
-          - dms-api.dms-dsm.com
+          - api.dms-dsm.com
   - name: dms-backend-stag
     tier: x3.micro
     github:
