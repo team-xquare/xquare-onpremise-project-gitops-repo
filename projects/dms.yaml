@@ -34,7 +34,7 @@ applications:
     endpoints:
       - port: 8080
         routes:
-          - dms-dev-api.dms-dsm.com
+          - dev-api.dms-dsm.com
   - name: dms-frontend-prod
     tier: x3.small
     github:
