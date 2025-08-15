@@ -107,7 +107,7 @@ spec:
                     {{- end }}
                     retryStrategy:
                       limit: "3"
-                      retryPolicy: "Always"
+                      retryPolicy: "OnFailure"
                       backoff:
                         duration: "30s"
                         factor: 2
@@ -185,7 +185,7 @@ spec:
                         - name: image-tag
                     retryStrategy:
                       limit: "2"
-                      retryPolicy: "Always"
+                      retryPolicy: "OnFailure"
                       backoff:
                         duration: "15s"
                         factor: 2
