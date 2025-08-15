@@ -86,13 +86,6 @@ spec:
                                 value: "{{`{{workflow.parameters.git-sha}}`}}"
                           {{- end }}
                           template: docker-build
-                          retryStrategy:
-                            limit: "3"
-                            retryPolicy: "Always"
-                            backoff:
-                              duration: "30s"
-                              factor: 2
-                              maxDuration: "5m"
                         - name: update-gitops
                           arguments:
                             parameters:
@@ -112,6 +105,13 @@ spec:
                       parameters:
                         - name: sha
                     {{- end }}
+                    retryStrategy:
+                      limit: "3"
+                      retryPolicy: "Always"
+                      backoff:
+                        duration: "30s"
+                        factor: 2
+                        maxDuration: "5m"
                     container:
                       image: gcr.io/kaniko-project/executor:latest
                       args:
@@ -184,6 +184,13 @@ spec:
                     inputs:
                       parameters:
                         - name: image-tag
+                    retryStrategy:
+                      limit: "2"
+                      retryPolicy: "Always"
+                      backoff:
+                        duration: "15s"
+                        factor: 1.5
+                        maxDuration: "2m"
                     container:
                       image: curlimages/curl:latest
                       command: ["/bin/sh", "-c"]
