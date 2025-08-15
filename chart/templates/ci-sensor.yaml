@@ -87,7 +87,7 @@ spec:
                           {{- end }}
                           template: docker-build
                           retryStrategy:
-                            limit: 3
+                            limit: "3"
                             retryPolicy: "Always"
                             backoff:
                               duration: "30s"
