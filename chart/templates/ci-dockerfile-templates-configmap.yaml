@@ -15,8 +15,11 @@ data:
     WORKDIR /app
     RUN apk add --no-cache bash findutils
     ENV GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.parallel=true -Dorg.gradle.configureondemand=true -XX:-UsePerfData -Dkotlin.compiler.execution.strategy=in-process -Dkotlin.incremental=false -Dorg.gradle.internal.http.connectionTimeout=60000 -Dorg.gradle.internal.http.socketTimeout=60000" GRADLE_USER_HOME="/app/.gradle"
+    COPY {{ .build.gradle.sourcePath | default "." }}/build.gradle* {{ .build.gradle.sourcePath | default "." }}/settings.gradle* {{ .build.gradle.sourcePath | default "." }}/gradle.properties* ./
+    COPY {{ .build.gradle.sourcePath | default "." }}/gradle gradle
+    RUN chmod +x gradlew && ./gradlew dependencies --no-daemon || true
     COPY {{ .build.gradle.sourcePath | default "." }}/ .
-    RUN chmod +x gradlew && {{ .build.gradle.buildCmd }} --no-daemon && rm -rf .gradle /root/.gradle /root/.kotlin /tmp/hsperfdata_* /tmp/.java_pid*
+    RUN {{ .build.gradle.buildCmd }} --no-daemon && rm -rf .gradle /root/.gradle /root/.kotlin /tmp/hsperfdata_* /tmp/.java_pid*
     FROM eclipse-temurin:{{ .build.gradle.version }}-jre-alpine
     RUN apk add --no-cache tzdata && addgroup -g 1001 appgroup && adduser -u 1001 -G appgroup -s /bin/sh -D appuser
     WORKDIR /app
