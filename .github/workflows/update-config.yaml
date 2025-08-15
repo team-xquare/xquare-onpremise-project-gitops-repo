@@ -71,10 +71,9 @@ on:
 jobs:
   handle-request:
     runs-on: ubuntu-latest
-    concurrency:
-      group: config-update
-      cancel-in-progress: false
     steps:
+      - uses: ahmadnassri/action-workflow-queue@v1
+
       - uses: actions/checkout@v3
 
       - name: Install yq
@@ -82,66 +81,55 @@ jobs:
           wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/local/bin/yq
           chmod +x /usr/local/bin/yq
 
-      - name: Process Request
+      - name: Process Request with Retry
         run: |
-          PATH_PARAMS="${{ github.event.client_payload.path }}"
-          ACTION="${{ github.event.client_payload.action }}"
-          SPEC='${{ toJson(github.event.client_payload.spec) }}'
+          set -e
+          git config user.name "XQUARE GitOps Bot"
+          git config user.email "teamxquare@gmail.com"
 
-          IFS='/' read -r -a PATH_ARRAY <<< "$PATH_PARAMS"
-          RESOURCE_TYPE="${PATH_ARRAY[0]}"
-          PROJECT="${PATH_ARRAY[1]}"
-          SUB_RESOURCE="${PATH_ARRAY[2]}"
-          NAME="${PATH_ARRAY[3]}"
+          RETRIES=5
+          for i in $(seq 1 $RETRIES); do
+            git pull --rebase origin main || true
 
-          FILE="projects/$PROJECT.yaml"
+            PATH_PARAMS="${{ github.event.client_payload.path }}"
+            ACTION="${{ github.event.client_payload.action }}"
+            SPEC='${{ toJson(github.event.client_payload.spec) }}'
 
-          case "$ACTION" in
-            "apply")
-              mkdir -p $(dirname $FILE)
-              if [ "$RESOURCE_TYPE" = "projects" ] && [ ! -f "$FILE" ]; then
-                echo "applications: []" > $FILE
-              fi
+            IFS='/' read -r -a PATH_ARRAY <<< "$PATH_PARAMS"
+            RESOURCE_TYPE="${PATH_ARRAY[0]}"
+            PROJECT="${PATH_ARRAY[1]}"
+            SUB_RESOURCE="${PATH_ARRAY[2]}"
+            NAME="${PATH_ARRAY[3]}"
+            FILE="projects/$PROJECT.yaml"
 
-              if [ -f "$FILE" ]; then
+            case "$ACTION" in
+              "apply")
+                mkdir -p $(dirname $FILE)
+                [ ! -f "$FILE" ] && echo "applications: []" > $FILE
                 if [ "$SUB_RESOURCE" = "applications" ]; then
                   yq eval "(.applications[] | select(.name == \"$NAME\")) *= ${SPEC}" -i $FILE
                 elif [ "$SUB_RESOURCE" = "addons" ]; then
-                  # Initialize addons array if it doesn't exist
                   yq eval ".addons //= []" -i $FILE
-                  # Update existing addon or add new one
                   yq eval "(.addons[] | select(.name == \"$NAME\")) *= ${SPEC} | if .addons | any(select(.name == \"$NAME\")) | not then .addons += [${SPEC} + {\"name\": \"$NAME\"}] else . end" -i $FILE
                 fi
-              fi
-              ;;
+                ;;
+              "remove")
+                [ -f "$FILE" ] && {
+                  [ "$SUB_RESOURCE" = "applications" ] && yq eval "del(.applications[] | select(.name == \"$NAME\"))" -i $FILE
+                  [ "$SUB_RESOURCE" = "addons" ] && yq eval "del(.addons[] | select(.name == \"$NAME\"))" -i $FILE
+                  [ -z "$SUB_RESOURCE" ] && rm $FILE
+                }
+                ;;
+            esac
 
-            "remove")
-              if [ -f "$FILE" ]; then
-                if [ "$SUB_RESOURCE" = "applications" ]; then
-                  yq eval "del(.applications[] | select(.name == \"$NAME\"))" -i $FILE
-                elif [ "$SUB_RESOURCE" = "addons" ]; then
-                  yq eval "del(.addons[] | select(.name == \"$NAME\"))" -i $FILE
-                elif [ -z "$SUB_RESOURCE" ]; then
-                  rm $FILE
-                fi
-              fi
-              ;;
-          esac
+            git add .
+            git diff-index --quiet HEAD || git commit -m "${ACTION} ${PATH_PARAMS}"
 
-      - name: Check for changes
-        id: check_changes
-        run: |
-          if [[ -n "$(git status --porcelain)" ]]; then
-            echo "changes=true" >> $GITHUB_OUTPUT
-          else
-            echo "changes=false" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Commit and push changes
-        if: steps.check_changes.outputs.changes == 'true'
-        run: |
-          git config user.name "XQUARE GitOps Bot"
-          git config user.email "teamxquare@gmail.com"
-          git add .
-          git commit -m "${{ github.event.client_payload.action }} ${{ github.event.client_payload.path }}"
-          git push
+            if git push; then
+              echo "Push succeeded"
+              break
+            else
+              echo "Push failed, retrying ($i/$RETRIES)..."
+              sleep 2
+            fi
+          done
