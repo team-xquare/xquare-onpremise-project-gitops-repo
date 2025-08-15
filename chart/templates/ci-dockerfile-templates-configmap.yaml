@@ -14,7 +14,7 @@ data:
     FROM eclipse-temurin:{{ .build.gradle.version }}-jdk-alpine AS build
     WORKDIR /app
     RUN apk add --no-cache bash findutils
-    ENV GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.parallel=true -Dorg.gradle.configureondemand=true -XX:-UsePerfData -Dkotlin.compiler.execution.strategy=in-process -Dkotlin.incremental=false" GRADLE_USER_HOME="/app/.gradle"
+    ENV GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.parallel=true -Dorg.gradle.configureondemand=true -XX:-UsePerfData -Dkotlin.compiler.execution.strategy=in-process -Dkotlin.incremental=false -Dorg.gradle.internal.http.connectionTimeout=60000 -Dorg.gradle.internal.http.socketTimeout=60000" GRADLE_USER_HOME="/app/.gradle"
     COPY {{ .build.gradle.sourcePath | default "." }}/ .
     RUN chmod +x gradlew && {{ .build.gradle.buildCmd }} --no-daemon && rm -rf .gradle /root/.gradle /root/.kotlin /tmp/hsperfdata_* /tmp/.java_pid*
     FROM eclipse-temurin:{{ .build.gradle.version }}-jre-alpine
