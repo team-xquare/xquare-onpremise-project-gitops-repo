@@ -123,9 +123,6 @@ spec:
                         {{- end }}
                         - "--cache=true"
                         - "--cache-repo={{ include "project.harborRegistry" $ }}/xquare/cache"
-                        - "--compressed-caching=false"
-                        - "--snapshot-mode=time"
-                        - "--cleanup"
                         - "--registry-mirror=mirror.gcr.io"
                       env:
                         - name: DOCKER_CONFIG
