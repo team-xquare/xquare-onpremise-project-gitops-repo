@@ -17,7 +17,7 @@ applications: []
 #         version: "17"
 #         sourcePath: "."
 #         outputPath: "/build/libs/*.jar"
-#         buildCmd: "./gradlew build -x test --build-cache --no-daemon"
+#         buildCmd: "./gradlew bootJar -x test --build-cache --no-daemon"
 #       # or nodejs:
 #       #   version: "18"
 #       #   sourcePath: "/"

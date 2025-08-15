@@ -12,7 +12,7 @@ applications:
         version: 21
         outputPath: /build/libs/*.jar
         sourcePath: .
-        buildCmd: ./gradlew build -x test
+        buildCmd: ./gradlew bootJar -x test
     endpoints:
       - port: 8080
         routes:

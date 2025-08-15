@@ -12,7 +12,7 @@ applications:
         version: 17
         outputPath: /application-infrastructure/build/libs/application-infrastructure-0.0.1-SNAPSHOT.jar
         sourcePath: .
-        buildCmd: ./gradlew build -x test --build-cache
+        buildCmd: ./gradlew bootJar -x test --build-cache
     endpoints:
       - port: 8080
         routes:
@@ -30,7 +30,7 @@ applications:
         version: 17
         outputPath: /build/libs/Equus-Api-Gateway-0.0.1-SNAPSHOT.jar
         sourcePath: .
-        buildCmd: ./gradlew build -x test --build-cache
+        buildCmd: ./gradlew bootJar -x test --build-cache
     endpoints:
       - port: 8080
         routes:
@@ -48,7 +48,7 @@ applications:
         version: 17
         outputPath: /build/libs/Equus-User-0.0.0.jar
         sourcePath: .
-        buildCmd: ./gradlew build -x test --build-cache
+        buildCmd: ./gradlew bootJar -x test --build-cache
     endpoints:
       - port: 8080
         routes:
@@ -66,7 +66,7 @@ applications:
         version: 17
         outputPath: /build/libs/Equus-Feed-0.0.1-SNAPSHOT.jar
         sourcePath: .
-        buildCmd: ./gradlew build -x test --build-cache
+        buildCmd: ./gradlew bootJar -x test --build-cache
     endpoints:
       - port: 8080
         routes:
@@ -84,7 +84,7 @@ applications:
         version: 17
         outputPath: /build/libs/Equus-Status-0.0.0.jar
         sourcePath: .
-        buildCmd: ./gradlew build -x test --build-cache
+        buildCmd: ./gradlew bootJar -x test --build-cache
     endpoints:
       - port: 8080
         routes:
@@ -102,7 +102,7 @@ applications:
         version: 17
         outputPath: /build/libs/Equus-Schedule-0.0.0.jar
         sourcePath: .
-        buildCmd: ./gradlew build -x test --build-cache
+        buildCmd: ./gradlew bootJar -x test --build-cache
     endpoints:
       - port: 8080
         routes:
@@ -192,7 +192,7 @@ applications:
         version: 11
         outputPath: /build/libs/*.jar
         sourcePath: .
-        buildCmd: ./gradlew build -x test
+        buildCmd: ./gradlew bootJar -x test
     endpoints:
       - port: 8080
         routes:
@@ -282,7 +282,7 @@ applications:
         version: 21
         outputPath: /build/libs/configserver-0.0.1-SNAPSHOT.jar
         sourcePath: .
-        buildCmd: ./gradlew build -x test
+        buildCmd: ./gradlew bootJar -x test
     endpoints:
       - port: 8888
         routes:

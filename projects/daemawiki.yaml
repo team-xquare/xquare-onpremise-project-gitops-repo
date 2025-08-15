@@ -12,7 +12,7 @@ applications:
         version: 21
         outputPath: /build/libs/*.jar
         sourcePath: .
-        buildCmd: ./gradlew build -x test --build-cache
+        buildCmd: ./gradlew bootJar -x test --build-cache
     endpoints:
       - port: 8080
         routes:
@@ -30,7 +30,7 @@ applications:
         version: 21
         outputPath: /build/libs/*.jar
         sourcePath: .
-        buildCmd: ./gradlew build -x test --build-cache
+        buildCmd: ./gradlew bootJar -x test --build-cache
     endpoints:
       - port: 8080
         routes:
