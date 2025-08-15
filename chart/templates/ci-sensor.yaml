@@ -121,9 +121,11 @@ spec:
                         {{- if .github.hash }}
                         - "--destination={{ include "project.harborRegistry" $ }}/xquare/{{ $.Values.project }}-{{ include "app.serviceName" . }}:{{`{{inputs.parameters.sha}}`}}"
                         {{- end }}
+                        - "--registry-mirror=mirror.gcr.io"
                         - "--cache=true"
                         - "--cache-repo={{ include "project.harborRegistry" $ }}/xquare/cache"
-                        - "--registry-mirror=mirror.gcr.io"
+                        - "--snapshot-mode=redo"
+                        - "--use-new-run=true"
                       env:
                         - name: DOCKER_CONFIG
                           value: "/kaniko/.docker"
