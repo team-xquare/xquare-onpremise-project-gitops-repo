@@ -14,15 +14,15 @@ data:
     FROM eclipse-temurin:{{ .build.gradle.version }}-jdk-alpine AS build
     WORKDIR /app
     RUN apk add --no-cache bash findutils
-    ENV GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.parallel=true -Dorg.gradle.configureondemand=true -XX:-UsePerfData -Dkotlin.compiler.execution.strategy=in-process -Dkotlin.incremental=false -Dorg.gradle.internal.http.connectionTimeout=60000 -Dorg.gradle.internal.http.socketTimeout=60000" 
+    ENV GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.parallel=true -Dorg.gradle.configureondemand=true -Dorg.gradle.caching=true -Dorg.gradle.configuration-cache=true -Dorg.gradle.unsafe.configuration-cache=true -Dorg.gradle.unsafe.configuration-cache-problems=warn -Dorg.gradle.workers.max=4 -Dorg.gradle.priority=high -Dorg.gradle.logging.level=lifecycle -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -XX:+UseG1GC -XX:G1HeapRegionSize=16m -XX:+UseStringDeduplication -XX:-UsePerfData -XX:+DisableExplicitGC -XX:MaxMetaspaceSize=512m -XX:+UnlockExperimentalVMOptions -XX:+UseJVMCICompiler -Dkotlin.compiler.execution.strategy=in-process -Dkotlin.incremental=false -Dkotlin.daemon.jvm.options=-Xmx1g -Dkotlin.parallel.tasks.in.project=true -Dfile.encoding=UTF-8 -Duser.country=US -Duser.language=en -Duser.timezone=UTC -Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom -Dorg.gradle.internal.http.connectionTimeout=60000 -Dorg.gradle.internal.http.socketTimeout=60000 -Dorg.gradle.internal.repository.max.tentatives=1 -Dorg.gradle.internal.repository.initial.backoff=500 -Dorg.gradle.internal.network.retry.max.times=2"
     ENV GRADLE_USER_HOME="/cache/.gradle"
     RUN mkdir -p /cache/.gradle
     COPY {{ .build.gradle.sourcePath | default "." }}/build.gradle* {{ .build.gradle.sourcePath | default "." }}/settings.gradle* {{ .build.gradle.sourcePath | default "." }}/gradle.properties* {{ .build.gradle.sourcePath | default "." }}/gradlew* ./
     COPY {{ .build.gradle.sourcePath | default "." }}/gradle gradle
     RUN chmod +x gradlew && ./gradlew --version
-    RUN ./gradlew dependencies --no-daemon || true
+    RUN ./gradlew dependencies || true
     COPY {{ .build.gradle.sourcePath | default "." }}/ .
-    RUN {{ .build.gradle.buildCmd }} --no-daemon && \
+    RUN {{ .build.gradle.buildCmd }} && \
         rm -rf .gradle /app/.gradle /root/.kotlin /tmp/* /var/tmp/* /tmp/kotlin-daemon*.log* 2>/dev/null || true
     FROM eclipse-temurin:{{ .build.gradle.version }}-jre-alpine
     RUN apk add --no-cache tzdata && addgroup -g 1001 appgroup && adduser -u 1001 -G appgroup -s /bin/sh -D appuser
