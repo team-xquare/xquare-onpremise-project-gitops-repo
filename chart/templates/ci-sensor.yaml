@@ -20,12 +20,10 @@ spec:
             type: string
             value:
               - "refs/heads/{{ .github.branch }}"
-          # {{- if empty .github.hash }}
           - path: body.X-GitHub-Event
             type: string
             value:
               - "ping"
-          # {{- end }}
         dataLogicalOperator: "or"
   eventBusName: ci-eventbus
   template:
