@@ -88,7 +88,7 @@ spec:
                     - name: gitops-repo
                       value: {{ include "ci.gitopsRepo" $ }}
                     - name: docker-context-path
-                      value: {{ if .build.docker }}{{ .build.docker.sourcePath | default "" }}{{ end }}
+                      value: "{{ if and .build .build.docker .build.docker.sourcePath }}{{ .build.docker.sourcePath }}{{ else }}{{ end }}"
                 podGC:
                   strategy: OnPodCompletion
                   deleteDelayDuration: 72h
