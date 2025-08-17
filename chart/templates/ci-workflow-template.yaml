@@ -49,7 +49,7 @@ spec:
 
           - name: create-check-run-start
             template: create-check-run
-            dependencies: [get-github-token, get-latest-sha]
+            depends: "get-github-token.Succeeded && (get-latest-sha.Succeeded || get-latest-sha.Skipped)"
             arguments:
               parameters:
                 - name: github-owner
@@ -69,11 +69,11 @@ spec:
                 - name: summary
                   value: "애플리케이션 빌드를 시작합니다"
                 - name: sha
-                  value: "{{`{{= workflow.parameters.github-event-type == 'push' ? workflow.parameters.github-sha : jsonpath(tasks.get-latest-sha.outputs.result, '$.sha') }}`}}"
+                  value: "{{`{{= workflow.parameters.github-event-type == 'push' ? workflow.parameters.github-sha : (tasks.get-latest-sha.status == 'Succeeded' ? jsonpath(tasks.get-latest-sha.outputs.result, '$.sha') : workflow.parameters.github-sha) }}`}}"
 
           - name: kaniko-build
             template: docker-build
-            dependencies: [get-github-token, get-latest-sha]
+            depends: "get-github-token.Succeeded && (get-latest-sha.Succeeded || get-latest-sha.Skipped)"
             arguments:
               parameters:
                 - name: github-owner
@@ -93,7 +93,7 @@ spec:
                 - name: docker-context-path
                   value: "{{`{{workflow.parameters.docker-context-path}}`}}"
                 - name: git-sha
-                  value: "{{`{{= workflow.parameters.github-event-type == 'push' ? workflow.parameters.github-sha : jsonpath(tasks.get-latest-sha.outputs.result, '$.sha') }}`}}"
+                  value: "{{`{{= workflow.parameters.github-event-type == 'push' ? workflow.parameters.github-sha : (tasks.get-latest-sha.status == 'Succeeded' ? jsonpath(tasks.get-latest-sha.outputs.result, '$.sha') : workflow.parameters.github-sha) }}`}}"
 
           - name: check-run-build-success
             template: update-check-run
@@ -156,7 +156,7 @@ spec:
                 - name: service-name
                   value: "{{`{{workflow.parameters.service-name}}`}}"
                 - name: image-tag
-                  value: "{{`{{= workflow.parameters.github-event-type == 'push' ? workflow.parameters.github-sha : jsonpath(tasks.get-latest-sha.outputs.result, '$.sha') }}`}}"
+                  value: "{{`{{= workflow.parameters.github-event-type == 'push' ? workflow.parameters.github-sha : (tasks.get-latest-sha.status == 'Succeeded' ? jsonpath(tasks.get-latest-sha.outputs.result, '$.sha') : workflow.parameters.github-sha) }}`}}"
 
           - name: check-run-gitops-success
             template: update-check-run
