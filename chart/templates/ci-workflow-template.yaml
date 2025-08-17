@@ -33,7 +33,7 @@ spec:
             template: github-token-generator
 
           - name: get-latest-sha
-            dependencies: [get-github-token]
+            depends: "get-github-token.Succeeded"
             template: fetch-latest-commit-sha
             when: "{{`{{workflow.parameters.github-event-type}}`}} != 'push'"
             arguments:
@@ -97,7 +97,7 @@ spec:
 
           - name: check-run-build-success
             template: update-check-run
-            dependencies: [kaniko-build]
+            depends: "kaniko-build.Succeeded"
             when: "{{`{{tasks.kaniko-build.status}}`}} == 'Succeeded'"
             arguments:
               parameters:
@@ -120,7 +120,7 @@ spec:
 
           - name: check-run-build-failed
             template: update-check-run
-            dependencies: [kaniko-build]
+            depends: "kaniko-build.Failed"
             when: "{{`{{tasks.kaniko-build.status}}`}} != 'Succeeded'"
             arguments:
               parameters:
@@ -143,7 +143,7 @@ spec:
 
           - name: gitops-update
             template: update-gitops-repo
-            dependencies: [kaniko-build]
+            depends: "kaniko-build.Succeeded"
             when: "{{`{{tasks.kaniko-build.status}}`}} == 'Succeeded'"
             arguments:
               parameters:
@@ -160,7 +160,7 @@ spec:
 
           - name: check-run-gitops-success
             template: update-check-run
-            dependencies: [gitops-update]
+            depends: "gitops-update.Succeeded"
             when: "{{`{{tasks.gitops-update.status}}`}} == 'Succeeded'"
             arguments:
               parameters:
@@ -183,7 +183,7 @@ spec:
 
           - name: check-run-gitops-failed
             template: update-check-run
-            dependencies: [gitops-update]
+            depends: "gitops-update.Failed"
             when: "{{`{{tasks.gitops-update.status}}`}} != 'Succeeded'"
             arguments:
               parameters:
