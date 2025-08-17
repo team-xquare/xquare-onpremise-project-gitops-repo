@@ -97,7 +97,6 @@ spec:
           - name: check-run-build-success
             template: update-check-run
             depends: "kaniko-build.Succeeded"
-            when: "{{`{{tasks.kaniko-build.status}}`}} == 'Succeeded'"
             arguments:
               parameters:
                 - name: github-owner
@@ -120,7 +119,6 @@ spec:
           - name: check-run-build-failed
             template: update-check-run
             depends: "kaniko-build.Failed"
-            when: "{{`{{tasks.kaniko-build.status}}`}} != 'Succeeded'"
             arguments:
               parameters:
                 - name: github-owner
@@ -143,7 +141,6 @@ spec:
           - name: gitops-update
             template: update-gitops-repo
             depends: "kaniko-build.Succeeded"
-            when: "{{`{{tasks.kaniko-build.status}}`}} == 'Succeeded'"
             arguments:
               parameters:
                 - name: gitops-repo
@@ -160,7 +157,6 @@ spec:
           - name: check-run-gitops-success
             template: update-check-run
             depends: "gitops-update.Succeeded"
-            when: "{{`{{tasks.gitops-update.status}}`}} == 'Succeeded'"
             arguments:
               parameters:
                 - name: github-owner
@@ -183,7 +179,6 @@ spec:
           - name: check-run-gitops-failed
             template: update-check-run
             depends: "gitops-update.Failed"
-            when: "{{`{{tasks.gitops-update.status}}`}} != 'Succeeded'"
             arguments:
               parameters:
                 - name: github-owner
