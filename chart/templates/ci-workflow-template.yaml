@@ -59,15 +59,15 @@ spec:
                 - name: github-token
                   value: "{{`{{tasks.get-github-token.outputs.parameters.github-token}}`}}"
                 - name: check-name
-                  value: "CI/CD Pipeline"
+                  value: "{{`{{workflow.parameters.service-name}}`}}"
                 - name: status
                   value: "in_progress"
                 - name: conclusion
                   value: ""
                 - name: title
-                  value: "빌드 시작"
+                  value: "빌드 진행 중"
                 - name: summary
-                  value: "Docker 이미지 빌드를 시작합니다"
+                  value: "애플리케이션 빌드를 시작합니다"
                 - name: sha
                   value: "{{`{{= workflow.parameters.github-event-type == 'push' ? workflow.parameters.github-sha : jsonpath(tasks.get-latest-sha.outputs.result, '$.sha') }}`}}"
 
@@ -114,9 +114,9 @@ spec:
                 - name: conclusion
                   value: ""
                 - name: title
-                  value: "빌드 완료 - GitOps 업데이트 중"
+                  value: "빌드 완료 - 배포 준비 중"
                 - name: summary
-                  value: "Docker 이미지 빌드 완료. GitOps 저장소 업데이트 중입니다"
+                  value: "빌드가 성공적으로 완료되었습니다. 배포를 준비하고 있습니다"
 
           - name: check-run-build-failed
             template: update-check-run
@@ -139,7 +139,7 @@ spec:
                 - name: title
                   value: "빌드 실패"
                 - name: summary
-                  value: "Docker 이미지 빌드에 실패했습니다. 로그를 확인해주세요"
+                  value: "빌드 과정에서 오류가 발생했습니다. 로그를 확인해주세요"
 
           - name: gitops-update
             template: update-gitops-repo
@@ -179,7 +179,7 @@ spec:
                 - name: title
                   value: "배포 트리거 성공"
                 - name: summary
-                  value: "CI/CD 파이프라인이 성공적으로 완료되었습니다"
+                  value: "빌드 및 배포 트리거가 성공적으로 완료되었습니다"
 
           - name: check-run-gitops-failed
             template: update-check-run
@@ -202,7 +202,7 @@ spec:
                 - name: title
                   value: "배포 트리거 실패"
                 - name: summary
-                  value: "GitOps 저장소 업데이트에 실패했습니다"
+                  value: "배포 트리거 과정에서 오류가 발생했습니다. 설정을 확인해주세요"
 
     - name: github-token-generator
       container:
