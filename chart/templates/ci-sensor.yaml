@@ -49,6 +49,7 @@ spec:
             - src:
                 dependencyName: {{ include "app.serviceName" . }}-github-push
                 dataKey: body.after
+                value: ""
               dest: spec.arguments.parameters.0.value
           {{- end }}
           source:
