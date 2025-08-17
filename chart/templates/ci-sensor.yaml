@@ -8,9 +8,10 @@ metadata:
   labels:
     {{- include "app.labels" . | nindent 4 }}
     app.kubernetes.io/component: ci-sensor
+  annotations: {}
 spec:
   dependencies:
-    - name: {{ include "app.serviceName" . }}-github-event
+    - name: {{ include "app.serviceName" . }}-github-push
       eventName: {{ include "ci.githubFullname" . }}
       eventSourceName: {{ include "app.serviceName" . }}-github-webhook
       filters:
@@ -19,15 +20,17 @@ spec:
             type: string
             value:
               - "refs/heads/{{ .github.branch }}"
+          {{- if empty .github.hash }}
           - path: body.X-GitHub-Event
             type: string
             value:
               - "ping"
+          {{- end }}
         dataLogicalOperator: "or"
-  
   eventBusName: ci-eventbus
   template:
-    serviceAccountName: kaniko-sa
+    metadata:
+      annotations: {}
     container:
       resources:
         requests:
@@ -36,24 +39,21 @@ spec:
         limits:
           cpu: 50m
           memory: 60Mi
-  
+    serviceAccountName: kaniko-sa
   triggers:
     - retryStrategy:
         steps: 3
       template:
         k8s:
           operation: create
+          {{- if .github.hash }}
           parameters:
             - src:
-                dependencyName: {{ include "app.serviceName" . }}-github-event
-                dataKey: body.X-GitHub-Event
-                value: ""
-              dest: spec.arguments.parameters.0.value
-            - src:
-                dependencyName: {{ include "app.serviceName" . }}-github-event
+                dependencyName: {{ include "app.serviceName" . }}-github-push
                 dataKey: body.after
                 value: ""
-              dest: spec.arguments.parameters.1.value
+              dest: spec.arguments.parameters.0.value
+          {{- end }}
           source:
             resource:
               apiVersion: argoproj.io/v1alpha1
@@ -65,33 +65,156 @@ spec:
                   {{- include "app.selectorLabels" . | nindent 18 }}
                   app.kubernetes.io/component: ci-workflow
               spec:
-                workflowTemplateRef:
-                  name: {{ include "app.serviceName" . }}-ci-pipeline-template
+                {{- if .github.hash }}
                 arguments:
                   parameters:
-                    - name: github-event-type
-                      value: ""
-                    - name: github-sha
-                      value: ""
-                    - name: service-name
-                      value: {{ include "app.serviceName" . }}
-                    - name: project-name
-                      value: {{ $.Values.project }}
-                    - name: github-owner
-                      value: {{ .github.owner }}
-                    - name: github-repo
-                      value: {{ .github.repo }}
-                    - name: github-branch
-                      value: {{ .github.branch }}
-                    - name: harbor-registry
-                      value: {{ include "project.harborRegistry" $ }}
-                    - name: gitops-repo
-                      value: {{ include "ci.gitopsRepo" $ }}
-                    - name: docker-context-path
-                      value: "{{ if and .build .build.docker .build.docker.sourcePath }}{{ .build.docker.sourcePath }}{{ else }}{{ end }}"
+                    - name: git-sha
+                {{- end }}
+                entrypoint: ci-pipeline
                 podGC:
                   strategy: OnPodCompletion
                   deleteDelayDuration: 72h
                 serviceAccountName: kaniko-sa
+                templates:
+                  - name: ci-pipeline
+                    dag:
+                      tasks:
+                        - name: build
+                          {{- if .github.hash }}
+                          arguments:
+                            parameters:
+                              - name: sha
+                                value: "{{`{{workflow.parameters.git-sha}}`}}"
+                          {{- end }}
+                          template: docker-build
+                        - name: update-gitops
+                          arguments:
+                            parameters:
+                              - name: image-tag
+                                {{- if empty .github.hash }}
+                                value: "latest"
+                                {{- else }}
+                                value: "{{`{{workflow.parameters.git-sha}}`}}"
+                                {{- end }}
+                          dependencies: [build]
+                          template: update-gitops
+
+                  - name: docker-build
+                    metadata: {}
+                    {{- if .github.hash }}
+                    inputs:
+                      parameters:
+                        - name: sha
+                    {{- end }}
+                    container:
+                      image: gcr.io/kaniko-project/executor:latest
+                      args:
+                        - "--context=/workspace/repo{{ if .build.docker }}{{ .build.docker.sourcePath | default "" }}{{ end }}"
+                        - "--dockerfile=/workspace/repo{{ if .build.docker }}{{ .build.docker.sourcePath | default "" }}{{ end }}/Dockerfile"
+                        - "--destination={{ include "project.harborRegistry" $ }}/xquare/{{ $.Values.project }}-{{ include "app.serviceName" . }}:latest"
+                        {{- if .github.hash }}
+                        - "--destination={{ include "project.harborRegistry" $ }}/xquare/{{ $.Values.project }}-{{ include "app.serviceName" . }}:{{`{{inputs.parameters.sha}}`}}"
+                        {{- end }}
+                        - "--registry-mirror=mirror.gcr.io"
+                        - "--cache=true"
+                        - "--cache-repo={{ include "project.harborRegistry" $ }}/xquare/cache"
+                        - "--snapshot-mode=redo"
+                        - "--use-new-run=true"
+                      env:
+                        - name: DOCKER_CONFIG
+                          value: "/kaniko/.docker"
+                      volumeMounts:
+                        - name: workspace
+                          mountPath: /workspace
+                        - name: docker-config
+                          mountPath: /kaniko/.docker
+                    initContainers:
+                      - name: checkout-and-prepare
+                        image: alpine:3.18
+                        command: ["/bin/sh", "-c"]
+                        args:
+                          - |
+                            set -e
+                            apk add --no-cache git jq curl openssl
+
+                            APP_ID={{ include "ci.githubAppID" $ }}
+                            INSTALL_ID={{ include "ci.installationId" . }}
+                            echo "$GITHUB_PRIVATE_KEY" > /tmp/key.pem
+                            chmod 600 /tmp/key.pem
+                            now=$(date +%s); iat=$((now-60)); exp=$((now+600))
+                            b64enc() { openssl base64 | tr -d '=' | tr '/+' '_-' | tr -d '\n'; }
+                            header_encoded=$(echo -n '{"typ":"JWT","alg":"RS256"}' | b64enc)
+                            payload_encoded=$(echo -n "{\"iat\":${iat},\"exp\":${exp},\"iss\":\"${APP_ID}\"}" | b64enc)
+                            JWT="${header_encoded}.${payload_encoded}.$(openssl dgst -sha256 -sign /tmp/key.pem <(echo -n "${header_encoded}.${payload_encoded}") | b64enc)"
+                            TOKEN=$(curl -s -X POST -H "Authorization: Bearer ${JWT}" -H "Accept: application/vnd.github+json" "https://api.github.com/app/installations/${INSTALL_ID}/access_tokens" | jq -r '.token')
+                            [ -z "$TOKEN" ] || [ "$TOKEN" = "null" ] && { echo "ERROR: Failed to get GitHub token"; exit 1; }
+                            
+                            git clone -b {{ .github.branch }} --single-branch https://x-access-token:${TOKEN}@github.com/{{ .github.owner }}/{{ .github.repo }}.git /workspace/repo || exit 1
+                            cd /workspace/repo
+                            {{- if .github.hash }}
+                            git checkout "{{`{{inputs.parameters.sha}}`}}" || exit 1
+                            {{- end }}
+                            
+                            {{- if .build.docker }}
+                            echo "Using existing Dockerfile from repository"
+                            {{- else }}
+                            cp /app-dockerfile/Dockerfile /workspace/repo/Dockerfile || exit 1
+                            {{- end }}
+                        env:
+                          - name: GITHUB_PRIVATE_KEY
+                            valueFrom:
+                              secretKeyRef:
+                                name: github-app-pem
+                                key: privateKey.pem
+                        volumeMounts:
+                          - name: workspace
+                            mountPath: /workspace
+                          - name: app-dockerfile
+                            mountPath: /app-dockerfile
+
+                  - name: update-gitops
+                    metadata: {}
+                    inputs:
+                      parameters:
+                        - name: image-tag
+                    container:
+                      image: curlimages/curl:latest
+                      command: ["/bin/sh", "-c"]
+                      args:
+                        - |
+                          curl -X POST \
+                            -H "Authorization: token ${GITHUB_TOKEN}" \
+                            -H "Accept: application/vnd.github.v3+json" \
+                            https://api.github.com/repos/{{ include "ci.gitopsRepo" $ }}/dispatches \
+                            -d '{
+                              "event_type": "config-api",
+                              "client_payload": {
+                                "path": "projects/{{ $.Values.project }}/applications/{{ include "app.serviceName" . }}",
+                                "action": "apply",
+                                "spec": {
+                                  "github": {
+                                    "hash": "'"{{`{{inputs.parameters.image-tag}}`}}"'"
+                                  }
+                                }
+                              }
+                            }'
+                      env:
+                        - name: GITHUB_TOKEN
+                          valueFrom:
+                            secretKeyRef:
+                              key: token
+                              name: github-token
+                volumes:
+                  - name: workspace
+                    emptyDir: {}
+                  - name: docker-config
+                    secret:
+                      secretName: harbor-registry-credentials
+                      items:
+                        - key: .dockerconfigjson
+                          path: config.json
+                  - name: app-dockerfile
+                    configMap:
+                      name: {{ include "app.serviceName" . }}-dockerfile
         name: {{ include "app.serviceName" . }}-workflow-trigger
 {{- end }}
