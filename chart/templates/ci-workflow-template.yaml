@@ -399,6 +399,7 @@ spec:
           runAsUser: 1000
           runAsGroup: 1000
           seccompProfile:
+            type: Unconfined
         env:
           - name: BUILDKITD_FLAGS
             value: --oci-worker-no-process-sandbox
