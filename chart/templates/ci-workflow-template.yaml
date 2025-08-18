@@ -97,7 +97,7 @@ spec:
 
           - name: check-run-build-success
             template: update-check-run
-            depends: "kaniko-build.Succeeded"
+            depends: "kaniko-build.Succeeded && create-check-run-start.Succeeded"
             arguments:
               parameters:
                 - name: github-owner
@@ -119,7 +119,7 @@ spec:
 
           - name: check-run-build-failed
             template: update-check-run
-            depends: "kaniko-build.Failed"
+            depends: "kaniko-build.Failed && create-check-run-start.Succeeded"
             arguments:
               parameters:
                 - name: github-owner
@@ -157,7 +157,7 @@ spec:
 
           - name: check-run-gitops-success
             template: update-check-run
-            depends: "gitops-update.Succeeded"
+            depends: "gitops-update.Succeeded && create-check-run-start.Succeeded"
             arguments:
               parameters:
                 - name: github-owner
@@ -179,7 +179,7 @@ spec:
 
           - name: check-run-gitops-failed
             template: update-check-run
-            depends: "gitops-update.Failed"
+            depends: "gitops-update.Failed && create-check-run-start.Succeeded"
             arguments:
               parameters:
                 - name: github-owner
