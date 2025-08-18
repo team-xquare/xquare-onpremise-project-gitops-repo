@@ -395,6 +395,10 @@ spec:
       container:
         image: moby/buildkit:rootless
         workingDir: /work/repo{{`{{inputs.parameters.docker-context-path}}`}}
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
+          seccompProfile:
         env:
           - name: BUILDKITD_FLAGS
             value: --oci-worker-no-process-sandbox
