@@ -60,7 +60,7 @@ applications:
       repo: Equus-Feed
       branch: main
       installationId: "77967720"
-      hash: latest
+      hash: 800f6ea7e517a69a547fb09cb4e5b3710d86a885
     build:
       gradle:
         version: 17
