@@ -78,7 +78,7 @@ applications:
       repo: Equus-Status
       branch: main
       installationId: "77967720"
-      hash: latest
+      hash: d96c114f25a8ada839b639b5a2b5aa8b9f14be99
     build:
       gradle:
         version: 17
