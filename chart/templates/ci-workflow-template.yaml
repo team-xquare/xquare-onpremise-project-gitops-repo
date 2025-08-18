@@ -69,7 +69,7 @@ spec:
                 - name: summary
                   value: "애플리케이션 빌드를 시작합니다"
                 - name: sha
-                  value: "{{`{{= workflow.parameters['github-event-type'] == 'push' ? workflow.parameters['github-sha'] : jsonpath(tasks['get-latest-sha'].outputs.result, '$.sha') }}`}}"
+                  value: "{{`{{= workflow.parameters['github-event-type'] == 'push' ? workflow.parameters['github-sha'] : jsonpath(tasks['get-latest-sha'].outputs.parameters['commit-sha'], '$.sha') }}`}}"
 
           - name: kaniko-build
             template: docker-build
@@ -93,7 +93,7 @@ spec:
                 - name: docker-context-path
                   value: "{{`{{workflow.parameters.docker-context-path}}`}}"
                 - name: git-sha
-                  value: "{{`{{= workflow.parameters['github-event-type'] == 'push' ? workflow.parameters['github-sha'] : jsonpath(tasks['get-latest-sha'].outputs.result, '$.sha') }}`}}"
+                  value: "{{`{{= workflow.parameters['github-event-type'] == 'push' ? workflow.parameters['github-sha'] : jsonpath(tasks['get-latest-sha'].outputs.parameters['commit-sha'], '$.sha') }}`}}"
 
           - name: check-run-build-success
             template: update-check-run
@@ -107,7 +107,7 @@ spec:
                 - name: github-token
                   value: "{{`{{tasks.get-github-token.outputs.parameters.github-token}}`}}"
                 - name: check-run-id
-                  value: "{{`{{jsonpath(tasks['create-check-run-start'].outputs.result, '$.id')}}`}}"
+                  value: "{{`{{jsonpath(tasks['create-check-run-start'].outputs.parameters['check-run-id'], '$.id')}}`}}"
                 - name: status
                   value: "in_progress"
                 - name: conclusion
@@ -129,7 +129,7 @@ spec:
                 - name: github-token
                   value: "{{`{{tasks.get-github-token.outputs.parameters.github-token}}`}}"
                 - name: check-run-id
-                  value: "{{`{{jsonpath(tasks['create-check-run-start'].outputs.result, '$.id')}}`}}"
+                  value: "{{`{{jsonpath(tasks['create-check-run-start'].outputs.parameters['check-run-id'], '$.id')}}`}}"
                 - name: status
                   value: "completed"
                 - name: conclusion
@@ -151,7 +151,7 @@ spec:
                 - name: service-name
                   value: "{{`{{workflow.parameters.service-name}}`}}"
                 - name: image-tag
-                  value: "{{`{{= workflow.parameters['github-event-type'] == 'push' ? workflow.parameters['github-sha'] : jsonpath(tasks['get-latest-sha'].outputs.result, '$.sha') }}`}}"
+                  value: "{{`{{= workflow.parameters['github-event-type'] == 'push' ? workflow.parameters['github-sha'] : jsonpath(tasks['get-latest-sha'].outputs.parameters['commit-sha'], '$.sha') }}`}}"
 
           - name: check-run-gitops-success
             template: update-check-run
@@ -165,7 +165,7 @@ spec:
                 - name: github-token
                   value: "{{`{{tasks.get-github-token.outputs.parameters.github-token}}`}}"
                 - name: check-run-id
-                  value: "{{`{{jsonpath(tasks['create-check-run-start'].outputs.result, '$.id')}}`}}"
+                  value: "{{`{{jsonpath(tasks['create-check-run-start'].outputs.parameters['check-run-id'], '$.id')}}`}}"
                 - name: status
                   value: "completed"
                 - name: conclusion
@@ -187,7 +187,7 @@ spec:
                 - name: github-token
                   value: "{{`{{tasks.get-github-token.outputs.parameters.github-token}}`}}"
                 - name: check-run-id
-                  value: "{{`{{jsonpath(tasks['create-check-run-start'].outputs.result, '$.id')}}`}}"
+                  value: "{{`{{jsonpath(tasks['create-check-run-start'].outputs.parameters['check-run-id'], '$.id')}}`}}"
                 - name: status
                   value: "completed"
                 - name: conclusion
@@ -243,15 +243,24 @@ spec:
           - name: github-repo
           - name: github-branch
           - name: github-token
-      http:
-        url: "https://api.github.com/repos/{{`{{inputs.parameters.github-owner}}`}}/{{`{{inputs.parameters.github-repo}}`}}/commits/{{`{{inputs.parameters.github-branch}}`}}"
-        method: GET
-        headers:
-          - name: Authorization
-            value: "Bearer {{`{{inputs.parameters.github-token}}`}}"
-          - name: Accept
-            value: "application/vnd.github+json"
-        successCondition: "response.statusCode == 200"
+      container:
+        image: curlimages/curl:latest
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            set -e
+            
+            RESPONSE=$(curl -s -H "Authorization: Bearer {{`{{inputs.parameters.github-token}}`}}" \
+              -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/{{`{{inputs.parameters.github-owner}}`}}/{{`{{inputs.parameters.github-repo}}`}}/commits/{{`{{inputs.parameters.github-branch}}`}}")
+            
+            echo "$RESPONSE" > /tmp/commit_info.json
+            echo "Successfully fetched commit info"
+      outputs:
+        parameters:
+          - name: commit-sha
+            valueFrom:
+              path: /tmp/commit_info.json
 
     - name: create-check-run
       inputs:
@@ -266,27 +275,35 @@ spec:
           - name: title
           - name: summary
           - name: sha
-      http:
-        url: "https://api.github.com/repos/{{`{{inputs.parameters.github-owner}}`}}/{{`{{inputs.parameters.github-repo}}`}}/check-runs"
-        method: POST
-        headers:
-          - name: Authorization
-            value: "Bearer {{`{{inputs.parameters.github-token}}`}}"
-          - name: Accept
-            value: "application/vnd.github+json"
-          - name: Content-Type
-            value: "application/json"
-        body: |
-          {
-            "name": "{{`{{inputs.parameters.check-name}}`}}",
-            "head_sha": "{{`{{inputs.parameters.sha}}`}}",
-            "status": "{{`{{inputs.parameters.status}}`}}",
-            "output": {
-              "title": "{{`{{inputs.parameters.title}}`}}",
-              "summary": "{{`{{inputs.parameters.summary}}`}}"
-            }
-          }
-        successCondition: "response.statusCode == 201"
+      container:
+        image: curlimages/curl:latest
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            set -e
+            
+            RESPONSE=$(curl -s -X POST \
+              -H "Authorization: Bearer {{`{{inputs.parameters.github-token}}`}}" \
+              -H "Accept: application/vnd.github+json" \
+              -H "Content-Type: application/json" \
+              -d '{
+                "name": "{{`{{inputs.parameters.check-name}}`}}",
+                "head_sha": "{{`{{inputs.parameters.sha}}`}}",
+                "status": "{{`{{inputs.parameters.status}}`}}",
+                "output": {
+                  "title": "{{`{{inputs.parameters.title}}`}}",
+                  "summary": "{{`{{inputs.parameters.summary}}`}}"
+                }
+              }' \
+              "https://api.github.com/repos/{{`{{inputs.parameters.github-owner}}`}}/{{`{{inputs.parameters.github-repo}}`}}/check-runs")
+            
+            echo "$RESPONSE" > /tmp/check_run.json
+            echo "Check run created successfully"
+      outputs:
+        parameters:
+          - name: check-run-id
+            valueFrom:
+              path: /tmp/check_run.json
 
     - name: update-check-run
       inputs:
@@ -300,26 +317,33 @@ spec:
             value: ""
           - name: title
           - name: summary
-      http:
-        url: "https://api.github.com/repos/{{`{{inputs.parameters.github-owner}}`}}/{{`{{inputs.parameters.github-repo}}`}}/check-runs/{{`{{inputs.parameters.check-run-id}}`}}"
-        method: PATCH
-        headers:
-          - name: Authorization
-            value: "Bearer {{`{{inputs.parameters.github-token}}`}}"
-          - name: Accept
-            value: "application/vnd.github+json"
-          - name: Content-Type
-            value: "application/json"
-        body: |
-          {
-            "status": "{{`{{inputs.parameters.status}}`}}",
-            {{`{{= inputs.parameters.conclusion != "" ? '"conclusion": "' + inputs.parameters.conclusion + '",' : '' }}`}}
-            "output": {
-              "title": "{{`{{inputs.parameters.title}}`}}",
-              "summary": "{{`{{inputs.parameters.summary}}`}}"
-            }
-          }
-        successCondition: "response.statusCode == 200"
+      container:
+        image: curlimages/curl:latest
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            set -e
+            
+            CONCLUSION_JSON=""
+            if [ "{{`{{inputs.parameters.conclusion}}`}}" != "" ]; then
+              CONCLUSION_JSON='"conclusion": "{{`{{inputs.parameters.conclusion}}`}}",'
+            fi
+            
+            curl -s -X PATCH \
+              -H "Authorization: Bearer {{`{{inputs.parameters.github-token}}`}}" \
+              -H "Accept: application/vnd.github+json" \
+              -H "Content-Type: application/json" \
+              -d "{
+                \"status\": \"{{`{{inputs.parameters.status}}`}}\",
+                $CONCLUSION_JSON
+                \"output\": {
+                  \"title\": \"{{`{{inputs.parameters.title}}`}}\",
+                  \"summary\": \"{{`{{inputs.parameters.summary}}`}}\"
+                }
+              }" \
+              "https://api.github.com/repos/{{`{{inputs.parameters.github-owner}}`}}/{{`{{inputs.parameters.github-repo}}`}}/check-runs/{{`{{inputs.parameters.check-run-id}}`}}"
+            
+            echo "Check run updated successfully"
 
     - name: docker-build
       inputs:
@@ -399,31 +423,36 @@ spec:
           - name: project-name
           - name: service-name
           - name: image-tag
-      http:
-        url: "https://api.github.com/repos/{{`{{inputs.parameters.gitops-repo}}`}}/dispatches"
-        method: POST
-        headers:
-          - name: Authorization
+      container:
+        image: curlimages/curl:latest
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            set -e
+            
+            curl -X POST \
+              -H "Authorization: token $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github.v3+json" \
+              -H "Content-Type: application/json" \
+              -d '{
+                "event_type": "config-api",
+                "client_payload": {
+                  "path": "projects/{{`{{inputs.parameters.project-name}}`}}/applications/{{`{{inputs.parameters.service-name}}`}}",
+                  "action": "apply",
+                  "spec": {
+                    "github": {
+                      "hash": "{{`{{inputs.parameters.image-tag}}`}}"
+                    }
+                  }
+                }
+              }' \
+              "https://api.github.com/repos/{{`{{inputs.parameters.gitops-repo}}`}}/dispatches"
+            
+            echo "GitOps repository dispatch completed successfully"
+        env:
+          - name: GITHUB_TOKEN
             valueFrom:
               secretKeyRef:
-                name: github-token
                 key: token
-          - name: Accept
-            value: "application/vnd.github.v3+json"
-          - name: Content-Type
-            value: "application/json"
-        body: |
-          {
-            "event_type": "config-api",
-            "client_payload": {
-              "path": "projects/{{`{{inputs.parameters.project-name}}`}}/applications/{{`{{inputs.parameters.service-name}}`}}",
-              "action": "apply",
-              "spec": {
-                "github": {
-                  "hash": "{{`{{inputs.parameters.image-tag}}`}}"
-                }
-              }
-            }
-          }
-        successCondition: "response.statusCode == 204"
+                name: github-token
 {{- end }}
