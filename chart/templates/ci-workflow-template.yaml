@@ -146,8 +146,6 @@ spec:
               parameters:
                 - name: gitops-repo
                   value: "{{`{{workflow.parameters.gitops-repo}}`}}"
-                - name: github-token
-                  value: "{{`{{tasks.get-github-token.outputs.parameters.github-token}}`}}"
                 - name: project-name
                   value: "{{`{{workflow.parameters.project-name}}`}}"
                 - name: service-name
@@ -398,7 +396,6 @@ spec:
       inputs:
         parameters:
           - name: gitops-repo
-          - name: github-token
           - name: project-name
           - name: service-name
           - name: image-tag
@@ -407,7 +404,10 @@ spec:
         method: POST
         headers:
           - name: Authorization
-            value: "token {{`{{inputs.parameters.github-token}}`}}"
+            valueFrom:
+              secretKeyRef:
+                name: github-token
+                key: token
           - name: Accept
             value: "application/vnd.github.v3+json"
           - name: Content-Type
