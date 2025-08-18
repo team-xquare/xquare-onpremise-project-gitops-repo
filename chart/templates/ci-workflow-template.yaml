@@ -357,6 +357,8 @@ spec:
           - name: docker-context-path
           - name: git-sha
       volumes:
+        - name: work
+          emptyDir: {}
         - name: docker-config
           secret:
             secretName: harbor-registry-credentials
@@ -366,74 +368,59 @@ spec:
         - name: app-dockerfile
           configMap:
             name: {{ include "app.serviceName" . }}-dockerfile
+      initContainers:
+        - name: git-checkout
+          image: alpine/git:latest
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              set -e
+              git config --global advice.detachedHead false
+              
+              TOKEN="{{`{{inputs.parameters.github-token}}`}}"
+              git clone -b {{`{{inputs.parameters.github-branch}}`}} --single-branch \
+                https://x-access-token:${TOKEN}@github.com/{{`{{inputs.parameters.github-owner}}`}}/{{`{{inputs.parameters.github-repo}}`}}.git /work/repo
+              
+              cd /work/repo
+              git checkout "{{`{{inputs.parameters.git-sha}}`}}"
+              
+              {{- if not .build.docker }}
+              cp /app-dockerfile/Dockerfile /work/repo{{`{{inputs.parameters.docker-context-path}}`}}/Dockerfile
+              {{- end }}
+          volumeMounts:
+            - name: work
+              mountPath: /work
+            - name: app-dockerfile
+              mountPath: /app-dockerfile
       container:
         image: moby/buildkit:rootless
-        command: ["/bin/sh", "-c"]
-        args:
-          - |
-            set -e
-            
-            # Set up runtime directories
-            mkdir -p /tmp/buildkit-runtime
-            git config --global advice.detachedHead false
-            
-            # Prepare build context and checkout code
-            TOKEN="{{`{{inputs.parameters.github-token}}`}}"
-            git clone -b {{`{{inputs.parameters.github-branch}}`}} --single-branch \
-              https://x-access-token:${TOKEN}@github.com/{{`{{inputs.parameters.github-owner}}`}}/{{`{{inputs.parameters.github-repo}}`}}.git /tmp/repo
-            
-            cd /tmp/repo
-            git checkout "{{`{{inputs.parameters.git-sha}}`}}"
-            
-            {{- if .build.docker }}
-            echo "Using existing Dockerfile from repository"
-            BUILD_CONTEXT="/tmp/repo{{`{{inputs.parameters.docker-context-path}}`}}"
-            {{- else }}
-            cp /app-dockerfile/Dockerfile /tmp/repo{{`{{inputs.parameters.docker-context-path}}`}}/Dockerfile
-            BUILD_CONTEXT="/tmp/repo{{`{{inputs.parameters.docker-context-path}}`}}"
-            {{- end }}
-            
-            # Change to build context directory
-            cd "$BUILD_CONTEXT"
-            
-            # Define image tags
-            IMAGE_LATEST="{{`{{inputs.parameters.harbor-registry}}`}}/xquare/{{`{{inputs.parameters.project-name}}`}}-{{`{{inputs.parameters.service-name}}`}}:latest"
-            IMAGE_SHA="{{`{{inputs.parameters.harbor-registry}}`}}/xquare/{{`{{inputs.parameters.project-name}}`}}-{{`{{inputs.parameters.service-name}}`}}:{{`{{inputs.parameters.git-sha}}`}}"
-            CACHE_IMAGE="{{`{{inputs.parameters.harbor-registry}}`}}/xquare/cache/{{`{{inputs.parameters.project-name}}`}}-{{`{{inputs.parameters.service-name}}`}}:buildcache"
-            
-            # Build with BuildKit daemonless mode
-            buildctl-daemonless.sh build \
-              --frontend dockerfile.v0 \
-              --local context=. \
-              --local dockerfile=. \
-              --import-cache type=registry,ref="$CACHE_IMAGE" \
-              --export-cache type=registry,ref="$CACHE_IMAGE",mode=max \
-              --output type=image,name="$IMAGE_LATEST,$IMAGE_SHA",push=true \
-              --progress=plain
-            
-            echo "Build completed successfully"
-            echo "Images pushed:"
-            echo "  Latest: $IMAGE_LATEST"
-            echo "  SHA: $IMAGE_SHA"
-            echo "  Cache: $CACHE_IMAGE"
-        securityContext:
-          privileged: true
-          runAsUser: 1000
-          runAsGroup: 1000
+        workingDir: /work/repo{{`{{inputs.parameters.docker-context-path}}`}}
         env:
           - name: BUILDKITD_FLAGS
-            value: "--oci-worker-no-process-sandbox --oci-worker-rootless"
+            value: --oci-worker-no-process-sandbox
           - name: DOCKER_CONFIG
-            value: "/.docker"
-          - name: XDG_RUNTIME_DIR
-            value: "/tmp/buildkit-runtime"
-          - name: TMPDIR
-            value: "/tmp"
+            value: /.docker
+        command:
+          - buildctl-daemonless.sh
+        args:
+          - build
+          - --frontend
+          - dockerfile.v0
+          - --local
+          - context=.
+          - --local
+          - dockerfile=.
+          - --import-cache
+          - type=registry,ref={{`{{inputs.parameters.harbor-registry}}`}}/xquare/cache/{{`{{inputs.parameters.project-name}}`}}-{{`{{inputs.parameters.service-name}}`}}:buildcache
+          - --export-cache
+          - type=registry,ref={{`{{inputs.parameters.harbor-registry}}`}}/xquare/cache/{{`{{inputs.parameters.project-name}}`}}-{{`{{inputs.parameters.service-name}}`}}:buildcache,mode=max
+          - --output
+          - type=image,name={{`{{inputs.parameters.harbor-registry}}`}}/xquare/{{`{{inputs.parameters.project-name}}`}}-{{`{{inputs.parameters.service-name}}`}}:latest,{{`{{inputs.parameters.harbor-registry}}`}}/xquare/{{`{{inputs.parameters.project-name}}`}}-{{`{{inputs.parameters.service-name}}`}}:{{`{{inputs.parameters.git-sha}}`}},push=true
         volumeMounts:
+          - name: work
+            mountPath: /work
           - name: docker-config
             mountPath: /.docker
-          - name: app-dockerfile
-            mountPath: /app-dockerfile
         resources:
           requests:
             cpu: "500m"
