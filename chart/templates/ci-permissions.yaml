@@ -41,7 +41,7 @@ rules:
     resources: ["events"]
     verbs: ["create", "patch", "list"]
   - apiGroups: ["argoproj.io"]
-    resources: ["workflows", "workflows/finalizers", "workflowtaskresults"]
+    resources: ["workflows", "workflows/finalizers", "workflowtaskresults", "workflowtasksets"]
     verbs: ["get", "list", "watch", "update", "patch", "create", "delete"]
   - apiGroups: ["policy"]
     resources: ["poddisruptionbudgets"]
