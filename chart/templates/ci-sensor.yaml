@@ -27,7 +27,7 @@ spec:
   
   eventBusName: ci-eventbus
   template:
-    serviceAccountName: kaniko-sa
+    serviceAccountName: buildkit-sa
     container:
       resources:
         requests:
@@ -92,6 +92,6 @@ spec:
                 podGC:
                   strategy: OnPodCompletion
                   deleteDelayDuration: 72h
-                serviceAccountName: kaniko-sa
+                serviceAccountName: buildkit-sa
         name: {{ include "app.serviceName" . }}-workflow-trigger
 {{- end }}
