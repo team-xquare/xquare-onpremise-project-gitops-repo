@@ -243,22 +243,24 @@ spec:
           - name: github-branch
           - name: github-token
       container:
-        image: curlimages/curl:latest
+        image: alpine:3.18
         command: ["/bin/sh", "-c"]
         args:
           - |
             set -e
-            
+            apk add --no-cache curl jq
+    
             COMMIT_SHA=$(curl -s -H "Authorization: Bearer {{`{{inputs.parameters.github-token}}`}}" \
               -H "Accept: application/vnd.github+json" \
-              "https://api.github.com/repos/{{`{{inputs.parameters.github-owner}}`}}/{{`{{inputs.parameters.github-repo}}`}}/commits/{{`{{inputs.parameters.github-branch}}`}}" | tr -d '\n' | grep -o '"sha":"[^"]*"' | head -1 | cut -d'"' -f4)
+              "https://api.github.com/repos/{{`{{inputs.parameters.github-owner}}`}}/{{`{{inputs.parameters.github-repo}}`}}/branches/{{`{{inputs.parameters.github-branch}}`}}" \
+              | jq -r '.commit.sha')
             echo "$COMMIT_SHA" > /tmp/commit_sha.txt
       outputs:
         parameters:
           - name: commit-sha
             valueFrom:
               path: /tmp/commit_sha.txt
-
+    
     - name: create-check-run
       inputs:
         parameters:
@@ -273,12 +275,13 @@ spec:
           - name: summary
           - name: sha
       container:
-        image: curlimages/curl:latest
+        image: alpine:3.18
         command: ["/bin/sh", "-c"]
         args:
           - |
             set -e
-            
+            apk add --no-cache curl jq
+    
             CHECK_RUN_ID=$(curl -s -X POST \
               -H "Authorization: Bearer {{`{{inputs.parameters.github-token}}`}}" \
               -H "Accept: application/vnd.github+json" \
@@ -292,7 +295,8 @@ spec:
                   "summary": "{{`{{inputs.parameters.summary}}`}}"
                 }
               }' \
-              "https://api.github.com/repos/{{`{{inputs.parameters.github-owner}}`}}/{{`{{inputs.parameters.github-repo}}`}}/check-runs" | tr -d '\n' | grep -o '"id":[0-9]*' | head -1 | cut -d':' -f2)
+              "https://api.github.com/repos/{{`{{inputs.parameters.github-owner}}`}}/{{`{{inputs.parameters.github-repo}}`}}/check-runs" \
+              | jq -r '.id')
             echo "$CHECK_RUN_ID" > /tmp/check_run_id.txt
       outputs:
         parameters:
