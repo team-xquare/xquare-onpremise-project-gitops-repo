@@ -10,6 +10,15 @@ metadata:
   annotations:
     secrets.hashicorp.com/vso-kv-path: avp/data/ci-cd-pipeline
 ---
+apiVersion: v1
+kind: Secret
+type: kubernetes.io/service-account-token
+metadata:
+  name: kaniko-sa.service-account-token
+  namespace: {{ include "project.namespace" . }}
+  annotations:
+    kubernetes.io/service-account.name: "kaniko-sa"
+---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
