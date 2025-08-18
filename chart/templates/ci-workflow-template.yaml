@@ -107,7 +107,7 @@ spec:
                 - name: github-token
                   value: "{{`{{tasks.get-github-token.outputs.parameters.github-token}}`}}"
                 - name: check-run-id
-                  value: "{{`{{tasks.create-check-run-start.outputs.parameters.check-run-id}}`}}"
+                  value: "{{`{{jsonpath(tasks.create-check-run-start.outputs.result, '$.id')}}`}}"
                 - name: status
                   value: "in_progress"
                 - name: conclusion
@@ -129,7 +129,7 @@ spec:
                 - name: github-token
                   value: "{{`{{tasks.get-github-token.outputs.parameters.github-token}}`}}"
                 - name: check-run-id
-                  value: "{{`{{tasks.create-check-run-start.outputs.parameters.check-run-id}}`}}"
+                  value: "{{`{{jsonpath(tasks.create-check-run-start.outputs.result, '$.id')}}`}}"
                 - name: status
                   value: "completed"
                 - name: conclusion
@@ -167,7 +167,7 @@ spec:
                 - name: github-token
                   value: "{{`{{tasks.get-github-token.outputs.parameters.github-token}}`}}"
                 - name: check-run-id
-                  value: "{{`{{tasks.create-check-run-start.outputs.parameters.check-run-id}}`}}"
+                  value: "{{`{{jsonpath(tasks.create-check-run-start.outputs.result, '$.id')}}`}}"
                 - name: status
                   value: "completed"
                 - name: conclusion
@@ -189,7 +189,7 @@ spec:
                 - name: github-token
                   value: "{{`{{tasks.get-github-token.outputs.parameters.github-token}}`}}"
                 - name: check-run-id
-                  value: "{{`{{tasks.create-check-run-start.outputs.parameters.check-run-id}}`}}"
+                  value: "{{`{{jsonpath(tasks.create-check-run-start.outputs.result, '$.id')}}`}}"
                 - name: status
                   value: "completed"
                 - name: conclusion
@@ -289,11 +289,6 @@ spec:
             }
           }
         successCondition: "response.statusCode == 201"
-      outputs:
-        parameters:
-          - name: check-run-id
-            valueFrom:
-              jqFilter: '.id'
 
     - name: update-check-run
       inputs:
