@@ -35,7 +35,7 @@ spec:
           - name: get-latest-sha
             depends: "get-github-token.Succeeded"
             template: fetch-latest-commit-sha
-            when: "{{workflow.parameters.github-event-type}} != 'push'"
+            when: "{{`{{workflow.parameters.github-event-type}}`}} != 'push'"
             arguments:
               parameters:
                 - name: github-owner
