@@ -253,6 +253,11 @@ spec:
               -H "Accept: application/vnd.github+json" \
               "https://api.github.com/repos/{{`{{inputs.parameters.github-owner}}`}}/{{`{{inputs.parameters.github-repo}}`}}/commits/{{`{{inputs.parameters.github-branch}}`}}" | \
               grep -o '"sha":"[^"]*"' | head -1 | cut -d'"' -f4)
+
+
+
+            echo "Latest commit SHA: $COMMIT_SHA"
+
             
             echo "$COMMIT_SHA" > /tmp/commit_sha.txt
       outputs:
@@ -297,6 +302,10 @@ spec:
               "https://api.github.com/repos/{{`{{inputs.parameters.github-owner}}`}}/{{`{{inputs.parameters.github-repo}}`}}/check-runs" | \
               grep -o '"id":[0-9]*' | head -1 | cut -d':' -f2)
             
+
+            echo "Check run created with ID: $CHECK_RUN_ID"
+
+
             echo "$CHECK_RUN_ID" > /tmp/check_run_id.txt
       outputs:
         parameters:
