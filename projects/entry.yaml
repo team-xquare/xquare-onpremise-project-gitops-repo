@@ -42,7 +42,7 @@ applications:
       repo: Equus-User
       branch: main
       installationId: "77967720"
-      hash: latest
+      hash: c7c6950a3a2ec44a46f172c46ee6b69b24fcc50a
     build:
       gradle:
         version: 17
