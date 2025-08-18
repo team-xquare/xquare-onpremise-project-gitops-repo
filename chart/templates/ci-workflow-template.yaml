@@ -107,7 +107,7 @@ spec:
                 - name: github-token
                   value: "{{`{{tasks.get-github-token.outputs.parameters.github-token}}`}}"
                 - name: check-run-id
-                  value: "{{`{{jsonpath(tasks.create-check-run-start.outputs.result, '$.id')}}`}}"
+                  value: "{{`{{jsonpath(tasks['create-check-run-start'].outputs.result, '$.id')}}`}}"
                 - name: status
                   value: "in_progress"
                 - name: conclusion
@@ -129,7 +129,7 @@ spec:
                 - name: github-token
                   value: "{{`{{tasks.get-github-token.outputs.parameters.github-token}}`}}"
                 - name: check-run-id
-                  value: "{{`{{jsonpath(tasks.create-check-run-start.outputs.result, '$.id')}}`}}"
+                  value: "{{`{{jsonpath(tasks['create-check-run-start'].outputs.result, '$.id')}}`}}"
                 - name: status
                   value: "completed"
                 - name: conclusion
@@ -165,7 +165,7 @@ spec:
                 - name: github-token
                   value: "{{`{{tasks.get-github-token.outputs.parameters.github-token}}`}}"
                 - name: check-run-id
-                  value: "{{`{{jsonpath(tasks.create-check-run-start.outputs.result, '$.id')}}`}}"
+                  value: "{{`{{jsonpath(tasks['create-check-run-start'].outputs.result, '$.id')}}`}}"
                 - name: status
                   value: "completed"
                 - name: conclusion
@@ -187,7 +187,7 @@ spec:
                 - name: github-token
                   value: "{{`{{tasks.get-github-token.outputs.parameters.github-token}}`}}"
                 - name: check-run-id
-                  value: "{{`{{jsonpath(tasks.create-check-run-start.outputs.result, '$.id')}}`}}"
+                  value: "{{`{{jsonpath(tasks['create-check-run-start'].outputs.result, '$.id')}}`}}"
                 - name: status
                   value: "completed"
                 - name: conclusion
