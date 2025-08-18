@@ -232,11 +232,11 @@ spec:
               secretKeyRef:
                 name: github-app-pem
                 key: privateKey.pem
-        outputs:
-          parameters:
-            - name: github-token
-              valueFrom:
-                path: /tmp/github_token.txt
+      outputs:
+        parameters:
+          - name: github-token
+            valueFrom:
+              path: /tmp/github_token.txt
 
     - name: fetch-latest-commit-sha
       inputs:
