@@ -1,0 +1,434 @@
+{{- range .Values.applications }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: {{ include "app.serviceName" . }}-ci-pipeline-template
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "app.labels" . | nindent 4 }}
+    app.kubernetes.io/component: ci-workflow-template
+spec:
+  entrypoint: ci-pipeline
+  arguments:
+    parameters:
+      - name: github-event-type
+      - name: github-sha
+        value: ""
+      - name: service-name
+      - name: project-name
+      - name: github-owner
+      - name: github-repo
+      - name: github-branch
+      - name: harbor-registry
+      - name: gitops-repo
+      - name: docker-context-path
+        value: ""
+
+  templates:
+    - name: ci-pipeline
+      dag:
+        tasks:
+          - name: get-github-token
+            template: github-token-generator
+
+          - name: get-latest-sha
+            depends: "get-github-token.Succeeded"
+            template: fetch-latest-commit-sha
+            when: "{{workflow.parameters.github-event-type}} != 'push'"
+            arguments:
+              parameters:
+                - name: github-owner
+                  value: "{{`{{workflow.parameters.github-owner}}`}}"
+                - name: github-repo
+                  value: "{{`{{workflow.parameters.github-repo}}`}}"
+                - name: github-branch
+                  value: "{{`{{workflow.parameters.github-branch}}`}}"
+                - name: github-token
+                  value: "{{`{{tasks.get-github-token.outputs.parameters.github-token}}`}}"
+
+          - name: create-check-run-start
+            template: create-check-run
+            depends: "get-github-token.Succeeded && (get-latest-sha.Succeeded || get-latest-sha.Skipped)"
+            arguments:
+              parameters:
+                - name: github-owner
+                  value: "{{`{{workflow.parameters.github-owner}}`}}"
+                - name: github-repo
+                  value: "{{`{{workflow.parameters.github-repo}}`}}"
+                - name: github-token
+                  value: "{{`{{tasks.get-github-token.outputs.parameters.github-token}}`}}"
+                - name: check-name
+                  value: "{{`{{workflow.parameters.service-name}}`}}"
+                - name: status
+                  value: "in_progress"
+                - name: conclusion
+                  value: ""
+                - name: title
+                  value: "빌드 진행 중"
+                - name: summary
+                  value: "애플리케이션 빌드를 시작합니다"
+                - name: sha
+                  value: "{{`{{= workflow.parameters.github-event-type == 'push' ? workflow.parameters.github-sha : (tasks.get-latest-sha.status == 'Succeeded' ? jsonpath(tasks.get-latest-sha.outputs.result, '$.sha') : workflow.parameters.github-sha) }}`}}"
+
+          - name: kaniko-build
+            template: docker-build
+            depends: "get-github-token.Succeeded && (get-latest-sha.Succeeded || get-latest-sha.Skipped)"
+            arguments:
+              parameters:
+                - name: github-owner
+                  value: "{{`{{workflow.parameters.github-owner}}`}}"
+                - name: github-repo
+                  value: "{{`{{workflow.parameters.github-repo}}`}}"
+                - name: github-branch
+                  value: "{{`{{workflow.parameters.github-branch}}`}}"
+                - name: github-token
+                  value: "{{`{{tasks.get-github-token.outputs.parameters.github-token}}`}}"
+                - name: harbor-registry
+                  value: "{{`{{workflow.parameters.harbor-registry}}`}}"
+                - name: project-name
+                  value: "{{`{{workflow.parameters.project-name}}`}}"
+                - name: service-name
+                  value: "{{`{{workflow.parameters.service-name}}`}}"
+                - name: docker-context-path
+                  value: "{{`{{workflow.parameters.docker-context-path}}`}}"
+                - name: git-sha
+                  value: "{{`{{= workflow.parameters.github-event-type == 'push' ? workflow.parameters.github-sha : (tasks.get-latest-sha.status == 'Succeeded' ? jsonpath(tasks.get-latest-sha.outputs.result, '$.sha') : workflow.parameters.github-sha) }}`}}"
+
+          - name: check-run-build-success
+            template: update-check-run
+            depends: "kaniko-build.Succeeded"
+            arguments:
+              parameters:
+                - name: github-owner
+                  value: "{{`{{workflow.parameters.github-owner}}`}}"
+                - name: github-repo
+                  value: "{{`{{workflow.parameters.github-repo}}`}}"
+                - name: github-token
+                  value: "{{`{{tasks.get-github-token.outputs.parameters.github-token}}`}}"
+                - name: check-run-id
+                  value: "{{`{{tasks.create-check-run-start.outputs.parameters.check-run-id}}`}}"
+                - name: status
+                  value: "in_progress"
+                - name: conclusion
+                  value: ""
+                - name: title
+                  value: "빌드 완료 - 배포 준비 중"
+                - name: summary
+                  value: "빌드가 성공적으로 완료되었습니다. 배포를 준비하고 있습니다"
+
+          - name: check-run-build-failed
+            template: update-check-run
+            depends: "kaniko-build.Failed"
+            arguments:
+              parameters:
+                - name: github-owner
+                  value: "{{`{{workflow.parameters.github-owner}}`}}"
+                - name: github-repo
+                  value: "{{`{{workflow.parameters.github-repo}}`}}"
+                - name: github-token
+                  value: "{{`{{tasks.get-github-token.outputs.parameters.github-token}}`}}"
+                - name: check-run-id
+                  value: "{{`{{tasks.create-check-run-start.outputs.parameters.check-run-id}}`}}"
+                - name: status
+                  value: "completed"
+                - name: conclusion
+                  value: "failure"
+                - name: title
+                  value: "빌드 실패"
+                - name: summary
+                  value: "빌드 과정에서 오류가 발생했습니다. 로그를 확인해주세요"
+
+          - name: gitops-update
+            template: update-gitops-repo
+            depends: "kaniko-build.Succeeded"
+            arguments:
+              parameters:
+                - name: gitops-repo
+                  value: "{{`{{workflow.parameters.gitops-repo}}`}}"
+                - name: github-token
+                  value: "{{`{{tasks.get-github-token.outputs.parameters.github-token}}`}}"
+                - name: project-name
+                  value: "{{`{{workflow.parameters.project-name}}`}}"
+                - name: service-name
+                  value: "{{`{{workflow.parameters.service-name}}`}}"
+                - name: image-tag
+                  value: "{{`{{= workflow.parameters.github-event-type == 'push' ? workflow.parameters.github-sha : (tasks.get-latest-sha.status == 'Succeeded' ? jsonpath(tasks.get-latest-sha.outputs.result, '$.sha') : workflow.parameters.github-sha) }}`}}"
+
+          - name: check-run-gitops-success
+            template: update-check-run
+            depends: "gitops-update.Succeeded"
+            arguments:
+              parameters:
+                - name: github-owner
+                  value: "{{`{{workflow.parameters.github-owner}}`}}"
+                - name: github-repo
+                  value: "{{`{{workflow.parameters.github-repo}}`}}"
+                - name: github-token
+                  value: "{{`{{tasks.get-github-token.outputs.parameters.github-token}}`}}"
+                - name: check-run-id
+                  value: "{{`{{tasks.create-check-run-start.outputs.parameters.check-run-id}}`}}"
+                - name: status
+                  value: "completed"
+                - name: conclusion
+                  value: "success"
+                - name: title
+                  value: "배포 트리거 성공"
+                - name: summary
+                  value: "빌드 및 배포 트리거가 성공적으로 완료되었습니다"
+
+          - name: check-run-gitops-failed
+            template: update-check-run
+            depends: "gitops-update.Failed"
+            arguments:
+              parameters:
+                - name: github-owner
+                  value: "{{`{{workflow.parameters.github-owner}}`}}"
+                - name: github-repo
+                  value: "{{`{{workflow.parameters.github-repo}}`}}"
+                - name: github-token
+                  value: "{{`{{tasks.get-github-token.outputs.parameters.github-token}}`}}"
+                - name: check-run-id
+                  value: "{{`{{tasks.create-check-run-start.outputs.parameters.check-run-id}}`}}"
+                - name: status
+                  value: "completed"
+                - name: conclusion
+                  value: "failure"
+                - name: title
+                  value: "배포 트리거 실패"
+                - name: summary
+                  value: "배포 트리거 과정에서 오류가 발생했습니다. 설정을 확인해주세요"
+
+    - name: github-token-generator
+      container:
+        image: alpine:3.18
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            set -e
+            apk add --no-cache jq curl openssl
+
+            APP_ID={{ include "ci.githubAppID" $ }}
+            INSTALL_ID={{ include "ci.installationId" . }}
+            echo "$GITHUB_PRIVATE_KEY" > /tmp/key.pem
+            chmod 600 /tmp/key.pem
+            
+            now=$(date +%s); iat=$((now-60)); exp=$((now+600))
+            b64enc() { openssl base64 | tr -d '=' | tr '/+' '_-' | tr -d '\n'; }
+            header_encoded=$(echo -n '{"typ":"JWT","alg":"RS256"}' | b64enc)
+            payload_encoded=$(echo -n "{\"iat\":${iat},\"exp\":${exp},\"iss\":\"${APP_ID}\"}" | b64enc)
+            JWT="${header_encoded}.${payload_encoded}.$(openssl dgst -sha256 -sign /tmp/key.pem <(echo -n "${header_encoded}.${payload_encoded}") | b64enc)"
+            
+            TOKEN=$(curl -s -X POST -H "Authorization: Bearer ${JWT}" -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/app/installations/${INSTALL_ID}/access_tokens" | jq -r '.token')
+            
+            [ -z "$TOKEN" ] || [ "$TOKEN" = "null" ] && { echo "ERROR: Failed to get GitHub token"; exit 1; }
+            
+            echo "$TOKEN" > /tmp/github_token.txt
+            echo "GitHub token acquired successfully"
+        env:
+          - name: GITHUB_PRIVATE_KEY
+            valueFrom:
+              secretKeyRef:
+                name: github-app-pem
+                key: privateKey.pem
+        outputs:
+          parameters:
+            - name: github-token
+              valueFrom:
+                path: /tmp/github_token.txt
+
+    - name: fetch-latest-commit-sha
+      inputs:
+        parameters:
+          - name: github-owner
+          - name: github-repo
+          - name: github-branch
+          - name: github-token
+      http:
+        url: "https://api.github.com/repos/{{`{{inputs.parameters.github-owner}}`}}/{{`{{inputs.parameters.github-repo}}`}}/commits/{{`{{inputs.parameters.github-branch}}`}}"
+        method: GET
+        headers:
+          - name: Authorization
+            value: "Bearer {{`{{inputs.parameters.github-token}}`}}"
+          - name: Accept
+            value: "application/vnd.github+json"
+        successCondition: "response.statusCode == 200"
+
+    - name: create-check-run
+      inputs:
+        parameters:
+          - name: github-owner
+          - name: github-repo
+          - name: github-token
+          - name: check-name
+          - name: status
+          - name: conclusion
+            value: ""
+          - name: title
+          - name: summary
+          - name: sha
+      http:
+        url: "https://api.github.com/repos/{{`{{inputs.parameters.github-owner}}`}}/{{`{{inputs.parameters.github-repo}}`}}/check-runs"
+        method: POST
+        headers:
+          - name: Authorization
+            value: "Bearer {{`{{inputs.parameters.github-token}}`}}"
+          - name: Accept
+            value: "application/vnd.github+json"
+          - name: Content-Type
+            value: "application/json"
+        body: |
+          {
+            "name": "{{`{{inputs.parameters.check-name}}`}}",
+            "head_sha": "{{`{{inputs.parameters.sha}}`}}",
+            "status": "{{`{{inputs.parameters.status}}`}}",
+            "output": {
+              "title": "{{`{{inputs.parameters.title}}`}}",
+              "summary": "{{`{{inputs.parameters.summary}}`}}"
+            }
+          }
+        successCondition: "response.statusCode == 201"
+      outputs:
+        parameters:
+          - name: check-run-id
+            valueFrom:
+              jqFilter: '.id'
+
+    - name: update-check-run
+      inputs:
+        parameters:
+          - name: github-owner
+          - name: github-repo
+          - name: github-token
+          - name: check-run-id
+          - name: status
+          - name: conclusion
+            value: ""
+          - name: title
+          - name: summary
+      http:
+        url: "https://api.github.com/repos/{{`{{inputs.parameters.github-owner}}`}}/{{`{{inputs.parameters.github-repo}}`}}/check-runs/{{`{{inputs.parameters.check-run-id}}`}}"
+        method: PATCH
+        headers:
+          - name: Authorization
+            value: "Bearer {{`{{inputs.parameters.github-token}}`}}"
+          - name: Accept
+            value: "application/vnd.github+json"
+          - name: Content-Type
+            value: "application/json"
+        body: |
+          {
+            "status": "{{`{{inputs.parameters.status}}`}}",
+            {{`{{= inputs.parameters.conclusion != "" ? '"conclusion": "' + inputs.parameters.conclusion + '",' : '' }}`}}
+            "output": {
+              "title": "{{`{{inputs.parameters.title}}`}}",
+              "summary": "{{`{{inputs.parameters.summary}}`}}"
+            }
+          }
+        successCondition: "response.statusCode == 200"
+
+    - name: docker-build
+      inputs:
+        parameters:
+          - name: github-owner
+          - name: github-repo
+          - name: github-branch
+          - name: github-token
+          - name: harbor-registry
+          - name: project-name
+          - name: service-name
+          - name: docker-context-path
+          - name: git-sha
+      volumes:
+        - name: workspace
+          emptyDir: {}
+        - name: docker-config
+          secret:
+            secretName: harbor-registry-credentials
+            items:
+              - key: .dockerconfigjson
+                path: config.json
+        - name: app-dockerfile
+          configMap:
+            name: {{ include "app.serviceName" . }}-dockerfile
+      container:
+        image: gcr.io/kaniko-project/executor:latest
+        args:
+          - "--context=/workspace/repo{{`{{inputs.parameters.docker-context-path}}`}}"
+          - "--dockerfile=/workspace/repo{{`{{inputs.parameters.docker-context-path}}`}}/Dockerfile"
+          - "--destination={{`{{inputs.parameters.harbor-registry}}`}}/xquare/{{`{{inputs.parameters.project-name}}`}}-{{`{{inputs.parameters.service-name}}`}}:latest"
+          - "--destination={{`{{inputs.parameters.harbor-registry}}`}}/xquare/{{`{{inputs.parameters.project-name}}`}}-{{`{{inputs.parameters.service-name}}`}}:{{`{{inputs.parameters.git-sha}}`}}"
+          - "--registry-mirror=mirror.gcr.io"
+          - "--cache=true"
+          - "--cache-repo={{`{{inputs.parameters.harbor-registry}}`}}/xquare/cache"
+          - "--snapshot-mode=redo"
+          - "--use-new-run=true"
+        env:
+          - name: DOCKER_CONFIG
+            value: "/kaniko/.docker"
+        volumeMounts:
+          - name: workspace
+            mountPath: /workspace
+          - name: docker-config
+            mountPath: /kaniko/.docker
+      initContainers:
+        - name: checkout-and-prepare
+          image: alpine:3.18
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              set -e
+              apk add --no-cache git
+              
+              TOKEN="{{`{{inputs.parameters.github-token}}`}}"
+              git clone -b {{`{{inputs.parameters.github-branch}}`}} --single-branch \
+                https://x-access-token:${TOKEN}@github.com/{{`{{inputs.parameters.github-owner}}`}}/{{`{{inputs.parameters.github-repo}}`}}.git /workspace/repo
+              
+              cd /workspace/repo
+              git checkout "{{`{{inputs.parameters.git-sha}}`}}"
+              
+              {{- if .build.docker }}
+              echo "Using existing Dockerfile from repository"
+              {{- else }}
+              cp /app-dockerfile/Dockerfile /workspace/repo/Dockerfile
+              {{- end }}
+          volumeMounts:
+            - name: workspace
+              mountPath: /workspace
+            - name: app-dockerfile
+              mountPath: /app-dockerfile
+
+    - name: update-gitops-repo
+      inputs:
+        parameters:
+          - name: gitops-repo
+          - name: github-token
+          - name: project-name
+          - name: service-name
+          - name: image-tag
+      http:
+        url: "https://api.github.com/repos/{{`{{inputs.parameters.gitops-repo}}`}}/dispatches"
+        method: POST
+        headers:
+          - name: Authorization
+            value: "token {{`{{inputs.parameters.github-token}}`}}"
+          - name: Accept
+            value: "application/vnd.github.v3+json"
+          - name: Content-Type
+            value: "application/json"
+        body: |
+          {
+            "event_type": "config-api",
+            "client_payload": {
+              "path": "projects/{{`{{inputs.parameters.project-name}}`}}/applications/{{`{{inputs.parameters.service-name}}`}}",
+              "action": "apply",
+              "spec": {
+                "github": {
+                  "hash": "{{`{{inputs.parameters.image-tag}}`}}"
+                }
+              }
+            }
+          }
+        successCondition: "response.statusCode == 204"
+{{- end }}
