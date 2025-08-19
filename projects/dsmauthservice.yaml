@@ -6,7 +6,7 @@ applications:
       repo: Dsm-login-server
       branch: main
       installationId: "80380806"
-      hash: latest
+      hash: 7aa9063627cb77b22a086e59896c58347ad7f1c9
     build:
       gradle:
         version: 17
