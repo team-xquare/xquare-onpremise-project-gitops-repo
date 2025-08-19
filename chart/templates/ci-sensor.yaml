@@ -93,8 +93,5 @@ spec:
                   strategy: OnPodCompletion
                   deleteDelayDuration: 72h
                 serviceAccountName: buildkit-sa
-                metadata:
-                  annotations:
-                    container.apparmor.security.beta.kubernetes.io/buildkit-build: unconfined
         name: {{ include "app.serviceName" . }}-workflow-trigger
 {{- end }}
