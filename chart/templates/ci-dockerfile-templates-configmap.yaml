@@ -20,9 +20,9 @@ data:
     COPY {{ .build.gradle.sourcePath | default "." }}/build.gradle* {{ .build.gradle.sourcePath | default "." }}/settings.gradle* {{ .build.gradle.sourcePath | default "." }}/gradle.properties* {{ .build.gradle.sourcePath | default "." }}/gradlew* ./
     COPY {{ .build.gradle.sourcePath | default "." }}/gradle gradle
     RUN chmod +x gradlew && ./gradlew --version
-    RUN ./gradlew dependencies || true
+    RUN chmod +x gradlew && ./gradlew dependencies || true
     COPY {{ .build.gradle.sourcePath | default "." }}/ .
-    RUN {{ .build.gradle.buildCmd }} && \
+    RUN chmod +x gradlew && {{ .build.gradle.buildCmd }} && \
         rm -rf .gradle /app/.gradle /root/.kotlin /tmp/* /var/tmp/* /tmp/kotlin-daemon*.log* 2>/dev/null || true
     FROM eclipse-temurin:{{ .build.gradle.version }}-jre-alpine
     RUN apk add --no-cache tzdata && addgroup -g 1001 appgroup && adduser -u 1001 -G appgroup -s /bin/sh -D appuser
