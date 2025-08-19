@@ -24,7 +24,7 @@ applications:
       repo: mozu-BE
       branch: develop
       installationId: "64125603"
-      hash: latest
+      hash: 4e2eaa2ebf8538e82ee70a1776a9400e59679bb5
     build:
       nodejs:
         version: "20.16"
