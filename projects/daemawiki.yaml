@@ -6,7 +6,7 @@ applications:
       repo: Claude
       branch: main
       installationId: "64110837"
-      hash: latest
+      hash: c0a0faaf3fc199e9518104cfa3cb8075a4111aaf
     build:
       gradle:
         version: 21
