@@ -186,7 +186,7 @@ applications:
       repo: Equus-Config-Server
       branch: main
       installationId: "77967720"
-      hash: latest
+      hash: 1558316c3c4b6849b5e5049fbeb914cb20688ce3
     build:
       gradle:
         version: 11
