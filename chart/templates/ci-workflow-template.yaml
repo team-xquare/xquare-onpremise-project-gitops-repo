@@ -397,8 +397,6 @@ spec:
         workingDir: /work/repo{{`{{inputs.parameters.docker-context-path}}`}}
         securityContext:
           privileged: true
-          runAsUser: 1000
-          runAsGroup: 1000
         env:
           - name: BUILDKITD_FLAGS
             value: --oci-worker-no-process-sandbox
