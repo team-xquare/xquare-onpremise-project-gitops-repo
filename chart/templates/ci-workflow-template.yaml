@@ -71,7 +71,7 @@ spec:
                 - name: sha
                   value: "{{`{{= workflow.parameters['github-event-type'] == 'push' ? workflow.parameters['github-sha'] : tasks['get-latest-sha'].outputs.parameters['commit-sha'] }}`}}"
 
-          - name: buildkit-build
+          - name: kaniko-build
             template: docker-build
             depends: "get-github-token.Succeeded && (get-latest-sha.Succeeded || get-latest-sha.Skipped)"
             arguments:
@@ -97,7 +97,7 @@ spec:
 
           - name: check-run-build-success
             template: update-check-run
-            depends: "buildkit-build.Succeeded && create-check-run-start.Succeeded"
+            depends: "kaniko-build.Succeeded && create-check-run-start.Succeeded"
             arguments:
               parameters:
                 - name: github-owner
@@ -119,7 +119,7 @@ spec:
 
           - name: check-run-build-failed
             template: update-check-run
-            depends: "buildkit-build.Failed && create-check-run-start.Succeeded"
+            depends: "kaniko-build.Failed && create-check-run-start.Succeeded"
             arguments:
               parameters:
                 - name: github-owner
@@ -141,7 +141,7 @@ spec:
 
           - name: gitops-update
             template: update-gitops-repo
-            depends: "buildkit-build.Succeeded"
+            depends: "kaniko-build.Succeeded"
             arguments:
               parameters:
                 - name: gitops-repo
@@ -357,7 +357,7 @@ spec:
           - name: docker-context-path
           - name: git-sha
       volumes:
-        - name: work
+        - name: workspace
           emptyDir: {}
         - name: docker-config
           secret:
@@ -368,70 +368,52 @@ spec:
         - name: app-dockerfile
           configMap:
             name: {{ include "app.serviceName" . }}-dockerfile
+      container:
+        image: gcr.io/kaniko-project/executor:latest
+        args:
+          - "--context=/workspace/repo{{`{{inputs.parameters.docker-context-path}}`}}"
+          - "--dockerfile=/workspace/repo{{`{{inputs.parameters.docker-context-path}}`}}/Dockerfile"
+          - "--destination={{`{{inputs.parameters.harbor-registry}}`}}/xquare/{{`{{inputs.parameters.project-name}}`}}-{{`{{inputs.parameters.service-name}}`}}:latest"
+          - "--destination={{`{{inputs.parameters.harbor-registry}}`}}/xquare/{{`{{inputs.parameters.project-name}}`}}-{{`{{inputs.parameters.service-name}}`}}:{{`{{inputs.parameters.git-sha}}`}}"
+          - "--registry-mirror=mirror.gcr.io"
+          - "--cache=true"
+          - "--cache-repo={{`{{inputs.parameters.harbor-registry}}`}}/xquare/cache"
+          - "--snapshot-mode=redo"
+          - "--use-new-run=true"
+        env:
+          - name: DOCKER_CONFIG
+            value: "/kaniko/.docker"
+        volumeMounts:
+          - name: workspace
+            mountPath: /workspace
+          - name: docker-config
+            mountPath: /kaniko/.docker
       initContainers:
-        - name: git-checkout
-          image: alpine/git:latest
+        - name: checkout-and-prepare
+          image: alpine:3.18
           command: ["/bin/sh", "-c"]
           args:
             - |
               set -e
-              git config --global advice.detachedHead false
+              apk add --no-cache git
               
               TOKEN="{{`{{inputs.parameters.github-token}}`}}"
               git clone -b {{`{{inputs.parameters.github-branch}}`}} --single-branch \
-                https://x-access-token:${TOKEN}@github.com/{{`{{inputs.parameters.github-owner}}`}}/{{`{{inputs.parameters.github-repo}}`}}.git /work/repo
+                https://x-access-token:${TOKEN}@github.com/{{`{{inputs.parameters.github-owner}}`}}/{{`{{inputs.parameters.github-repo}}`}}.git /workspace/repo
               
-              cd /work/repo
+              cd /workspace/repo
               git checkout "{{`{{inputs.parameters.git-sha}}`}}"
               
-              {{- if not .build.docker }}
-              cp /app-dockerfile/Dockerfile /work/repo{{`{{inputs.parameters.docker-context-path}}`}}/Dockerfile
+              {{- if .build.docker }}
+              echo "Using existing Dockerfile from repository"
+              {{- else }}
+              cp /app-dockerfile/Dockerfile /workspace/repo/Dockerfile
               {{- end }}
           volumeMounts:
-            - name: work
-              mountPath: /work
+            - name: workspace
+              mountPath: /workspace
             - name: app-dockerfile
               mountPath: /app-dockerfile
-      container:
-        image: moby/buildkit:rootless
-        workingDir: /work/repo{{`{{inputs.parameters.docker-context-path}}`}}
-        securityContext:
-          privileged: true
-        env:
-          - name: BUILDKITD_FLAGS
-            value: --oci-worker-no-process-sandbox
-          - name: DOCKER_CONFIG
-            value: /.docker
-        command:
-          - buildctl-daemonless.sh
-        args:
-          - build
-          - --frontend
-          - dockerfile.v0
-          - --local
-          - context=.
-          - --local
-          - dockerfile=.
-          - --import-cache
-          - type=registry,ref={{`{{inputs.parameters.harbor-registry}}`}}/xquare/cache/{{`{{inputs.parameters.project-name}}`}}-{{`{{inputs.parameters.service-name}}`}}:buildcache
-          - --export-cache
-          - type=registry,ref={{`{{inputs.parameters.harbor-registry}}`}}/xquare/cache/{{`{{inputs.parameters.project-name}}`}}-{{`{{inputs.parameters.service-name}}`}}:buildcache,mode=max
-          - --output
-          - type=image,name={{`{{inputs.parameters.harbor-registry}}`}}/xquare/{{`{{inputs.parameters.project-name}}`}}-{{`{{inputs.parameters.service-name}}`}}:latest,push=true
-          - --output  
-          - type=image,name={{`{{inputs.parameters.harbor-registry}}`}}/xquare/{{`{{inputs.parameters.project-name}}`}}-{{`{{inputs.parameters.service-name}}`}}:{{`{{inputs.parameters.git-sha}}`}},push=true
-        volumeMounts:
-          - name: work
-            mountPath: /work
-          - name: docker-config
-            mountPath: /.docker
-        resources:
-          requests:
-            cpu: "500m"
-            memory: "1Gi"
-          limits:
-            cpu: "2000m"
-            memory: "4Gi"
 
     - name: update-gitops-repo
       inputs:
