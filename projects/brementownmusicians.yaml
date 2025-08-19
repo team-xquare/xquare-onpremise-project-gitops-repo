@@ -6,7 +6,7 @@ applications:
       repo: WeMeet_BE
       branch: main
       installationId: "64195567"
-      hash: latest
+      hash: 0cbe6f9e00d71e9715947ed7337abbb9f0f09189
     build:
       gradle:
         version: 17
