@@ -96,7 +96,7 @@ applications:
       repo: Equus-Schedule
       branch: main
       installationId: "77967720"
-      hash: latest
+      hash: 316988bb50b281ccb0cea5f2e4a9d75439c5b8f7
     build:
       gradle:
         version: 17
