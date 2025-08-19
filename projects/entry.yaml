@@ -132,7 +132,7 @@ applications:
       repo: Entry-Mono
       branch: main
       installationId: "77967720"
-      hash: latest
+      hash: 2cdf3a608cf7bd67dbd67a6893dbb823ecf04ef8
     build:
       vite:
         version: "22"
