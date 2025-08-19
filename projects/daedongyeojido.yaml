@@ -6,7 +6,7 @@ applications:
       repo: Whispy_BE
       branch: main
       installationId: "63841363"
-      hash: latest
+      hash: 260d2d8214535363380f070e58a075b88e5adf05
     build:
       gradle:
         version: 17
