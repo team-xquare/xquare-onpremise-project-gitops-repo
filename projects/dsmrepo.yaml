@@ -60,7 +60,7 @@ applications:
       repo: repo
       branch: main
       installationId: "79908920"
-      hash: latest
+      hash: f2ebab23cd2f9a63d6701fc83ef316b0631b9e50
     build:
       vite:
         version: "18"
