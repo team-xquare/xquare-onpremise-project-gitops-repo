@@ -24,7 +24,7 @@ applications:
       repo: Claude
       branch: develop
       installationId: "64110837"
-      hash: latest
+      hash: ded624911c6090a02cf815221485979a326a19f4
     build:
       gradle:
         version: 21
