@@ -10,7 +10,7 @@ applications:
     build:
       gradle:
         version: 17
-        outputPath: /build/libs/Sillok_server-0.0.1-SNAPSHOT.jar
+        outputPath: /build/libs/*.jar
         sourcePath: .
         buildCmd: ./gradlew bootJar -x test
     endpoints:
