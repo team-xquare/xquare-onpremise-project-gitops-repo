@@ -276,7 +276,7 @@ applications:
       repo: Casper-Config-Server
       branch: main
       installationId: "77967720"
-      hash: d2027d014671334ae7fcaecc71f27ecda6c8cf59
+      hash: 9d12491eea24d440ad23f34b20b6f175fb856659
     build:
       gradle:
         version: 21
