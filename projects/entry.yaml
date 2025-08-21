@@ -193,6 +193,7 @@ applications:
         outputPath: /build/libs/Casper-User-0.0.1-SNAPSHOT.jar
         sourcePath: .
         buildCmd: ./gradlew bootJar -x test
+        extraPackages: gcompat
     endpoints:
       - port: 8080
         routes:
