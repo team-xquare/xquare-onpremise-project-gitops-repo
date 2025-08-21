@@ -189,7 +189,7 @@ applications:
       hash: 9d12491eea24d440ad23f34b20b6f175fb856659
     build:
       gradle:
-        version: 21
+        version: 17
         outputPath: /build/libs/Casper-User-0.0.1-SNAPSHOT.jar
         sourcePath: .
         buildCmd: ./gradlew bootJar -x test
