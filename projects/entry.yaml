@@ -246,3 +246,15 @@ addons:
     type: mysql
     tier: x3.micro
     storage: 1Gi
+  - name: casper-user-database
+    type: mysql
+    tier: x3.micro
+    storage: 1Gi
+  - name: casper-status-database
+    type: mysql
+    tier: x3.micro
+    storage: 1Gi
+  - name: casper-schedule-database
+    type: mysql
+    tier: x3.micro
+    storage: 1Gi
