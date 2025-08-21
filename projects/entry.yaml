@@ -172,9 +172,10 @@ applications:
     build:
       gradle:
         version: 17
-        outputPath: /build/libs/Casper-Feed-0.0.1-SNAPSHOT.jar
+        outputPath: /casper-feed/build/libs/Casper-Feed-0.0.1-SNAPSHOT.jar
         sourcePath: .
         buildCmd: ./gradlew bootJar -x test
+        extraPackages: gcompat
     endpoints:
       - port: 8080
         routes:
@@ -209,9 +210,10 @@ applications:
     build:
       gradle:
         version: 17
-        outputPath: /build/libs/Casper-Status-0.0.1-SNAPSHOT.jar
+        outputPath: /casper-status/build/libs/casper-status-0.0.1.jar
         sourcePath: .
         buildCmd: ./gradlew bootJar -x test
+        extraPackages: gcompat
     endpoints:
       - port: 8080
         routes:
@@ -230,6 +232,7 @@ applications:
         outputPath: /build/libs/Casper-Schedule-0.0.1-SNAPSHOT.jar
         sourcePath: .
         buildCmd: ./gradlew bootJar -x test
+        extraPackages: gcompat
     endpoints:
       - port: 8080
         routes:
