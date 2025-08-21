@@ -153,7 +153,7 @@ applications:
       hash: 9d12491eea24d440ad23f34b20b6f175fb856659
     build:
       gradle:
-        version: 21
+        version: 17
         outputPath: /build/libs/configserver-0.0.1-SNAPSHOT.jar
         sourcePath: .
         buildCmd: ./gradlew bootJar -x test
@@ -161,6 +161,24 @@ applications:
       - port: 8888
         routes:
           - entry-admission-api-config-server-dev.entrydsm.hs.kr
+  - name: casper-feed-stag
+    tier: x3.small
+    github:
+      owner: EntryDSM
+      repo: Casper-Feed
+      branch: main
+      installationId: "77967720"
+      hash: 9d12491eea24d440ad23f34b20b6f175fb856659
+    build:
+      gradle:
+        version: 21
+        outputPath: /build/libs/Casper-Feed-0.0.1-SNAPSHOT.jar
+        sourcePath: .
+        buildCmd: ./gradlew build
+    endpoints:
+      - port: 8080
+        routes:
+          - casper-feed-dev.entrydsm.hs.kr
 addons:
   - name: entry-redis
     type: redis
