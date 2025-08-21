@@ -174,7 +174,7 @@ applications:
         version: 17
         outputPath: /build/libs/Casper-Feed-0.0.1-SNAPSHOT.jar
         sourcePath: .
-        buildCmd: ./gradlew bootJar -x test
+        buildCmd: ./gradlew bootJar -x test & chmod +x /cache/.gradle/caches/modules-2/files-2.1/io.grpc/protoc-gen-grpc-java/*/protoc-gen-grpc-java-*-linux-x86_64.exe
     endpoints:
       - port: 8080
         routes:
@@ -192,7 +192,7 @@ applications:
         version: 17
         outputPath: /build/libs/Casper-User-0.0.1-SNAPSHOT.jar
         sourcePath: .
-        buildCmd: ./gradlew bootJar -x test
+        buildCmd: ./gradlew bootJar -x test & chmod +x /cache/.gradle/caches/modules-2/files-2.1/io.grpc/protoc-gen-grpc-java/*/protoc-gen-grpc-java-*-linux-x86_64.exe
     endpoints:
       - port: 8080
         routes:
@@ -210,7 +210,7 @@ applications:
         version: 17
         outputPath: /build/libs/Casper-Status-0.0.1-SNAPSHOT.jar
         sourcePath: .
-        buildCmd: ./gradlew bootJar -x test
+        buildCmd: ./gradlew bootJar -x test & chmod +x /cache/.gradle/caches/modules-2/files-2.1/io.grpc/protoc-gen-grpc-java/*/protoc-gen-grpc-java-*-linux-x86_64.exe
     endpoints:
       - port: 8080
         routes:
@@ -228,7 +228,7 @@ applications:
         version: 17
         outputPath: /build/libs/Casper-Schedule-0.0.1-SNAPSHOT.jar
         sourcePath: .
-        buildCmd: ./gradlew bootJar -x test
+        buildCmd: ./gradlew bootJar -x test & chmod +x /cache/.gradle/caches/modules-2/files-2.1/io.grpc/protoc-gen-grpc-java/*/protoc-gen-grpc-java-*-linux-x86_64.exe
     endpoints:
       - port: 8080
         routes:
