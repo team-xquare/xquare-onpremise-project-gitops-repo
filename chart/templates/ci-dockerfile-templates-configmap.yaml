@@ -17,11 +17,11 @@ data:
     ENV GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.parallel=true -Dorg.gradle.configureondemand=true -Dorg.gradle.caching=true -Dorg.gradle.configuration-cache=true -Dorg.gradle.unsafe.configuration-cache=true -Dorg.gradle.unsafe.configuration-cache-problems=warn -Dorg.gradle.workers.max=4 -Dorg.gradle.logging.level=lifecycle -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -XX:+UseG1GC -XX:G1HeapRegionSize=16m -XX:+UseStringDeduplication -XX:-UsePerfData -XX:+DisableExplicitGC -XX:MaxMetaspaceSize=512m -Dkotlin.compiler.execution.strategy=in-process -Dkotlin.incremental=false -Dkotlin.daemon.jvm.options=-Xmx1g -Dkotlin.parallel.tasks.in.project=true -Dfile.encoding=UTF-8 -Duser.country=US -Duser.language=en -Duser.timezone=UTC -Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom -Dorg.gradle.internal.http.connectionTimeout=60000 -Dorg.gradle.internal.http.socketTimeout=60000 -Dorg.gradle.internal.repository.max.tentatives=1 -Dorg.gradle.internal.repository.initial.backoff=500 -Dorg.gradle.internal.network.retry.max.times=2"
     ENV GRADLE_USER_HOME="/cache/.gradle"
     RUN mkdir -p /cache/.gradle
-    COPY {{ .build.gradle.sourcePath | default "." }}/build.gradle* {{ .build.gradle.sourcePath | default "." }}/settings.gradle* {{ .build.gradle.sourcePath | default "." }}/gradle.properties* {{ .build.gradle.sourcePath | default "." }}/gradlew* ./
-    COPY {{ .build.gradle.sourcePath | default "." }}/gradle gradle
+    COPY ./build.gradle* ./settings.gradle* ./gradle.properties* ./gradlew* ./
+    COPY ./gradle gradle
     RUN chmod +x gradlew && ./gradlew --version
     RUN chmod +x gradlew && ./gradlew dependencies || true
-    COPY {{ .build.gradle.sourcePath | default "." }}/ .
+    COPY ./ .
     RUN chmod +x gradlew && {{ .build.gradle.buildCmd }} && \
         rm -rf .gradle /app/.gradle /root/.kotlin /tmp/* /var/tmp/* /tmp/kotlin-daemon*.log* 2>/dev/null || true
     FROM eclipse-temurin:{{ .build.gradle.version }}-jre-alpine
@@ -36,7 +36,7 @@ data:
     FROM node:{{ .build.nodejs.version }}-alpine AS build
     RUN corepack enable
     WORKDIR /app
-    COPY {{ .build.nodejs.sourcePath | default "." }}/ .
+    COPY ./ .
     RUN {{ .build.nodejs.buildCmd }}
     FROM node:{{ .build.nodejs.version }}-alpine
     RUN apk add --no-cache dumb-init && addgroup -g 1001 appgroup && adduser -u 1001 -G appgroup -s /bin/sh -D appuser
@@ -50,7 +50,7 @@ data:
     FROM node:{{ .build.react.version }}-alpine AS build
     RUN corepack enable
     WORKDIR /app
-    COPY {{ .build.react.sourcePath | default "." }}/ .
+    COPY ./ .
     RUN {{ .build.react.buildCmd }}
     FROM nginx:alpine
     RUN apk add --no-cache tzdata wget && addgroup -g 101 nginx-group || true && adduser -u 101 -G nginx-group -s /bin/sh -D nginx-user || true
@@ -62,7 +62,7 @@ data:
     FROM node:{{ .build.vite.version }}-alpine AS build
     RUN corepack enable
     WORKDIR /app
-    COPY {{ .build.vite.sourcePath | default "." }}/ .
+    COPY ./ .
     RUN {{ .build.vite.buildCmd }}
     FROM nginx:alpine
     RUN apk add --no-cache tzdata wget
@@ -74,7 +74,7 @@ data:
     FROM node:{{ .build.vue.version }}-alpine AS build
     RUN corepack enable
     WORKDIR /app
-    COPY {{ .build.vue.sourcePath | default "." }}/ .
+    COPY ./ .
     RUN {{ .build.vue.buildCmd }}
     FROM nginx:alpine
     RUN apk add --no-cache tzdata wget
@@ -86,7 +86,7 @@ data:
     FROM node:{{ .build.nextjs.version }}-alpine AS build
     RUN corepack enable
     WORKDIR /app
-    COPY {{ .build.nextjs.sourcePath | default "." }}/ .
+    COPY ./ .
     RUN {{ .build.nextjs.buildCmd }}
     FROM node:{{ .build.nextjs.version }}-alpine
     RUN apk add --no-cache dumb-init tzdata && addgroup -g 1001 appgroup && adduser -u 1001 -G appgroup -s /bin/sh -D appuser
@@ -103,7 +103,7 @@ data:
     WORKDIR /app
     COPY go.mod go.sum ./
     RUN go mod download
-    COPY {{ .build.go.sourcePath | default "." }}/ .
+    COPY ./ .
     RUN CGO_ENABLED=0 GOOS=linux {{ .build.go.buildCmd }}
     FROM alpine:latest
     RUN apk --no-cache add ca-certificates tzdata wget && addgroup -g 1001 appgroup && adduser -u 1001 -G appgroup -s /bin/sh -D appuser
@@ -117,7 +117,7 @@ data:
     WORKDIR /app
     COPY Cargo.toml Cargo.lock ./
     RUN mkdir src && echo "fn main() {}" > src/main.rs && cargo build --release && rm -rf src
-    COPY {{ .build.rust.sourcePath | default "." }}/ .
+    COPY ./ .
     RUN {{ .build.rust.buildCmd }}
     FROM alpine:latest
     RUN apk --no-cache add ca-certificates tzdata wget libgcc && addgroup -g 1001 appgroup && adduser -u 1001 -G appgroup -s /bin/sh -D appuser
@@ -132,7 +132,7 @@ data:
     ENV MAVEN_OPTS="-XX:-UsePerfData"
     COPY pom.xml ./
     RUN mvn dependency:go-offline -B
-    COPY {{ .build.maven.sourcePath | default "." }}/ .
+    COPY ./ .
     RUN {{ .build.maven.buildCmd }} && rm -rf /tmp/hsperfdata_* /tmp/.java_pid*
     FROM eclipse-temurin:{{ .build.maven.version }}-jre-alpine
     RUN apk add --no-cache tzdata wget && addgroup -g 1001 appgroup && adduser -u 1001 -G appgroup -s /bin/sh -D appuser
@@ -148,7 +148,7 @@ data:
     RUN addgroup -g 1001 appgroup && adduser -u 1001 -G appgroup -s /bin/sh -D appuser
     COPY requirements*.txt ./
     RUN pip install --no-cache-dir -r requirements.txt
-    COPY --chown=appuser:appgroup {{ .build.django.sourcePath | default "." }}/ .
+    COPY --chown=appuser:appgroup ./ .
     RUN {{ .build.django.buildCmd }}
     USER appuser
     CMD ["python", "manage.py", "runserver", "0.0.0.0:8080"]
@@ -159,7 +159,7 @@ data:
     RUN addgroup -g 1001 appgroup && adduser -u 1001 -G appgroup -s /bin/sh -D appuser
     COPY requirements*.txt ./
     RUN pip install --no-cache-dir -r requirements.txt
-    COPY --chown=appuser:appgroup {{ .build.django.sourcePath | default "." }}/ .
+    COPY --chown=appuser:appgroup ./ .
     RUN {{ .build.flask.buildCmd }}
     USER appuser
     CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:8080", "app:app"]
