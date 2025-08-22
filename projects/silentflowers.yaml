@@ -10,7 +10,7 @@ applications:
     build:
       gradle:
         javaVersion: 21
-        distPath: /build/libs/Silent-Flowers-0.0.1-SNAPSHOT.jar
+        jarOutputPath: /build/libs/Silent-Flowers-0.0.1-SNAPSHOT.jar
         buildCommand: ./gradlew bootJar -x test
     endpoints:
       - port: 8080

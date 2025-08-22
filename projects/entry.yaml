@@ -146,7 +146,7 @@ applications:
     build:
       gradle:
         javaVersion: 17
-        distPath: /build/libs/configserver-0.0.1-SNAPSHOT.jar
+        jarOutputPath: /build/libs/configserver-0.0.1-SNAPSHOT.jar
         buildCommand: ./gradlew bootJar -x test
     endpoints:
       - port: 8888
@@ -163,7 +163,7 @@ applications:
     build:
       gradle:
         javaVersion: 17
-        distPath: /casper-feed/build/libs/casper-feed-0.0.1-SNAPSHOT.jar
+        jarOutputPath: /casper-feed/build/libs/casper-feed-0.0.1-SNAPSHOT.jar
         buildCommand: ./gradlew bootJar -x test
     endpoints:
       - port: 8080
@@ -180,7 +180,7 @@ applications:
     build:
       gradle:
         javaVersion: 17
-        distPath: /casper-user/build/libs/casper-user-0.0.1.jar
+        jarOutputPath: /casper-user/build/libs/casper-user-0.0.1.jar
         buildCommand: ./gradlew bootJar -x test
     endpoints:
       - port: 8080
@@ -197,7 +197,7 @@ applications:
     build:
       gradle:
         javaVersion: 17
-        distPath: /casper-status/build/libs/casper-status-0.0.1.jar
+        jarOutputPath: /casper-status/build/libs/casper-status-0.0.1.jar
         buildCommand: ./gradlew bootJar -x test
     endpoints:
       - port: 8080
@@ -214,7 +214,7 @@ applications:
     build:
       gradle:
         javaVersion: 17
-        distPath: /build/libs/Casper-Schedule-0.0.1-SNAPSHOT.jar
+        jarOutputPath: /build/libs/Casper-Schedule-0.0.1-SNAPSHOT.jar
         buildCommand: ./gradlew bootJar -x test
     endpoints:
       - port: 8080

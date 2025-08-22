@@ -10,7 +10,7 @@ applications:
     build:
       gradle:
         javaVersion: 17
-        distPath: /dms-infrastructure/build/libs/*.jar
+        jarOutputPath: /dms-infrastructure/build/libs/*.jar
         buildCommand: ./gradlew bootJar -x test -x detekt --build-cache --no-daemon
     endpoints:
       - port: 8080
@@ -27,7 +27,7 @@ applications:
     build:
       gradle:
         javaVersion: 17
-        distPath: /dms-infrastructure/build/libs/*.jar
+        jarOutputPath: /dms-infrastructure/build/libs/*.jar
         buildCommand: ./gradlew bootJar -x test -x detekt --build-cache --no-daemon
     endpoints:
       - port: 8080

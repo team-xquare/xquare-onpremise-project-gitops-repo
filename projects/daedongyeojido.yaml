@@ -10,7 +10,7 @@ applications:
     build:
       gradle:
         javaVersion: 17
-        distPath: /build/libs/*.jar
+        jarOutputPath: /build/libs/*.jar
         buildCommand: ./gradlew clean build -x test
     endpoints:
       - port: 8080

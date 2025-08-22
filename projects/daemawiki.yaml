@@ -10,7 +10,7 @@ applications:
     build:
       gradle:
         javaVersion: 21
-        distPath: /build/libs/*.jar
+        jarOutputPath: /build/libs/*.jar
         buildCommand: ./gradlew bootJar -x test --build-cache
     endpoints:
       - port: 8080
@@ -27,7 +27,7 @@ applications:
     build:
       gradle:
         javaVersion: 21
-        distPath: /build/libs/*.jar
+        jarOutputPath: /build/libs/*.jar
         buildCommand: ./gradlew bootJar -x test --build-cache
     endpoints:
       - port: 8080
