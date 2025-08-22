@@ -166,7 +166,9 @@ data:
     {{- $startCmd := (splitList " " (.build.flask.startCommand | default "gunicorn -w 4 -b 0.0.0.0:8080 app:app")) }}
     CMD [{{- range $i, $cmd := $startCmd }}{{if $i}}, {{end}}"{{ $cmd }}"{{- end }}]
 {{- else if .build.docker }}
-    # Custom Dockerfile build - using {{ .build.docker.dockerfilePath | default "./Dockerfile" }}
+    # Custom Dockerfile build
+    # Using Dockerfile: {{ .build.docker.dockerfilePath | default "./Dockerfile" }}
+    # Build context: {{ .build.docker.contextPath | default "." }}
 {{- else }}
     FROM alpine:latest
     RUN apk add --no-cache ca-certificates tzdata && addgroup -g 1001 appgroup && adduser -u 1001 -G appgroup -s /bin/sh -D appuser

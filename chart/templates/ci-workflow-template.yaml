@@ -366,7 +366,14 @@ spec:
       container:
         image: gcr.io/kaniko-project/executor:latest
         args:
-          - "--context=/workspace/repo/"
+          - "--context=/workspace/repo/{{- if .build.docker }}{{- if .build.docker.contextPath }}{{ .build.docker.contextPath }}{{- else }}.{{- end }}{{- else }}.{{- end }}"
+          {{- if .build.docker }}
+          {{- if .build.docker.dockerfilePath }}
+          - "--dockerfile={{ .build.docker.dockerfilePath }}"
+          {{- end }}
+          {{- else }}
+          - "--dockerfile=Dockerfile"
+          {{- end }}
           - "--destination={{`{{inputs.parameters.harbor-registry}}`}}/xquare/{{`{{inputs.parameters.project-name}}`}}-{{`{{inputs.parameters.service-name}}`}}:latest"
           - "--destination={{`{{inputs.parameters.harbor-registry}}`}}/xquare/{{`{{inputs.parameters.project-name}}`}}-{{`{{inputs.parameters.service-name}}`}}:{{`{{inputs.parameters.git-sha}}`}}"
           - "--registry-mirror=mirror.gcr.io"
@@ -399,8 +406,13 @@ spec:
               git checkout "{{`{{inputs.parameters.git-sha}}`}}"
               
               {{- if .build.docker }}
-              echo "Using existing Dockerfile from repository"
+              {{- if .build.docker.dockerfilePath }}
+              echo "Using Dockerfile from specified path: {{ .build.docker.dockerfilePath }}"
               {{- else }}
+              echo "Using existing Dockerfile from repository root"
+              {{- end }}
+              {{- else }}
+              echo "Using generated Dockerfile from template"
               cp /app-dockerfile/Dockerfile /workspace/repo/Dockerfile
               {{- end }}
           volumeMounts:

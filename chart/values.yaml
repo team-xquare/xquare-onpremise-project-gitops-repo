@@ -225,6 +225,7 @@ applications: []
 #     build:
 #       docker:
 #         dockerfilePath: "./docker/prod.Dockerfile"
+#         contextPath: "."
 #     endpoints:
 #       - port: 8080
 #         routes:
