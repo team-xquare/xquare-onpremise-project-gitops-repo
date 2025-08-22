@@ -13,6 +13,13 @@ applications: []
 #       branch: main
 #       installationId: "12345678"
 #       hash: latest
+#       # Optional: Only trigger builds when specific files change
+#       triggerPaths:
+#         - "src/**"           # Java source code
+#         - "build.gradle"     # Build configuration
+#         - "gradle.properties"
+#         - "application*.yml" # Spring config files
+#         - "Dockerfile"
 #     build:
 #       gradle:
 #         javaVersion: "17"
@@ -32,6 +39,13 @@ applications: []
 #       branch: main
 #       installationId: "12345678"
 #       hash: latest
+#       # Optional: Only trigger builds when specific files change
+#       triggerPaths:
+#         - "src/**"
+#         - "lib/**"
+#         - "package.json"
+#         - "package-lock.json"
+#         - "Dockerfile"
 #     build:
 #       nodejs:
 #         nodeVersion: "18"
@@ -51,6 +65,13 @@ applications: []
 #       branch: main
 #       installationId: "12345678"
 #       hash: latest
+#       # Optional: Only trigger builds when specific files change
+#       triggerPaths:
+#         - "src/**"           # Source files
+#         - "public/**"        # Public assets
+#         - "package.json"     # Dependencies
+#         - "package-lock.json"
+#         - "Dockerfile"
 #     build:
 #       react:
 #         nodeVersion: "18"
@@ -70,6 +91,13 @@ applications: []
 #       branch: main
 #       installationId: "12345678"
 #       hash: latest
+#       # Optional: Only trigger builds when specific files change
+#       triggerPaths:
+#         - "src/**"
+#         - "public/**"
+#         - "package.json"
+#         - "vite.config.*"
+#         - "Dockerfile"
 #     build:
 #       vite:
 #         nodeVersion: "20"
