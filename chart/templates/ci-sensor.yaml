@@ -73,20 +73,6 @@ spec:
                       value: ""
                     - name: github-sha
                       value: ""
-                    - name: service-name
-                      value: {{ include "app.serviceName" . }}
-                    - name: project-name
-                      value: {{ $.Values.project }}
-                    - name: github-owner
-                      value: {{ .github.owner }}
-                    - name: github-repo
-                      value: {{ .github.repo }}
-                    - name: github-branch
-                      value: {{ .github.branch }}
-                    - name: harbor-registry
-                      value: {{ include "project.harborRegistry" $ }}
-                    - name: gitops-repo
-                      value: {{ include "ci.gitopsRepo" $ }}
                 podGC:
                   strategy: OnPodCompletion
                   deleteDelayDuration: 72h
