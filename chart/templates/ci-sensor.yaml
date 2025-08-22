@@ -87,8 +87,6 @@ spec:
                       value: {{ include "project.harborRegistry" $ }}
                     - name: gitops-repo
                       value: {{ include "ci.gitopsRepo" $ }}
-                    - name: docker-context-path
-                      value: "{{ if and .build .build.docker .build.docker.sourcePath }}{{ .build.docker.sourcePath }}{{ else }}{{ end }}"
                 podGC:
                   strategy: OnPodCompletion
                   deleteDelayDuration: 72h
