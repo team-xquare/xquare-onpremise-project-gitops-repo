@@ -2,8 +2,9 @@
 # No need to specify project field in this file
 
 applications: []
-# Example application structure:
+# Example application structure with all build types:
 # applications:
+#   # Gradle (Spring Boot / Java)
 #   - name: example-service-prod
 #     tier: x3.small
 #     github:
@@ -14,22 +15,220 @@ applications: []
 #       hash: latest
 #     build:
 #       gradle:
-#         version: "17"
-#         outputPath: "/build/libs/*.jar"
-#         buildCmd: "./gradlew bootJar -x test --build-cache --no-daemon"
-#       # or nodejs:
-#       #   version: "18"
-#       #   startCmd: "npm start"
-#       #   buildCmd: "npm run build"
-#       # or react:
-#       #   version: "18"
-#       #   outputPath: "/build"
-#       #   buildCmd: "npm run build"
-#       # or docker: {}  # Use existing Dockerfile from repository
+#         javaVersion: "17"
+#         jarOutputPath: "/build/libs/*.jar"
+#         buildCommand: "./gradlew bootJar -x test --build-cache --no-daemon"
 #     endpoints:
 #       - port: 8080
 #         routes:
 #           - example.dsmhs.kr
+#
+#   # Node.js Backend
+#   - name: example-node-api
+#     tier: x3.small
+#     github:
+#       owner: team-xquare
+#       repo: node-api
+#       branch: main
+#       installationId: "12345678"
+#       hash: latest
+#     build:
+#       nodejs:
+#         nodeVersion: "18"
+#         buildCommand: "npm ci && npm run build"
+#         startCommand: "npm start"
+#     endpoints:
+#       - port: 8080
+#         routes:
+#           - api.dsmhs.kr
+#
+#   # React Frontend
+#   - name: example-react-app
+#     tier: x3.small
+#     github:
+#       owner: team-xquare
+#       repo: react-frontend
+#       branch: main
+#       installationId: "12345678"
+#       hash: latest
+#     build:
+#       react:
+#         nodeVersion: "18"
+#         buildCommand: "npm ci && npm run build"
+#         distPath: "/build"
+#     endpoints:
+#       - port: 8080
+#         routes:
+#           - app.dsmhs.kr
+#
+#   # Vite Frontend
+#   - name: example-vite-app
+#     tier: x3.small
+#     github:
+#       owner: team-xquare
+#       repo: vite-frontend
+#       branch: main
+#       installationId: "12345678"
+#       hash: latest
+#     build:
+#       vite:
+#         nodeVersion: "20"
+#         buildCommand: "npm ci && npm run build"
+#         distPath: "/dist"
+#     endpoints:
+#       - port: 8080
+#         routes:
+#           - vite.dsmhs.kr
+#
+#   # Vue.js Frontend
+#   - name: example-vue-app
+#     tier: x3.small
+#     github:
+#       owner: team-xquare
+#       repo: vue-frontend
+#       branch: main
+#       installationId: "12345678"
+#       hash: latest
+#     build:
+#       vue:
+#         nodeVersion: "18"
+#         buildCommand: "npm ci && npm run build"
+#         distPath: "/dist"
+#     endpoints:
+#       - port: 8080
+#         routes:
+#           - vue.dsmhs.kr
+#
+#   # Next.js Full-stack
+#   - name: example-nextjs-app
+#     tier: x3.medium
+#     github:
+#       owner: team-xquare
+#       repo: nextjs-app
+#       branch: main
+#       installationId: "12345678"
+#       hash: latest
+#     build:
+#       nextjs:
+#         nodeVersion: "20"
+#         buildCommand: "npm ci && npm run build"
+#         startCommand: "npm start"
+#     endpoints:
+#       - port: 8080
+#         routes:
+#           - nextjs.dsmhs.kr
+#
+#   # Go Backend
+#   - name: example-go-service
+#     tier: x3.small
+#     github:
+#       owner: team-xquare
+#       repo: go-service
+#       branch: main
+#       installationId: "12345678"
+#       hash: latest
+#     build:
+#       go:
+#         goVersion: "1.21"
+#         buildCommand: "go build -o myservice ."
+#         binaryName: "myservice"
+#     endpoints:
+#       - port: 8080
+#         routes:
+#           - go.dsmhs.kr
+#
+#   # Rust Backend
+#   - name: example-rust-service
+#     tier: x3.small
+#     github:
+#       owner: team-xquare
+#       repo: rust-service
+#       branch: main
+#       installationId: "12345678"
+#       hash: latest
+#     build:
+#       rust:
+#         rustVersion: "1.75"
+#         buildCommand: "cargo build --release"
+#         binaryName: "rust-service"
+#     endpoints:
+#       - port: 8080
+#         routes:
+#           - rust.dsmhs.kr
+#
+#   # Maven (Spring Boot / Java)
+#   - name: example-maven-service
+#     tier: x3.small
+#     github:
+#       owner: team-xquare
+#       repo: maven-service
+#       branch: main
+#       installationId: "12345678"
+#       hash: latest
+#     build:
+#       maven:
+#         javaVersion: "17"
+#         buildCommand: "mvn clean package -DskipTests"
+#         jarOutputPath: "/target/*.jar"
+#     endpoints:
+#       - port: 8080
+#         routes:
+#           - maven.dsmhs.kr
+#
+#   # Django Backend
+#   - name: example-django-app
+#     tier: x3.medium
+#     github:
+#       owner: team-xquare
+#       repo: django-app
+#       branch: main
+#       installationId: "12345678"
+#       hash: latest
+#     build:
+#       django:
+#         pythonVersion: "3.11"
+#         buildCommand: "python manage.py collectstatic --noinput"
+#         startCommand: "python manage.py runserver 0.0.0.0:8080"
+#     endpoints:
+#       - port: 8080
+#         routes:
+#           - django.dsmhs.kr
+#
+#   # Flask Backend
+#   - name: example-flask-api
+#     tier: x3.small
+#     github:
+#       owner: team-xquare
+#       repo: flask-api
+#       branch: main
+#       installationId: "12345678"
+#       hash: latest
+#     build:
+#       flask:
+#         pythonVersion: "3.11"
+#         buildCommand: "pip install -r requirements.txt"
+#         startCommand: "gunicorn -w 4 -b 0.0.0.0:8080 app:app"
+#     endpoints:
+#       - port: 8080
+#         routes:
+#           - flask.dsmhs.kr
+#
+#   # Custom Dockerfile
+#   - name: example-custom-app
+#     tier: x3.small
+#     github:
+#       owner: team-xquare
+#       repo: custom-app
+#       branch: main
+#       installationId: "12345678"
+#       hash: latest
+#     build:
+#       docker:
+#         dockerfilePath: "./docker/prod.Dockerfile"
+#     endpoints:
+#       - port: 8080
+#         routes:
+#           - custom.dsmhs.kr
 
 addons: []
 # Example addon structures:
