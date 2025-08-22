@@ -9,9 +9,9 @@ applications:
       hash: a47ded1952971a6cda200f29a370799682230684
     build:
       gradle:
-        version: 21
-        outputPath: /build/libs/*.jar
-        buildCmd: ./gradlew bootJar -x test
+        javaVersion: 21
+        distPath: /build/libs/*.jar
+        buildCommand: ./gradlew bootJar -x test
     endpoints:
       - port: 8080
         routes:
@@ -26,9 +26,9 @@ applications:
       hash: f2ebab23cd2f9a63d6701fc83ef316b0631b9e50
     build:
       vite:
-        version: "18"
-        outputPath: /packages/main/dist
-        buildCmd: yarn install --frozen-lockfile && yarn workspace main build
+        nodeVersion: "18"
+        distPath: /packages/main/dist
+        buildCommand: yarn install --frozen-lockfile && yarn workspace main build
     endpoints:
       - port: 8080
         routes:
@@ -43,9 +43,9 @@ applications:
       hash: f2ebab23cd2f9a63d6701fc83ef316b0631b9e50
     build:
       vite:
-        version: "18"
-        outputPath: /packages/teacher/dist
-        buildCmd: yarn install --frozen-lockfile && yarn workspace teacher build
+        nodeVersion: "18"
+        distPath: /packages/teacher/dist
+        buildCommand: yarn install --frozen-lockfile && yarn workspace teacher build
     endpoints:
       - port: 8080
         routes:
@@ -60,9 +60,9 @@ applications:
       hash: f2ebab23cd2f9a63d6701fc83ef316b0631b9e50
     build:
       vite:
-        version: "18"
-        outputPath: /packages/student/dist
-        buildCmd: yarn install --frozen-lockfile && yarn workspace student build
+        nodeVersion: "18"
+        distPath: /packages/student/dist
+        buildCommand: yarn install --frozen-lockfile && yarn workspace student build
     endpoints:
       - port: 8080
         routes:

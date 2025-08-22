@@ -9,9 +9,9 @@ applications:
       hash: c0a0faaf3fc199e9518104cfa3cb8075a4111aaf
     build:
       gradle:
-        version: 21
-        outputPath: /build/libs/*.jar
-        buildCmd: ./gradlew bootJar -x test --build-cache
+        javaVersion: 21
+        distPath: /build/libs/*.jar
+        buildCommand: ./gradlew bootJar -x test --build-cache
     endpoints:
       - port: 8080
         routes:
@@ -26,9 +26,9 @@ applications:
       hash: ded624911c6090a02cf815221485979a326a19f4
     build:
       gradle:
-        version: 21
-        outputPath: /build/libs/*.jar
-        buildCmd: ./gradlew bootJar -x test --build-cache
+        javaVersion: 21
+        distPath: /build/libs/*.jar
+        buildCommand: ./gradlew bootJar -x test --build-cache
     endpoints:
       - port: 8080
         routes:

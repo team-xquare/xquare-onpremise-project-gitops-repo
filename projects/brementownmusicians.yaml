@@ -9,9 +9,9 @@ applications:
       hash: 0cbe6f9e00d71e9715947ed7337abbb9f0f09189
     build:
       gradle:
-        version: 17
-        outputPath: /build/libs/WeMeet-0.0.1-SNAPSHOT.jar
-        buildCmd: ./gradlew bootJar -x test
+        javaVersion: 17
+        distPath: /build/libs/WeMeet-0.0.1-SNAPSHOT.jar
+        buildCommand: ./gradlew bootJar -x test
     endpoints:
       - port: 8080
         routes:

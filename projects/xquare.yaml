@@ -9,9 +9,9 @@ applications:
       hash: 2a66d8ae3b99a3682cad484bf4a5972bf8c29531
     build:
       react:
-        version: "22"
-        outputPath: /build
-        buildCmd: npm ci && npm run build
+        nodeVersion: "22"
+        distPath: /build
+        buildCommand: npm ci && npm run build
     endpoints:
       - port: 8080
         routes:
@@ -26,9 +26,9 @@ applications:
       hash: e0fea6b5e211816dd7956861b39d711a7a3d1973
     build:
       react:
-        version: "22"
-        outputPath: /build
-        buildCmd: npm ci && npm run build
+        nodeVersion: "22"
+        distPath: /build
+        buildCommand: npm ci && npm run build
     endpoints:
       - port: 8080
         routes:
@@ -43,9 +43,9 @@ applications:
       hash: 117821b2c5f0f5c56fef3187ef19d56c7e3642b4
     build:
       gradle:
-        version: 17
-        outputPath: /build/libs/xquare-infra-0.0.1-SNAPSHOT.jar
-        buildCmd: ./gradlew bootJar -x test
+        javaVersion: 17
+        distPath: /build/libs/xquare-infra-0.0.1-SNAPSHOT.jar
+        buildCommand: ./gradlew bootJar -x test
     endpoints:
       - port: 8080
         routes:
@@ -60,9 +60,9 @@ applications:
       hash: 38093661fe75fa513de1c66a66799ce9d52489f7
     build:
       gradle:
-        version: 17
-        outputPath: /build/libs/xquare-infra-0.0.1-SNAPSHOT.jar
-        buildCmd: ./gradlew bootJar -x test
+        javaVersion: 17
+        distPath: /build/libs/xquare-infra-0.0.1-SNAPSHOT.jar
+        buildCommand: ./gradlew bootJar -x test
     endpoints:
       - port: 8080
         routes:

@@ -9,9 +9,9 @@ applications:
       hash: b403a05412cf8eddbfcf23ab95a27007686ed0c0
     build:
       gradle:
-        version: 17
-        outputPath: /dms-infrastructure/build/libs/*.jar
-        buildCmd: ./gradlew bootJar -x test -x detekt --build-cache --no-daemon
+        javaVersion: 17
+        distPath: /dms-infrastructure/build/libs/*.jar
+        buildCommand: ./gradlew bootJar -x test -x detekt --build-cache --no-daemon
     endpoints:
       - port: 8080
         routes:
@@ -26,9 +26,9 @@ applications:
       hash: latest
     build:
       gradle:
-        version: 17
-        outputPath: /dms-infrastructure/build/libs/*.jar
-        buildCmd: ./gradlew bootJar -x test -x detekt --build-cache --no-daemon
+        javaVersion: 17
+        distPath: /dms-infrastructure/build/libs/*.jar
+        buildCommand: ./gradlew bootJar -x test -x detekt --build-cache --no-daemon
     endpoints:
       - port: 8080
         routes:
@@ -43,9 +43,9 @@ applications:
       hash: 6bd517a72025ccc2c63e54ab15661869f9ad6c01
     build:
       react:
-        version: "22"
-        outputPath: /services/admin/build
-        buildCmd: yarn install && yarn workspace @service/admin build
+        nodeVersion: "22"
+        distPath: /services/admin/build
+        buildCommand: yarn install && yarn workspace @service/admin build
     endpoints:
       - port: 8080
         routes:
@@ -60,9 +60,9 @@ applications:
       hash: 740b94c77442010657ebf5d87f5f7107877baf73
     build:
       react:
-        version: "22"
-        outputPath: /services/admin/build
-        buildCmd: yarn install && yarn workspace @service/admin build
+        nodeVersion: "22"
+        distPath: /services/admin/build
+        buildCommand: yarn install && yarn workspace @service/admin build
     endpoints:
       - port: 8080
         routes:
@@ -77,9 +77,9 @@ applications:
       hash: 9275caf067d30e03cc5fc55b0869873649c0e174
     build:
       react:
-        version: "22"
-        outputPath: /build
-        buildCmd: yarn install && yarn build
+        nodeVersion: "22"
+        distPath: /build
+        buildCommand: yarn install && yarn build
     endpoints:
       - port: 8080
         routes:

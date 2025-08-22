@@ -9,9 +9,9 @@ applications:
       hash: 260d2d8214535363380f070e58a075b88e5adf05
     build:
       gradle:
-        version: 17
-        outputPath: /build/libs/*.jar
-        buildCmd: ./gradlew clean build -x test
+        javaVersion: 17
+        distPath: /build/libs/*.jar
+        buildCommand: ./gradlew clean build -x test
     endpoints:
       - port: 8080
         routes:

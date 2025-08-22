@@ -9,9 +9,9 @@ applications:
       hash: 2cdf3a608cf7bd67dbd67a6893dbb823ecf04ef8
     build:
       vite:
-        version: "22"
-        outputPath: /packages/Entry-LTS/build
-        buildCmd: yarn install && yarn workspace @entrydsm/main build
+        nodeVersion: "22"
+        distPath: /packages/Entry-LTS/build
+        buildCommand: yarn install && yarn workspace @entrydsm/main build
     endpoints:
       - port: 8080
         routes:
@@ -26,9 +26,9 @@ applications:
       hash: 2cdf3a608cf7bd67dbd67a6893dbb823ecf04ef8
     build:
       vite:
-        version: "22"
-        outputPath: /packages/Entry-Auth/build
-        buildCmd: yarn install && yarn workspace @entrydsm/auth build
+        nodeVersion: "22"
+        distPath: /packages/Entry-Auth/build
+        buildCommand: yarn install && yarn workspace @entrydsm/auth build
     endpoints:
       - port: 8080
         routes:
@@ -43,9 +43,9 @@ applications:
       hash: 2cdf3a608cf7bd67dbd67a6893dbb823ecf04ef8
     build:
       vite:
-        version: "22"
-        outputPath: /packages/Admission-LTS/build
-        buildCmd: yarn install && yarn workspace @entrydsm/admission build
+        nodeVersion: "22"
+        distPath: /packages/Admission-LTS/build
+        buildCommand: yarn install && yarn workspace @entrydsm/admission build
     endpoints:
       - port: 8080
         routes:
@@ -60,9 +60,9 @@ applications:
       hash: 2cdf3a608cf7bd67dbd67a6893dbb823ecf04ef8
     build:
       vite:
-        version: "22"
-        outputPath: /packages/Admission-Admin-LTS/build
-        buildCmd: yarn install && yarn workspace @entrydsm/admin build
+        nodeVersion: "22"
+        distPath: /packages/Admission-Admin-LTS/build
+        buildCommand: yarn install && yarn workspace @entrydsm/admin build
     endpoints:
       - port: 8080
         routes:
@@ -77,9 +77,9 @@ applications:
       hash: a534d77e3441d8bec26e64fa6cd3a900e67a02e4
     build:
       vite:
-        version: "22"
-        outputPath: /apps/Admission-LTS/dist
-        buildCmd: yarn install && yarn nx build @entry/design-token && yarn nx build @entry/ui && yarn nx build @entry/admission-lts
+        nodeVersion: "22"
+        distPath: /apps/Admission-LTS/dist
+        buildCommand: yarn install && yarn nx build @entry/design-token && yarn nx build @entry/ui && yarn nx build @entry/admission-lts
     endpoints:
       - port: 8080
         routes:
@@ -94,9 +94,9 @@ applications:
       hash: a534d77e3441d8bec26e64fa6cd3a900e67a02e4
     build:
       vite:
-        version: "22"
-        outputPath: /apps/entry-admin/dist
-        buildCmd: yarn install && yarn nx build @entry/design-token && yarn nx build @entry/ui && yarn nx build @entry/Entry-admin
+        nodeVersion: "22"
+        distPath: /apps/entry-admin/dist
+        buildCommand: yarn install && yarn nx build @entry/design-token && yarn nx build @entry/ui && yarn nx build @entry/Entry-admin
     endpoints:
       - port: 8080
         routes:
@@ -111,9 +111,9 @@ applications:
       hash: a534d77e3441d8bec26e64fa6cd3a900e67a02e4
     build:
       vite:
-        version: "22"
-        outputPath: /apps/entry-auth/dist
-        buildCmd: yarn install && yarn nx build @entry/design-token && yarn nx build @entry/ui && yarn nx build @entry/Entry-auth
+        nodeVersion: "22"
+        distPath: /apps/entry-auth/dist
+        buildCommand: yarn install && yarn nx build @entry/design-token && yarn nx build @entry/ui && yarn nx build @entry/Entry-auth
     endpoints:
       - port: 8080
         routes:
@@ -128,9 +128,9 @@ applications:
       hash: a534d77e3441d8bec26e64fa6cd3a900e67a02e4
     build:
       vite:
-        version: "22"
-        outputPath: /apps/entry-user/dist
-        buildCmd: yarn install && yarn nx build @entry/design-token && yarn nx build @entry/ui && yarn nx build @entry/Entry-user
+        nodeVersion: "22"
+        distPath: /apps/entry-user/dist
+        buildCommand: yarn install && yarn nx build @entry/design-token && yarn nx build @entry/ui && yarn nx build @entry/Entry-user
     endpoints:
       - port: 8080
         routes:
@@ -145,9 +145,9 @@ applications:
       hash: 9d12491eea24d440ad23f34b20b6f175fb856659
     build:
       gradle:
-        version: 17
-        outputPath: /build/libs/configserver-0.0.1-SNAPSHOT.jar
-        buildCmd: ./gradlew bootJar -x test
+        javaVersion: 17
+        distPath: /build/libs/configserver-0.0.1-SNAPSHOT.jar
+        buildCommand: ./gradlew bootJar -x test
     endpoints:
       - port: 8888
         routes:
@@ -162,9 +162,9 @@ applications:
       hash: 1974f65cb573cd44e0d128c4d52e4c9f35f3a00e
     build:
       gradle:
-        version: 17
-        outputPath: /casper-feed/build/libs/casper-feed-0.0.1-SNAPSHOT.jar
-        buildCmd: ./gradlew bootJar -x test
+        javaVersion: 17
+        distPath: /casper-feed/build/libs/casper-feed-0.0.1-SNAPSHOT.jar
+        buildCommand: ./gradlew bootJar -x test
     endpoints:
       - port: 8080
         routes:
@@ -179,9 +179,9 @@ applications:
       hash: 3a9901a7359bdfbb2acf1bcde8e830a26b952395
     build:
       gradle:
-        version: 17
-        outputPath: /casper-user/build/libs/casper-user-0.0.1.jar
-        buildCmd: ./gradlew bootJar -x test
+        javaVersion: 17
+        distPath: /casper-user/build/libs/casper-user-0.0.1.jar
+        buildCommand: ./gradlew bootJar -x test
     endpoints:
       - port: 8080
         routes:
@@ -196,9 +196,9 @@ applications:
       hash: cf1b681001a8db7f7c2fe7b3d768089cff451519
     build:
       gradle:
-        version: 17
-        outputPath: /casper-status/build/libs/casper-status-0.0.1.jar
-        buildCmd: ./gradlew bootJar -x test
+        javaVersion: 17
+        distPath: /casper-status/build/libs/casper-status-0.0.1.jar
+        buildCommand: ./gradlew bootJar -x test
     endpoints:
       - port: 8080
         routes:
@@ -213,9 +213,9 @@ applications:
       hash: f962dcd41eabb2fe6faa015036842083f3074264
     build:
       gradle:
-        version: 17
-        outputPath: /build/libs/Casper-Schedule-0.0.1-SNAPSHOT.jar
-        buildCmd: ./gradlew bootJar -x test
+        javaVersion: 17
+        distPath: /build/libs/Casper-Schedule-0.0.1-SNAPSHOT.jar
+        buildCommand: ./gradlew bootJar -x test
     endpoints:
       - port: 8080
         routes:

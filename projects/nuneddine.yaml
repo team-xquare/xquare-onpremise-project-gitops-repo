@@ -9,9 +9,9 @@ applications:
       hash: 355df203686c5b0aafe29db0c9bee0d97718f2ec
     build:
       gradle:
-        version: 17
-        outputPath: /build/libs/capstone-0.0.1-SNAPSHOT.jar
-        buildCmd: ./gradlew bootJar -x test
+        javaVersion: 17
+        distPath: /build/libs/capstone-0.0.1-SNAPSHOT.jar
+        buildCommand: ./gradlew bootJar -x test
     endpoints:
       - port: 8080
         routes:

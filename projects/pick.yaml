@@ -9,9 +9,9 @@ applications:
       hash: 7d7b701bc64a911f5b2d962fd8aefd77d5b245b2
     build:
       gradle:
-        version: 17
-        outputPath: /build/libs/PICK2024_SERVER-0.0.1-SNAPSHOT.jar
-        buildCmd: ./gradlew bootJar -x test
+        javaVersion: 17
+        distPath: /build/libs/PICK2024_SERVER-0.0.1-SNAPSHOT.jar
+        buildCommand: ./gradlew bootJar -x test
     endpoints:
       - port: 8080
         routes:
@@ -26,9 +26,9 @@ applications:
       hash: 61032442696a1405631ef3558e1cf92faa580230
     build:
       gradle:
-        version: 17
-        outputPath: /build/libs/PICK2024_SERVER-0.0.1-SNAPSHOT.jar
-        buildCmd: ./gradlew bootJar -x test
+        javaVersion: 17
+        distPath: /build/libs/PICK2024_SERVER-0.0.1-SNAPSHOT.jar
+        buildCommand: ./gradlew bootJar -x test
     endpoints:
       - port: 8080
         routes:
@@ -43,9 +43,9 @@ applications:
       hash: 0cdd7da4dbea276fcd56408bc51257286275169e
     build:
       vite:
-        version: "18"
-        outputPath: /dist
-        buildCmd: yarn install --frozen-lockfile && yarn build
+        nodeVersion: "18"
+        distPath: /dist
+        buildCommand: yarn install --frozen-lockfile && yarn build
     endpoints:
       - port: 8080
         routes:
@@ -60,9 +60,9 @@ applications:
       hash: b7b64d7ea4f5ae9584283d3f9159725668b0bb3c
     build:
       vite:
-        version: "18"
-        outputPath: /dist
-        buildCmd: yarn install --frozen-lockfile && yarn build
+        nodeVersion: "18"
+        distPath: /dist
+        buildCommand: yarn install --frozen-lockfile && yarn build
     endpoints:
       - port: 8080
         routes:
@@ -77,9 +77,9 @@ applications:
       hash: faa93ee0004707d2abe4a2a0f48de5a2b0634228
     build:
       vite:
-        version: "18"
-        outputPath: /dist
-        buildCmd: yarn install --frozen-lockfile && yarn build
+        nodeVersion: "18"
+        distPath: /dist
+        buildCommand: yarn install --frozen-lockfile && yarn build
     endpoints:
       - port: 8080
         routes:
@@ -94,9 +94,9 @@ applications:
       hash: f3c54467f767db2f1875061d65a2390c7a236c38
     build:
       vite:
-        version: "18"
-        outputPath: /dist
-        buildCmd: yarn install --frozen-lockfile && yarn build
+        nodeVersion: "18"
+        distPath: /dist
+        buildCommand: yarn install --frozen-lockfile && yarn build
     endpoints:
       - port: 8080
         routes:
