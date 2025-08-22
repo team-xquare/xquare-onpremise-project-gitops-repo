@@ -11,7 +11,6 @@ applications:
       gradle:
         version: 17
         outputPath: /build/libs/WeMeet-0.0.1-SNAPSHOT.jar
-        sourcePath: /
         buildCmd: ./gradlew bootJar -x test
     endpoints:
       - port: 8080

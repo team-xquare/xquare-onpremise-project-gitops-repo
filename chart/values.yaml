@@ -15,17 +15,14 @@ applications: []
 #     build:
 #       gradle:
 #         version: "17"
-#         sourcePath: "."
 #         outputPath: "/build/libs/*.jar"
 #         buildCmd: "./gradlew bootJar -x test --build-cache --no-daemon"
 #       # or nodejs:
 #       #   version: "18"
-#       #   sourcePath: "/"
 #       #   startCmd: "npm start"
 #       #   buildCmd: "npm run build"
 #       # or react:
 #       #   version: "18"
-#       #   sourcePath: "/"
 #       #   outputPath: "/build"
 #       #   buildCmd: "npm run build"
 #       # or docker: {}  # Use existing Dockerfile from repository
@@ -43,7 +40,7 @@ addons: []
 #     tier: x3.small
 #     storage: 20Gi
 #
-#   # PostgreSQL Database  
+#   # PostgreSQL Database
 #   - name: example-postgres
 #     type: postgresql
 #     tier: x3.medium
@@ -56,7 +53,7 @@ addons: []
 #     storage: 10Gi
 #
 #   # MongoDB
-#   - name: example-mongodb  
+#   - name: example-mongodb
 #     type: mongodb
 #     tier: x3.medium
 #     storage: 50Gi

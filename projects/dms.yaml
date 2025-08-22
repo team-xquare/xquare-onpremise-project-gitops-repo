@@ -11,7 +11,6 @@ applications:
       gradle:
         version: 17
         outputPath: /dms-infrastructure/build/libs/*.jar
-        sourcePath: /
         buildCmd: ./gradlew bootJar -x test -x detekt --build-cache --no-daemon
     endpoints:
       - port: 8080
@@ -29,7 +28,6 @@ applications:
       gradle:
         version: 17
         outputPath: /dms-infrastructure/build/libs/*.jar
-        sourcePath: /
         buildCmd: ./gradlew bootJar -x test -x detekt --build-cache --no-daemon
     endpoints:
       - port: 8080
@@ -47,7 +45,6 @@ applications:
       react:
         version: "22"
         outputPath: /services/admin/build
-        sourcePath: /
         buildCmd: yarn install && yarn workspace @service/admin build
     endpoints:
       - port: 8080
@@ -65,7 +62,6 @@ applications:
       react:
         version: "22"
         outputPath: /services/admin/build
-        sourcePath: /
         buildCmd: yarn install && yarn workspace @service/admin build
     endpoints:
       - port: 8080
@@ -83,7 +79,6 @@ applications:
       react:
         version: "22"
         outputPath: /build
-        sourcePath: /
         buildCmd: yarn install && yarn build
     endpoints:
       - port: 8080

@@ -10,7 +10,6 @@ applications:
     build:
       nodejs:
         version: 22.5.1
-        sourcePath: /
         buildCmd: yarn install --frozen-lockfile && yarn build
         startCmd: yarn start
     endpoints:

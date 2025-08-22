@@ -10,7 +10,6 @@ applications:
     build:
       nodejs:
         version: "20.16"
-        sourcePath: /
         buildCmd: npm ci && npm run build
         startCmd: npm run start
     endpoints:
@@ -28,7 +27,6 @@ applications:
     build:
       nodejs:
         version: "20.16"
-        sourcePath: /
         buildCmd: npm ci && npm run build
         startCmd: npm run start
     endpoints:
