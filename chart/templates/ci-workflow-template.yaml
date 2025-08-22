@@ -22,8 +22,6 @@ spec:
       - name: github-branch
       - name: harbor-registry
       - name: gitops-repo
-      - name: docker-context-path
-        value: ""
 
   templates:
     - name: ci-pipeline
@@ -90,8 +88,6 @@ spec:
                   value: "{{`{{workflow.parameters.project-name}}`}}"
                 - name: service-name
                   value: "{{`{{workflow.parameters.service-name}}`}}"
-                - name: docker-context-path
-                  value: "{{`{{workflow.parameters.docker-context-path}}`}}"
                 - name: git-sha
                   value: "{{`{{= workflow.parameters['github-event-type'] == 'push' ? workflow.parameters['github-sha'] : tasks['get-latest-sha'].outputs.parameters['commit-sha'] }}`}}"
 
@@ -354,7 +350,6 @@ spec:
           - name: harbor-registry
           - name: project-name
           - name: service-name
-          - name: docker-context-path
           - name: git-sha
       volumes:
         - name: workspace
@@ -371,7 +366,7 @@ spec:
       container:
         image: gcr.io/kaniko-project/executor:latest
         args:
-          - "--context=/workspace/repo{{`{{inputs.parameters.docker-context-path}}`}}"
+          - "--context=/workspace/repo/"
           - "--dockerfile=/workspace/repo{{`{{inputs.parameters.docker-context-path}}`}}/Dockerfile"
           - "--destination={{`{{inputs.parameters.harbor-registry}}`}}/xquare/{{`{{inputs.parameters.project-name}}`}}-{{`{{inputs.parameters.service-name}}`}}:latest"
           - "--destination={{`{{inputs.parameters.harbor-registry}}`}}/xquare/{{`{{inputs.parameters.project-name}}`}}-{{`{{inputs.parameters.service-name}}`}}:{{`{{inputs.parameters.git-sha}}`}}"
