@@ -14,7 +14,7 @@ spec:
       eventName: {{ include "ci.githubFullname" . }}
       eventSourceName: {{ include "app.serviceName" . }}-github-webhook
       filters:
-        script: |
+        script: |-
           if event.body['X-GitHub-Event'] == 'ping' then return true end
           if event.body.ref ~= 'refs/heads/{{ .github.branch }}' or event.body['X-GitHub-Event'] ~= 'push' then return false end
           {{- if .github.triggerPaths }}
