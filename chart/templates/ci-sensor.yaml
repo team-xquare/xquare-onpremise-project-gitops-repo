@@ -38,7 +38,7 @@ spec:
             return file:match('^' .. p .. '$$') ~= nil
           end
           for _, file in ipairs(files) do
-            for _, pattern in ipairs({{ .github.triggerPaths | toJson }}) do
+            for _, pattern in ipairs({ {{- range $i, $path := .github.triggerPaths }}{{if $i}}, {{end}}"{{$path}}"{{- end}} }) do
               if minimatch(file, pattern) then return true end
             end
           end
