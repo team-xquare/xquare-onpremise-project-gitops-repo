@@ -20,14 +20,21 @@ spec:
           {{- if .github.triggerPaths }}
           local files = {}
           if event.body.head_commit then
-            if event.body.head_commit.added then
-              for _, f in ipairs(event.body.head_commit.added) do table.insert(files, f) end
+            local commit = event.body.head_commit
+            if commit.added then
+              for i = 1, #commit.added do
+                table.insert(files, commit.added[i])
+              end
             end
-            if event.body.head_commit.modified then
-              for _, f in ipairs(event.body.head_commit.modified) do table.insert(files, f) end
+            if commit.modified then
+              for i = 1, #commit.modified do
+                table.insert(files, commit.modified[i])
+              end
             end
-            if event.body.head_commit.removed then
-              for _, f in ipairs(event.body.head_commit.removed) do table.insert(files, f) end
+            if commit.removed then
+              for i = 1, #commit.removed do
+                table.insert(files, commit.removed[i])
+              end
             end
           end
           local function minimatch(file, pattern)
