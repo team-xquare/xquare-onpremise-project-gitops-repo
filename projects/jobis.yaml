@@ -1,0 +1,9 @@
+addons:
+  - name: jobis-redis
+    type: redis
+    tier: x3.micro
+    storage: 1Gi
+  - name: jobis-mysql
+    type: mysql
+    tier: x3.micro
+    storage: 1Gi
