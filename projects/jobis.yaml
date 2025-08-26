@@ -16,9 +16,10 @@ applications:
         - gradlew
         - gradlew.bat
     build:
-      javaVersion: "17"
-      jarOutputPath: jobis-infrastructure/build/libs/*.jar
-      buildCommand: "./gradlew :jobis-infrastructure:bootJar"
+      gradle:
+        javaVersion: "17"
+        jarOutputPath: /jobis-infrastructure/build/libs/*.jar
+        buildCommand: "./gradlew :jobis-infrastructure:bootJar"
     endpoints:
       - port: 8080
         routes:
@@ -40,9 +41,10 @@ applications:
         - gradlew
         - gradlew.bat
     build:
-      javaVersion: "17"
-      jarOutputPath: jobis-infrastructure/build/libs/*.jar
-      buildCommand: "./gradlew :jobis-infrastructure:bootJar"
+      gradle:
+        javaVersion: "17"
+        jarOutputPath: /jobis-infrastructure/build/libs/*.jar
+        buildCommand: "./gradlew :jobis-infrastructure:bootJar"
     endpoints:
       - port: 8080
         routes:
