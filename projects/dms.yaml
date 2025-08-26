@@ -15,7 +15,7 @@ applications:
     endpoints:
       - port: 8080
         routes:
-          - api.dms-dsm.com
+          - api.dms.dsmhs.kr
   - name: dms-backend-stag
     tier: x3.micro
     github:
@@ -32,7 +32,7 @@ applications:
     endpoints:
       - port: 8080
         routes:
-          - dev-api.dms-dsm.com
+          - dev-api.dms.dsmhs.kr
   - name: dms-frontend-prod
     tier: x3.small
     github:
@@ -49,7 +49,7 @@ applications:
     endpoints:
       - port: 8080
         routes:
-          - admin.dms-dsm.com
+          - admin.dms.dsmhs.kr
   - name: dms-frontend-stag
     tier: x3.small
     github:
@@ -66,7 +66,7 @@ applications:
     endpoints:
       - port: 8080
         routes:
-          - admin-dev.dms-dsm.com
+          - admin-dev.dms.dsmhs.kr
   - name: dms-webview-prod
     tier: x3.small
     github:
@@ -83,7 +83,7 @@ applications:
     endpoints:
       - port: 8080
         routes:
-          - webview.dms-dsm.com
+          - webview.dms.dsmhs.kr
 addons:
   - name: dms-redis
     type: redis
