@@ -20,9 +20,15 @@ spec:
           {{- if .github.triggerPaths }}
           local files = {}
           if event.body.head_commit then
-            for _, f in ipairs(event.body.head_commit.added or {}) do table.insert(files, f) end
-            for _, f in ipairs(event.body.head_commit.modified or {}) do table.insert(files, f) end
-            for _, f in ipairs(event.body.head_commit.removed or {}) do table.insert(files, f) end
+            if event.body.head_commit.added then
+              for _, f in ipairs(event.body.head_commit.added) do table.insert(files, f) end
+            end
+            if event.body.head_commit.modified then
+              for _, f in ipairs(event.body.head_commit.modified) do table.insert(files, f) end
+            end
+            if event.body.head_commit.removed then
+              for _, f in ipairs(event.body.head_commit.removed) do table.insert(files, f) end
+            end
           end
           local function minimatch(file, pattern)
             local isLiteral = pattern:find('%*%*') and not (pattern == '**' or pattern:find('%*%*/') or pattern:find('/%*%*%$') or pattern:find('/%*%*/'))
