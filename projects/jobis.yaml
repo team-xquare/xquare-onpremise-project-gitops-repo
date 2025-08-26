@@ -65,7 +65,7 @@ applications:
     build:
       vite:
         nodeVersion: "23.11.0"
-        distPath: apps/admin/dist
+        distPath: /apps/admin/dist
         buildCommand: "yarn install && yarn nx build admin"
     endpoints:
       - port: 8080
@@ -89,7 +89,7 @@ applications:
     build:
       vite:
         nodeVersion: "23.11.0"
-        distPath: apps/admin/dist
+        distPath: /apps/admin/dist
         buildCommand: "yarn install && yarn nx build admin"
     endpoints:
       - port: 8080
@@ -113,7 +113,7 @@ applications:
     build:
       vite:
         nodeVersion: "23.11.0"
-        distPath: apps/company/dist
+        distPath: /apps/company/dist
         buildCommand: "yarn install && yarn nx build company"
     endpoints:
       - port: 8080
@@ -137,7 +137,7 @@ applications:
     build:
       vite:
         nodeVersion: "23.11.0"
-        distPath: apps/company/dist
+        distPath: /apps/company/dist
         buildCommand: "yarn install && yarn nx build company"
     endpoints:
       - port: 8080
@@ -161,7 +161,7 @@ applications:
     build:
       vite:
         nodeVersion: "23.11.0"
-        distPath: apps/student/dist
+        distPath: /apps/student/dist
         buildCommand: "yarn install && yarn nx build student"
     endpoints:
       - port: 8080
@@ -185,7 +185,7 @@ applications:
     build:
       vite:
         nodeVersion: "23.11.0"
-        distPath: apps/student/dist
+        distPath: /apps/student/dist
         buildCommand: "yarn install && yarn nx build student"
     endpoints:
       - port: 8080
