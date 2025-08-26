@@ -25,17 +25,17 @@ spec:
             for _, f in ipairs(event.body.head_commit.removed or {}) do table.insert(files, f) end
           end
           local function minimatch(file, pattern)
-            local isLiteral = pattern:find('%*%*') and not (pattern == '**' or pattern:find('%*%*/') or pattern:find('/%*%*$') or pattern:find('/%*%*/'))
+            local isLiteral = pattern:find('%*%*') and not (pattern == '**' or pattern:find('%*%*/') or pattern:find('/%*%*{{ printf "$" }}') or pattern:find('/%*%*/'))
             if isLiteral then
               local p = pattern:gsub('%.', '%%.'):gsub('%*%*', '__LIT__'):gsub('%*', '[^/]*'):gsub('__LIT__', '%%*%%*'):gsub('%?', '[^/]')
-              return file:match('^' .. p .. '$') ~= nil
+              return file:match('^' .. p .. '{{ printf "$" }}') ~= nil
             end
-            local p = pattern:gsub('%.', '__DOT__'):gsub('^%*%*$', '__ALL__'):gsub('^%*%*/', '__START__/'):gsub('/%*%*/', '/__MID__/'):gsub('/%*%*$', '/__END__')
+            local p = pattern:gsub('%.', '__DOT__'):gsub('^%*%*{{ printf "$" }}', '__ALL__'):gsub('^%*%*/', '__START__/'):gsub('/%*%*/', '/__MID__/'):gsub('/%*%*{{ printf "$" }}', '/__END__')
             p = (p == '*' and '[^/]+' or p:gsub('%*', '[^/]*')):gsub('%?', '[^/]'):gsub('__ALL__', '.*'):gsub('__START__', '.*'):gsub('__MID__', '.*'):gsub('__END__', '.*'):gsub('__DOT__', '%%.')
             if pattern:match('^%*%*/') or pattern:match('/%*%*/') then
-              if file:match('^' .. p:gsub('%.%*/', '') .. '$') then return true end
+              if file:match('^' .. p:gsub('%.%*/', '') .. '{{ printf "$" }}') then return true end
             end
-            return file:match('^' .. p .. '$') ~= nil
+            return file:match('^' .. p .. '{{ printf "$" }}') ~= nil
           end
           for _, file in ipairs(files) do
             for _, pattern in ipairs({{ .github.triggerPaths | toJson }}) do
