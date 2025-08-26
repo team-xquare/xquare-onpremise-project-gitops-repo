@@ -15,56 +15,13 @@ spec:
       eventSourceName: {{ include "app.serviceName" . }}-github-webhook
       filters:
         script: |
-          if event.body['X-GitHub-Event'] == 'ping' then return true end
-          if event.body.ref ~= 'refs/heads/{{ .github.branch }}' or event.body['X-GitHub-Event'] ~= 'push' then return false end
-          {{- if .github.triggerPaths }}
-          local files = {}
-          if event.body.head_commit then
-            local commit = event.body.head_commit
-            if commit.added and type(commit.added) == "table" then
-              for i = 1, #commit.added do
-                if commit.added[i] then
-                  files[#files + 1] = commit.added[i]
-                end
-              end
-            end
-            if commit.modified and type(commit.modified) == "table" then
-              for i = 1, #commit.modified do
-                if commit.modified[i] then
-                  files[#files + 1] = commit.modified[i]
-                end
-              end
-            end
-            if commit.removed and type(commit.removed) == "table" then
-              for i = 1, #commit.removed do
-                if commit.removed[i] then
-                  files[#files + 1] = commit.removed[i]
-                end
-              end
-            end
+          if event.body['X-GitHub-Event'] == 'ping' then 
+            return true 
           end
-          local function minimatch(file, pattern)
-            local isLiteral = pattern:find('%*%*') and not (pattern == '**' or pattern:find('%*%*/') or pattern:find('/%*%*%$') or pattern:find('/%*%*/'))
-            if isLiteral then
-              local p = pattern:gsub('%.', '%%.'):gsub('%*%*', '__LIT__'):gsub('%*', '[^/]*'):gsub('__LIT__', '%%*%%*'):gsub('%?', '[^/]')
-              return file:match('^' .. p .. '%$') ~= nil
-            end
-            local p = pattern:gsub('%.', '__DOT__'):gsub('^%*%*%$', '__ALL__'):gsub('^%*%*/', '__START__/'):gsub('/%*%*/', '/__MID__/'):gsub('/%*%*%$', '/__END__')
-            p = (p == '*' and '[^/]+' or p:gsub('%*', '[^/]*')):gsub('%?', '[^/]'):gsub('__ALL__', '.*'):gsub('__START__', '.*'):gsub('__MID__', '.*'):gsub('__END__', '.*'):gsub('__DOT__', '%%.')
-            if pattern:match('^%*%*/') or pattern:match('/%*%*/') then
-              if file:match('^' .. p:gsub('%.%*/', '') .. '%$') then return true end
-            end
-            return file:match('^' .. p .. '%$') ~= nil
+          if event.body.ref ~= 'refs/heads/{{ .github.branch }}' or event.body['X-GitHub-Event'] ~= 'push' then 
+            return false 
           end
-          for _, file in ipairs(files) do
-            for _, pattern in ipairs({{ .github.triggerPaths | toJson }}) do
-              if minimatch(file, pattern) then return true end
-            end
-          end
-          return false
-          {{- else }}
           return true
-          {{- end }}
   
   eventBusName: ci-eventbus
   template:
