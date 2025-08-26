@@ -21,19 +21,25 @@ spec:
           local files = {}
           if event.body.head_commit then
             local commit = event.body.head_commit
-            if commit.added then
+            if commit.added and type(commit.added) == "table" then
               for i = 1, #commit.added do
-                table.insert(files, commit.added[i])
+                if commit.added[i] then
+                  files[#files + 1] = commit.added[i]
+                end
               end
             end
-            if commit.modified then
+            if commit.modified and type(commit.modified) == "table" then
               for i = 1, #commit.modified do
-                table.insert(files, commit.modified[i])
+                if commit.modified[i] then
+                  files[#files + 1] = commit.modified[i]
+                end
               end
             end
-            if commit.removed then
+            if commit.removed and type(commit.removed) == "table" then
               for i = 1, #commit.removed do
-                table.insert(files, commit.removed[i])
+                if commit.removed[i] then
+                  files[#files + 1] = commit.removed[i]
+                end
               end
             end
           end
