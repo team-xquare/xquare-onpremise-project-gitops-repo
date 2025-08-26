@@ -8,11 +8,11 @@ applications:
       installationId: "82814703"
       hash: bc66eb4c4f8219453412053db6439d4a7af786de
       triggerPaths:
-        - jobis-application/
-        - jobis-infrastructure/
+        - jobis-application/**
+        - jobis-infrastructure/**
         - build.gradle
         - settings.gradle
-        - gradle/
+        - gradle/**
         - gradlew
         - gradlew.bat
     build:
@@ -33,11 +33,11 @@ applications:
       installationId: "82814703"
       hash: ff7d2ba1b68f8bc408b44822c5291223be4e4a1e
       triggerPaths:
-        - jobis-application/
-        - jobis-infrastructure/
+        - jobis-application/**
+        - jobis-infrastructure/**
         - build.gradle
         - settings.gradle
-        - gradle/
+        - gradle/**
         - gradlew
         - gradlew.bat
     build:
@@ -58,8 +58,8 @@ applications:
       installationId: "82814703"
       hash: a9d7cef7e2cbb78783e58eaa6b00b5096103c8de
       triggerPaths:
-        - apps/admin/
-        - packages/
+        - apps/admin/**
+        - packages/**
         - package.json
         - yarn.lock
         - nx.json
@@ -82,8 +82,8 @@ applications:
       installationId: "82814703"
       hash:
       triggerPaths:
-        - apps/admin/
-        - packages/
+        - apps/admin/**
+        - packages/**
         - package.json
         - yarn.lock
         - nx.json
@@ -106,8 +106,8 @@ applications:
       installationId: "82814703"
       hash: a9d7cef7e2cbb78783e58eaa6b00b5096103c8de
       triggerPaths:
-        - apps/company/
-        - packages/
+        - apps/company/**
+        - packages/**
         - package.json
         - yarn.lock
         - nx.json
@@ -130,8 +130,8 @@ applications:
       installationId: "82814703"
       hash:
       triggerPaths:
-        - apps/company/
-        - packages/
+        - apps/company/**
+        - packages/**
         - package.json
         - yarn.lock
         - nx.json
@@ -154,8 +154,8 @@ applications:
       installationId: "82814703"
       hash: a9d7cef7e2cbb78783e58eaa6b00b5096103c8de
       triggerPaths:
-        - apps/student/
-        - packages/
+        - apps/student/**
+        - packages/**
         - package.json
         - yarn.lock
         - nx.json
@@ -178,8 +178,8 @@ applications:
       installationId: "82814703"
       hash:
       triggerPaths:
-        - apps/student/
-        - packages/
+        - apps/student/**
+        - packages/**
         - package.json
         - yarn.lock
         - nx.json
