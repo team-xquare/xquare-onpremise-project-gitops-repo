@@ -18,31 +18,45 @@ spec:
           if event.body['X-GitHub-Event'] == 'ping' then return true end
           if event.body.ref ~= 'refs/heads/{{ .github.branch }}' or event.body['X-GitHub-Event'] ~= 'push' then return false end
           {{- if .github.triggerPaths }}
-          local files = {}
+          local function matchesPath(files, patterns)
+            if not patterns or #patterns == 0 then return true end
+            local paths = {}
+            for _, list in pairs(files) do for _, p in ipairs(list or {}) do table.insert(paths, p) end end
+            if #paths == 0 then return false end
+            local inc, exc = {}, {}
+            for _, pat in ipairs(patterns) do
+              if pat:sub(1,1) == "!" then table.insert(exc, pat:sub(2)) else table.insert(inc, pat) end
+            end
+            for _, path in ipairs(paths) do
+              local match = #inc == 0
+              if not match then
+                for _, pat in ipairs(inc) do
+                  if path:match("^" .. pat:gsub("%*%*/", ".*/"):gsub("%*%*", ".*"):gsub("%*", "[^/]*") .. "$") then
+                    match = true break
+                  end
+                end
+              end
+              if match then
+                local excluded = false
+                for _, pat in ipairs(exc) do
+                  if path:match("^" .. pat:gsub("%*%*/", ".*/"):gsub("%*%*", ".*"):gsub("%*", "[^/]*") .. "$") then
+                    excluded = true break
+                  end
+                end
+                if not excluded then return true end
+              end
+            end
+            return false
+          end
+          
+          local changedFiles = {added={}, modified={}, removed={}}
           if event.body.head_commit then
-            for _, f in ipairs(event.body.head_commit.added or {}) do table.insert(files, f) end
-            for _, f in ipairs(event.body.head_commit.modified or {}) do table.insert(files, f) end
-            for _, f in ipairs(event.body.head_commit.removed or {}) do table.insert(files, f) end
+            for _, f in ipairs(event.body.head_commit.added or {}) do table.insert(changedFiles.added, f) end
+            for _, f in ipairs(event.body.head_commit.modified or {}) do table.insert(changedFiles.modified, f) end
+            for _, f in ipairs(event.body.head_commit.removed or {}) do table.insert(changedFiles.removed, f) end
           end
-          local function minimatch(file, pattern)
-            local isLiteral = pattern:find('%*%*') and not (pattern == '**' or pattern:find('%*%*/') or pattern:find('/%*%*$$') or pattern:find('/%*%*/'))
-            if isLiteral then
-              local p = pattern:gsub('%.', '%%.'):gsub('%*%*', '__LIT__'):gsub('%*', '[^/]*'):gsub('__LIT__', '%%*%%*'):gsub('%?', '[^/]')
-              return file:match('^' .. p .. '$$') ~= nil
-            end
-            local p = pattern:gsub('%.', '__DOT__'):gsub('^%*%*$$', '__ALL__'):gsub('^%*%*/', '__START__/'):gsub('/%*%*/', '/__MID__/'):gsub('/%*%*$$', '/__END__')
-            p = (p == '*' and '[^/]+' or p:gsub('%*', '[^/]*')):gsub('%?', '[^/]'):gsub('__ALL__', '.*'):gsub('__START__', '.*'):gsub('__MID__', '.*'):gsub('__END__', '.*'):gsub('__DOT__', '%%.')
-            if pattern:match('^%*%*/') or pattern:match('/%*%*/') then
-              if file:match('^' .. p:gsub('%.%*/', '') .. '$$') then return true end
-            end
-            return file:match('^' .. p .. '$$') ~= nil
-          end
-          for _, file in ipairs(files) do
-            for _, pattern in ipairs({ {{- range $i, $path := .github.triggerPaths }}{{if $i}}, {{end}}"{{$path}}"{{- end}} }) do
-              if minimatch(file, pattern) then return true end
-            end
-          end
-          return false
+          
+          return matchesPath(changedFiles, { {{- range $i, $path := .github.triggerPaths }}{{if $i}}, {{end}}"{{$path}}"{{- end}} })
           {{- else }}
           return true
           {{- end }}
