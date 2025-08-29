@@ -6,6 +6,7 @@ applications:
       repo: DMS-Backend
       branch: main
       installationId: "64597732"
+      hash: b403a05412cf8eddbfcf23ab95a27007686ed0c0
     build:
       gradle:
         javaVersion: 17
