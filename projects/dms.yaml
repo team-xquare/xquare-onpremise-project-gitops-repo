@@ -16,19 +16,17 @@ applications:
       - port: 8080
         routes:
           - api-dms.dsmhs.kr
-  - name: dms-backend-stag
+  - name: dms-main-stag
     tier: x3.micro
     github:
       owner: team-aliens
       repo: DMS-Backend
       branch: develop
       installationId: "64597732"
-      hash: latest
     build:
-      gradle:
-        javaVersion: 17
-        jarOutputPath: /dms-infrastructure/build/libs/*.jar
-        buildCommand: ./gradlew bootJar -x test -x detekt --build-cache --no-daemon
+      docker:
+        dockerfilePath: "./dms-main/Dockerfile"
+        contextPath: "."
     endpoints:
       - port: 8080
         routes:
