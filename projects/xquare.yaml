@@ -74,7 +74,7 @@ applications:
       repo: test-backend
       branch: main
       installationId: "62433388"
-      hash: 5fd834496090c18673a42ee0f77e85bf8eb78a00
+      hash: 206feacab55b755de6f8d58975729ce0bcb469a1
     build:
       go:
         goVersion: "1.23"
