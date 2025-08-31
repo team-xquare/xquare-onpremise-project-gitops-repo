@@ -67,6 +67,40 @@ applications:
       - port: 8080
         routes:
           - xquare-api-stag.dsmhs.kr
+  - name: test-backend
+    tier: x3.small
+    github:
+      owner: team-xquare
+      repo: test-backend
+      branch: main
+      installationId: "62433388"
+      hash: latest
+    build:
+      go:
+        goVersion: "1.23"
+        buildCommand: go build -o main ./cmd/api/
+        binaryName: main
+    endpoints:
+      - port: 8080
+        routes:
+          - xquare-server.dsmhs.kr
+  - name: test-frontend
+    tier: x3.small
+    github:
+      owner: team-xquare
+      repo: test-frontend
+      branch: main
+      installationId: "62433388"
+      hash: latest
+    build:
+      react:
+        nodeVersion: "18"
+        distPath: /dist
+        buildCommand: npm ci && npm run build
+    endpoints:
+      - port: 8080
+        routes:
+          - xquare.dsmhs.kr
 addons:
   - name: xquare-redis
     type: redis
@@ -77,6 +111,10 @@ addons:
     tier: x3.micro
     storage: 1Gi
   - name: xquare-xquare-infra-stag-mysql
+    type: mysql
+    tier: x3.micro
+    storage: 1Gi
+  - name: test-deployment-platform-mysql
     type: mysql
     tier: x3.micro
     storage: 1Gi
