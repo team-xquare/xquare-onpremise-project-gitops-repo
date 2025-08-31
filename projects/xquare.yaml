@@ -90,6 +90,7 @@ applications:
       repo: test-frontend
       branch: main
       installationId: "62433388"
+      hash: f2c32ec46303a79b3e0905ff1a5232e639827fcb
     build:
       react:
         nodeVersion: "18"
