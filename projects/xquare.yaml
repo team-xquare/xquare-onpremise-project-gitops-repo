@@ -118,3 +118,7 @@ addons:
     type: mysql
     tier: x3.micro
     storage: 1Gi
+  - name: test-deployment-platform-redis
+    type: redis
+    tier: x3.micro
+    storage: 1Gi
