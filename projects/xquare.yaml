@@ -74,7 +74,6 @@ applications:
       repo: test-backend
       branch: main
       installationId: "62433388"
-      hash: latest
     build:
       go:
         goVersion: "1.23"
@@ -91,7 +90,6 @@ applications:
       repo: test-frontend
       branch: main
       installationId: "62433388"
-      hash: latest
     build:
       react:
         nodeVersion: "18"
