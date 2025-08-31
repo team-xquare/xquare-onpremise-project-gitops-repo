@@ -92,11 +92,12 @@ applications:
       installationId: "62433388"
       hash: f2c32ec46303a79b3e0905ff1a5232e639827fcb
     build:
-      docker:
-        dockerfilePath: ./Dockerfile
-        contextPath: .
+      react:
+        nodeVersion: "18"
+        distPath: /dist
+        buildCommand: npm ci && npm run build
     endpoints:
-      - port: 80
+      - port: 8080
         routes:
           - xquare.dsmhs.kr
 addons:
