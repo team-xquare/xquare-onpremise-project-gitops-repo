@@ -76,10 +76,9 @@ applications:
       installationId: "62433388"
       hash: 206feacab55b755de6f8d58975729ce0bcb469a1
     build:
-      go:
-        goVersion: "1.23"
-        buildCommand: go build -o main ./cmd/api/
-        binaryName: main
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
     endpoints:
       - port: 8080
         routes:
@@ -93,12 +92,11 @@ applications:
       installationId: "62433388"
       hash: f2c32ec46303a79b3e0905ff1a5232e639827fcb
     build:
-      react:
-        nodeVersion: "18"
-        distPath: /dist
-        buildCommand: npm ci && npm run build
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
     endpoints:
-      - port: 8080
+      - port: 80
         routes:
           - xquare.dsmhs.kr
 addons:
