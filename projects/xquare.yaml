@@ -90,7 +90,7 @@ applications:
       repo: test-frontend
       branch: main
       installationId: "62433388"
-      hash: 73bd468e32ccba52a15f92adac34f3d0a9e15e2c
+      hash: 4f6292a97cbbc1030b799f5d6ef79c908a524408
     build:
       docker:
         dockerfilePath: ./Dockerfile
