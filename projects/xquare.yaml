@@ -74,7 +74,7 @@ applications:
       repo: test-backend
       branch: main
       installationId: "62433388"
-      hash: c7702b6da190097398f62f3a6853f3d7d7fd4ca4
+      hash: e8e3207ba328b3b3e98cca95eb23ae84d39ad0d6
     build:
       docker:
         dockerfilePath: ./Dockerfile
