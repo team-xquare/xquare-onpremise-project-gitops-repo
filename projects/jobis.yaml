@@ -128,7 +128,7 @@ applications:
       repo: JOBIS-FE-V2
       branch: develop
       installationId: "82814703"
-      hash: ae1a4d295c5223b13f9c0d0569711484527c39ad
+      hash: ea74ac73a4c81c58602d56978ead8488692f3ab4
       # triggerPaths:
       #   - apps/company/**
       #   - packages/**
