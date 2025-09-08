@@ -33,12 +33,52 @@ applications:
       - port: 3000
         routes:
           - mozu-stag.dsmhs.kr
+  - name: mozu-server-v2-prod
+    tier: x3.small
+    github:
+      owner: team-mozu
+      repo: mozu-BE-v2
+      branch: main
+      installationId: "64125603"
+    build:
+      gradle:
+        javaVersion: 17
+        jarOutputPath: /build/libs/*.jar
+        buildCommand: ./gradlew bootJar -x test
+    endpoints:
+      - port: 8080
+        routes:
+          - mozu-v2-prod.dsmhs.kr
+  - name: mozu-server-v2-stag
+    tier: x3.small
+    github:
+      owner: team-mozu
+      repo: mozu-BE-v2
+      branch: develop
+      installationId: "64125603"
+    build:
+      gradle:
+        javaVersion: 17
+        jarOutputPath: /build/libs/*.jar
+        buildCommand: ./gradlew bootJar -x test
+    endpoints:
+      - port: 8080
+        routes:
+          - mozu-v2-stag.dsmhs.kr
 addons:
   - name: mozu-mozu-server-prod-mysql
     type: mysql
     tier: x3.micro
     storage: 1Gi
   - name: mozu-mozu-server-stag-mysql
+    type: mysql
+    tier: x3.micro
+    storage: 1Gi
+  - name: mozu-mozu-server-v2-prod-mysql
+    type: mysql
+    tier: x3.micro
+    storage: 1Gi
+  - name: mozu-mozu-server-v2-stag-mysql
     type: mysql
     tier: x3.micro
     storage: 1Gi
