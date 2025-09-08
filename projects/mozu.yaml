@@ -82,3 +82,7 @@ addons:
     type: mysql
     tier: x3.micro
     storage: 1Gi
+  - name: mozu-redis
+    type: redis
+    tier: x3.micro
+    storage: 1Gi
