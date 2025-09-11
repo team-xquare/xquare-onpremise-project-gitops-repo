@@ -1,73 +1,5 @@
 applications:
-  - name: entry-lts-prod
-    tier: x3.small
-    github:
-      owner: EntryDSM
-      repo: Entry-Mono
-      branch: main
-      installationId: "77967720"
-      hash: 2cdf3a608cf7bd67dbd67a6893dbb823ecf04ef8
-    build:
-      vite:
-        nodeVersion: "22"
-        distPath: /packages/Entry-LTS/build
-        buildCommand: yarn install && yarn workspace @entrydsm/main build
-    endpoints:
-      - port: 8080
-        routes:
-          - www.entrydsm.hs.kr
-  - name: entry-auth-prod
-    tier: x3.small
-    github:
-      owner: EntryDSM
-      repo: Entry-Mono
-      branch: main
-      installationId: "77967720"
-      hash: 2cdf3a608cf7bd67dbd67a6893dbb823ecf04ef8
-    build:
-      vite:
-        nodeVersion: "22"
-        distPath: /packages/Entry-Auth/build
-        buildCommand: yarn install && yarn workspace @entrydsm/auth build
-    endpoints:
-      - port: 8080
-        routes:
-          - auth.entrydsm.hs.kr
-  - name: entry-admission-lts-prod
-    tier: x3.small
-    github:
-      owner: EntryDSM
-      repo: Entry-Mono
-      branch: main
-      installationId: "77967720"
-      hash: 2cdf3a608cf7bd67dbd67a6893dbb823ecf04ef8
-    build:
-      vite:
-        nodeVersion: "22"
-        distPath: /packages/Admission-LTS/build
-        buildCommand: yarn install && yarn workspace @entrydsm/admission build
-    endpoints:
-      - port: 8080
-        routes:
-          - apply.entrydsm.hs.kr
-  - name: entry-admission-admin-lts-prod
-    tier: x3.small
-    github:
-      owner: EntryDSM
-      repo: Entry-Mono
-      branch: main
-      installationId: "77967720"
-      hash: 2cdf3a608cf7bd67dbd67a6893dbb823ecf04ef8
-    build:
-      vite:
-        nodeVersion: "22"
-        distPath: /packages/Admission-Admin-LTS/build
-        buildCommand: yarn install && yarn workspace @entrydsm/admin build
-    endpoints:
-      - port: 8080
-        routes:
-          - admin.entrydsm.hs.kr
-  - name: entry-admission-2025-prod
+  - name: entry-admission
     tier: x3.small
     github:
       owner: EntryDSM
@@ -83,8 +15,8 @@ applications:
     endpoints:
       - port: 8080
         routes:
-          - entry-admission-admission-dev.entrydsm.hs.kr
-  - name: entry-admission-2025-admin-prod
+          - admission.entrydsm.hs.kr
+  - name: entry-admin
     tier: x3.small
     github:
       owner: EntryDSM
@@ -100,8 +32,8 @@ applications:
     endpoints:
       - port: 8080
         routes:
-          - entry-admission-admin-dev.entrydsm.hs.kr
-  - name: entry-admission-2025-auth-prod
+          - admin.entrydsm.hs.kr
+  - name: entry-auth
     tier: x3.small
     github:
       owner: EntryDSM
@@ -117,8 +49,8 @@ applications:
     endpoints:
       - port: 8080
         routes:
-          - entry-admission-auth-dev.entrydsm.hs.kr
-  - name: entry-admission-2025-user-prod
+          - auth.entrydsm.hs.kr
+  - name: entry-user
     tier: x3.small
     github:
       owner: EntryDSM
@@ -134,8 +66,8 @@ applications:
     endpoints:
       - port: 8080
         routes:
-          - entry-admission-user-dev.entrydsm.hs.kr
-  - name: casper-config-server-prod
+          - user.entrydsm.hs.kr
+  - name: casper-config-server
     tier: x3.small
     github:
       owner: EntryDSM
@@ -151,8 +83,8 @@ applications:
     endpoints:
       - port: 8888
         routes:
-          - entry-admission-api-config-server-dev.entrydsm.hs.kr
-  - name: casper-feed-stag
+          - config.entrydsm.hs.kr
+  - name: casper-feed
     tier: x3.small
     github:
       owner: EntryDSM
@@ -168,8 +100,8 @@ applications:
     endpoints:
       - port: 8080
         routes:
-          - casper-feed-dev.entrydsm.hs.kr
-  - name: casper-user-stag
+          - casper-feed.entrydsm.hs.kr
+  - name: casper-user
     tier: x3.small
     github:
       owner: EntryDSM
@@ -185,8 +117,8 @@ applications:
     endpoints:
       - port: 8080
         routes:
-          - casper-user-dev.entrydsm.hs.kr
-  - name: casper-status-stag
+          - casper-user.entrydsm.hs.kr
+  - name: casper-status
     tier: x3.small
     github:
       owner: EntryDSM
@@ -202,8 +134,8 @@ applications:
     endpoints:
       - port: 8080
         routes:
-          - casper-status-dev.entrydsm.hs.kr
-  - name: casper-schedule-stag
+          - casper-status.entrydsm.hs.kr
+  - name: casper-schedule-dev
     tier: x3.small
     github:
       owner: EntryDSM
@@ -219,13 +151,13 @@ applications:
     endpoints:
       - port: 8080
         routes:
-          - casper-schedule-dev.entrydsm.hs.kr
+          - casper-schedule.entrydsm.hs.kr
 addons:
   - name: entry-redis
     type: redis
-    tier: x3.micro
+    tier: x3.small
     storage: 1Gi
-  - name: entry-config-server-database
+  - name: entry-config-database
     type: mysql
     tier: x3.micro
     storage: 1Gi
@@ -245,3 +177,6 @@ addons:
     type: mysql
     tier: x3.micro
     storage: 1Gi
+  - name: capser-kafka
+    type: kafka
+    tier: x3.small
