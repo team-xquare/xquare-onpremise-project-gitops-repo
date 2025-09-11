@@ -180,3 +180,4 @@ addons:
   - name: capser-kafka
     type: kafka
     tier: x3.small
+    storage: 10Gi
