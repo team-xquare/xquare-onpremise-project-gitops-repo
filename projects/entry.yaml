@@ -77,7 +77,7 @@ applications:
       hash: 9d12491eea24d440ad23f34b20b6f175fb856659
     build:
       gradle:
-        javaVersion: 17
+        javaVersion: 21
         jarOutputPath: /build/libs/configserver-0.0.1-SNAPSHOT.jar
         buildCommand: ./gradlew bootJar -x test
     endpoints:
