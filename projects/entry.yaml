@@ -135,7 +135,7 @@ applications:
       - port: 8080
         routes:
           - casper-status.entrydsm.hs.kr
-  - name: casper-schedule-dev
+  - name: casper-schedule
     tier: x3.small
     github:
       owner: EntryDSM
