@@ -16,7 +16,7 @@ spec:
   {{- range $endpoint := .endpoints }}
     - port: {{ $endpoint.port }}
       targetPort: {{ $endpoint.port }}
-      protocol: TCP
+      name: "p{{ $endpoint.port }}"
   {{- end }}
 {{- end }}
 {{- end }}
