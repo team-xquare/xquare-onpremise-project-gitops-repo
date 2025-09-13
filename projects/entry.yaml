@@ -135,6 +135,7 @@ applications:
       - port: 8080
         routes:
           - casper-status.entrydsm.hs.kr
+      - port: 9091
   - name: casper-schedule
     tier: x3.small
     github:
