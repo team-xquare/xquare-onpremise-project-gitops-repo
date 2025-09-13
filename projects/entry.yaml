@@ -146,8 +146,8 @@ applications:
     build:
       gradle:
         javaVersion: 17
-        jarOutputPath: /build/libs/Casper-Schedule-0.0.1-SNAPSHOT.jar
-        buildCommand: ./gradlew bootJar -x test
+        jarOutputPath: /casper-schedule/build/libs/casper-schedule.jar
+        buildCommand: ./gradlew :casper-schedule:bootJar -x test
     endpoints:
       - port: 8080
         routes:
