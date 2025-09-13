@@ -152,6 +152,7 @@ applications:
       - port: 8080
         routes:
           - casper-schedule.entrydsm.hs.kr
+      - port: 9093
 addons:
   - name: entry-redis
     type: redis
