@@ -181,6 +181,10 @@ addons:
     type: mysql
     tier: x3.micro
     storage: 1Gi
+  - name: casper-application-database
+    type: mysql
+    tier: x3.micro
+    storage: 2Gi
   - name: casper-feed-database
     type: mysql
     tier: x3.micro
