@@ -118,6 +118,7 @@ applications:
       - port: 8080
         routes:
           - casper-user.entrydsm.hs.kr
+      - port: 9090
   - name: casper-status
     tier: x3.small
     github:
