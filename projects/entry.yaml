@@ -96,7 +96,7 @@ applications:
       gradle:
         javaVersion: 17
         jarOutputPath: /casper-application-infrastructure/build/libs/casper-application-infrastructure.jar
-        buildCommand: ./gradlew:casper-application-infrastructure:bootJar -x test
+        buildCommand: ./gradlew :casper-application-infrastructure:bootJar -x test
     endpoints:
       - port: 8080
         routes:
