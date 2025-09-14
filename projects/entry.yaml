@@ -84,6 +84,23 @@ applications:
       - port: 8888
         routes:
           - config.entrydsm.hs.kr
+  - name: casper-application
+    tier: x3.small
+    github:
+      owner: EntryDSM
+      repo: Casper-Application
+      branch: main
+      installationId: "77967720"
+      hash: 07e7f94f8327105b4afed2efb1660e737708563b
+    build:
+      gradle:
+        javaVersion: 17
+        jarOutputPath: /casper-application-infrastructure/build/libs/casper-application-infrastructure.jar
+        buildCommand: ./gradlew casper-application-infrastructure bootJar -x test
+    endpoints:
+      - port: 8080
+        routes:
+          - casper-application.entrydsm.hs.kr
   - name: casper-feed
     tier: x3.small
     github:
