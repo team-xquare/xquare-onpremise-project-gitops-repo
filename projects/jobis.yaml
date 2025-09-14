@@ -80,7 +80,7 @@ applications:
       repo: JOBIS-FE-V2
       branch: develop
       installationId: "82814703"
-      hash: 4ddb981ede91c7b7aac1395bc40eaa9fc3f5564b
+      hash: b5dbba82e300ae941824c04eb8bb09c4c27bca44
       # triggerPaths:
       #   - apps/admin/**
       #   - packages/**
