@@ -95,7 +95,7 @@ applications:
     build:
       gradle:
         javaVersion: 17
-        jarOutputPath: /app/build/libs/equus-api-gateway-0.0.1-SNAPSHOT.jar
+        jarOutputPath: /build/libs/equus-api-gateway-0.0.1-SNAPSHOT.jar
         buildCommand: ./gradlew bootJar -x test
     endpoints:
       - port: 8080
