@@ -161,7 +161,7 @@ applications:
       repo: Casper-Schedule
       branch: main
       installationId: "77967720"
-      hash: 6e51c86ba612de946d0775744e43556730aa0428
+      hash: 0f6c5102bf2f0ac004b7f12d1aa7f37efa140b4f
     build:
       gradle:
         javaVersion: 17
