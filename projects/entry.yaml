@@ -91,7 +91,7 @@ applications:
       repo: Equus-Api-Gateway
       branch: main
       installationId: "77967720"
-      hash: 28328020c22c4eb1d8ccfc449f945cbf816ec728
+      hash: a90f1090da6be2d00b7b3f4e90359fb8a1f49912
     build:
       gradle:
         javaVersion: 17
