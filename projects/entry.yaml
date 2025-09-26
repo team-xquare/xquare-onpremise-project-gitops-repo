@@ -66,7 +66,7 @@ applications:
     endpoints:
       - port: 8080
         routes:
-          - user.entrydsm.hs.kr
+          - www.entrydsm.hs.kr
   - name: casper-config-server
     tier: x3.small
     github:
