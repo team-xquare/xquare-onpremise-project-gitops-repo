@@ -57,7 +57,7 @@ applications:
       repo: mozu-BE-v2
       branch: develop
       installationId: "64125603"
-      hash: 8cd9b1e148c35808d45dad06549f46a8d0c3cc8b
+      hash: 604a0aea1427d94fa71606fa7e6b8ccd0ecc5f72
     build:
       gradle:
         javaVersion: 17
