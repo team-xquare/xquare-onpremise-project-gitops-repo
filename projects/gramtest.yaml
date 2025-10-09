@@ -18,4 +18,4 @@ addons:
   - name: mysql
     type: mysql
     tier: x3.micro
-    storage: 1Gi
+    storage: 8Gi
