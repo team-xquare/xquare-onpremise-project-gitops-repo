@@ -6,7 +6,7 @@ applications:
       repo: Entry-Admission
       branch: develop
       installationId: "77967720"
-      hash: f28984ceb03605af574901f0dbbd9770365d6465
+      hash: 80c5cae7b896485cc73ab2ffdcffd15823fae7cc
     build:
       vite:
         nodeVersion: "22"
