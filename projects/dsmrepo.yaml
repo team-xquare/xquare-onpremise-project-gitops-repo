@@ -6,7 +6,7 @@ applications:
       repo: Whopper
       branch: main
       installationId: "79908920"
-      hash: a47ded1952971a6cda200f29a370799682230684
+      hash: 4df2d86452de7f843839c83acd8bfb156f61ab62
     build:
       gradle:
         javaVersion: 21
