@@ -28,7 +28,7 @@ applications:
       vite:
         nodeVersion: "18"
         distPath: /packages/main/dist
-        buildCommand: yarn install --frozen-lockfile && yarn workspace main build
+        buildCommand: yarn install --frozen-lockfile && NODE_ENV=production yarn workspace main build
     endpoints:
       - port: 8080
         routes:
