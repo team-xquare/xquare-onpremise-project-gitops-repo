@@ -45,7 +45,7 @@ applications:
       vite:
         nodeVersion: "18"
         distPath: /packages/teacher/dist
-        buildCommand: yarn install --frozen-lockfile && yarn workspace teacher build
+        buildCommand: yarn install --frozen-lockfile && NODE_ENV=production yarn workspace teacher build
     endpoints:
       - port: 8080
         routes:
