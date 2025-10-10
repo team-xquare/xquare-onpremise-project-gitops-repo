@@ -102,7 +102,7 @@ applications:
         routes:
           - api.entrydsm.hs.kr
   - name: casper-application
-    tier: x3.small
+    tier: x3.medium
     github:
       owner: EntryDSM
       repo: Casper-Application
@@ -136,7 +136,7 @@ applications:
         routes:
           - casper-feed.entrydsm.hs.kr
   - name: casper-user
-    tier: x3.small
+    tier: x3.medium
     github:
       owner: EntryDSM
       repo: Casper-User
