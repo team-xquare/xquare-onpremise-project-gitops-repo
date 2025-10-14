@@ -57,7 +57,8 @@ data:
       sed 's/process\.env\.//' | sort -u | while read var; do \
         uuid=$(echo -n "$var" | md5sum | cut -d' ' -f1); \
         echo "$var=__ENV_${uuid}__"; \
-      done > /tmp/.env.mappings || echo "" > /tmp/.env.mappings
+      done > /tmp/.env.mappings || echo "" > /tmp/.env.mappings && \
+      echo "Detected env vars: $(cat /tmp/.env.mappings | cut -d'=' -f1 | tr '\n' ' ')"
     RUN export $(cat /tmp/.env.mappings | xargs) && {{ .build.react.buildCommand }}
     FROM nginx:alpine
     RUN apk add --no-cache tzdata wget && addgroup -g 101 nginx-group || true && adduser -u 101 -G nginx-group -s /bin/sh -D nginx-user || true
