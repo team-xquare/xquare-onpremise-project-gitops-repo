@@ -23,7 +23,7 @@ applications:
       repo: DMS-Backend
       branch: develop
       installationId: "64597732"
-      hash: 9b22e8708f2b48526e480043d0d055e0429a4368
+      hash: 9dab7e1784a10de9b85e46f155f5452db81fb108
     build:
       docker:
         dockerfilePath: "./dms-main/Dockerfile"
