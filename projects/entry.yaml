@@ -7,6 +7,8 @@ applications:
       branch: develop
       installationId: "77967720"
       hash: 635d11f23ab7425f500d7afb9eafd0f7cb1b47fe
+      triggerPaths:
+        - app/Admission-LTS/**
     build:
       vite:
         nodeVersion: "22"
@@ -24,6 +26,8 @@ applications:
       branch: develop
       installationId: "77967720"
       hash: 635d11f23ab7425f500d7afb9eafd0f7cb1b47fe
+      triggerPaths:
+        - app/entry-admin/**
     build:
       vite:
         nodeVersion: "22"
@@ -41,6 +45,8 @@ applications:
       branch: develop
       installationId: "77967720"
       hash: 635d11f23ab7425f500d7afb9eafd0f7cb1b47fe
+      triggerPaths:
+        - app/entry-auth/**
     build:
       vite:
         nodeVersion: "22"
