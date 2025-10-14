@@ -8,7 +8,7 @@ applications:
       installationId: "77967720"
       hash: 635d11f23ab7425f500d7afb9eafd0f7cb1b47fe
       triggerPaths:
-        - app/Admission-LTS/**
+        - apps/Admission-LTS/**
     build:
       vite:
         nodeVersion: "22"
@@ -27,7 +27,7 @@ applications:
       installationId: "77967720"
       hash: 635d11f23ab7425f500d7afb9eafd0f7cb1b47fe
       triggerPaths:
-        - app/entry-admin/**
+        - apps/entry-admin/**
     build:
       vite:
         nodeVersion: "22"
@@ -46,7 +46,7 @@ applications:
       installationId: "77967720"
       hash: 635d11f23ab7425f500d7afb9eafd0f7cb1b47fe
       triggerPaths:
-        - app/entry-auth/**
+        - apps/entry-auth/**
     build:
       vite:
         nodeVersion: "22"
@@ -65,7 +65,7 @@ applications:
       installationId: "77967720"
       hash: 9597193785fe557259cb6537ba19229b0db9d96c
       triggerPaths:
-        - app/entry-user/**
+        - apps/entry-user/**
     build:
       vite:
         nodeVersion: "22"
