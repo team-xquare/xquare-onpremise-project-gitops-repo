@@ -6,7 +6,7 @@ applications:
       repo: Whopper
       branch: main
       installationId: "79908920"
-      hash: a47ded1952971a6cda200f29a370799682230684
+      hash: 97d899a88b523e24156880136e243574f4e6b4bb
     build:
       gradle:
         javaVersion: 21
@@ -23,12 +23,12 @@ applications:
       repo: repo
       branch: main
       installationId: "79908920"
-      hash: f2ebab23cd2f9a63d6701fc83ef316b0631b9e50
+      hash: 37757ad2e3885c726cb36b85e168d059fc6d9ec3
     build:
       vite:
         nodeVersion: "18"
         distPath: /packages/main/dist
-        buildCommand: yarn install --frozen-lockfile && yarn workspace main build
+        buildCommand: yarn install --frozen-lockfile && NODE_ENV=production yarn workspace main build
     endpoints:
       - port: 8080
         routes:
@@ -40,12 +40,12 @@ applications:
       repo: repo
       branch: main
       installationId: "79908920"
-      hash: f2ebab23cd2f9a63d6701fc83ef316b0631b9e50
+      hash: 37757ad2e3885c726cb36b85e168d059fc6d9ec3
     build:
       vite:
         nodeVersion: "18"
         distPath: /packages/teacher/dist
-        buildCommand: yarn install --frozen-lockfile && yarn workspace teacher build
+        buildCommand: yarn install --frozen-lockfile && NODE_ENV=production yarn workspace teacher build
     endpoints:
       - port: 8080
         routes:
@@ -57,12 +57,12 @@ applications:
       repo: repo
       branch: main
       installationId: "79908920"
-      hash: f2ebab23cd2f9a63d6701fc83ef316b0631b9e50
+      hash: 37757ad2e3885c726cb36b85e168d059fc6d9ec3
     build:
       vite:
         nodeVersion: "18"
         distPath: /packages/student/dist
-        buildCommand: yarn install --frozen-lockfile && yarn workspace student build
+        buildCommand: yarn install --frozen-lockfile && NODE_ENV=production yarn workspace student build
     endpoints:
       - port: 8080
         routes:

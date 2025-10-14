@@ -6,7 +6,7 @@ applications:
       repo: Entry-Admission
       branch: develop
       installationId: "77967720"
-      hash: 61a3195ebe2e51f3c415f612a5e7f68c6dd0ef04
+      hash: 635d11f23ab7425f500d7afb9eafd0f7cb1b47fe
     build:
       vite:
         nodeVersion: "22"
@@ -23,7 +23,7 @@ applications:
       repo: Entry-Admission
       branch: develop
       installationId: "77967720"
-      hash: 61a3195ebe2e51f3c415f612a5e7f68c6dd0ef04
+      hash: 635d11f23ab7425f500d7afb9eafd0f7cb1b47fe
     build:
       vite:
         nodeVersion: "22"
@@ -40,7 +40,7 @@ applications:
       repo: Entry-Admission
       branch: develop
       installationId: "77967720"
-      hash: 61a3195ebe2e51f3c415f612a5e7f68c6dd0ef04
+      hash: 635d11f23ab7425f500d7afb9eafd0f7cb1b47fe
     build:
       vite:
         nodeVersion: "22"
@@ -57,7 +57,7 @@ applications:
       repo: Entry-Admission
       branch: develop
       installationId: "77967720"
-      hash: 61a3195ebe2e51f3c415f612a5e7f68c6dd0ef04
+      hash: 9597193785fe557259cb6537ba19229b0db9d96c
     build:
       vite:
         nodeVersion: "22"
@@ -66,7 +66,7 @@ applications:
     endpoints:
       - port: 8080
         routes:
-          - user.entrydsm.hs.kr
+          - www.entrydsm.hs.kr
   - name: casper-config-server
     tier: x3.small
     github:
@@ -91,7 +91,7 @@ applications:
       repo: Equus-Api-Gateway
       branch: main
       installationId: "77967720"
-      hash:
+      hash: cb1dfa6be124137a858ed288b15d8d42574531c8
     build:
       gradle:
         javaVersion: 17
@@ -102,13 +102,13 @@ applications:
         routes:
           - api.entrydsm.hs.kr
   - name: casper-application
-    tier: x3.small
+    tier: x3.medium
     github:
       owner: EntryDSM
       repo: Casper-Application
       branch: main
       installationId: "77967720"
-      hash: a9e06c1da62a6b08f1e14bba4fb841c93e67d1ba
+      hash: a64a1b8fb1b0d53c613f8ff81df1daefb7b0aa2a
     build:
       gradle:
         javaVersion: 17
@@ -125,7 +125,7 @@ applications:
       repo: Casper-Feed
       branch: main
       installationId: "77967720"
-      hash: 0d442beaca86507829df8c9944b7981d92b8ed87
+      hash: f6763686befc6e1070a91e26cb0973d124ec84e4
     build:
       gradle:
         javaVersion: 17
@@ -136,13 +136,13 @@ applications:
         routes:
           - casper-feed.entrydsm.hs.kr
   - name: casper-user
-    tier: x3.small
+    tier: x3.medium
     github:
       owner: EntryDSM
       repo: Casper-User
       branch: main
       installationId: "77967720"
-      hash: 227e52afd736458c45bc7afe01f97b4f5cb6444f
+      hash: ee905a0bf08779c5f2ad54421c35bda37bcbf83d
     build:
       gradle:
         javaVersion: 17
@@ -160,7 +160,7 @@ applications:
       repo: Casper-Status
       branch: main
       installationId: "77967720"
-      hash: 3831b2f29b9606a1788488c7397957d27237e7e2
+      hash: f40ebd85288062e1243d5db8e96d647dcc967f6b
     build:
       gradle:
         javaVersion: 17

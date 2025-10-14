@@ -81,8 +81,6 @@ applications:
         contextPath: .
     endpoints:
       - port: 8080
-        routes:
-          - xquare-server.dsmhs.kr
   - name: test-frontend
     tier: x3.small
     github:
@@ -97,8 +95,6 @@ applications:
         contextPath: .
     endpoints:
       - port: 80
-        routes:
-          - xquare.dsmhs.kr
 addons:
   - name: xquare-redis
     type: redis

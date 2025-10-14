@@ -23,7 +23,7 @@ applications:
       repo: DMS-Backend
       branch: develop
       installationId: "64597732"
-      hash: da1bd1af2e908f6876f7ff0282d634bac7ab20da
+      hash: 9dab7e1784a10de9b85e46f155f5452db81fb108
     build:
       docker:
         dockerfilePath: "./dms-main/Dockerfile"
@@ -73,7 +73,7 @@ applications:
       repo: dms-webview
       branch: main
       installationId: "64597732"
-      hash: 9275caf067d30e03cc5fc55b0869873649c0e174
+      hash: 8084f639ac835147265926942ad9ff26813cdfe0
     build:
       react:
         nodeVersion: "22"
@@ -93,6 +93,22 @@ addons:
     tier: x3.micro
     storage: 1Gi
   - name: dms-dms-backend-stag-mysql
+    type: mysql
+    tier: x3.micro
+    storage: 1Gi
+  - name: dms-main-prod-mysql
+    type: mysql
+    tier: x3.micro
+    storage: 1Gi
+  - name: dms-main-stag-mysql
+    type: mysql
+    tier: x3.micro
+    storage: 1Gi
+  - name: dms-notification-prod-mysql
+    type: mysql
+    tier: x3.micro
+    storage: 1Gi
+  - name: dms-notification-stag-mysql
     type: mysql
     tier: x3.micro
     storage: 1Gi
