@@ -27,11 +27,13 @@ spec:
             for _, pat in ipairs(patterns) do
               if pat:sub(1,1) == "!" then table.insert(exc, pat:sub(2)) else table.insert(inc, pat) end
             end
+            local hasIncludes = #inc > 0
             for _, path in ipairs(paths) do
-              local match = #inc == 0
-              if not match then
+              local match = not hasIncludes
+              if hasIncludes then
                 for _, pat in ipairs(inc) do
-                  if path:match("^" .. pat:gsub("%*%*/", ".*/"):gsub("%*%*", ".*"):gsub("%*", "[^/]*") .. "$") then
+                  local regex = "^" .. pat:gsub("%*%*%/", ".*/"):gsub("%*%*", ".*"):gsub("%*", "[^/]*") .. "$"
+                  if path:match(regex) then
                     match = true break
                   end
                 end
@@ -39,7 +41,8 @@ spec:
               if match then
                 local excluded = false
                 for _, pat in ipairs(exc) do
-                  if path:match("^" .. pat:gsub("%*%*/", ".*/"):gsub("%*%*", ".*"):gsub("%*", "[^/]*") .. "$") then
+                  local regex = "^" .. pat:gsub("%*%*%/", ".*/"):gsub("%*%*", ".*"):gsub("%*", "[^/]*") .. "$"
+                  if path:match(regex) then
                     excluded = true break
                   end
                 end
@@ -50,10 +53,21 @@ spec:
           end
           
           local changedFiles = {added={}, modified={}, removed={}}
-          if event.body.head_commit then
-            for _, f in ipairs(event.body.head_commit.added or {}) do table.insert(changedFiles.added, f) end
-            for _, f in ipairs(event.body.head_commit.modified or {}) do table.insert(changedFiles.modified, f) end
-            for _, f in ipairs(event.body.head_commit.removed or {}) do table.insert(changedFiles.removed, f) end
+
+          if event.body.commits then
+            for _, commit in ipairs(event.body.commits) do
+              for _, f in ipairs(commit.added or {}) do table.insert(changedFiles.added, f) end
+              for _, f in ipairs(commit.modified or {}) do table.insert(changedFiles.modified, f) end
+              for _, f in ipairs(commit.removed or {}) do table.insert(changedFiles.removed, f) end
+            end
+          end
+
+          if #changedFiles.added == 0 and #changedFiles.modified == 0 and #changedFiles.removed == 0 then
+            if event.body.head_commit then
+              for _, f in ipairs(event.body.head_commit.added or {}) do table.insert(changedFiles.added, f) end
+              for _, f in ipairs(event.body.head_commit.modified or {}) do table.insert(changedFiles.modified, f) end
+              for _, f in ipairs(event.body.head_commit.removed or {}) do table.insert(changedFiles.removed, f) end
+            end
           end
           
           return matchesPath(changedFiles, { {{- range $i, $path := .github.triggerPaths }}{{if $i}}, {{end}}"{{$path}}"{{- end}} })
