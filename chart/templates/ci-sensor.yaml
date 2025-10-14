@@ -16,7 +16,13 @@ spec:
       filters:
         script: |
           if event.body['X-GitHub-Event'] == 'ping' then return true end
-          if event.body.ref ~= 'refs/heads/{{ .github.branch }}' or event.body['X-GitHub-Event'] ~= 'push' then return false end
+          print("event.body.ref=" .. tostring(event.body.ref))
+          print("expected=refs/heads/{{ .github.branch }}")
+          print("X-GitHub-Event=" .. tostring(event.body['X-GitHub-Event']))
+          if event.body.ref ~= 'refs/heads/{{ .github.branch }}' or event.body['X-GitHub-Event'] ~= 'push' then
+            print("Branch or event type check failed")
+            return false
+          end
           {{- if .github.triggerPaths }}
           local function matchesPath(files, patterns)
             if not patterns or #patterns == 0 then return true end
