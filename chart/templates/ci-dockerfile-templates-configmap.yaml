@@ -52,7 +52,8 @@ data:
     RUN apk add --no-cache coreutils
     WORKDIR /app
     COPY ./ .
-    RUN find src/ -type f \( -name "*.js" -o -name "*.jsx" -o -name "*.ts" -o -name "*.tsx" \) \
+    RUN find . -type f \( -name "*.js" -o -name "*.jsx" -o -name "*.ts" -o -name "*.tsx" \) \
+      ! -path "*/node_modules/*" ! -path "*/.git/*" ! -path "*/build/*" ! -path "*/dist/*" \
       -exec grep -oh 'process\.env\.[A-Z_][A-Z0-9_]*' {} + 2>/dev/null | \
       sed 's/process\.env\.//' | sort -u | while read var; do \
         uuid=$(echo -n "$var" | md5sum | cut -d' ' -f1); \
