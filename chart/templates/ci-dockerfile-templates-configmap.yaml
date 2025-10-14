@@ -49,43 +49,14 @@ data:
 {{- else if .build.react }}
     FROM node:{{ .build.react.nodeVersion }}-alpine AS build
     RUN corepack enable
-    RUN apk add --no-cache coreutils
     WORKDIR /app
     COPY ./ .
-    RUN find src/ -type f \( -name "*.js" -o -name "*.jsx" -o -name "*.ts" -o -name "*.tsx" \) \
-      -exec grep -oh 'process\.env\.[A-Z_][A-Z0-9_]*' {} + 2>/dev/null | \
-      sed 's/process\.env\.//' | sort -u | while read var; do \
-        uuid=$(echo -n "$var" | md5sum | cut -d' ' -f1); \
-        echo "$var=__ENV_${uuid}__"; \
-      done > /tmp/.env.mappings || echo "" > /tmp/.env.mappings
-    RUN export $(cat /tmp/.env.mappings | xargs) && {{ .build.react.buildCommand }}
+    RUN {{ .build.react.buildCommand }}
     FROM nginx:alpine
     RUN apk add --no-cache tzdata wget && addgroup -g 101 nginx-group || true && adduser -u 101 -G nginx-group -s /bin/sh -D nginx-user || true
     COPY --from=build /app{{ .build.react.distPath | default "/build" }} /usr/share/nginx/html
-    COPY --from=build /tmp/.env.mappings /.env.mappings
     RUN echo 'server { listen 8080; server_name _; root /usr/share/nginx/html; index index.html; add_header X-Frame-Options "SAMEORIGIN" always; add_header X-Content-Type-Options "nosniff" always; add_header X-XSS-Protection "1; mode=block" always; gzip on; gzip_vary on; gzip_types text/plain text/css application/json application/javascript text/xml application/xml text/javascript; location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ { expires 1y; add_header Cache-Control "public, immutable"; } location / { try_files $uri $uri/ /index.html; } location /health { access_log off; return 200 "healthy\\n"; add_header Content-Type text/plain; } }' > /etc/nginx/conf.d/default.conf
     RUN rm -f /etc/nginx/conf.d/default.conf.default
-    RUN cat > /docker-entrypoint.d/40-inject-env.sh << 'EOF'
-#!/bin/sh
-set -e
-if [ ! -f /.env.mappings ] || [ ! -s /.env.mappings ]; then
-  exit 0
-fi
-sed_script="/tmp/replace.sed"
-> "$sed_script"
-while IFS='=' read -r key placeholder; do
-  value=$(printenv "$key" || echo "")
-  if [ -n "$value" ]; then
-    escaped=$(printf '%s\n' "$value" | sed 's/[&/\]/\\&/g')
-    echo "s|$placeholder|$escaped|g" >> "$sed_script"
-  fi
-done < /.env.mappings
-if [ -s "$sed_script" ]; then
-  find /usr/share/nginx/html -type f -name "*.js" -exec sed -i -f "$sed_script" {} +
-fi
-rm -f "$sed_script"
-EOF
-    RUN chmod +x /docker-entrypoint.d/40-inject-env.sh
     CMD ["nginx", "-g", "daemon off;"]
 {{- else if .build.vite }}
     FROM node:{{ .build.vite.nodeVersion }}-alpine AS build
