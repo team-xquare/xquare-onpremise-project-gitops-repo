@@ -59,7 +59,7 @@ data:
       grep -vE '^(NODE_ENV|PUBLIC_URL|PATH|HOME|USER|SHELL|TERM|LANG|LC_ALL|PWD|OLDPWD|TMPDIR)$' | \
       while read var; do \
         uuid=$(echo -n "$var" | md5sum | cut -d' ' -f1); \
-        echo "$var=__ENV_${uuid}__"; \
+        echo "$var=__ENV_NOT_SET__${var}__${uuid}__"; \
       done > /tmp/.env.mappings || echo "" > /tmp/.env.mappings
     RUN export $(cat /tmp/.env.mappings | xargs) && {{ .build.react.buildCommand }}
     FROM nginx:alpine
@@ -84,7 +84,7 @@ data:
       grep -vE '^(NODE_ENV|PUBLIC_URL|PATH|HOME|USER|SHELL|TERM|LANG|LC_ALL|PWD|OLDPWD|TMPDIR)$' | \
       while read var; do \
         uuid=$(echo -n "$var" | md5sum | cut -d' ' -f1); \
-        echo "$var=__ENV_${uuid}__"; \
+        echo "$var=__ENV_NOT_SET__${var}__${uuid}__"; \
       done > /tmp/.env.mappings || echo "" > /tmp/.env.mappings
     RUN export $(cat /tmp/.env.mappings | xargs) && {{ .build.vite.buildCommand }}
     FROM nginx:alpine
@@ -109,7 +109,7 @@ data:
       grep -vE '^(NODE_ENV|PUBLIC_URL|PATH|HOME|USER|SHELL|TERM|LANG|LC_ALL|PWD|OLDPWD|TMPDIR)$' | \
       while read var; do \
         uuid=$(echo -n "$var" | md5sum | cut -d' ' -f1); \
-        echo "$var=__ENV_${uuid}__"; \
+        echo "$var=__ENV_NOT_SET__${var}__${uuid}__"; \
       done > /tmp/.env.mappings || echo "" > /tmp/.env.mappings
     RUN export $(cat /tmp/.env.mappings | xargs) && {{ .build.vue.buildCommand }}
     FROM nginx:alpine
