@@ -30,6 +30,20 @@ applications:
         contextPath: "."
     endpoints:
       - port: 8081
+  - name: dms-gateway-stag
+    tier: x3.micro
+    github:
+      owner: team-aliens
+      repo: DMS-Backend
+      branch: develop
+      installationId: "64597732"
+      hash: b901c9caff2850e96175ddcdbc503e5e8574d850
+    build:
+      docker:
+        dockerfilePath: "./dms-gateway/Dockerfile"
+        contextPath: "."
+    endpoints:
+      - port: 8080
         routes:
           - dev-api-dms.dsmhs.kr
   - name: dms-frontend-prod
