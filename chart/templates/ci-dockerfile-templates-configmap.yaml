@@ -52,9 +52,12 @@ data:
     RUN apk add --no-cache coreutils
     WORKDIR /app
     COPY ./ .
-    RUN find src/ -type f \( -name "*.js" -o -name "*.jsx" -o -name "*.ts" -o -name "*.tsx" \) \
+    RUN find . -type f \( -name "*.js" -o -name "*.jsx" -o -name "*.ts" -o -name "*.tsx" \) \
+      ! -path "*/node_modules/*" ! -path "*/.git/*" ! -path "*/build/*" ! -path "*/dist/*" \
       -exec grep -oh 'process\.env\.[A-Z_][A-Z0-9_]*' {} + 2>/dev/null | \
-      sed 's/process\.env\.//' | sort -u | while read var; do \
+      sed 's/process\.env\.//' | sort -u | \
+      grep -vE '^(NODE_ENV|PUBLIC_URL|PATH|HOME|USER|SHELL|TERM|LANG|LC_ALL|PWD|OLDPWD|TMPDIR)$' | \
+      while read var; do \
         uuid=$(echo -n "$var" | md5sum | cut -d' ' -f1); \
         echo "$var=__ENV_${uuid}__"; \
       done > /tmp/.env.mappings || echo "" > /tmp/.env.mappings
@@ -71,26 +74,52 @@ data:
 {{- else if .build.vite }}
     FROM node:{{ .build.vite.nodeVersion }}-alpine AS build
     RUN corepack enable
+    RUN apk add --no-cache coreutils
     WORKDIR /app
     COPY ./ .
-    RUN {{ .build.vite.buildCommand }}
+    RUN find . -type f \( -name "*.js" -o -name "*.jsx" -o -name "*.ts" -o -name "*.tsx" \) \
+      ! -path "*/node_modules/*" ! -path "*/.git/*" ! -path "*/build/*" ! -path "*/dist/*" \
+      -exec grep -oh 'process\.env\.[A-Z_][A-Z0-9_]*' {} + 2>/dev/null | \
+      sed 's/process\.env\.//' | sort -u | \
+      grep -vE '^(NODE_ENV|PUBLIC_URL|PATH|HOME|USER|SHELL|TERM|LANG|LC_ALL|PWD|OLDPWD|TMPDIR)$' | \
+      while read var; do \
+        uuid=$(echo -n "$var" | md5sum | cut -d' ' -f1); \
+        echo "$var=__ENV_${uuid}__"; \
+      done > /tmp/.env.mappings || echo "" > /tmp/.env.mappings
+    RUN export $(cat /tmp/.env.mappings | xargs) && {{ .build.vite.buildCommand }}
     FROM nginx:alpine
-    RUN apk add --no-cache tzdata wget
+    RUN apk add --no-cache tzdata wget && addgroup -g 101 nginx-group || true && adduser -u 101 -G nginx-group -s /bin/sh -D nginx-user || true
     COPY --from=build /app{{ .build.vite.distPath | default "/dist" }} /usr/share/nginx/html
+    COPY --from=build /tmp/.env.mappings /.env.mappings
     RUN echo 'server { listen 8080; server_name _; root /usr/share/nginx/html; index index.html; add_header X-Frame-Options "SAMEORIGIN" always; add_header X-Content-Type-Options "nosniff" always; add_header X-XSS-Protection "1; mode=block" always; gzip on; gzip_vary on; gzip_types text/plain text/css application/json application/javascript text/xml application/xml text/javascript; location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ { expires 1y; add_header Cache-Control "public, immutable"; } location / { try_files $uri $uri/ /index.html; } location /health { access_log off; return 200 "healthy\\n"; add_header Content-Type text/plain; } }' > /etc/nginx/conf.d/default.conf
     RUN rm -f /etc/nginx/conf.d/default.conf.default
+    RUN printf '#!/bin/sh\nset -e\nif [ ! -f /.env.mappings ] || [ ! -s /.env.mappings ]; then\n  exit 0\nfi\nsed_script="/tmp/replace.sed"\n> "$sed_script"\nwhile IFS='\''='\'' read -r key placeholder; do\n  value=$(printenv "$key" || echo "")\n  if [ -n "$value" ]; then\n    escaped=$(printf '\''%%s\\n'\'' "$value" | sed '\''s/[&/\\]/\\\\&/g'\'')\n    echo "s|$placeholder|$escaped|g" >> "$sed_script"\n  fi\ndone < /.env.mappings\nif [ -s "$sed_script" ]; then\n  find /usr/share/nginx/html -type f -name "*.js" -exec sed -i -f "$sed_script" {} +\nfi\nrm -f "$sed_script"\n' > /docker-entrypoint.d/40-inject-env.sh
+    RUN chmod +x /docker-entrypoint.d/40-inject-env.sh
     CMD ["nginx", "-g", "daemon off;"]
 {{- else if .build.vue }}
     FROM node:{{ .build.vue.nodeVersion }}-alpine AS build
     RUN corepack enable
+    RUN apk add --no-cache coreutils
     WORKDIR /app
     COPY ./ .
-    RUN {{ .build.vue.buildCommand }}
+    RUN find . -type f \( -name "*.js" -o -name "*.jsx" -o -name "*.ts" -o -name "*.tsx" \) \
+      ! -path "*/node_modules/*" ! -path "*/.git/*" ! -path "*/build/*" ! -path "*/dist/*" \
+      -exec grep -oh 'process\.env\.[A-Z_][A-Z0-9_]*' {} + 2>/dev/null | \
+      sed 's/process\.env\.//' | sort -u | \
+      grep -vE '^(NODE_ENV|PUBLIC_URL|PATH|HOME|USER|SHELL|TERM|LANG|LC_ALL|PWD|OLDPWD|TMPDIR)$' | \
+      while read var; do \
+        uuid=$(echo -n "$var" | md5sum | cut -d' ' -f1); \
+        echo "$var=__ENV_${uuid}__"; \
+      done > /tmp/.env.mappings || echo "" > /tmp/.env.mappings
+    RUN export $(cat /tmp/.env.mappings | xargs) && {{ .build.vue.buildCommand }}
     FROM nginx:alpine
-    RUN apk add --no-cache tzdata wget
+    RUN apk add --no-cache tzdata wget && addgroup -g 101 nginx-group || true && adduser -u 101 -G nginx-group -s /bin/sh -D nginx-user || true
     COPY --from=build /app{{ .build.vue.distPath | default "/dist" }} /usr/share/nginx/html
+    COPY --from=build /tmp/.env.mappings /.env.mappings
     RUN echo 'server { listen 8080; server_name _; root /usr/share/nginx/html; index index.html; add_header X-Frame-Options "SAMEORIGIN" always; add_header X-Content-Type-Options "nosniff" always; add_header X-XSS-Protection "1; mode=block" always; gzip on; gzip_vary on; gzip_types text/plain text/css application/json application/javascript text/xml application/xml text/javascript; location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ { expires 1y; add_header Cache-Control "public, immutable"; } location / { try_files $uri $uri/ /index.html; } location /health { access_log off; return 200 "healthy\\n"; add_header Content-Type text/plain; } }' > /etc/nginx/conf.d/default.conf
     RUN rm -f /etc/nginx/conf.d/default.conf.default
+    RUN printf '#!/bin/sh\nset -e\nif [ ! -f /.env.mappings ] || [ ! -s /.env.mappings ]; then\n  exit 0\nfi\nsed_script="/tmp/replace.sed"\n> "$sed_script"\nwhile IFS='\''='\'' read -r key placeholder; do\n  value=$(printenv "$key" || echo "")\n  if [ -n "$value" ]; then\n    escaped=$(printf '\''%%s\\n'\'' "$value" | sed '\''s/[&/\\]/\\\\&/g'\'')\n    echo "s|$placeholder|$escaped|g" >> "$sed_script"\n  fi\ndone < /.env.mappings\nif [ -s "$sed_script" ]; then\n  find /usr/share/nginx/html -type f -name "*.js" -exec sed -i -f "$sed_script" {} +\nfi\nrm -f "$sed_script"\n' > /docker-entrypoint.d/40-inject-env.sh
+    RUN chmod +x /docker-entrypoint.d/40-inject-env.sh
     CMD ["nginx", "-g", "daemon off;"]
 {{- else if .build.nextjs }}
     FROM node:{{ .build.nextjs.nodeVersion }}-alpine AS build
