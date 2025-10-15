@@ -133,7 +133,7 @@ applications:
       repo: Casper-Feed
       branch: main
       installationId: "77967720"
-      hash: 5075cb2720313ca84b2f0d89177939604c38e680
+      hash: cf4caa3174434bae83e9b1c3ec804c043b80ed57
     build:
       gradle:
         javaVersion: 17
