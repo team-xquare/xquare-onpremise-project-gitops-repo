@@ -13,7 +13,7 @@ applications:
         jarOutputPath: /dms-infrastructure/build/libs/*.jar
         buildCommand: ./gradlew bootJar -x test -x detekt --build-cache --no-daemon
     endpoints:
-      - port: 8080
+      - port: 8081
         routes:
           - api-dms.dsmhs.kr
   - name: dms-main-stag
@@ -29,7 +29,7 @@ applications:
         dockerfilePath: "./dms-main/Dockerfile"
         contextPath: "."
     endpoints:
-      - port: 8080
+      - port: 8081
         routes:
           - dev-api-dms.dsmhs.kr
   - name: dms-frontend-prod
