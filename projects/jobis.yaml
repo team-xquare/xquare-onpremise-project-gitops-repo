@@ -7,14 +7,14 @@ applications:
       branch: main
       installationId: "82814703"
       hash: 7b22bc6113c28f0f0cfe5233a0f6e514c21f2535
-      # triggerPaths:
-      #   - jobis-application/**
-      #   - jobis-infrastructure/**
-      #   - build.gradle
-      #   - settings.gradle
-      #   - gradle/**
-      #   - gradlew
-      #   - gradlew.bat
+      triggerPaths:
+        - jobis-application/**
+        - jobis-infrastructure/**
+        - build.gradle
+        - settings.gradle
+        - gradle/**
+        - gradlew
+        - gradlew.bat
     build:
       gradle:
         javaVersion: "17"
@@ -32,14 +32,14 @@ applications:
       branch: develop
       installationId: "82814703"
       hash: 0607d78a067017fe5db69dedff618cc5282fe302
-      # triggerPaths:
-      #   - jobis-application/**
-      #   - jobis-infrastructure/**
-      #   - build.gradle
-      #   - settings.gradle
-      #   - gradle/**
-      #   - gradlew
-      #   - gradlew.bat
+      triggerPaths:
+        - jobis-application/**
+        - jobis-infrastructure/**
+        - build.gradle
+        - settings.gradle
+        - gradle/**
+        - gradlew
+        - gradlew.bat
     build:
       gradle:
         javaVersion: "17"
@@ -57,13 +57,13 @@ applications:
       branch: main
       installationId: "82814703"
       hash: a9d7cef7e2cbb78783e58eaa6b00b5096103c8de
-      # triggerPaths:
-      #   - apps/admin/**
-      #   - packages/**
-      #   - package.json
-      #   - yarn.lock
-      #   - nx.json
-      #   - tsconfig.base.json
+      triggerPaths:
+        - apps/admin/**
+        - packages/**
+        - package.json
+        - yarn.lock
+        - nx.json
+        - tsconfig.base.json
     build:
       vite:
         nodeVersion: "23.11.0"
@@ -81,13 +81,13 @@ applications:
       branch: develop
       installationId: "82814703"
       hash: 700390a179b33995c328cd86e147c9b9f0f43096
-      # triggerPaths:
-      #   - apps/admin/**
-      #   - packages/**
-      #   - package.json
-      #   - yarn.lock
-      #   - nx.json
-      #   - tsconfig.base.json
+      triggerPaths:
+        - apps/admin/**
+        - packages/**
+        - package.json
+        - yarn.lock
+        - nx.json
+        - tsconfig.base.json
     build:
       vite:
         nodeVersion: "23.11.0"
@@ -105,13 +105,13 @@ applications:
       branch: main
       installationId: "82814703"
       hash: a9d7cef7e2cbb78783e58eaa6b00b5096103c8de
-      # triggerPaths:
-      #   - apps/company/**
-      #   - packages/**
-      #   - package.json
-      #   - yarn.lock
-      #   - nx.json
-      #   - tsconfig.base.json
+      triggerPaths:
+        - apps/company/**
+        - packages/**
+        - package.json
+        - yarn.lock
+        - nx.json
+        - tsconfig.base.json
     build:
       vite:
         nodeVersion: "23.11.0"
@@ -129,13 +129,13 @@ applications:
       branch: develop
       installationId: "82814703"
       hash: 700390a179b33995c328cd86e147c9b9f0f43096
-      # triggerPaths:
-      #   - apps/company/**
-      #   - packages/**
-      #   - package.json
-      #   - yarn.lock
-      #   - nx.json
-      #   - tsconfig.base.json
+      triggerPaths:
+        - apps/company/**
+        - packages/**
+        - package.json
+        - yarn.lock
+        - nx.json
+        - tsconfig.base.json
     build:
       vite:
         nodeVersion: "23.11.0"
@@ -153,13 +153,13 @@ applications:
       branch: main
       installationId: "82814703"
       hash: a9d7cef7e2cbb78783e58eaa6b00b5096103c8de
-      # triggerPaths:
-      #   - apps/student/**
-      #   - packages/**
-      #   - package.json
-      #   - yarn.lock
-      #   - nx.json
-      #   - tsconfig.base.json
+      triggerPaths:
+        - apps/student/**
+        - packages/**
+        - package.json
+        - yarn.lock
+        - nx.json
+        - tsconfig.base.json
     build:
       vite:
         nodeVersion: "23.11.0"
@@ -177,13 +177,13 @@ applications:
       branch: develop
       installationId: "82814703"
       hash: 700390a179b33995c328cd86e147c9b9f0f43096
-      # triggerPaths:
-      #   - apps/student/**
-      #   - packages/**
-      #   - package.json
-      #   - yarn.lock
-      #   - nx.json
-      #   - tsconfig.base.json
+      triggerPaths:
+        - apps/student/**
+        - packages/**
+        - package.json
+        - yarn.lock
+        - nx.json
+        - tsconfig.base.json
     build:
       vite:
         nodeVersion: "23.11.0"
