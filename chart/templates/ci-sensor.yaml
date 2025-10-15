@@ -15,88 +15,66 @@ spec:
       eventSourceName: {{ include "app.serviceName" . }}-github-webhook
       filters:
         script: |
-          if event.body['X-GitHub-Event'] == 'ping' then
-            return true
-          end
-          if event.body.ref ~= 'refs/heads/{{ .github.branch }}' or event.body['X-GitHub-Event'] ~= 'push' then
-            return false
-          end
+          if event.body['X-GitHub-Event'] == 'ping' then return true end
+          if event.body.ref ~= 'refs/heads/{{ .github.branch }}' or event.body['X-GitHub-Event'] ~= 'push' then return false end
           {{- if .github.triggerPaths }}
-          local function matchesPath(files, patterns)
-            if not patterns or #patterns == 0 then
-              return true
+          local function g2p(s)
+            if not s or s == "" then return ".*" end
+            local p,i,l="",1,#s
+            while i<=l do
+              local c=s:sub(i,i)
+              if c=="*" then
+                if i+1<=l and s:sub(i+1,i+1)=="*" then
+                  if i+2<=l and s:sub(i+2,i+2)=="/" then p,i=p..".-",i+3 else p,i=p..".*",i+2 end
+                else p,i=p.."[^/]*",i+1 end
+              elseif c=="?" then p,i=p.."[^/]",i+1
+              elseif c=="[" then
+                local j,v=i+1,false
+                if j<=l and s:sub(j,j)=="!" then v,j=true,j+1 end
+                while j<=l and s:sub(j,j)~="]" do j=j+1 end
+                if j<=l then
+                  local cls=s:sub(i,j)
+                  if v then cls=cls:gsub("^%[!","[^") end
+                  p,i=p..cls,j+1
+                else p,i=p.."%[",i+1 end
+              elseif c:match("[%.%+%-%^%$%(%)%%]") then p,i=p.."%"..c,i+1
+              else p,i=p..c,i+1 end
             end
-            local paths = {}
-            for _, list in pairs(files) do
-              for _, p in ipairs(list or {}) do
-                table.insert(paths, p)
-              end
+            return "^"..p.."$"
+          end
+          local function match(files,pats)
+            if not pats or #pats==0 then return true end
+            local paths={}
+            for _,list in pairs(files) do for _,p in ipairs(list or {}) do table.insert(paths,p) end end
+            if #paths==0 then return false end
+            local inc,exc={},{}
+            for _,pat in ipairs(pats) do
+              if pat:sub(1,1)=="!" then table.insert(exc,g2p(pat:sub(2))) else table.insert(inc,g2p(pat)) end
             end
-            if #paths == 0 then
-              return false
-            end
-            local inc, exc = {}, {}
-            for _, pat in ipairs(patterns) do
-              if pat:sub(1,1) == "!" then
-                table.insert(exc, pat:sub(2))
-              else
-                table.insert(inc, pat)
-              end
-            end
-            for _, path in ipairs(paths) do
-              local match = false
-              if #inc == 0 then
-                match = true
-              else
-                for _, pat in ipairs(inc) do
-                  if path:match(pat) then
-                    match = true
-                    break
-                  end
-                end
-              end
-              if match then
-                for _, pat in ipairs(exc) do
-                  if path:match(pat) then
-                    match = false
-                    break
-                  end
-                end
-              end
-              if match then
-                return true
-              end
+            for _,path in ipairs(paths) do
+              local m=#inc==0
+              if not m then for _,pat in ipairs(inc) do if path:match(pat) then m=true break end end end
+              if m then for _,pat in ipairs(exc) do if path:match(pat) then m=false break end end end
+              if m then return true end
             end
             return false
           end
-          local changedFiles = {added={}, modified={}, removed={}}
+          local cf={added={},modified={},removed={}}
           if event.body.commits then
-            for _, commit in ipairs(event.body.commits) do
-              for _, f in ipairs(commit.added or {}) do
-                table.insert(changedFiles.added, f)
-              end
-              for _, f in ipairs(commit.modified or {}) do
-                table.insert(changedFiles.modified, f)
-              end
-              for _, f in ipairs(commit.removed or {}) do
-                table.insert(changedFiles.removed, f)
-              end
+            for _,c in ipairs(event.body.commits) do
+              for _,f in ipairs(c.added or {}) do table.insert(cf.added,f) end
+              for _,f in ipairs(c.modified or {}) do table.insert(cf.modified,f) end
+              for _,f in ipairs(c.removed or {}) do table.insert(cf.removed,f) end
             end
           end
-          if #changedFiles.added == 0 and #changedFiles.modified == 0 and #changedFiles.removed == 0 then
+          if #cf.added==0 and #cf.modified==0 and #cf.removed==0 then
             if event.body.head_commit then
-              for _, f in ipairs(event.body.head_commit.added or {}) do
-                table.insert(changedFiles.added, f)
-              end
-              for _, f in ipairs(event.body.head_commit.modified or {}) do
-                table.insert(changedFiles.modified, f)
-              end
-              for _, f in ipairs(event.body.head_commit.removed or {}) do
-                table.insert(changedFiles.removed, f)
-              end
+              for _,f in ipairs(event.body.head_commit.added or {}) do table.insert(cf.added,f) end
+              for _,f in ipairs(event.body.head_commit.modified or {}) do table.insert(cf.modified,f) end
+              for _,f in ipairs(event.body.head_commit.removed or {}) do table.insert(cf.removed,f) end
             end
           end
-          return matchesPath(changedFiles, { {{- range $i, $path := .github.triggerPaths }}{{if $i}}, {{end}}"{{$path}}"{{- end}} })
+          return match(cf,{ {{- range $i, $path := .github.triggerPaths }}{{if $i}}, {{end}}"{{$path}}"{{- end}} })
           {{- else }}
           return true
           {{- end }}
