@@ -38,9 +38,7 @@ spec:
               local match = not hasIncludes
               if hasIncludes then
                 for _, pat in ipairs(inc) do
-                  local regex = pat:gsub("%*%*", ".*"):gsub("%*", "[^/]*")
-                  regex = "^" .. regex
-                  if not regex:match("%$$") then regex = regex end
+                  local regex = "^" .. pat:gsub("%*%*", "DOUBLESTAR"):gsub("%*", "[^/]*"):gsub("DOUBLESTAR", ".*")
                   print("DEBUG: pattern='" .. pat .. "' -> regex='" .. regex .. "' checking against '" .. path .. "'")
                   if path:match(regex) then
                     print("DEBUG: MATCHED!")
