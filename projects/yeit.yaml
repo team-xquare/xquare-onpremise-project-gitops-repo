@@ -1,5 +1,5 @@
 applications:
-  - name: image-server
+  - name: image-analysis-server
     tier: x3.small
     github:
       owner: team-yeit
@@ -14,3 +14,18 @@ applications:
       - port: 8000
         routes:
           - yeit-image-api.dsmhs.kr
+  - name: intent-recognition-server
+    tier: x3.small
+    github:
+      owner: team-yeit
+      repo: intent-recognition-server
+      branch: main
+      installationId: "83724210"
+    build:
+      docker:
+        dockerfilePath: "./Dockerfile"
+        contextPath: "."
+    endpoints:
+      - port: 8080
+        routes:
+          - yeit-intent-recognition-api.dsmhs.kr
