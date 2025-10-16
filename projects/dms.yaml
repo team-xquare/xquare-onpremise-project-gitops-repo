@@ -8,14 +8,11 @@ applications:
       installationId: "64597732"
       hash: b403a05412cf8eddbfcf23ab95a27007686ed0c0
     build:
-      gradle:
-        javaVersion: 17
-        jarOutputPath: /dms-infrastructure/build/libs/*.jar
-        buildCommand: ./gradlew bootJar -x test -x detekt --build-cache --no-daemon
+      docker:
+        dockerfilePath: "./dms-main/Dockerfile"
+        contextPath: "."
     endpoints:
       - port: 8081
-        routes:
-          - api-dms.dsmhs.kr
   - name: dms-main-stag
     tier: x3.micro
     github:
@@ -46,6 +43,21 @@ applications:
       - port: 8080
         routes:
           - dev-api-dms.dsmhs.kr
+  - name: dms-gateway-prod
+    tier: x3.micro
+    github:
+      owner: team-aliens
+      repo: DMS-Backend
+      branch: main
+      installationId: "64597732"
+    build:
+      docker:
+        dockerfilePath: "./dms-gateway/Dockerfile"
+        contextPath: "."
+    endpoints:
+      - port: 8080
+        routes:
+          - api-dms.dsmhs.kr
   - name: dms-frontend-prod
     tier: x3.small
     github:
