@@ -1,0 +1,135 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: access-server-secret-generator
+  namespace: {{ include "project.namespace" $ }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: access-server-secret-generator
+  namespace: {{ include "project.namespace" $ }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+rules:
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["create", "get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: access-server-secret-generator
+  namespace: {{ include "project.namespace" $ }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: access-server-secret-generator
+subjects:
+- kind: ServiceAccount
+  name: access-server-secret-generator
+  namespace: {{ include "project.namespace" $ }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: access-server-secret-generator
+  namespace: {{ include "project.namespace" $ }}
+  annotations:
+    argocd.argoproj.io/hook: Sync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+spec:
+  template:
+    spec:
+      containers:
+      - name: generator
+        image: bitnami/kubectl:latest
+        command:
+          - /bin/sh
+          - -c
+          - |
+            if ! kubectl get secret access-server-password -n {{ include "project.namespace" $ }} 2>/dev/null; then
+              RAND=$(head -c 32 /dev/urandom | base64 | tr -d '/+=' | head -c 32)
+              kubectl create secret generic access-server-password \
+                --from-literal=password=$RAND \
+                --namespace={{ include "project.namespace" $ }}
+            fi
+      serviceAccountName: access-server-secret-generator
+      restartPolicy: OnFailure
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: access-server
+  namespace: {{ include "project.namespace" $ }}
+spec:
+  selector:
+    app: access-server
+  ports:
+    - port: 8080
+      targetPort: 8080
+      name: websocket
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: access-server
+  namespace: {{ include "project.namespace" $ }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: access-server
+  template:
+    metadata:
+      labels:
+        app: access-server
+    spec:
+      containers:
+        - name: access-server
+          image: xquare/access-server:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: access-server-password
+                  key: password
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: access-server-httproute
+  namespace: {{ include "project.namespace" $ }}
+spec:
+  parentRefs:
+    - name: external-gateway
+      namespace: gateway
+      sectionName: http
+    - name: external-gateway
+      namespace: gateway
+      sectionName: https
+  hostnames:
+    - xquare-remote-access-{{ .Values.project }}.dsmhs.kr
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: access-server
+          port: 8080
