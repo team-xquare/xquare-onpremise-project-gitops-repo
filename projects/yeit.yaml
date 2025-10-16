@@ -1,6 +1,6 @@
 applications:
   - name: image-analysis-server
-    tier: x3.small
+    tier: x3.medium
     github:
       owner: team-yeit
       repo: image-analysis-server
