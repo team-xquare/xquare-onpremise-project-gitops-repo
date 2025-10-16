@@ -1,0 +1,26 @@
+applications:
+  - name: server
+    tier: x3.small
+    github:
+      owner: GuJeuk-Check-in
+      repo: GuJeuk-Check-In_server
+      branch: main
+      installationId: "90332669"
+    build:
+      gradle:
+        javaVersion: 17
+        jarOutputPath: /build/libs/*.jar
+        buildCommand: ./gradlew bootJar -x test
+    endpoints:
+      - port: 8080
+        routes:
+          - gujeuk-api.dsmhs.kr
+addons:
+  - name: mysql
+    type: mysql
+    tier: x3.micro
+    storage: 1Gi
+  - name: redis
+    type: redis
+    tier: x3.micro
+    storage: 1Gi
