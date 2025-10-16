@@ -1,0 +1,16 @@
+applications:
+  - name: image-server
+    tier: x3.small
+    github:
+      owner: team-yeit
+      repo: image-analysis-server
+      branch: main
+      installationId: "83724210"
+    build:
+      docker:
+        dockerfilePath: "./Dockerfile"
+        contextPath: "."
+    endpoints:
+      - port: 8000
+        routes:
+          - yeit-image-api.dsmhs.kr
