@@ -6,6 +6,7 @@ applications:
       repo: image-analysis-server
       branch: main
       installationId: "83724210"
+      hash: 95d93867893e950406f3f09a1799db3f07211b34
     build:
       docker:
         dockerfilePath: "./Dockerfile"
