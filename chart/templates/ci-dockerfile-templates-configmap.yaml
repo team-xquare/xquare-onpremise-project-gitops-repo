@@ -60,7 +60,8 @@ data:
       while read var; do \
         uuid=$(echo -n "$var" | md5sum | cut -d' ' -f1); \
         echo "$var=__ENV_NOT_SET__${var}__${uuid}__"; \
-      done > /tmp/.env.mappings || echo "" > /tmp/.env.mappings
+      done > /tmp/.env.mappings || echo "" > /tmp/.env.mappings && \
+      echo "Found env vars: $(cat /tmp/.env.mappings | cut -d'=' -f1 | tr '\n' ' ')"
     RUN export $(cat /tmp/.env.mappings | xargs) && {{ .build.react.buildCommand }}
     FROM nginx:alpine
     RUN apk add --no-cache tzdata wget && addgroup -g 101 nginx-group || true && adduser -u 101 -G nginx-group -s /bin/sh -D nginx-user || true
@@ -85,7 +86,8 @@ data:
       while read var; do \
         uuid=$(echo -n "$var" | md5sum | cut -d' ' -f1); \
         echo "$var=__ENV_NOT_SET__${var}__${uuid}__"; \
-      done > /tmp/.env.mappings || echo "" > /tmp/.env.mappings
+      done > /tmp/.env.mappings || echo "" > /tmp/.env.mappings && \
+      echo "Found env vars: $(cat /tmp/.env.mappings | cut -d'=' -f1 | tr '\n' ' ')"
     RUN export $(cat /tmp/.env.mappings | xargs) && {{ .build.vite.buildCommand }}
     FROM nginx:alpine
     RUN apk add --no-cache tzdata wget && addgroup -g 101 nginx-group || true && adduser -u 101 -G nginx-group -s /bin/sh -D nginx-user || true
@@ -110,7 +112,8 @@ data:
       while read var; do \
         uuid=$(echo -n "$var" | md5sum | cut -d' ' -f1); \
         echo "$var=__ENV_NOT_SET__${var}__${uuid}__"; \
-      done > /tmp/.env.mappings || echo "" > /tmp/.env.mappings
+      done > /tmp/.env.mappings || echo "" > /tmp/.env.mappings && \
+      echo "Found env vars: $(cat /tmp/.env.mappings | cut -d'=' -f1 | tr '\n' ' ')"
     RUN export $(cat /tmp/.env.mappings | xargs) && {{ .build.vue.buildCommand }}
     FROM nginx:alpine
     RUN apk add --no-cache tzdata wget && addgroup -g 101 nginx-group || true && adduser -u 101 -G nginx-group -s /bin/sh -D nginx-user || true
