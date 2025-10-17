@@ -23,7 +23,7 @@ applications:
       repo: repo
       branch: main
       installationId: "79908920"
-      hash: 9d5659f4f11b6894ece00acd1511930135323647
+      hash: f486f13a3c6387aa70ff2dac075e1d93d3b79d33
     build:
       vite:
         nodeVersion: "18"
