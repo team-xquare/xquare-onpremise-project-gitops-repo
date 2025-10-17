@@ -25,7 +25,7 @@ applications:
       installationId: "90332669"
     build:
       vite:
-        nodeVersion: "18"
+        nodeVersion: "20"
         distPath: /dist
         buildCommand: yarn install --frozen-lockfile && yarn build
     endpoints:
