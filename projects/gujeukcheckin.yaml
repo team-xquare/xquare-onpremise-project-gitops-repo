@@ -16,6 +16,22 @@ applications:
       - port: 8080
         routes:
           - gujeuk-api.dsmhs.kr
+  - name: frontend
+    tier: x3.small
+    github:
+      owner: GuJeuk-Check-in
+      repo: GuJeuk-Check-In_FE
+      branch: main
+      installationId: "90332669"
+    build:
+      vite:
+        nodeVersion: "18"
+        distPath: /dist
+        buildCommand: yarn install --frozen-lockfile && yarn build
+    endpoints:
+      - port: 8080
+        routes:
+          - gujeuk.dsmhs.kr
 addons:
   - name: mysql
     type: mysql
