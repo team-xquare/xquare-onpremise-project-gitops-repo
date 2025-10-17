@@ -116,7 +116,7 @@ applications:
       repo: Casper-Application
       branch: main
       installationId: "77967720"
-      hash: 5afae3e7f8da2d79e72930773cf078fb46991ce8
+      hash: 3a0d261390da01e7483f2ddb447987bb152b4c4c
     build:
       gradle:
         javaVersion: 17
