@@ -22,7 +22,7 @@ applications:
       repo: intent-recognition-server
       branch: main
       installationId: "83724210"
-      hash: 6938983ac93d57b1acca836cf20f820fbf1b92e7
+      hash: 94012f2476741b61c89b5910c86258525fab2f9e
     build:
       docker:
         dockerfilePath: "./Dockerfile"
