@@ -111,7 +111,7 @@ applications:
         routes:
           - webview-dms.dsmhs.kr
 addons:
-  - name: dms-redis
+  - name: redis
     type: redis
     tier: x3.micro
     storage: 1Gi
