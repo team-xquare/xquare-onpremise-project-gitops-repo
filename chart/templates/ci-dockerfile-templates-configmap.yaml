@@ -52,19 +52,19 @@ data:
     RUN apk add --no-cache coreutils
     WORKDIR /app
     COPY ./ .
-    RUN echo "=== Scanning for environment variables ===" && \
-      find . -maxdepth 2 -name ".env*" -type f -exec sh -c 'echo "From .env file: $1"; grep -oE "^[A-Z_][A-Z0-9_]*=" "$1" 2>/dev/null | sed "s/=$//"' _ {} \; > /tmp/.env.from.files && \
+    RUN (find . -maxdepth 2 -name ".env*" -type f -exec grep -oE '^[A-Z_][A-Z0-9_]*=' {} + 2>/dev/null | sed 's/=$//' && \
       find . -type f \( -name "*.js" -o -name "*.jsx" -o -name "*.ts" -o -name "*.tsx" \) \
       ! -path "*/node_modules/*" ! -path "*/.git/*" ! -path "*/build/*" ! -path "*/dist/*" \
-      -exec sh -c 'matches=$(grep -ohE "process\.env\.[A-Z_][A-Z0-9_]*|import\.meta\.env\.[A-Z_][A-Z0-9_]*" "$1" 2>/dev/null | sed -e "s/process\.env\.//" -e "s/import\.meta\.env\.//"); [ -n "$matches" ] && echo "From code file: $1" && echo "$matches"' _ {} \; > /tmp/.env.from.code && \
-      cat /tmp/.env.from.files /tmp/.env.from.code | grep -v "^From " | sort -u | \
+      ! -path "*/.yarn/*" ! -path "*/.next/*" ! -path "*/.cache/*" ! -path "*/.turbo/*" \
+      ! -path "*/coverage/*" ! -path "*/out/*" \
+      -exec grep -ohE 'process\.env\.[A-Z_][A-Z0-9_]*|import\.meta\.env\.[A-Z_][A-Z0-9_]*' {} + 2>/dev/null | \
+      sed -e 's/process\.env\.//' -e 's/import\.meta\.env\.//') | sort -u | \
       grep -vE '^(NODE_ENV|PUBLIC_URL|PATH|HOME|USER|SHELL|TERM|LANG|LC_ALL|PWD|OLDPWD|TMPDIR|MODE|DEV|PROD|SSR|BASE_URL)$' | \
       while read var; do \
         uuid=$(echo -n "$var" | md5sum | cut -d' ' -f1); \
         echo "$var=__ENV_NOT_SET__${var}__${uuid}__"; \
       done > /tmp/.env.mappings && \
-      echo "=== Found env vars: $(cat /tmp/.env.mappings | cut -d'=' -f1 | tr '\n' ' ') ===" && \
-      cat /tmp/.env.from.files /tmp/.env.from.code
+      echo "Found env vars: $(cat /tmp/.env.mappings | cut -d'=' -f1 | tr '\n' ' ')"
     RUN export $(cat /tmp/.env.mappings | xargs) && {{ .build.react.buildCommand }}
     FROM nginx:alpine
     RUN apk add --no-cache tzdata wget && addgroup -g 101 nginx-group || true && adduser -u 101 -G nginx-group -s /bin/sh -D nginx-user || true
@@ -81,19 +81,19 @@ data:
     RUN apk add --no-cache coreutils
     WORKDIR /app
     COPY ./ .
-    RUN echo "=== Scanning for environment variables ===" && \
-      find . -maxdepth 2 -name ".env*" -type f -exec sh -c 'echo "From .env file: $1"; grep -oE "^[A-Z_][A-Z0-9_]*=" "$1" 2>/dev/null | sed "s/=$//"' _ {} \; > /tmp/.env.from.files && \
+    RUN (find . -maxdepth 2 -name ".env*" -type f -exec grep -oE '^[A-Z_][A-Z0-9_]*=' {} + 2>/dev/null | sed 's/=$//' && \
       find . -type f \( -name "*.js" -o -name "*.jsx" -o -name "*.ts" -o -name "*.tsx" \) \
       ! -path "*/node_modules/*" ! -path "*/.git/*" ! -path "*/build/*" ! -path "*/dist/*" \
-      -exec sh -c 'matches=$(grep -ohE "process\.env\.[A-Z_][A-Z0-9_]*|import\.meta\.env\.[A-Z_][A-Z0-9_]*" "$1" 2>/dev/null | sed -e "s/process\.env\.//" -e "s/import\.meta\.env\.//"); [ -n "$matches" ] && echo "From code file: $1" && echo "$matches"' _ {} \; > /tmp/.env.from.code && \
-      cat /tmp/.env.from.files /tmp/.env.from.code | grep -v "^From " | sort -u | \
+      ! -path "*/.yarn/*" ! -path "*/.next/*" ! -path "*/.cache/*" ! -path "*/.turbo/*" \
+      ! -path "*/coverage/*" ! -path "*/out/*" \
+      -exec grep -ohE 'process\.env\.[A-Z_][A-Z0-9_]*|import\.meta\.env\.[A-Z_][A-Z0-9_]*' {} + 2>/dev/null | \
+      sed -e 's/process\.env\.//' -e 's/import\.meta\.env\.//') | sort -u | \
       grep -vE '^(NODE_ENV|PUBLIC_URL|PATH|HOME|USER|SHELL|TERM|LANG|LC_ALL|PWD|OLDPWD|TMPDIR|MODE|DEV|PROD|SSR|BASE_URL)$' | \
       while read var; do \
         uuid=$(echo -n "$var" | md5sum | cut -d' ' -f1); \
         echo "$var=__ENV_NOT_SET__${var}__${uuid}__"; \
       done > /tmp/.env.mappings && \
-      echo "=== Found env vars: $(cat /tmp/.env.mappings | cut -d'=' -f1 | tr '\n' ' ') ===" && \
-      cat /tmp/.env.from.files /tmp/.env.from.code
+      echo "Found env vars: $(cat /tmp/.env.mappings | cut -d'=' -f1 | tr '\n' ' ')"
     RUN export $(cat /tmp/.env.mappings | xargs) && {{ .build.vite.buildCommand }}
     FROM nginx:alpine
     RUN apk add --no-cache tzdata wget && addgroup -g 101 nginx-group || true && adduser -u 101 -G nginx-group -s /bin/sh -D nginx-user || true
@@ -110,19 +110,19 @@ data:
     RUN apk add --no-cache coreutils
     WORKDIR /app
     COPY ./ .
-    RUN echo "=== Scanning for environment variables ===" && \
-      find . -maxdepth 2 -name ".env*" -type f -exec sh -c 'echo "From .env file: $1"; grep -oE "^[A-Z_][A-Z0-9_]*=" "$1" 2>/dev/null | sed "s/=$//"' _ {} \; > /tmp/.env.from.files && \
+    RUN (find . -maxdepth 2 -name ".env*" -type f -exec grep -oE '^[A-Z_][A-Z0-9_]*=' {} + 2>/dev/null | sed 's/=$//' && \
       find . -type f \( -name "*.js" -o -name "*.jsx" -o -name "*.ts" -o -name "*.tsx" \) \
       ! -path "*/node_modules/*" ! -path "*/.git/*" ! -path "*/build/*" ! -path "*/dist/*" \
-      -exec sh -c 'matches=$(grep -ohE "process\.env\.[A-Z_][A-Z0-9_]*|import\.meta\.env\.[A-Z_][A-Z0-9_]*" "$1" 2>/dev/null | sed -e "s/process\.env\.//" -e "s/import\.meta\.env\.//"); [ -n "$matches" ] && echo "From code file: $1" && echo "$matches"' _ {} \; > /tmp/.env.from.code && \
-      cat /tmp/.env.from.files /tmp/.env.from.code | grep -v "^From " | sort -u | \
+      ! -path "*/.yarn/*" ! -path "*/.next/*" ! -path "*/.cache/*" ! -path "*/.turbo/*" \
+      ! -path "*/coverage/*" ! -path "*/out/*" \
+      -exec grep -ohE 'process\.env\.[A-Z_][A-Z0-9_]*|import\.meta\.env\.[A-Z_][A-Z0-9_]*' {} + 2>/dev/null | \
+      sed -e 's/process\.env\.//' -e 's/import\.meta\.env\.//') | sort -u | \
       grep -vE '^(NODE_ENV|PUBLIC_URL|PATH|HOME|USER|SHELL|TERM|LANG|LC_ALL|PWD|OLDPWD|TMPDIR|MODE|DEV|PROD|SSR|BASE_URL)$' | \
       while read var; do \
         uuid=$(echo -n "$var" | md5sum | cut -d' ' -f1); \
         echo "$var=__ENV_NOT_SET__${var}__${uuid}__"; \
       done > /tmp/.env.mappings && \
-      echo "=== Found env vars: $(cat /tmp/.env.mappings | cut -d'=' -f1 | tr '\n' ' ') ===" && \
-      cat /tmp/.env.from.files /tmp/.env.from.code
+      echo "Found env vars: $(cat /tmp/.env.mappings | cut -d'=' -f1 | tr '\n' ' ')"
     RUN export $(cat /tmp/.env.mappings | xargs) && {{ .build.vue.buildCommand }}
     FROM nginx:alpine
     RUN apk add --no-cache tzdata wget && addgroup -g 101 nginx-group || true && adduser -u 101 -G nginx-group -s /bin/sh -D nginx-user || true
