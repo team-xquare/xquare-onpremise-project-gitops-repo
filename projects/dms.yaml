@@ -1,9 +1,9 @@
 applications:
   - name: notification-prod
-    tier: x3.micro
+    tier: x3.small
     github:
       owner: team-aliens
-      repo: DMS-Notification
+      repo: DMS-Backend
       branch: main
       installationId: "64597732"
     build:
@@ -14,7 +14,7 @@ applications:
       - port: 8082
       - port: 9090
   - name: notification-stag
-    tier: x3.micro
+    tier: x3.small
     github:
       owner: team-aliens
       repo: DMS-Backend
@@ -29,7 +29,7 @@ applications:
       - port: 8082
       - port: 9090
   - name: main-prod
-    tier: x3.micro
+    tier: x3.small
     github:
       owner: team-aliens
       repo: DMS-Backend
@@ -43,7 +43,7 @@ applications:
     endpoints:
       - port: 8081
   - name: main-stag
-    tier: x3.micro
+    tier: x3.small
     github:
       owner: team-aliens
       repo: DMS-Backend
@@ -57,7 +57,7 @@ applications:
     endpoints:
       - port: 8081
   - name: gateway-stag
-    tier: x3.micro
+    tier: x3.small
     github:
       owner: team-aliens
       repo: DMS-Backend
@@ -73,7 +73,7 @@ applications:
         routes:
           - dev-api-dms.dsmhs.kr
   - name: gateway-prod
-    tier: x3.micro
+    tier: x3.small
     github:
       owner: team-aliens
       repo: DMS-Backend
