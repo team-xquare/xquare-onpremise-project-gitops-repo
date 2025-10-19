@@ -130,7 +130,11 @@ applications:
         routes:
           - webview-dms.dsmhs.kr
 addons:
-  - name: redis
+  - name: prod-redis
+    type: redis
+    tier: x3.micro
+    storage: 1Gi
+  - name: stag-redis
     type: redis
     tier: x3.micro
     storage: 1Gi
@@ -158,7 +162,11 @@ addons:
     type: mysql
     tier: x3.micro
     storage: 1Gi
-  - name: rabbitmq
+  - name: prod-rabbitmq
+    type: rabbitmq
+    tier: x3.micro
+    storage: 1Gi
+  - name: stag-rabbitmq
     type: rabbitmq
     tier: x3.micro
     storage: 1Gi
