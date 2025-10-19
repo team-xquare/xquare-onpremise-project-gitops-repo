@@ -1,0 +1,28 @@
+applications:
+  - name: server
+    tier: x3.micro
+    github:
+      owner: team-xquare
+      repo: wstest
+      branch: main
+      installationId: "62433388"
+    build:
+      docker:
+        dockerfilePath: "./server/Dockerfile"
+        contextPath: "./server"
+    endpoints:
+      - port: 8080
+        routes:
+          - wstest.dsmhs.kr
+
+  - name: client
+    tier: x3.micro
+    github:
+      owner: team-xquare
+      repo: wstest
+      branch: main
+      installationId: "62433388"
+    build:
+      docker:
+        dockerfilePath: "./client/Dockerfile"
+        contextPath: "./client"
