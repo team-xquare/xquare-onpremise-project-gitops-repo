@@ -12,6 +12,7 @@ applications:
         contextPath: "."
     endpoints:
       - port: 8082
+      - port: 9090
   - name: notification-stag
     tier: x3.micro
     github:
@@ -25,6 +26,7 @@ applications:
         contextPath: "."
     endpoints:
       - port: 8082
+      - port: 9090
   - name: main-prod
     tier: x3.micro
     github:
