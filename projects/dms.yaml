@@ -1,5 +1,18 @@
 applications:
-  - name: main-prod
+  - name: notification-prod
+    tier: x3.micro
+    github:
+      owner: team-aliens
+      repo: DMS-Notification
+      branch: main
+      installationId: "64597732"
+    build:
+      docker:
+        dockerfilePath: "./dms-notification/Dockerfile"
+        contextPath: "."
+    endpoints:
+      - port: 8082
+  - name: notification-stag
     tier: x3.micro
     github:
       owner: team-aliens
@@ -11,7 +24,7 @@ applications:
         dockerfilePath: "./dms-main/Dockerfile"
         contextPath: "."
     endpoints:
-      - port: 8081
+      - port: 8082
   - name: main-stag
     tier: x3.micro
     github:
