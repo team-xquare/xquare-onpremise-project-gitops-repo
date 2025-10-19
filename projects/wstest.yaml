@@ -3,7 +3,7 @@ applications:
     tier: x3.micro
     github:
       owner: team-xquare
-      repo: wstest
+      repo: ws-test
       branch: main
       installationId: "62433388"
     build:
@@ -19,7 +19,7 @@ applications:
     tier: x3.micro
     github:
       owner: team-xquare
-      repo: wstest
+      repo: ws-test
       branch: main
       installationId: "62433388"
     build:
