@@ -123,19 +123,19 @@ addons:
     type: mysql
     tier: x3.micro
     storage: 1Gi
-  - name: dms-main-prod-mysql
+  - name: main-prod-mysql
     type: mysql
     tier: x3.micro
     storage: 1Gi
-  - name: dms-main-stag-mysql
+  - name: main-stag-mysql
     type: mysql
     tier: x3.micro
     storage: 1Gi
-  - name: dms-notification-prod-mysql
+  - name: notification-prod-mysql
     type: mysql
     tier: x3.micro
     storage: 1Gi
-  - name: dms-notification-stag-mysql
+  - name: notification-stag-mysql
     type: mysql
     tier: x3.micro
     storage: 1Gi
