@@ -1,40 +1,37 @@
 applications:
-  - name: dms-main-prod
+  - name: main-prod
     tier: x3.micro
     github:
       owner: team-aliens
       repo: DMS-Backend
       branch: main
       installationId: "64597732"
-      hash: b79865f0212fecc51e70a9b963b4f2b423fceade
     build:
       docker:
         dockerfilePath: "./dms-main/Dockerfile"
         contextPath: "."
     endpoints:
       - port: 8081
-  - name: dms-main-stag
+  - name: main-stag
     tier: x3.micro
     github:
       owner: team-aliens
       repo: DMS-Backend
       branch: develop
       installationId: "64597732"
-      hash: de6f2d5b5dfc45eabe69e253a5775124504ac2ba
     build:
       docker:
         dockerfilePath: "./dms-main/Dockerfile"
         contextPath: "."
     endpoints:
       - port: 8081
-  - name: dms-gateway-stag
+  - name: gateway-stag
     tier: x3.micro
     github:
       owner: team-aliens
       repo: DMS-Backend
       branch: develop
       installationId: "64597732"
-      hash: de6f2d5b5dfc45eabe69e253a5775124504ac2ba
     build:
       docker:
         dockerfilePath: "./dms-gateway/Dockerfile"
@@ -43,14 +40,13 @@ applications:
       - port: 8080
         routes:
           - dev-api-dms.dsmhs.kr
-  - name: dms-gateway-prod
+  - name: gateway-prod
     tier: x3.micro
     github:
       owner: team-aliens
       repo: DMS-Backend
       branch: main
       installationId: "64597732"
-      hash: b79865f0212fecc51e70a9b963b4f2b423fceade
     build:
       docker:
         dockerfilePath: "./dms-gateway/Dockerfile"
@@ -59,14 +55,13 @@ applications:
       - port: 8080
         routes:
           - api-dms.dsmhs.kr
-  - name: dms-frontend-prod
+  - name: frontend-prod
     tier: x3.small
     github:
       owner: team-aliens
       repo: DMS-Frontend
       branch: main
       installationId: "64597732"
-      hash: 6bd517a72025ccc2c63e54ab15661869f9ad6c01
     build:
       react:
         nodeVersion: "22"
@@ -76,14 +71,13 @@ applications:
       - port: 8080
         routes:
           - admin-dms.dsmhs.kr
-  - name: dms-frontend-stag
+  - name: frontend-stag
     tier: x3.small
     github:
       owner: team-aliens
       repo: DMS-Frontend
       branch: dev
       installationId: "64597732"
-      hash: 7b56c10a86dfbfd29b09d598237ec214bd98dd4f
     build:
       react:
         nodeVersion: "22"
@@ -93,14 +87,13 @@ applications:
       - port: 8080
         routes:
           - admin-dev-dms.dsmhs.kr
-  - name: dms-webview-prod
+  - name: webview-prod
     tier: x3.small
     github:
       owner: team-aliens
       repo: dms-webview
       branch: main
       installationId: "64597732"
-      hash: 8084f639ac835147265926942ad9ff26813cdfe0
     build:
       react:
         nodeVersion: "22"
