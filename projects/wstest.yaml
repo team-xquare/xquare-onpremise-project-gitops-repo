@@ -6,6 +6,7 @@ applications:
       repo: ws-test
       branch: main
       installationId: "62433388"
+      hash: 7781e998f397120d113f800e219fb4a68e48310b
     build:
       docker:
         dockerfilePath: "./Dockerfile"
