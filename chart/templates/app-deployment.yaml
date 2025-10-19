@@ -19,9 +19,11 @@ spec:
         {{- include "app.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: application
       annotations:
+        {{- if .endpoints }}
         prometheus.io/scrape: "true"
         prometheus.io/path: "/actuator/prometheus"
         prometheus.io/port: "{{ (index .endpoints 0).port }}"
+        {{- end }}
         cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
     spec:
       serviceAccountName: {{ include "project.vaultServiceAccount" $ }}
@@ -41,6 +43,7 @@ spec:
         - name: {{ include "app.serviceName" . }}
           image: {{ include "project.harborRegistry" $ }}/xquare/{{ $.Values.project }}-{{ include "app.serviceName" . }}:{{ .github.hash | default "latest" }}
           imagePullPolicy: Always
+          {{- if .endpoints }}
           ports:
           {{- range $endpoint := .endpoints }}
             - containerPort: {{ $endpoint.port }}
@@ -49,6 +52,7 @@ spec:
           env:
             - name: PORT
               value: "{{ (index .endpoints 0).port }}"
+          {{- end }}
           envFrom:
             - secretRef:
                 name: {{ include "app.vaultSecretName" (dict "project" $.Values.project "name" (include "app.serviceName" .)) }}
@@ -96,12 +100,14 @@ spec:
               cpu: 400m
               memory: 512Mi
             {{- end }}
+          {{- if .endpoints }}
           readinessProbe:
             tcpSocket:
               port: {{ (index .endpoints 0).port }}
             initialDelaySeconds: 20
             periodSeconds: 10
             successThreshold: 3
+          {{- end }}
       imagePullSecrets:
         - name: {{ include "app.serviceName" . }}-imagepullsecrets
 {{- end }}

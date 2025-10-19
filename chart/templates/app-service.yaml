@@ -1,5 +1,5 @@
 {{- range .Values.applications }}
-{{- if .github.hash }}
+{{- if and .github.hash .endpoints }}
 ---
 apiVersion: v1
 kind: Service
