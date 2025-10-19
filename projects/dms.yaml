@@ -21,10 +21,23 @@ applications:
       installationId: "64597732"
     build:
       docker:
-        dockerfilePath: "./dms-main/Dockerfile"
+        dockerfilePath: "./dms-notification/Dockerfile"
         contextPath: "."
     endpoints:
       - port: 8082
+  - name: main-prod
+    tier: x3.micro
+    github:
+      owner: team-aliens
+      repo: DMS-Backend
+      branch: main
+      installationId: "64597732"
+    build:
+      docker:
+        dockerfilePath: "./dms-main/Dockerfile"
+        contextPath: "."
+    endpoints:
+      - port: 8081
   - name: main-stag
     tier: x3.micro
     github:
