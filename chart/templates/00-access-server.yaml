@@ -110,28 +110,28 @@ spec:
               cpu: 200m
               memory: 256Mi
 ---
-# apiVersion: cilium.io/v2
-# kind: CiliumNetworkPolicy
-# metadata:
-#   name: access-server-network-policy
-#   namespace: {{ include "project.namespace" $ }}
-# spec:
-#   endpointSelector:
-#     matchLabels:
-#       app: access-server
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: access-server-network-policy
+  namespace: {{ include "project.namespace" $ }}
+spec:
+  endpointSelector:
+    matchLabels:
+      app: access-server
 
-#   egress:
-#     - toEndpoints:
-#         - matchLabels:
-#             io.kubernetes.pod.namespace: kube-system
-#             k8s-app: kube-dns
-#       toPorts:
-#         - ports:
-#             - port: "53"
-#               protocol: UDP
-#     - toEndpoints:
-#         - matchLabels:
-#             io.kubernetes.pod.namespace: {{ include "project.namespace" $ }}
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: {{ include "project.namespace" $ }}
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
