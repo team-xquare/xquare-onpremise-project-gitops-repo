@@ -1,94 +1,4 @@
 applications:
-  - name: notification-prod
-    tier: x3.small
-    github:
-      owner: team-aliens
-      repo: DMS-Backend
-      branch: main
-      installationId: "64597732"
-      hash: 23c4729fa49970cc6fd2f09bb0d5dfd9a25e495f
-    build:
-      docker:
-        dockerfilePath: "./dms-notification/Dockerfile"
-        contextPath: "."
-    endpoints:
-      - port: 8082
-      - port: 9090
-  - name: notification-stag
-    tier: x3.small
-    github:
-      owner: team-aliens
-      repo: DMS-Backend
-      branch: develop
-      installationId: "64597732"
-      hash: 62172df796327140af9f5c68f152e6176b439783
-    build:
-      docker:
-        dockerfilePath: "./dms-notification/Dockerfile"
-        contextPath: "."
-    endpoints:
-      - port: 8082
-      - port: 9090
-  - name: main-prod
-    tier: x3.small
-    github:
-      owner: team-aliens
-      repo: DMS-Backend
-      branch: main
-      installationId: "64597732"
-      hash: 23c4729fa49970cc6fd2f09bb0d5dfd9a25e495f
-    build:
-      docker:
-        dockerfilePath: "./dms-main/Dockerfile"
-        contextPath: "."
-    endpoints:
-      - port: 8081
-  - name: main-stag
-    tier: x3.small
-    github:
-      owner: team-aliens
-      repo: DMS-Backend
-      branch: develop
-      installationId: "64597732"
-      hash: 62172df796327140af9f5c68f152e6176b439783
-    build:
-      docker:
-        dockerfilePath: "./dms-main/Dockerfile"
-        contextPath: "."
-    endpoints:
-      - port: 8081
-  - name: gateway-stag
-    tier: x3.small
-    github:
-      owner: team-aliens
-      repo: DMS-Backend
-      branch: develop
-      installationId: "64597732"
-      hash: 62172df796327140af9f5c68f152e6176b439783
-    build:
-      docker:
-        dockerfilePath: "./dms-gateway/Dockerfile"
-        contextPath: "."
-    endpoints:
-      - port: 8080
-        routes:
-          - dev-api-dms.dsmhs.kr
-  - name: gateway-prod
-    tier: x3.small
-    github:
-      owner: team-aliens
-      repo: DMS-Backend
-      branch: main
-      installationId: "64597732"
-      hash: 23c4729fa49970cc6fd2f09bb0d5dfd9a25e495f
-    build:
-      docker:
-        dockerfilePath: "./dms-gateway/Dockerfile"
-        contextPath: "."
-    endpoints:
-      - port: 8080
-        routes:
-          - api-dms.dsmhs.kr
   - name: frontend-prod
     tier: x3.small
     github:
@@ -140,15 +50,97 @@ applications:
       - port: 8080
         routes:
           - webview-dms.dsmhs.kr
+  - name: gateway-prod
+    tier: x3.small
+    github:
+      owner: team-aliens
+      repo: DMS-Backend
+      branch: main
+      installationId: "64597732"
+      hash: 23c4729fa49970cc6fd2f09bb0d5dfd9a25e495f
+    build:
+      docker:
+        dockerfilePath: "./dms-gateway/Dockerfile"
+        contextPath: "."
+    endpoints:
+      - port: 8080
+        routes:
+          - api-dms.dsmhs.kr
+  - name: gateway-stag
+    tier: x3.small
+    github:
+      owner: team-aliens
+      repo: DMS-Backend
+      branch: develop
+      installationId: "64597732"
+      hash: 62172df796327140af9f5c68f152e6176b439783
+    build:
+      docker:
+        dockerfilePath: "./dms-gateway/Dockerfile"
+        contextPath: "."
+    endpoints:
+      - port: 8080
+        routes:
+          - dev-api-dms.dsmhs.kr
+  - name: main-prod
+    tier: x3.small
+    github:
+      owner: team-aliens
+      repo: DMS-Backend
+      branch: main
+      installationId: "64597732"
+      hash: 23c4729fa49970cc6fd2f09bb0d5dfd9a25e495f
+    build:
+      docker:
+        dockerfilePath: "./dms-main/Dockerfile"
+        contextPath: "."
+    endpoints:
+      - port: 8081
+  - name: main-stag
+    tier: x3.small
+    github:
+      owner: team-aliens
+      repo: DMS-Backend
+      branch: develop
+      installationId: "64597732"
+      hash: 62172df796327140af9f5c68f152e6176b439783
+    build:
+      docker:
+        dockerfilePath: "./dms-main/Dockerfile"
+        contextPath: "."
+    endpoints:
+      - port: 8081
+  - name: notification-prod
+    tier: x3.small
+    github:
+      owner: team-aliens
+      repo: DMS-Backend
+      branch: main
+      installationId: "64597732"
+      hash: 23c4729fa49970cc6fd2f09bb0d5dfd9a25e495f
+    build:
+      docker:
+        dockerfilePath: "./dms-notification/Dockerfile"
+        contextPath: "."
+    endpoints:
+      - port: 8082
+      - port: 9090
+  - name: notification-stag
+    tier: x3.small
+    github:
+      owner: team-aliens
+      repo: DMS-Backend
+      branch: develop
+      installationId: "64597732"
+      hash: 62172df796327140af9f5c68f152e6176b439783
+    build:
+      docker:
+        dockerfilePath: "./dms-notification/Dockerfile"
+        contextPath: "."
+    endpoints:
+      - port: 8082
+      - port: 9090
 addons:
-  - name: prod-redis
-    type: redis
-    tier: x3.micro
-    storage: 1Gi
-  - name: stag-redis
-    type: redis
-    tier: x3.micro
-    storage: 1Gi
   - name: main-prod-mysql
     type: mysql
     tier: x3.micro
@@ -171,5 +163,13 @@ addons:
     storage: 1Gi
   - name: stag-rabbitmq
     type: rabbitmq
+    tier: x3.micro
+    storage: 1Gi
+  - name: prod-redis
+    type: redis
+    tier: x3.micro
+    storage: 1Gi
+  - name: stag-redis
+    type: redis
     tier: x3.micro
     storage: 1Gi
