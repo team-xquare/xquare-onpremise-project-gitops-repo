@@ -113,7 +113,7 @@ applications:
       repo: DMS-Frontend
       branch: dev
       installationId: "64597732"
-      hash: 7b56c10a86dfbfd29b09d598237ec214bd98dd4f
+      hash: a91c6b0ebd7fcbe202a1f0a4c847b823a6b85a48
     build:
       react:
         nodeVersion: "22"
