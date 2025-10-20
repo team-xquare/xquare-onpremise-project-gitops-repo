@@ -27,5 +27,3 @@ applications:
       docker:
         dockerfilePath: "./Dockerfile"
         contextPath: "./client"
-    endpoints:
-      - port: 8080
