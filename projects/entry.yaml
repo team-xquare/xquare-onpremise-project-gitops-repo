@@ -6,7 +6,7 @@ applications:
       repo: Entry-Admission
       branch: develop
       installationId: "77967720"
-      hash: dd43afcf4c37f2ca92e7f9c23430d54c857d04b5
+      hash: 6299cb7ee640c25ebd6c774f8ebeb159be77b616
       triggerPaths:
         - apps/Admission-LTS/**
     build:
