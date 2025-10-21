@@ -10,6 +10,13 @@ metadata:
     {{- include "app.labels" . | nindent 4 }}
     app.kubernetes.io/component: application
 spec:
+  minReadySeconds: 5
+  progressDeadlineSeconds: 600
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
   selector:
     matchLabels:
       {{- include "app.selectorLabels" . | nindent 6 }}
@@ -27,6 +34,7 @@ spec:
         cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
     spec:
       serviceAccountName: {{ include "project.vaultServiceAccount" $ }}
+      terminationGracePeriodSeconds: 60
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -101,12 +109,33 @@ spec:
               memory: 512Mi
             {{- end }}
           {{- if .endpoints }}
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/sh", "-c", "sleep 25"]
+          startupProbe:
+            tcpSocket:
+              port: {{ (index .endpoints 0).port }}
+            initialDelaySeconds: 0
+            periodSeconds: 5
+            timeoutSeconds: 3
+            successThreshold: 1
+            failureThreshold: 30
           readinessProbe:
             tcpSocket:
               port: {{ (index .endpoints 0).port }}
-            initialDelaySeconds: 20
+            initialDelaySeconds: 0
+            periodSeconds: 3
+            timeoutSeconds: 2
+            successThreshold: 1
+            failureThreshold: 2
+          livenessProbe:
+            tcpSocket:
+              port: {{ (index .endpoints 0).port }}
+            initialDelaySeconds: 0
             periodSeconds: 10
-            successThreshold: 3
+            timeoutSeconds: 3
+            failureThreshold: 3
           {{- end }}
       imagePullSecrets:
         - name: {{ include "app.serviceName" . }}-imagepullsecrets
