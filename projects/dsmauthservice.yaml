@@ -1,21 +1,21 @@
 applications:
-  - name: dsm-login-prod
-    tier: x3.small
-    github:
-      owner: DAS-DsmAuthService
-      repo: Dsm-login-server
-      branch: main
-      installationId: "80380806"
-      hash: 7aa9063627cb77b22a086e59896c58347ad7f1c9
-    build:
-      gradle:
-        javaVersion: 17
-        jarOutputPath: /build/libs/*.jar
-        buildCommand: ./gradlew bootJar -x test
-    endpoints:
-      - port: 8080
-        routes:
-          - dsm-login.dsmhs.kr
+  # - name: dsm-login-prod
+  #   tier: x3.small
+  #   github:
+  #     owner: DAS-DsmAuthService
+  #     repo: Dsm-login-server
+  #     branch: main
+  #     installationId: "80380806"
+  #     hash: 7aa9063627cb77b22a086e59896c58347ad7f1c9
+  #   build:
+  #     gradle:
+  #       javaVersion: 17
+  #       jarOutputPath: /build/libs/*.jar
+  #       buildCommand: ./gradlew bootJar -x test
+  #   endpoints:
+  #     - port: 8080
+  #       routes:
+  #         - dsm-login.dsmhs.kr
 addons:
   - name: dsmauthservice-dsm-login-prod-mysql
     type: mysql
