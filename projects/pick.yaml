@@ -23,7 +23,7 @@ applications:
       repo: PICK_CORE_SERVER
       branch: develop
       installationId: "64595989"
-      hash: d79e3413846d8280c8c627e35490c2ed86be89f8
+      hash: 211f6bcbff27c469623016a78b2f9ba3f64a612a
     build:
       gradle:
         javaVersion: 17
