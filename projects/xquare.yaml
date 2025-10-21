@@ -1,100 +1,100 @@
 applications:
-  - name: xquare-frontend-prod
-    tier: x3.small
-    github:
-      owner: team-xquare
-      repo: xquare-frontend-v2
-      branch: main
-      installationId: "62433388"
-      hash: 2a66d8ae3b99a3682cad484bf4a5972bf8c29531
-    build:
-      react:
-        nodeVersion: "22"
-        distPath: /build
-        buildCommand: npm ci && npm run build
-    endpoints:
-      - port: 8080
-        routes:
-          - infra.dsmhs.kr
-  - name: xquare-frontend-stag
-    tier: x3.small
-    github:
-      owner: team-xquare
-      repo: xquare-frontend-v2
-      branch: develop
-      installationId: "62433388"
-      hash: e0fea6b5e211816dd7956861b39d711a7a3d1973
-    build:
-      react:
-        nodeVersion: "22"
-        distPath: /build
-        buildCommand: npm ci && npm run build
-    endpoints:
-      - port: 8080
-        routes:
-          - infra-stag.dsmhs.kr
-  - name: xquare-infra-prod
-    tier: x3.small
-    github:
-      owner: team-xquare
-      repo: xquare-infra-backend
-      branch: main
-      installationId: "62433388"
-      hash: 117821b2c5f0f5c56fef3187ef19d56c7e3642b4
-    build:
-      gradle:
-        javaVersion: 17
-        jarOutputPath: /build/libs/xquare-infra-0.0.1-SNAPSHOT.jar
-        buildCommand: ./gradlew bootJar -x test
-    endpoints:
-      - port: 8080
-        routes:
-          - xquare-api.dsmhs.kr
-  - name: xquare-infra-stag
-    tier: x3.small
-    github:
-      owner: team-xquare
-      repo: xquare-infra-backend
-      branch: develop
-      installationId: "62433388"
-      hash: 38093661fe75fa513de1c66a66799ce9d52489f7
-    build:
-      gradle:
-        javaVersion: 17
-        jarOutputPath: /build/libs/xquare-infra-0.0.1-SNAPSHOT.jar
-        buildCommand: ./gradlew bootJar -x test
-    endpoints:
-      - port: 8080
-        routes:
-          - xquare-api-stag.dsmhs.kr
-  - name: test-backend
-    tier: x3.small
-    github:
-      owner: team-xquare
-      repo: test-backend
-      branch: main
-      installationId: "62433388"
-      hash: 9b851c06e47ddccfee51bd17527208ecf8f37664
-    build:
-      docker:
-        dockerfilePath: ./Dockerfile
-        contextPath: .
-    endpoints:
-      - port: 8080
-  - name: test-frontend
-    tier: x3.small
-    github:
-      owner: team-xquare
-      repo: test-frontend
-      branch: main
-      installationId: "62433388"
-      hash: e1f3cb5e577b5cd5224eb35301da7853656c54be
-    build:
-      docker:
-        dockerfilePath: ./Dockerfile
-        contextPath: .
-    endpoints:
-      - port: 80
+  # - name: xquare-frontend-prod
+  #   tier: x3.small
+  #   github:
+  #     owner: team-xquare
+  #     repo: xquare-frontend-v2
+  #     branch: main
+  #     installationId: "62433388"
+  #     hash: 2a66d8ae3b99a3682cad484bf4a5972bf8c29531
+  #   build:
+  #     react:
+  #       nodeVersion: "22"
+  #       distPath: /build
+  #       buildCommand: npm ci && npm run build
+  #   endpoints:
+  #     - port: 8080
+  #       routes:
+  #         - infra.dsmhs.kr
+  # - name: xquare-frontend-stag
+  #   tier: x3.small
+  #   github:
+  #     owner: team-xquare
+  #     repo: xquare-frontend-v2
+  #     branch: develop
+  #     installationId: "62433388"
+  #     hash: e0fea6b5e211816dd7956861b39d711a7a3d1973
+  #   build:
+  #     react:
+  #       nodeVersion: "22"
+  #       distPath: /build
+  #       buildCommand: npm ci && npm run build
+  #   endpoints:
+  #     - port: 8080
+  #       routes:
+  #         - infra-stag.dsmhs.kr
+  # - name: xquare-infra-prod
+  #   tier: x3.small
+  #   github:
+  #     owner: team-xquare
+  #     repo: xquare-infra-backend
+  #     branch: main
+  #     installationId: "62433388"
+  #     hash: 117821b2c5f0f5c56fef3187ef19d56c7e3642b4
+  #   build:
+  #     gradle:
+  #       javaVersion: 17
+  #       jarOutputPath: /build/libs/xquare-infra-0.0.1-SNAPSHOT.jar
+  #       buildCommand: ./gradlew bootJar -x test
+  #   endpoints:
+  #     - port: 8080
+  #       routes:
+  #         - xquare-api.dsmhs.kr
+  # - name: xquare-infra-stag
+  #   tier: x3.small
+  #   github:
+  #     owner: team-xquare
+  #     repo: xquare-infra-backend
+  #     branch: develop
+  #     installationId: "62433388"
+  #     hash: 38093661fe75fa513de1c66a66799ce9d52489f7
+  #   build:
+  #     gradle:
+  #       javaVersion: 17
+  #       jarOutputPath: /build/libs/xquare-infra-0.0.1-SNAPSHOT.jar
+  #       buildCommand: ./gradlew bootJar -x test
+  #   endpoints:
+  #     - port: 8080
+  #       routes:
+  #         - xquare-api-stag.dsmhs.kr
+  # - name: test-backend
+  #   tier: x3.small
+  #   github:
+  #     owner: team-xquare
+  #     repo: test-backend
+  #     branch: main
+  #     installationId: "62433388"
+  #     hash: 9b851c06e47ddccfee51bd17527208ecf8f37664
+  #   build:
+  #     docker:
+  #       dockerfilePath: ./Dockerfile
+  #       contextPath: .
+  #   endpoints:
+  #     - port: 8080
+  # - name: test-frontend
+  #   tier: x3.small
+  #   github:
+  #     owner: team-xquare
+  #     repo: test-frontend
+  #     branch: main
+  #     installationId: "62433388"
+  #     hash: e1f3cb5e577b5cd5224eb35301da7853656c54be
+  #   build:
+  #     docker:
+  #       dockerfilePath: ./Dockerfile
+  #       contextPath: .
+  #   endpoints:
+  #     - port: 80
 addons:
   - name: xquare-redis
     type: redis
