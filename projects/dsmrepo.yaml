@@ -1,72 +1,72 @@
 applications:
-  - name: whopper-prod
-    tier: x3.small
-    github:
-      owner: DSM-Repo
-      repo: Whopper
-      branch: main
-      installationId: "79908920"
-      hash: 97d899a88b523e24156880136e243574f4e6b4bb
-    build:
-      gradle:
-        javaVersion: 21
-        jarOutputPath: /build/libs/*.jar
-        buildCommand: ./gradlew bootJar -x test
-    endpoints:
-      - port: 8080
-        routes:
-          - api.dsm-repo.com
-  - name: repo-main-prod
-    tier: x3.small
-    github:
-      owner: DSM-Repo
-      repo: repo
-      branch: main
-      installationId: "79908920"
-      hash: f486f13a3c6387aa70ff2dac075e1d93d3b79d33
-    build:
-      vite:
-        nodeVersion: "18"
-        distPath: /packages/main/dist
-        buildCommand: yarn install --frozen-lockfile && NODE_ENV=production yarn workspace main build
-    endpoints:
-      - port: 8080
-        routes:
-          - www.dsm-repo.com
-  - name: repo-teacher-prod
-    tier: x3.small
-    github:
-      owner: DSM-Repo
-      repo: repo
-      branch: main
-      installationId: "79908920"
-      hash: f486f13a3c6387aa70ff2dac075e1d93d3b79d33
-    build:
-      vite:
-        nodeVersion: "18"
-        distPath: /packages/teacher/dist
-        buildCommand: yarn install --frozen-lockfile && NODE_ENV=production yarn workspace teacher build
-    endpoints:
-      - port: 8080
-        routes:
-          - teacher.dsm-repo.com
-  - name: repo-user-prod
-    tier: x3.small
-    github:
-      owner: DSM-Repo
-      repo: repo
-      branch: main
-      installationId: "79908920"
-      hash: f486f13a3c6387aa70ff2dac075e1d93d3b79d33
-    build:
-      vite:
-        nodeVersion: "18"
-        distPath: /packages/student/dist
-        buildCommand: yarn install --frozen-lockfile && NODE_ENV=production yarn workspace student build
-    endpoints:
-      - port: 8080
-        routes:
-          - user.dsm-repo.com
+  # - name: whopper-prod
+  #   tier: x3.small
+  #   github:
+  #     owner: DSM-Repo
+  #     repo: Whopper
+  #     branch: main
+  #     installationId: "79908920"
+  #     hash: 97d899a88b523e24156880136e243574f4e6b4bb
+  #   build:
+  #     gradle:
+  #       javaVersion: 21
+  #       jarOutputPath: /build/libs/*.jar
+  #       buildCommand: ./gradlew bootJar -x test
+  #   endpoints:
+  #     - port: 8080
+  #       routes:
+  #         - api.dsm-repo.com
+  # - name: repo-main-prod
+  #   tier: x3.small
+  #   github:
+  #     owner: DSM-Repo
+  #     repo: repo
+  #     branch: main
+  #     installationId: "79908920"
+  #     hash: f486f13a3c6387aa70ff2dac075e1d93d3b79d33
+  #   build:
+  #     vite:
+  #       nodeVersion: "18"
+  #       distPath: /packages/main/dist
+  #       buildCommand: yarn install --frozen-lockfile && NODE_ENV=production yarn workspace main build
+  #   endpoints:
+  #     - port: 8080
+  #       routes:
+  #         - www.dsm-repo.com
+  # - name: repo-teacher-prod
+  #   tier: x3.small
+  #   github:
+  #     owner: DSM-Repo
+  #     repo: repo
+  #     branch: main
+  #     installationId: "79908920"
+  #     hash: f486f13a3c6387aa70ff2dac075e1d93d3b79d33
+  #   build:
+  #     vite:
+  #       nodeVersion: "18"
+  #       distPath: /packages/teacher/dist
+  #       buildCommand: yarn install --frozen-lockfile && NODE_ENV=production yarn workspace teacher build
+  #   endpoints:
+  #     - port: 8080
+  #       routes:
+  #         - teacher.dsm-repo.com
+  # - name: repo-user-prod
+  #   tier: x3.small
+  #   github:
+  #     owner: DSM-Repo
+  #     repo: repo
+  #     branch: main
+  #     installationId: "79908920"
+  #     hash: f486f13a3c6387aa70ff2dac075e1d93d3b79d33
+  #   build:
+  #     vite:
+  #       nodeVersion: "18"
+  #       distPath: /packages/student/dist
+  #       buildCommand: yarn install --frozen-lockfile && NODE_ENV=production yarn workspace student build
+  #   endpoints:
+  #     - port: 8080
+  #       routes:
+  #         - user.dsm-repo.com
 addons:
   - name: dsmrepo-redis
     type: redis
