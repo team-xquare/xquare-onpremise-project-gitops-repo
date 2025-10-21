@@ -1,19 +1,19 @@
 applications:
-  - name: server
-    tier: x3.small
-    github:
-      owner: xquare-mirror
-      repo: MIRROR-f8a91e7c3dbe6a42f9c7d08e14b3af9271c5e8a7b6d2f4c1e9a8d7b2f6e3c9d1058b2a4f1c6d7e9b0f3a5c7d8e
-      branch: main
-      installationId: "47296158"
-    build:
-      docker:
-        dockerfilePath: "./Dockerfile"
-        contextPath: "."
-    endpoints:
-      - port: 5000
-        routes:
-          - gramtest-api.dsmhs.kr
+  # - name: server
+  #   tier: x3.small
+  #   github:
+  #     owner: xquare-mirror
+  #     repo: MIRROR-f8a91e7c3dbe6a42f9c7d08e14b3af9271c5e8a7b6d2f4c1e9a8d7b2f6e3c9d1058b2a4f1c6d7e9b0f3a5c7d8e
+  #     branch: main
+  #     installationId: "47296158"
+  #   build:
+  #     docker:
+  #       dockerfilePath: "./Dockerfile"
+  #       contextPath: "."
+  #   endpoints:
+  #     - port: 5000
+  #       routes:
+  #         - gramtest-api.dsmhs.kr
 addons:
   - name: mysql
     type: mysql
