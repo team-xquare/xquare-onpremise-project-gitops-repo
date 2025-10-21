@@ -1,21 +1,21 @@
 applications:
-  - name: lotura-prod
-    tier: x3.small
-    github:
-      owner: team-osj
-      repo: Lotura_BackEnd_V2
-      branch: main
-      installationId: "64110126"
-      hash: 33b070ce61f8e18a06029de378211b897541917a
-    build:
-      nodejs:
-        nodeVersion: 22.5.1
-        buildCommand: yarn install --frozen-lockfile && yarn build
-        startCommand: yarn start
-    endpoints:
-      - port: 3000
-        routes:
-          - lotura.dsmhs.kr
+  # - name: lotura-prod
+  #   tier: x3.small
+  #   github:
+  #     owner: team-osj
+  #     repo: Lotura_BackEnd_V2
+  #     branch: main
+  #     installationId: "64110126"
+  #     hash: 33b070ce61f8e18a06029de378211b897541917a
+  #   build:
+  #     nodejs:
+  #       nodeVersion: 22.5.1
+  #       buildCommand: yarn install --frozen-lockfile && yarn build
+  #       startCommand: yarn start
+  #   endpoints:
+  #     - port: 3000
+  #       routes:
+  #         - lotura.dsmhs.kr
 addons:
   - name: nonamed-lotura-prod-mysql
     type: mysql
