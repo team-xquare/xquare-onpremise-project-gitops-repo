@@ -34,7 +34,7 @@ applications:
         routes:
           - gujeuk.dsmhs.kr
 addons:
-  - name: mysql
+  - name: mysql-stag
     type: mysql
     tier: x3.micro
     storage: 1Gi
