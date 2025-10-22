@@ -1,38 +1,38 @@
 applications:
-  # - name: server
-  #   tier: x3.small
-  #   github:
-  #     owner: GuJeuk-Check-in
-  #     repo: GuJeuk-Check-In_server
-  #     branch: main
-  #     installationId: "90332669"
-  #     hash: ad60b53639afce0fe43e86f15d562ebf9e5ec85c
-  #   build:
-  #     gradle:
-  #       javaVersion: 17
-  #       jarOutputPath: /build/libs/*.jar
-  #       buildCommand: ./gradlew bootJar -x test
-  #   endpoints:
-  #     - port: 8080
-  #       routes:
-  #         - gujeuk-api.dsmhs.kr
-  # - name: frontend
-  #   tier: x3.small
-  #   github:
-  #     owner: GuJeuk-Check-in
-  #     repo: GuJeuk-Check-in-FE
-  #     branch: main
-  #     installationId: "90332669"
-  #     hash: bb3723a297c807f5dab59b3aca49444cebea6155
-  #   build:
-  #     vite:
-  #       nodeVersion: "20"
-  #       distPath: /dist
-  #       buildCommand: yarn install --frozen-lockfile && yarn build
-  #   endpoints:
-  #     - port: 8080
-  #       routes:
-  #         - gujeuk.dsmhs.kr
+  - name: server
+    tier: x3.small
+    github:
+      owner: GuJeuk-Check-in
+      repo: GuJeuk-Check-In_server
+      branch: main
+      installationId: "90332669"
+      hash: ad60b53639afce0fe43e86f15d562ebf9e5ec85c
+    build:
+      gradle:
+        javaVersion: 17
+        jarOutputPath: /build/libs/*.jar
+        buildCommand: ./gradlew bootJar -x test
+    endpoints:
+      - port: 8080
+        routes:
+          - gujeuk-api.dsmhs.kr
+  - name: frontend
+    tier: x3.small
+    github:
+      owner: GuJeuk-Check-in
+      repo: GuJeuk-Check-in-FE
+      branch: main
+      installationId: "90332669"
+      hash: bb3723a297c807f5dab59b3aca49444cebea6155
+    build:
+      vite:
+        nodeVersion: "20"
+        distPath: /dist
+        buildCommand: yarn install --frozen-lockfile && yarn build
+    endpoints:
+      - port: 8080
+        routes:
+          - gujeuk.dsmhs.kr
 addons:
   - name: mysql
     type: mysql
