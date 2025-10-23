@@ -1,21 +1,21 @@
 applications:
-  # - name: sillok-be-prod
-  #   tier: x3.small
-  #   github:
-  #     owner: Team-jeong-ho-kim
-  #     repo: Sillok_BE
-  #     branch: main
-  #     installationId: "63841363"
-  #     hash: 5d7b42c72e9ca08f1c293c58ad07ea6d97d92a2b
-  #   build:
-  #     gradle:
-  #       javaVersion: 17
-  #       jarOutputPath: /build/libs/*.jar
-  #       buildCommand: ./gradlew bootJar -x test
-  #   endpoints:
-  #     - port: 8080
-  #       routes:
-  #         - sillok-api.dsmhs.kr
+  - name: sillok-be-prod
+    tier: x3.small
+    github:
+      owner: Team-jeong-ho-kim
+      repo: Sillok_BE
+      branch: main
+      installationId: "63841363"
+      hash: 5d7b42c72e9ca08f1c293c58ad07ea6d97d92a2b
+    build:
+      gradle:
+        javaVersion: 17
+        jarOutputPath: /build/libs/*.jar
+        buildCommand: ./gradlew bootJar -x test
+    endpoints:
+      - port: 8080
+        routes:
+          - sillok-api.dsmhs.kr
 addons:
   - name: daedong-sillok-be-prod-mysql
     type: mysql

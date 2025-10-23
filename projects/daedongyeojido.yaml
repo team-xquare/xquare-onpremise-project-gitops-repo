@@ -1,21 +1,21 @@
 applications:
-  # - name: whispy-prod
-  #   tier: x3.small
-  #   github:
-  #     owner: Team-jeong-ho-kim
-  #     repo: Whispy_BE
-  #     branch: main
-  #     installationId: "63841363"
-  #     hash: 260d2d8214535363380f070e58a075b88e5adf05
-  #   build:
-  #     gradle:
-  #       javaVersion: 17
-  #       jarOutputPath: /build/libs/*.jar
-  #       buildCommand: ./gradlew clean build -x test
-  #   endpoints:
-  #     - port: 8080
-  #       routes:
-  #         - whispy.dsmhs.kr
+  - name: whispy-prod
+    tier: x3.small
+    github:
+      owner: Team-jeong-ho-kim
+      repo: Whispy_BE
+      branch: main
+      installationId: "63841363"
+      hash: 260d2d8214535363380f070e58a075b88e5adf05
+    build:
+      gradle:
+        javaVersion: 17
+        jarOutputPath: /build/libs/*.jar
+        buildCommand: ./gradlew clean build -x test
+    endpoints:
+      - port: 8080
+        routes:
+          - whispy.dsmhs.kr
 addons:
   - name: daedongyeojido-whispy-prod-mysql
     type: mysql

@@ -1,106 +1,106 @@
 applications:
-  # - name: pick-core-prod
-  #   tier: x3.small
-  #   github:
-  #     owner: DSM-PICK
-  #     repo: PICK_CORE_SERVER
-  #     branch: main
-  #     installationId: "64595989"
-  #     hash: c84385b04fdfd1e6cb2981a305aca25dc4d429a8
-  #   build:
-  #     gradle:
-  #       javaVersion: 17
-  #       jarOutputPath: /build/libs/PICK2024_SERVER-0.0.1-SNAPSHOT.jar
-  #       buildCommand: ./gradlew bootJar -x test
-  #   endpoints:
-  #     - port: 8080
-  #       routes:
-  #         - pick-core.dsmhs.kr
-  # - name: pick-core-stag
-  #   tier: x3.small
-  #   github:
-  #     owner: DSM-PICK
-  #     repo: PICK_CORE_SERVER
-  #     branch: develop
-  #     installationId: "64595989"
-  #     hash: 211f6bcbff27c469623016a78b2f9ba3f64a612a
-  #   build:
-  #     gradle:
-  #       javaVersion: 17
-  #       jarOutputPath: /build/libs/PICK2024_SERVER-0.0.1-SNAPSHOT.jar
-  #       buildCommand: ./gradlew bootJar -x test
-  #   endpoints:
-  #     - port: 8080
-  #       routes:
-  #         - pick-core-stag.dsmhs.kr
-  # - name: pick-admin-prod
-  #   tier: x3.small
-  #   github:
-  #     owner: DSM-PICK
-  #     repo: PiCK2024_FRONT_V2
-  #     branch: main
-  #     installationId: "64595989"
-  #     hash: ea41e17e95c61b245863b16609c81a1e9b4e2e28
-  #   build:
-  #     vite:
-  #       nodeVersion: "18"
-  #       distPath: /dist
-  #       buildCommand: yarn install --frozen-lockfile && yarn build
-  #   endpoints:
-  #     - port: 8080
-  #       routes:
-  #         - pick-admin.dsmhs.kr
-  # - name: pick-admin-stag
-  #   tier: x3.small
-  #   github:
-  #     owner: DSM-PICK
-  #     repo: PiCK2024_FRONT_V2
-  #     branch: develop
-  #     installationId: "64595989"
-  #     hash: 14c895d9018aa83ee115309e1b63d61ff2fdc74b
-  #   build:
-  #     vite:
-  #       nodeVersion: "18"
-  #       distPath: /dist
-  #       buildCommand: yarn install --frozen-lockfile && yarn build
-  #   endpoints:
-  #     - port: 8080
-  #       routes:
-  #         - pick-admin-stag.dsmhs.kr
-  # - name: pick-teacher-prod
-  #   tier: x3.small
-  #   github:
-  #     owner: DSM-PICK
-  #     repo: PiCK2024_FRONT_TEACHER_V2
-  #     branch: main
-  #     installationId: "64595989"
-  #     hash: 0ecfe3d6ce589c01b50e758ee3e9fb4ccd5674e6
-  #   build:
-  #     vite:
-  #       nodeVersion: "18"
-  #       distPath: /dist
-  #       buildCommand: yarn install --frozen-lockfile && yarn build
-  #   endpoints:
-  #     - port: 8080
-  #       routes:
-  #         - pick-teacher.dsmhs.kr
-  # - name: pick-teacher-stag
-  #   tier: x3.small
-  #   github:
-  #     owner: DSM-PICK
-  #     repo: PiCK2024_FRONT_TEACHER_V2
-  #     branch: develop
-  #     installationId: "64595989"
-  #     hash: 4132ad09266e760d4d225488dbd159a64b2185ab
-  #   build:
-  #     vite:
-  #       nodeVersion: "18"
-  #       distPath: /dist
-  #       buildCommand: yarn install --frozen-lockfile && yarn build
-  #   endpoints:
-  #     - port: 8080
-  #       routes:
-  #         - pick-teacher-stag.dsmhs.kr
+  - name: pick-core-prod
+    tier: x3.small
+    github:
+      owner: DSM-PICK
+      repo: PICK_CORE_SERVER
+      branch: main
+      installationId: "64595989"
+      hash: c84385b04fdfd1e6cb2981a305aca25dc4d429a8
+    build:
+      gradle:
+        javaVersion: 17
+        jarOutputPath: /build/libs/PICK2024_SERVER-0.0.1-SNAPSHOT.jar
+        buildCommand: ./gradlew bootJar -x test
+    endpoints:
+      - port: 8080
+        routes:
+          - pick-core.dsmhs.kr
+  - name: pick-core-stag
+    tier: x3.small
+    github:
+      owner: DSM-PICK
+      repo: PICK_CORE_SERVER
+      branch: develop
+      installationId: "64595989"
+      hash: 211f6bcbff27c469623016a78b2f9ba3f64a612a
+    build:
+      gradle:
+        javaVersion: 17
+        jarOutputPath: /build/libs/PICK2024_SERVER-0.0.1-SNAPSHOT.jar
+        buildCommand: ./gradlew bootJar -x test
+    endpoints:
+      - port: 8080
+        routes:
+          - pick-core-stag.dsmhs.kr
+  - name: pick-admin-prod
+    tier: x3.small
+    github:
+      owner: DSM-PICK
+      repo: PiCK2024_FRONT_V2
+      branch: main
+      installationId: "64595989"
+      hash: ea41e17e95c61b245863b16609c81a1e9b4e2e28
+    build:
+      vite:
+        nodeVersion: "18"
+        distPath: /dist
+        buildCommand: yarn install --frozen-lockfile && yarn build
+    endpoints:
+      - port: 8080
+        routes:
+          - pick-admin.dsmhs.kr
+  - name: pick-admin-stag
+    tier: x3.small
+    github:
+      owner: DSM-PICK
+      repo: PiCK2024_FRONT_V2
+      branch: develop
+      installationId: "64595989"
+      hash: 14c895d9018aa83ee115309e1b63d61ff2fdc74b
+    build:
+      vite:
+        nodeVersion: "18"
+        distPath: /dist
+        buildCommand: yarn install --frozen-lockfile && yarn build
+    endpoints:
+      - port: 8080
+        routes:
+          - pick-admin-stag.dsmhs.kr
+  - name: pick-teacher-prod
+    tier: x3.small
+    github:
+      owner: DSM-PICK
+      repo: PiCK2024_FRONT_TEACHER_V2
+      branch: main
+      installationId: "64595989"
+      hash: 0ecfe3d6ce589c01b50e758ee3e9fb4ccd5674e6
+    build:
+      vite:
+        nodeVersion: "18"
+        distPath: /dist
+        buildCommand: yarn install --frozen-lockfile && yarn build
+    endpoints:
+      - port: 8080
+        routes:
+          - pick-teacher.dsmhs.kr
+  - name: pick-teacher-stag
+    tier: x3.small
+    github:
+      owner: DSM-PICK
+      repo: PiCK2024_FRONT_TEACHER_V2
+      branch: develop
+      installationId: "64595989"
+      hash: 4132ad09266e760d4d225488dbd159a64b2185ab
+    build:
+      vite:
+        nodeVersion: "18"
+        distPath: /dist
+        buildCommand: yarn install --frozen-lockfile && yarn build
+    endpoints:
+      - port: 8080
+        routes:
+          - pick-teacher-stag.dsmhs.kr
 addons:
   - name: pick-redis
     type: redis

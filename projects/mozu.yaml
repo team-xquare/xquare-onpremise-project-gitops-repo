@@ -1,72 +1,72 @@
 applications:
-  # - name: mozu-server-prod
-  #   tier: x3.micro
-  #   github:
-  #     owner: team-mozu
-  #     repo: mozu-BE
-  #     branch: main
-  #     installationId: "64125603"
-  #     hash: 1323ae94537f2aea3d10191705398a2b16ab7e0d
-  #   build:
-  #     nodejs:
-  #       nodeVersion: "20.16"
-  #       buildCommand: npm ci && npm run build
-  #       startCommand: npm run start
-  #   endpoints:
-  #     - port: 3000
-  #       routes:
-  #         - mozu.dsmhs.kr
-  # - name: mozu-server-stag
-  #   tier: x3.micro
-  #   github:
-  #     owner: team-mozu
-  #     repo: mozu-BE
-  #     branch: develop
-  #     installationId: "64125603"
-  #     hash: 4e2eaa2ebf8538e82ee70a1776a9400e59679bb5
-  #   build:
-  #     nodejs:
-  #       nodeVersion: "20.16"
-  #       buildCommand: npm ci && npm run build
-  #       startCommand: npm run start
-  #   endpoints:
-  #     - port: 3000
-  #       routes:
-  #         - mozu-stag.dsmhs.kr
-  # - name: mozu-server-v2-prod
-  #   tier: x3.small
-  #   github:
-  #     owner: team-mozu
-  #     repo: mozu-BE-v2
-  #     branch: main
-  #     installationId: "64125603"
-  #     hash: 55ae60f75ca702c7d9ce5389148fd251657b19c2
-  #   build:
-  #     gradle:
-  #       javaVersion: 17
-  #       jarOutputPath: /build/libs/*.jar
-  #       buildCommand: ./gradlew bootJar -x test
-  #   endpoints:
-  #     - port: 8080
-  #       routes:
-  #         - mozu-v2-prod.dsmhs.kr
-  # - name: mozu-server-v2-stag
-  #   tier: x3.small
-  #   github:
-  #     owner: team-mozu
-  #     repo: mozu-BE-v2
-  #     branch: develop
-  #     installationId: "64125603"
-  #     hash: 11609a2591aa2cecf2ca0e0b28811b72335a7b92
-  #   build:
-  #     gradle:
-  #       javaVersion: 17
-  #       jarOutputPath: /build/libs/*.jar
-  #       buildCommand: ./gradlew bootJar -x test
-  #   endpoints:
-  #     - port: 8080
-  #       routes:
-  #         - mozu-v2-stag.dsmhs.kr
+  - name: mozu-server-prod
+    tier: x3.micro
+    github:
+      owner: team-mozu
+      repo: mozu-BE
+      branch: main
+      installationId: "64125603"
+      hash: 1323ae94537f2aea3d10191705398a2b16ab7e0d
+    build:
+      nodejs:
+        nodeVersion: "20.16"
+        buildCommand: npm ci && npm run build
+        startCommand: npm run start
+    endpoints:
+      - port: 3000
+        routes:
+          - mozu.dsmhs.kr
+  - name: mozu-server-stag
+    tier: x3.micro
+    github:
+      owner: team-mozu
+      repo: mozu-BE
+      branch: develop
+      installationId: "64125603"
+      hash: 4e2eaa2ebf8538e82ee70a1776a9400e59679bb5
+    build:
+      nodejs:
+        nodeVersion: "20.16"
+        buildCommand: npm ci && npm run build
+        startCommand: npm run start
+    endpoints:
+      - port: 3000
+        routes:
+          - mozu-stag.dsmhs.kr
+  - name: mozu-server-v2-prod
+    tier: x3.small
+    github:
+      owner: team-mozu
+      repo: mozu-BE-v2
+      branch: main
+      installationId: "64125603"
+      hash: 55ae60f75ca702c7d9ce5389148fd251657b19c2
+    build:
+      gradle:
+        javaVersion: 17
+        jarOutputPath: /build/libs/*.jar
+        buildCommand: ./gradlew bootJar -x test
+    endpoints:
+      - port: 8080
+        routes:
+          - mozu-v2-prod.dsmhs.kr
+  - name: mozu-server-v2-stag
+    tier: x3.small
+    github:
+      owner: team-mozu
+      repo: mozu-BE-v2
+      branch: develop
+      installationId: "64125603"
+      hash: 11609a2591aa2cecf2ca0e0b28811b72335a7b92
+    build:
+      gradle:
+        javaVersion: 17
+        jarOutputPath: /build/libs/*.jar
+        buildCommand: ./gradlew bootJar -x test
+    endpoints:
+      - port: 8080
+        routes:
+          - mozu-v2-stag.dsmhs.kr
 addons:
   - name: mozu-mozu-server-prod-mysql
     type: mysql

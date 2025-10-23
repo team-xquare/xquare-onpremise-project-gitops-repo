@@ -1,198 +1,198 @@
 applications:
-  # - name: be-prod
-  #   tier: x3.small
-  #   github:
-  #     owner: Team-return
-  #     repo: JOBIS-DSM-BE
-  #     branch: main
-  #     installationId: "82814703"
-  #     hash: 7b22bc6113c28f0f0cfe5233a0f6e514c21f2535
-  #     triggerPaths:
-  #       - jobis-application/**
-  #       - jobis-infrastructure/**
-  #       - build.gradle
-  #       - settings.gradle
-  #       - gradle/**
-  #       - gradlew
-  #       - gradlew.bat
-  #   build:
-  #     gradle:
-  #       javaVersion: "17"
-  #       jarOutputPath: /jobis-infrastructure/build/libs/*.jar
-  #       buildCommand: "./gradlew :jobis-infrastructure:bootJar"
-  #   endpoints:
-  #     - port: 8080
-  #       routes:
-  #         - jobis-api.dsmhs.kr
-  # - name: be-stag
-  #   tier: x3.small
-  #   github:
-  #     owner: Team-return
-  #     repo: JOBIS-DSM-BE
-  #     branch: develop
-  #     installationId: "82814703"
-  #     hash: 9438e7d377d552dcb30e27c49169ba9c8c20d215
-  #     triggerPaths:
-  #       - jobis-application/**
-  #       - jobis-infrastructure/**
-  #       - build.gradle
-  #       - settings.gradle
-  #       - gradle/**
-  #       - gradlew
-  #       - gradlew.bat
-  #   build:
-  #     gradle:
-  #       javaVersion: "17"
-  #       jarOutputPath: /jobis-infrastructure/build/libs/*.jar
-  #       buildCommand: "./gradlew :jobis-infrastructure:bootJar"
-  #   endpoints:
-  #     - port: 8080
-  #       routes:
-  #         - jobis-api-stag.dsmhs.kr
-  # - name: fe-admin-prod
-  #   tier: x3.small
-  #   github:
-  #     owner: Team-return
-  #     repo: JOBIS-FE-V2
-  #     branch: main
-  #     installationId: "82814703"
-  #     hash: a9d7cef7e2cbb78783e58eaa6b00b5096103c8de
-  #     triggerPaths:
-  #       - apps/admin/**
-  #       - packages/**
-  #       - package.json
-  #       - yarn.lock
-  #       - nx.json
-  #       - tsconfig.base.json
-  #   build:
-  #     vite:
-  #       nodeVersion: "23.11.0"
-  #       distPath: /apps/admin/dist
-  #       buildCommand: "yarn install && yarn nx build admin"
-  #   endpoints:
-  #     - port: 8080
-  #       routes:
-  #         - jobis-admin.dsmhs.kr
-  # - name: fe-admin-stag
-  #   tier: x3.small
-  #   github:
-  #     owner: Team-return
-  #     repo: JOBIS-FE-V2
-  #     branch: develop
-  #     installationId: "82814703"
-  #     hash: 700390a179b33995c328cd86e147c9b9f0f43096
-  #     triggerPaths:
-  #       - apps/admin/**
-  #       - packages/**
-  #       - package.json
-  #       - yarn.lock
-  #       - nx.json
-  #       - tsconfig.base.json
-  #   build:
-  #     vite:
-  #       nodeVersion: "23.11.0"
-  #       distPath: /apps/admin/dist
-  #       buildCommand: "yarn install && yarn nx build admin"
-  #   endpoints:
-  #     - port: 8080
-  #       routes:
-  #         - jobis-admin-stag.dsmhs.kr
-  # - name: fe-company-prod
-  #   tier: x3.small
-  #   github:
-  #     owner: Team-return
-  #     repo: JOBIS-FE-V2
-  #     branch: main
-  #     installationId: "82814703"
-  #     hash: a9d7cef7e2cbb78783e58eaa6b00b5096103c8de
-  #     triggerPaths:
-  #       - apps/company/**
-  #       - packages/**
-  #       - package.json
-  #       - yarn.lock
-  #       - nx.json
-  #       - tsconfig.base.json
-  #   build:
-  #     vite:
-  #       nodeVersion: "23.11.0"
-  #       distPath: /apps/company/dist
-  #       buildCommand: "yarn install && yarn nx build company"
-  #   endpoints:
-  #     - port: 8080
-  #       routes:
-  #         - jobis-company.dsmhs.kr
-  # - name: fe-company-stag
-  #   tier: x3.small
-  #   github:
-  #     owner: Team-return
-  #     repo: JOBIS-FE-V2
-  #     branch: develop
-  #     installationId: "82814703"
-  #     hash: 700390a179b33995c328cd86e147c9b9f0f43096
-  #     triggerPaths:
-  #       - apps/company/**
-  #       - packages/**
-  #       - package.json
-  #       - yarn.lock
-  #       - nx.json
-  #       - tsconfig.base.json
-  #   build:
-  #     vite:
-  #       nodeVersion: "23.11.0"
-  #       distPath: /apps/company/dist
-  #       buildCommand: "yarn install && yarn nx build company"
-  #   endpoints:
-  #     - port: 8080
-  #       routes:
-  #         - jobis-company-stag.dsmhs.kr
-  # - name: fe-student-prod
-  #   tier: x3.small
-  #   github:
-  #     owner: Team-return
-  #     repo: JOBIS-FE-V2
-  #     branch: main
-  #     installationId: "82814703"
-  #     hash: a9d7cef7e2cbb78783e58eaa6b00b5096103c8de
-  #     triggerPaths:
-  #       - apps/student/**
-  #       - packages/**
-  #       - package.json
-  #       - yarn.lock
-  #       - nx.json
-  #       - tsconfig.base.json
-  #   build:
-  #     vite:
-  #       nodeVersion: "23.11.0"
-  #       distPath: /apps/student/dist
-  #       buildCommand: "yarn install && yarn nx build student"
-  #   endpoints:
-  #     - port: 8080
-  #       routes:
-  #         - jobis.dsmhs.kr
-  # - name: fe-student-stag
-  #   tier: x3.small
-  #   github:
-  #     owner: Team-return
-  #     repo: JOBIS-FE-V2
-  #     branch: develop
-  #     installationId: "82814703"
-  #     hash: 700390a179b33995c328cd86e147c9b9f0f43096
-  #     triggerPaths:
-  #       - apps/student/**
-  #       - packages/**
-  #       - package.json
-  #       - yarn.lock
-  #       - nx.json
-  #       - tsconfig.base.json
-  #   build:
-  #     vite:
-  #       nodeVersion: "23.11.0"
-  #       distPath: /apps/student/dist
-  #       buildCommand: "yarn install && yarn nx build student"
-  #   endpoints:
-  #     - port: 8080
-  #       routes:
-  #         - jobis-stag.dsmhs.kr
+  - name: be-prod
+    tier: x3.small
+    github:
+      owner: Team-return
+      repo: JOBIS-DSM-BE
+      branch: main
+      installationId: "82814703"
+      hash: 7b22bc6113c28f0f0cfe5233a0f6e514c21f2535
+      triggerPaths:
+        - jobis-application/**
+        - jobis-infrastructure/**
+        - build.gradle
+        - settings.gradle
+        - gradle/**
+        - gradlew
+        - gradlew.bat
+    build:
+      gradle:
+        javaVersion: "17"
+        jarOutputPath: /jobis-infrastructure/build/libs/*.jar
+        buildCommand: "./gradlew :jobis-infrastructure:bootJar"
+    endpoints:
+      - port: 8080
+        routes:
+          - jobis-api.dsmhs.kr
+  - name: be-stag
+    tier: x3.small
+    github:
+      owner: Team-return
+      repo: JOBIS-DSM-BE
+      branch: develop
+      installationId: "82814703"
+      hash: 9438e7d377d552dcb30e27c49169ba9c8c20d215
+      triggerPaths:
+        - jobis-application/**
+        - jobis-infrastructure/**
+        - build.gradle
+        - settings.gradle
+        - gradle/**
+        - gradlew
+        - gradlew.bat
+    build:
+      gradle:
+        javaVersion: "17"
+        jarOutputPath: /jobis-infrastructure/build/libs/*.jar
+        buildCommand: "./gradlew :jobis-infrastructure:bootJar"
+    endpoints:
+      - port: 8080
+        routes:
+          - jobis-api-stag.dsmhs.kr
+  - name: fe-admin-prod
+    tier: x3.small
+    github:
+      owner: Team-return
+      repo: JOBIS-FE-V2
+      branch: main
+      installationId: "82814703"
+      hash: a9d7cef7e2cbb78783e58eaa6b00b5096103c8de
+      triggerPaths:
+        - apps/admin/**
+        - packages/**
+        - package.json
+        - yarn.lock
+        - nx.json
+        - tsconfig.base.json
+    build:
+      vite:
+        nodeVersion: "23.11.0"
+        distPath: /apps/admin/dist
+        buildCommand: "yarn install && yarn nx build admin"
+    endpoints:
+      - port: 8080
+        routes:
+          - jobis-admin.dsmhs.kr
+  - name: fe-admin-stag
+    tier: x3.small
+    github:
+      owner: Team-return
+      repo: JOBIS-FE-V2
+      branch: develop
+      installationId: "82814703"
+      hash: 700390a179b33995c328cd86e147c9b9f0f43096
+      triggerPaths:
+        - apps/admin/**
+        - packages/**
+        - package.json
+        - yarn.lock
+        - nx.json
+        - tsconfig.base.json
+    build:
+      vite:
+        nodeVersion: "23.11.0"
+        distPath: /apps/admin/dist
+        buildCommand: "yarn install && yarn nx build admin"
+    endpoints:
+      - port: 8080
+        routes:
+          - jobis-admin-stag.dsmhs.kr
+  - name: fe-company-prod
+    tier: x3.small
+    github:
+      owner: Team-return
+      repo: JOBIS-FE-V2
+      branch: main
+      installationId: "82814703"
+      hash: a9d7cef7e2cbb78783e58eaa6b00b5096103c8de
+      triggerPaths:
+        - apps/company/**
+        - packages/**
+        - package.json
+        - yarn.lock
+        - nx.json
+        - tsconfig.base.json
+    build:
+      vite:
+        nodeVersion: "23.11.0"
+        distPath: /apps/company/dist
+        buildCommand: "yarn install && yarn nx build company"
+    endpoints:
+      - port: 8080
+        routes:
+          - jobis-company.dsmhs.kr
+  - name: fe-company-stag
+    tier: x3.small
+    github:
+      owner: Team-return
+      repo: JOBIS-FE-V2
+      branch: develop
+      installationId: "82814703"
+      hash: 700390a179b33995c328cd86e147c9b9f0f43096
+      triggerPaths:
+        - apps/company/**
+        - packages/**
+        - package.json
+        - yarn.lock
+        - nx.json
+        - tsconfig.base.json
+    build:
+      vite:
+        nodeVersion: "23.11.0"
+        distPath: /apps/company/dist
+        buildCommand: "yarn install && yarn nx build company"
+    endpoints:
+      - port: 8080
+        routes:
+          - jobis-company-stag.dsmhs.kr
+  - name: fe-student-prod
+    tier: x3.small
+    github:
+      owner: Team-return
+      repo: JOBIS-FE-V2
+      branch: main
+      installationId: "82814703"
+      hash: a9d7cef7e2cbb78783e58eaa6b00b5096103c8de
+      triggerPaths:
+        - apps/student/**
+        - packages/**
+        - package.json
+        - yarn.lock
+        - nx.json
+        - tsconfig.base.json
+    build:
+      vite:
+        nodeVersion: "23.11.0"
+        distPath: /apps/student/dist
+        buildCommand: "yarn install && yarn nx build student"
+    endpoints:
+      - port: 8080
+        routes:
+          - jobis.dsmhs.kr
+  - name: fe-student-stag
+    tier: x3.small
+    github:
+      owner: Team-return
+      repo: JOBIS-FE-V2
+      branch: develop
+      installationId: "82814703"
+      hash: 700390a179b33995c328cd86e147c9b9f0f43096
+      triggerPaths:
+        - apps/student/**
+        - packages/**
+        - package.json
+        - yarn.lock
+        - nx.json
+        - tsconfig.base.json
+    build:
+      vite:
+        nodeVersion: "23.11.0"
+        distPath: /apps/student/dist
+        buildCommand: "yarn install && yarn nx build student"
+    endpoints:
+      - port: 8080
+        routes:
+          - jobis-stag.dsmhs.kr
 addons:
   - name: jobis-redis
     type: redis
