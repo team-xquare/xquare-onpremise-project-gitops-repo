@@ -1,0 +1,33 @@
+{{- range .Values.applications }}
+{{- if .github.hash }}
+---
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: {{ include "app.serviceName" . }}
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "app.labels" . | nindent 4 }}
+    app.kubernetes.io/component: autoscaling
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ include "app.serviceName" . }}
+  updatePolicy:
+    updateMode: Auto
+  resourcePolicy:
+    containerPolicies:
+    - containerName: {{ include "app.serviceName" . }}
+      controlledResources:
+      - cpu
+      - memory
+      controlledValues: RequestsAndLimits
+      minAllowed:
+        cpu: 50m
+        memory: 64Mi
+      maxAllowed:
+        cpu: 4000m
+        memory: 8Gi
+{{- end }}
+{{- end }}

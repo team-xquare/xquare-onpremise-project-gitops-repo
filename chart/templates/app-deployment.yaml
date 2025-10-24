@@ -65,49 +65,12 @@ spec:
             - secretRef:
                 name: {{ include "app.vaultSecretName" (dict "project" $.Values.project "name" (include "app.serviceName" .)) }}
           resources:
-            {{- if eq .tier "x3.nano" }}
             requests:
               cpu: 100m
               memory: 128Mi
             limits:
-              cpu: 200m
-              memory: 256Mi
-            {{- else if eq .tier "x3.micro" }}
-            requests:
-              cpu: 200m
-              memory: 256Mi
-            limits:
-              cpu: 400m
+              cpu: 2000m
               memory: 512Mi
-            {{- else if eq .tier "x3.small" }}
-            requests:
-              cpu: 400m
-              memory: 512Mi
-            limits:
-              cpu: 800m
-              memory: 1Gi
-            {{- else if eq .tier "x3.medium" }}
-            requests:
-              cpu: 800m
-              memory: 1Gi
-            limits:
-              cpu: 1600m
-              memory: 2Gi
-            {{- else if eq .tier "x3.large" }}
-            requests:
-              cpu: 1600m
-              memory: 2Gi
-            limits:
-              cpu: 3200m
-              memory: 4Gi
-            {{- else }}
-            requests:
-              cpu: 200m
-              memory: 256Mi
-            limits:
-              cpu: 400m
-              memory: 512Mi
-            {{- end }}
           {{- if .endpoints }}
           lifecycle:
             preStop:
