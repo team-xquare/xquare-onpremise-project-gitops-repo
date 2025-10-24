@@ -102,15 +102,20 @@ jobs:
             NAME="${PATH_ARRAY[3]}"
             FILE="projects/$PROJECT.yaml"
 
+            add_or_update_sub_resource () {
+              local resource_type="$1"
+              yq eval "with(.${resource_type}; (first(.name == \"$NAME\") // (. += { \"name\": \"$NAME\" } | first(.name == \"$NAME\"))) *= ${SPEC})" -i $FILE
+            }
+
             case "$ACTION" in
               "apply")
                 mkdir -p $(dirname $FILE)
                 [ ! -f "$FILE" ] && echo "applications: []" > $FILE
                 if [ "$SUB_RESOURCE" = "applications" ]; then
-                  yq eval "(.applications[] | select(.name == \"$NAME\")) *= ${SPEC}" -i $FILE
+                  add_or_update_sub_resource "applications"
                 elif [ "$SUB_RESOURCE" = "addons" ]; then
                   yq eval ".addons //= []" -i $FILE
-                  yq eval "(.addons[] | select(.name == \"$NAME\")) *= ${SPEC} | if .addons | any(select(.name == \"$NAME\")) | not then .addons += [${SPEC} + {\"name\": \"$NAME\"}] else . end" -i $FILE
+                  add_or_update_sub_resource "addons"
                 fi
                 ;;
               "remove")
