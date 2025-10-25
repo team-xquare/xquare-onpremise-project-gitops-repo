@@ -66,11 +66,10 @@ spec:
                 name: {{ include "app.vaultSecretName" (dict "project" $.Values.project "name" (include "app.serviceName" .)) }}
           resources:
             requests:
-              cpu: 100m
-              memory: 128Mi
+              cpu: 200m
+              memory: 256Mi
             limits:
-              cpu: 2000m
-              memory: 512Mi
+              memory: 256Mi
           {{- if .endpoints }}
           lifecycle:
             preStop:
