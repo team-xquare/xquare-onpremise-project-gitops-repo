@@ -6,7 +6,6 @@ applications: []
 # applications:
 #   # Gradle (Spring Boot / Java)
 #   - name: example-service-prod
-#     tier: x3.small
 #     github:
 #       owner: team-xquare
 #       repo: example-service
@@ -32,7 +31,6 @@ applications: []
 #
 #   # Node.js Backend
 #   - name: example-node-api
-#     tier: x3.small
 #     github:
 #       owner: team-xquare
 #       repo: node-api
@@ -58,7 +56,6 @@ applications: []
 #
 #   # React Frontend
 #   - name: example-react-app
-#     tier: x3.small
 #     github:
 #       owner: team-xquare
 #       repo: react-frontend
@@ -84,7 +81,6 @@ applications: []
 #
 #   # Vite Frontend
 #   - name: example-vite-app
-#     tier: x3.small
 #     github:
 #       owner: team-xquare
 #       repo: vite-frontend
@@ -110,7 +106,6 @@ applications: []
 #
 #   # Vue.js Frontend
 #   - name: example-vue-app
-#     tier: x3.small
 #     github:
 #       owner: team-xquare
 #       repo: vue-frontend
@@ -129,7 +124,6 @@ applications: []
 #
 #   # Next.js Full-stack
 #   - name: example-nextjs-app
-#     tier: x3.medium
 #     github:
 #       owner: team-xquare
 #       repo: nextjs-app
@@ -148,7 +142,6 @@ applications: []
 #
 #   # Go Backend
 #   - name: example-go-service
-#     tier: x3.small
 #     github:
 #       owner: team-xquare
 #       repo: go-service
@@ -167,7 +160,6 @@ applications: []
 #
 #   # Rust Backend
 #   - name: example-rust-service
-#     tier: x3.small
 #     github:
 #       owner: team-xquare
 #       repo: rust-service
@@ -186,7 +178,6 @@ applications: []
 #
 #   # Maven (Spring Boot / Java)
 #   - name: example-maven-service
-#     tier: x3.small
 #     github:
 #       owner: team-xquare
 #       repo: maven-service
@@ -205,7 +196,6 @@ applications: []
 #
 #   # Django Backend
 #   - name: example-django-app
-#     tier: x3.medium
 #     github:
 #       owner: team-xquare
 #       repo: django-app
@@ -224,7 +214,6 @@ applications: []
 #
 #   # Flask Backend
 #   - name: example-flask-api
-#     tier: x3.small
 #     github:
 #       owner: team-xquare
 #       repo: flask-api
@@ -243,7 +232,6 @@ applications: []
 #
 #   # Custom Dockerfile
 #   - name: example-custom-app
-#     tier: x3.small
 #     github:
 #       owner: team-xquare
 #       repo: custom-app
@@ -265,35 +253,29 @@ addons: []
 #   # MySQL Database
 #   - name: example-mysql
 #     type: mysql
-#     tier: x3.small
 #     storage: 20Gi
 #
 #   # PostgreSQL Database
 #   - name: example-postgres
 #     type: postgresql
-#     tier: x3.medium
 #     storage: 50Gi
 #
 #   # Redis Cache
 #   - name: example-redis
 #     type: redis
-#     tier: x3.micro
 #     storage: 10Gi
 #
 #   # MongoDB
 #   - name: example-mongodb
 #     type: mongodb
-#     tier: x3.medium
 #     storage: 50Gi
 #
 #   # Apache Kafka
 #   - name: example-kafka
 #     type: kafka
-#     tier: x3.large
 #     storage: 100Gi
 #
 #   # RabbitMQ
 #   - name: example-rabbitmq
 #     type: rabbitmq
-#     tier: x3.medium
 #     storage: 20Gi

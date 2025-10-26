@@ -1,6 +1,5 @@
 applications:
   - name: pick-core-prod
-    tier: x3.small
     github:
       owner: DSM-PICK
       repo: PICK_CORE_SERVER
@@ -17,7 +16,6 @@ applications:
         routes:
           - pick-core.dsmhs.kr
   - name: pick-core-stag
-    tier: x3.small
     github:
       owner: DSM-PICK
       repo: PICK_CORE_SERVER
@@ -34,7 +32,6 @@ applications:
         routes:
           - pick-core-stag.dsmhs.kr
   - name: pick-admin-prod
-    tier: x3.small
     github:
       owner: DSM-PICK
       repo: PiCK2024_FRONT_V2
@@ -51,7 +48,6 @@ applications:
         routes:
           - pick-admin.dsmhs.kr
   - name: pick-admin-stag
-    tier: x3.small
     github:
       owner: DSM-PICK
       repo: PiCK2024_FRONT_V2
@@ -68,7 +64,6 @@ applications:
         routes:
           - pick-admin-stag.dsmhs.kr
   - name: pick-teacher-prod
-    tier: x3.small
     github:
       owner: DSM-PICK
       repo: PiCK2024_FRONT_TEACHER_V2
@@ -85,7 +80,6 @@ applications:
         routes:
           - pick-teacher.dsmhs.kr
   - name: pick-teacher-stag
-    tier: x3.small
     github:
       owner: DSM-PICK
       repo: PiCK2024_FRONT_TEACHER_V2
@@ -104,13 +98,10 @@ applications:
 addons:
   - name: pick-redis
     type: redis
-    tier: x3.micro
     storage: 1Gi
   - name: pick-pick-core-prod-mysql
     type: mysql
-    tier: x3.micro
     storage: 1Gi
   - name: pick-pick-core-stag-mysql
     type: mysql
-    tier: x3.micro
     storage: 1Gi

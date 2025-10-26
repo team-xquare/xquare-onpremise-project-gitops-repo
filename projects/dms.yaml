@@ -1,6 +1,5 @@
 applications:
   - name: frontend-prod
-    tier: x3.small
     github:
       owner: team-aliens
       repo: DMS-Frontend
@@ -17,7 +16,6 @@ applications:
         routes:
           - admin-dms.dsmhs.kr
   - name: frontend-stag
-    tier: x3.small
     github:
       owner: team-aliens
       repo: DMS-Frontend
@@ -34,7 +32,6 @@ applications:
         routes:
           - admin-dev-dms.dsmhs.kr
   - name: webview-prod
-    tier: x3.small
     github:
       owner: team-aliens
       repo: dms-webview
@@ -51,7 +48,6 @@ applications:
         routes:
           - webview-dms.dsmhs.kr
   - name: gateway-prod
-    tier: x3.small
     github:
       owner: team-aliens
       repo: DMS-Backend
@@ -67,7 +63,6 @@ applications:
         routes:
           - api-dms.dsmhs.kr
   - name: gateway-stag
-    tier: x3.small
     github:
       owner: team-aliens
       repo: DMS-Backend
@@ -83,7 +78,6 @@ applications:
         routes:
           - dev-api-dms.dsmhs.kr
   - name: main-prod
-    tier: x3.small
     github:
       owner: team-aliens
       repo: DMS-Backend
@@ -97,7 +91,6 @@ applications:
     endpoints:
       - port: 8081
   - name: main-stag
-    tier: x3.small
     github:
       owner: team-aliens
       repo: DMS-Backend
@@ -111,7 +104,6 @@ applications:
     endpoints:
       - port: 8081
   - name: notification-prod
-    tier: x3.small
     github:
       owner: team-aliens
       repo: DMS-Backend
@@ -126,7 +118,6 @@ applications:
       - port: 8082
       - port: 9090
   - name: notification-stag
-    tier: x3.small
     github:
       owner: team-aliens
       repo: DMS-Backend
@@ -143,33 +134,25 @@ applications:
 addons:
   - name: main-prod-mysql
     type: mysql
-    tier: x3.micro
     storage: 1Gi
   - name: main-stag-mysql
     type: mysql
-    tier: x3.micro
     storage: 1Gi
   - name: notification-prod-mysql
     type: mysql
-    tier: x3.micro
     storage: 1Gi
   - name: notification-stag-mysql
     type: mysql
-    tier: x3.micro
     storage: 1Gi
   - name: prod-rabbitmq
     type: rabbitmq
-    tier: x3.micro
     storage: 1Gi
   - name: stag-rabbitmq
     type: rabbitmq
-    tier: x3.micro
     storage: 1Gi
   - name: prod-redis
     type: redis
-    tier: x3.micro
     storage: 1Gi
   - name: stag-redis
     type: redis
-    tier: x3.micro
     storage: 1Gi

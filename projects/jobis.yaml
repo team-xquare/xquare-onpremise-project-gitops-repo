@@ -1,6 +1,5 @@
 applications:
   - name: be-prod
-    tier: x3.small
     github:
       owner: Team-return
       repo: JOBIS-DSM-BE
@@ -25,7 +24,6 @@ applications:
         routes:
           - jobis-api.dsmhs.kr
   - name: be-stag
-    tier: x3.small
     github:
       owner: Team-return
       repo: JOBIS-DSM-BE
@@ -50,7 +48,6 @@ applications:
         routes:
           - jobis-api-stag.dsmhs.kr
   - name: fe-admin-prod
-    tier: x3.small
     github:
       owner: Team-return
       repo: JOBIS-FE-V2
@@ -74,7 +71,6 @@ applications:
         routes:
           - jobis-admin.dsmhs.kr
   - name: fe-admin-stag
-    tier: x3.small
     github:
       owner: Team-return
       repo: JOBIS-FE-V2
@@ -98,7 +94,6 @@ applications:
         routes:
           - jobis-admin-stag.dsmhs.kr
   - name: fe-company-prod
-    tier: x3.small
     github:
       owner: Team-return
       repo: JOBIS-FE-V2
@@ -122,7 +117,6 @@ applications:
         routes:
           - jobis-company.dsmhs.kr
   - name: fe-company-stag
-    tier: x3.small
     github:
       owner: Team-return
       repo: JOBIS-FE-V2
@@ -146,7 +140,6 @@ applications:
         routes:
           - jobis-company-stag.dsmhs.kr
   - name: fe-student-prod
-    tier: x3.small
     github:
       owner: Team-return
       repo: JOBIS-FE-V2
@@ -170,7 +163,6 @@ applications:
         routes:
           - jobis.dsmhs.kr
   - name: fe-student-stag
-    tier: x3.small
     github:
       owner: Team-return
       repo: JOBIS-FE-V2
@@ -196,13 +188,10 @@ applications:
 addons:
   - name: jobis-redis
     type: redis
-    tier: x3.micro
     storage: 1Gi
   - name: jobis-prod-mysql
     type: mysql
-    tier: x3.micro
     storage: 1Gi
   - name: jobis-stag-mysql
     type: mysql
-    tier: x3.micro
     storage: 1Gi

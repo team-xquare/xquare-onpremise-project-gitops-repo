@@ -1,6 +1,5 @@
 applications:
   - name: whopper-prod
-    tier: x3.small
     github:
       owner: DSM-Repo
       repo: Whopper
@@ -17,7 +16,6 @@ applications:
         routes:
           - api.dsm-repo.com
   - name: repo-main-prod
-    tier: x3.small
     github:
       owner: DSM-Repo
       repo: repo
@@ -34,7 +32,6 @@ applications:
         routes:
           - www.dsm-repo.com
   - name: repo-teacher-prod
-    tier: x3.small
     github:
       owner: DSM-Repo
       repo: repo
@@ -51,7 +48,6 @@ applications:
         routes:
           - teacher.dsm-repo.com
   - name: repo-user-prod
-    tier: x3.small
     github:
       owner: DSM-Repo
       repo: repo
@@ -70,9 +66,7 @@ applications:
 addons:
   - name: dsmrepo-redis
     type: redis
-    tier: x3.micro
     storage: 1Gi
   - name: dsmrepo-mongodb
     type: mongodb
-    tier: x3.micro
     storage: 1Gi

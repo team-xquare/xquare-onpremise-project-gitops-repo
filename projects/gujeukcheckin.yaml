@@ -1,6 +1,5 @@
 applications:
   - name: server
-    tier: x3.small
     github:
       owner: GuJeuk-Check-in
       repo: GuJeuk-Check-In_server
@@ -17,7 +16,6 @@ applications:
         routes:
           - gujeuk-api.dsmhs.kr
   - name: frontend
-    tier: x3.small
     github:
       owner: GuJeuk-Check-in
       repo: GuJeuk-Check-in-FE
@@ -36,9 +34,7 @@ applications:
 addons:
   - name: mysql-stag
     type: mysql
-    tier: x3.micro
     storage: 1Gi
   - name: redis
     type: redis
-    tier: x3.micro
     storage: 1Gi

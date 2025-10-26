@@ -1,6 +1,5 @@
 applications:
   - name: mozu-server-prod
-    tier: x3.micro
     github:
       owner: team-mozu
       repo: mozu-BE
@@ -17,7 +16,6 @@ applications:
         routes:
           - mozu.dsmhs.kr
   - name: mozu-server-stag
-    tier: x3.micro
     github:
       owner: team-mozu
       repo: mozu-BE
@@ -34,7 +32,6 @@ applications:
         routes:
           - mozu-stag.dsmhs.kr
   - name: mozu-server-v2-prod
-    tier: x3.small
     github:
       owner: team-mozu
       repo: mozu-BE-v2
@@ -51,7 +48,6 @@ applications:
         routes:
           - mozu-v2-prod.dsmhs.kr
   - name: mozu-server-v2-stag
-    tier: x3.small
     github:
       owner: team-mozu
       repo: mozu-BE-v2
@@ -70,21 +66,16 @@ applications:
 addons:
   - name: mozu-mozu-server-prod-mysql
     type: mysql
-    tier: x3.micro
     storage: 1Gi
   - name: mozu-mozu-server-stag-mysql
     type: mysql
-    tier: x3.micro
     storage: 1Gi
   - name: mozu-mozu-server-v2-prod-mysql
     type: mysql
-    tier: x3.micro
     storage: 1Gi
   - name: mozu-mozu-server-v2-stag-mysql
     type: mysql
-    tier: x3.micro
     storage: 1Gi
   - name: mozu-redis
     type: redis
-    tier: x3.micro
     storage: 1Gi

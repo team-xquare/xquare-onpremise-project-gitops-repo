@@ -1,6 +1,5 @@
 applications:
   - name: sillok-be-prod
-    tier: x3.small
     github:
       owner: Team-jeong-ho-kim
       repo: Sillok_BE
@@ -19,5 +18,4 @@ applications:
 addons:
   - name: daedong-sillok-be-prod-mysql
     type: mysql
-    tier: x3.micro
     storage: 1Gi

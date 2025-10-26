@@ -1,6 +1,5 @@
 applications:
   - name: whispy-prod
-    tier: x3.small
     github:
       owner: Team-jeong-ho-kim
       repo: Whispy_BE
@@ -19,5 +18,4 @@ applications:
 addons:
   - name: daedongyeojido-whispy-prod-mysql
     type: mysql
-    tier: x3.micro
     storage: 1Gi

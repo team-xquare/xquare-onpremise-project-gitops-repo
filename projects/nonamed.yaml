@@ -1,6 +1,5 @@
 applications:
   - name: lotura-prod
-    tier: x3.small
     github:
       owner: team-osj
       repo: Lotura_BackEnd_V2
@@ -19,5 +18,4 @@ applications:
 addons:
   - name: nonamed-lotura-prod-mysql
     type: mysql
-    tier: x3.micro
     storage: 1Gi

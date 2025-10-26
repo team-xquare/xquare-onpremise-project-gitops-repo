@@ -1,6 +1,5 @@
 applications:
   - name: dsm-login-prod
-    tier: x3.small
     github:
       owner: DAS-DsmAuthService
       repo: Dsm-login-server
@@ -19,5 +18,4 @@ applications:
 addons:
   - name: dsmauthservice-dsm-login-prod-mysql
     type: mysql
-    tier: x3.micro
     storage: 1Gi

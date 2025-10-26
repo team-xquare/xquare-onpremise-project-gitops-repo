@@ -1,6 +1,5 @@
 applications:
   - name: xquare-frontend-prod
-    tier: x3.small
     github:
       owner: team-xquare
       repo: xquare-frontend-v2
@@ -17,7 +16,6 @@ applications:
         routes:
           - infra.dsmhs.kr
   - name: xquare-frontend-stag
-    tier: x3.small
     github:
       owner: team-xquare
       repo: xquare-frontend-v2
@@ -34,7 +32,6 @@ applications:
         routes:
           - infra-stag.dsmhs.kr
   - name: xquare-infra-prod
-    tier: x3.small
     github:
       owner: team-xquare
       repo: xquare-infra-backend
@@ -51,7 +48,6 @@ applications:
         routes:
           - xquare-api.dsmhs.kr
   - name: xquare-infra-stag
-    tier: x3.small
     github:
       owner: team-xquare
       repo: xquare-infra-backend
@@ -68,7 +64,6 @@ applications:
         routes:
           - xquare-api-stag.dsmhs.kr
   - name: test-backend
-    tier: x3.small
     github:
       owner: team-xquare
       repo: test-backend
@@ -82,7 +77,6 @@ applications:
     endpoints:
       - port: 8080
   - name: test-frontend
-    tier: x3.small
     github:
       owner: team-xquare
       repo: test-frontend
@@ -98,21 +92,16 @@ applications:
 addons:
   - name: xquare-redis
     type: redis
-    tier: x3.micro
     storage: 1Gi
   - name: xquare-xquare-infra-prod-mysql
     type: mysql
-    tier: x3.micro
     storage: 1Gi
   - name: xquare-xquare-infra-stag-mysql
     type: mysql
-    tier: x3.micro
     storage: 1Gi
   - name: test-deployment-platform-mysql
     type: mysql
-    tier: x3.micro
     storage: 1Gi
   - name: test-deployment-platform-redis
     type: redis
-    tier: x3.micro
     storage: 1Gi
