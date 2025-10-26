@@ -279,3 +279,8 @@ addons: []
 #   - name: example-rabbitmq
 #     type: rabbitmq
 #     storage: 20Gi
+#
+#   # ELK Stack (Elasticsearch + Kibana)
+#   - name: example-elk
+#     type: elk
+#     storage: 50Gi

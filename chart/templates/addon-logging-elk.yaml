@@ -1,0 +1,379 @@
+{{- range .Values.addons }}
+{{- if eq .type "elk" }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ include "addon.name" . }}-filebeat
+  namespace: {{ include "project.namespace" $ }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ include "addon.name" . }}-filebeat
+  namespace: {{ include "project.namespace" $ }}
+rules:
+- apiGroups: [""]
+  resources:
+  - pods
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["apps"]
+  resources:
+  - replicasets
+  verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ include "addon.name" . }}-filebeat
+  namespace: {{ include "project.namespace" $ }}
+subjects:
+- kind: ServiceAccount
+  name: {{ include "addon.name" . }}-filebeat
+  namespace: {{ include "project.namespace" $ }}
+roleRef:
+  kind: Role
+  name: {{ include "addon.name" . }}-filebeat
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "project.namespace" $ }}-{{ include "addon.name" . }}-filebeat-nodes
+rules:
+- apiGroups: [""]
+  resources:
+  - nodes
+  verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "project.namespace" $ }}-{{ include "addon.name" . }}-filebeat-nodes
+subjects:
+- kind: ServiceAccount
+  name: {{ include "addon.name" . }}-filebeat
+  namespace: {{ include "project.namespace" $ }}
+roleRef:
+  kind: ClusterRole
+  name: {{ include "project.namespace" $ }}-{{ include "addon.name" . }}-filebeat-nodes
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "addon.name" . }}-filebeat-config
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+data:
+  filebeat.yml: |
+    filebeat.autodiscover:
+      providers:
+        - type: kubernetes
+          node: ${NODE_NAME}
+          hints.enabled: true
+          templates:
+            - condition:
+                equals:
+                  kubernetes.namespace: "{{ include "project.namespace" $ }}"
+              config:
+                - type: container
+                  paths:
+                    - /var/log/containers/*-${data.kubernetes.container.id}.log
+                  processors:
+                    - add_kubernetes_metadata:
+                        host: ${NODE_NAME}
+                        matchers:
+                        - logs_path:
+                            logs_path: "/var/log/containers/"
+    processors:
+      - add_cloud_metadata: ~
+      - add_host_metadata: ~
+      - drop_fields:
+          fields: ["agent.ephemeral_id", "agent.id", "ecs.version"]
+          ignore_missing: true
+      - drop_event:
+          when:
+            not:
+              equals:
+                kubernetes.namespace: "{{ include "project.namespace" $ }}"
+    output.logstash:
+      hosts: ["{{ include "addon.serviceName" . }}-logstash:5044"]
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "addon.name" . }}-logstash-pipeline
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+data:
+  logstash.conf: |
+    input {
+      beats {
+        port => 5044
+      }
+    }
+    output {
+      elasticsearch {
+        hosts => ["http://{{ include "addon.serviceName" . }}-elasticsearch:9200"]
+        index => "logs-%{+YYYY.MM.dd}"
+      }
+    }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "addon.serviceName" . }}-elasticsearch
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+spec:
+  selector:
+    {{- include "addon.selectorLabels" . | nindent 4 }}
+    component: elasticsearch
+  ports:
+    - port: 9200
+      targetPort: 9200
+      name: http
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "addon.serviceName" . }}-kibana
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+spec:
+  selector:
+    {{- include "addon.selectorLabels" . | nindent 4 }}
+    component: kibana
+  ports:
+    - port: 5601
+      targetPort: 5601
+      name: http
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "addon.serviceName" . }}-logstash
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+spec:
+  selector:
+    {{- include "addon.selectorLabels" . | nindent 4 }}
+    component: logstash
+  ports:
+    - port: 5044
+      targetPort: 5044
+      name: beats
+  type: ClusterIP
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "addon.name" . }}-data
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .storage }}
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "addon.name" . }}-elasticsearch
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+spec:
+  serviceName: {{ include "addon.serviceName" . }}-elasticsearch
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "addon.selectorLabels" . | nindent 6 }}
+      component: elasticsearch
+  template:
+    metadata:
+      labels:
+        {{- include "addon.selectorLabels" . | nindent 8 }}
+        component: elasticsearch
+    spec:
+      containers:
+        - name: elasticsearch
+          image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+          ports:
+            - containerPort: 9200
+              name: http
+          env:
+            - name: cluster.name
+              value: {{ include "project.namespace" $ }}
+            - name: node.name
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: discovery.seed_hosts
+              value: {{ include "addon.serviceName" . }}-elasticsearch
+            - name: cluster.initial_master_nodes
+              value: {{ include "addon.name" . }}-elasticsearch-0
+            - name: ES_JAVA_OPTS
+              value: "-Xms512m -Xmx512m"
+            - name: xpack.security.enabled
+              value: "false"
+            - name: xpack.security.enrollment.enabled
+              value: "false"
+          resources:
+            requests:
+              cpu: 500m
+              memory: 1Gi
+            limits:
+              memory: 1Gi
+          volumeMounts:
+            - name: data
+              mountPath: /usr/share/elasticsearch/data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ include "addon.name" . }}-data
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "addon.name" . }}-logstash
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "addon.selectorLabels" . | nindent 6 }}
+      component: logstash
+  template:
+    metadata:
+      labels:
+        {{- include "addon.selectorLabels" . | nindent 8 }}
+        component: logstash
+    spec:
+      containers:
+        - name: logstash
+          image: docker.elastic.co/logstash/logstash:8.11.0
+          ports:
+            - containerPort: 5044
+              name: beats
+          env:
+            - name: xpack.monitoring.enabled
+              value: "false"
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              memory: 512Mi
+          volumeMounts:
+            - name: pipeline
+              mountPath: /usr/share/logstash/pipeline
+      volumes:
+        - name: pipeline
+          configMap:
+            name: {{ include "addon.name" . }}-logstash-pipeline
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "addon.name" . }}-kibana
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "addon.selectorLabels" . | nindent 6 }}
+      component: kibana
+  template:
+    metadata:
+      labels:
+        {{- include "addon.selectorLabels" . | nindent 8 }}
+        component: kibana
+    spec:
+      containers:
+        - name: kibana
+          image: docker.elastic.co/kibana/kibana:8.11.0
+          ports:
+            - containerPort: 5601
+              name: http
+          env:
+            - name: ELASTICSEARCH_HOSTS
+              value: "http://{{ include "addon.serviceName" . }}-elasticsearch:9200"
+          resources:
+            requests:
+              cpu: 200m
+              memory: 512Mi
+            limits:
+              memory: 512Mi
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: {{ include "addon.name" . }}-filebeat
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "addon.selectorLabels" . | nindent 6 }}
+      component: filebeat
+  template:
+    metadata:
+      labels:
+        {{- include "addon.selectorLabels" . | nindent 8 }}
+        component: filebeat
+    spec:
+      serviceAccountName: {{ include "addon.name" . }}-filebeat
+      containers:
+        - name: filebeat
+          image: docker.elastic.co/beats/filebeat:8.11.0
+          env:
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+          resources:
+            requests:
+              cpu: 100m
+              memory: 200Mi
+            limits:
+              memory: 200Mi
+          volumeMounts:
+            - name: config
+              mountPath: /usr/share/filebeat/filebeat.yml
+              subPath: filebeat.yml
+            - name: varlog
+              mountPath: /var/log
+            - name: varlibdockercontainers
+              mountPath: /var/lib/docker/containers
+              readOnly: true
+          securityContext:
+            runAsUser: 0
+      volumes:
+        - name: config
+          configMap:
+            name: {{ include "addon.name" . }}-filebeat-config
+        - name: varlog
+          hostPath:
+            path: /var/log
+        - name: varlibdockercontainers
+          hostPath:
+            path: /var/lib/docker/containers
+{{- end }}
+{{- end }}
