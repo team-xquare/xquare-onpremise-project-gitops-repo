@@ -272,12 +272,14 @@ spec:
           env:
             - name: xpack.monitoring.enabled
               value: "false"
+            - name: LS_JAVA_OPTS
+              value: "-Xms512m -Xmx512m"
           resources:
             requests:
               cpu: 250m
-              memory: 512Mi
+              memory: 1Gi
             limits:
-              memory: 512Mi
+              memory: 1Gi
           volumeMounts:
             - name: pipeline
               mountPath: /usr/share/logstash/pipeline
