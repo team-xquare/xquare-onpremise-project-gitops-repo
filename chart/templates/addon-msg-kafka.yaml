@@ -68,6 +68,12 @@ spec:
               value: "PLAINTEXT://{{ include "addon.serviceName" . }}.{{ include "project.namespace" $ }}.svc.cluster.local:9092"
             - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
               value: "1"
+          resources:
+            requests:
+              cpu: 200m
+              memory: 512Mi
+            limits:
+              memory: 512Mi
         - name: zookeeper
           image: confluentinc/cp-zookeeper:7.4.0
           ports:
@@ -79,7 +85,11 @@ spec:
             - name: ZOOKEEPER_TICK_TIME
               value: "2000"
           resources:
-            {{- include "addon.resources" . | nindent 12 }}
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              memory: 256Mi
           volumeMounts:
             - name: data
               mountPath: /var/lib/kafka/data

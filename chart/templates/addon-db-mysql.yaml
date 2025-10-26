@@ -65,7 +65,11 @@ spec:
             - name: MYSQL_DATABASE
               value: {{ include "addon.databaseName" . | quote }}
           resources:
-            {{- include "addon.resources" . | nindent 12 }}
+            requests:
+              cpu: 200m
+              memory: 256Mi
+            limits:
+              memory: 256Mi
           volumeMounts:
             - name: data
               mountPath: /var/lib/mysql
