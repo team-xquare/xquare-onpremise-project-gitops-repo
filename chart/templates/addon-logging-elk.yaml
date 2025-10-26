@@ -318,6 +318,10 @@ spec:
           env:
             - name: ELASTICSEARCH_HOSTS
               value: "http://{{ include "addon.serviceName" . }}-elasticsearch:9200"
+            - name: NODE_OPTIONS
+              value: ""
+            - name: XPACK_REPORTING_ROLES_ENABLED
+              value: "false"
           resources:
             requests:
               cpu: 200m
