@@ -71,9 +71,9 @@ spec:
           resources:
             requests:
               cpu: 200m
-              memory: 512Mi
+              memory: 1Gi
             limits:
-              memory: 512Mi
+              memory: 1Gi
         - name: zookeeper
           image: confluentinc/cp-zookeeper:7.4.0
           ports:
@@ -87,9 +87,9 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 256Mi
+              memory: 512Mi
             limits:
-              memory: 256Mi
+              memory: 512Mi
           volumeMounts:
             - name: data
               mountPath: /var/lib/kafka/data
