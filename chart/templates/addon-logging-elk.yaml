@@ -322,6 +322,10 @@ spec:
               value: ""
             - name: XPACK_REPORTING_ROLES_ENABLED
               value: "false"
+            - name: XPACK_FLEET_ENABLED
+              value: "false"
+            - name: XPACK_ENCRYPTEDSAVEDOBJECTS_ENABLED
+              value: "false"
           resources:
             requests:
               cpu: 200m
