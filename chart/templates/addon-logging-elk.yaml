@@ -382,9 +382,9 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 200Mi
+              memory: 512Mi
             limits:
-              memory: 200Mi
+              memory: 512Mi
           volumeMounts:
             - name: config
               mountPath: /usr/share/filebeat/filebeat.yml
