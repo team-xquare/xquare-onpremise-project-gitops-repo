@@ -104,6 +104,23 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  name: {{ include "addon.name" . }}-elasticsearch-config
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+data:
+  elasticsearch.yml: |
+    cluster.name: {{ include "project.namespace" $ }}
+    network.host: 0.0.0.0
+    discovery.type: single-node
+    xpack.security.enabled: false
+    xpack.security.enrollment.enabled: false
+    xpack.security.http.ssl.enabled: false
+    xpack.security.transport.ssl.enabled: false
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
   name: {{ include "addon.name" . }}-logstash-pipeline
   namespace: {{ include "project.namespace" $ }}
   labels:
@@ -216,22 +233,12 @@ spec:
             - containerPort: 9200
               name: http
           env:
-            - name: cluster.name
-              value: {{ include "project.namespace" $ }}
             - name: node.name
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
-            - name: discovery.seed_hosts
-              value: {{ include "addon.serviceName" . }}-elasticsearch
-            - name: cluster.initial_master_nodes
-              value: {{ include "addon.name" . }}-elasticsearch-0
             - name: ES_JAVA_OPTS
               value: "-Xms512m -Xmx512m"
-            - name: xpack.security.enabled
-              value: "false"
-            - name: xpack.security.enrollment.enabled
-              value: "false"
           resources:
             requests:
               cpu: 500m
@@ -241,10 +248,16 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /usr/share/elasticsearch/data
+            - name: config
+              mountPath: /usr/share/elasticsearch/config/elasticsearch.yml
+              subPath: elasticsearch.yml
       volumes:
         - name: data
           persistentVolumeClaim:
             claimName: {{ include "addon.name" . }}-data
+        - name: config
+          configMap:
+            name: {{ include "addon.name" . }}-elasticsearch-config
 ---
 apiVersion: apps/v1
 kind: Deployment
