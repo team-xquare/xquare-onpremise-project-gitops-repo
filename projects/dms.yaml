@@ -109,7 +109,7 @@ applications:
       repo: DMS-Backend
       branch: main
       installationId: "64597732"
-      hash: fced2f12f5e45732303ec3730f061092f9ffcc72
+      hash: 224ab89414631abf7182e584b0e38b633b4c7d81
     build:
       docker:
         dockerfilePath: "./dms-notification/Dockerfile"
