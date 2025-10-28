@@ -1,0 +1,23 @@
+applications:
+  - name: server
+    github:
+      owner: Team-Weero
+      repo: weero-server-v2
+      branch: main
+      installationId: "91905783"
+    build:
+      gradle:
+        javaVersion: 21
+        jarOutputPath: /build/libs/*.jar
+        buildCommand: ./gradlew bootJar -x test
+    endpoints:
+      - port: 8080
+        routes:
+          - weero-api.dsmhs.kr
+addons:
+  - name: server-redis
+    type: redis
+    storage: 1Gi
+  - name: server-mysql
+    type: mysql
+    storage: 1Gi
