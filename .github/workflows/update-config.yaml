@@ -114,7 +114,7 @@ jobs:
                 if [ "$SUB_RESOURCE" = "applications" ]; then
                   add_or_update_sub_resource "applications"
                 elif [ "$SUB_RESOURCE" = "addons" ]; then
-                  yq eval ".addons //= []" -i $FILE
+                  yq eval "(.addons // (.addons = [])) | parent" -i $FILE
                   add_or_update_sub_resource "addons"
                 fi
                 ;;
