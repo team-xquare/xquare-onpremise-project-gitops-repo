@@ -85,7 +85,7 @@ applications:
       repo: PiCK2024_FRONT_TEACHER_V2
       branch: develop
       installationId: "64595989"
-      hash: 4132ad09266e760d4d225488dbd159a64b2185ab
+      hash: a492ae49a5c843cafa0e93b6afa15d317a2c945a
     build:
       vite:
         nodeVersion: "18"
