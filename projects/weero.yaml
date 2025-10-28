@@ -7,7 +7,7 @@ applications:
       installationId: "91905783"
     build:
       gradle:
-        javaVersion: 21
+        javaVersion: 17
         jarOutputPath: /build/libs/*.jar
         buildCommand: ./gradlew bootJar -x test
     endpoints:
