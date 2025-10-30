@@ -1,0 +1,457 @@
+{{- range .Values.addons }}
+{{- if eq .type "seaweedfs" }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "addon.serviceName" . }}-master
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+    app.kubernetes.io/component: master
+spec:
+  clusterIP: None
+  selector:
+    {{- include "addon.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: master
+  ports:
+    - port: 9333
+      targetPort: 9333
+      protocol: TCP
+      name: master
+    - port: 19333
+      targetPort: 19333
+      protocol: TCP
+      name: master-grpc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "addon.serviceName" . }}-volume
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+    app.kubernetes.io/component: volume
+spec:
+  selector:
+    {{- include "addon.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: volume
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+      name: volume
+    - port: 18080
+      targetPort: 18080
+      protocol: TCP
+      name: volume-grpc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "addon.serviceName" . }}-filer
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+    app.kubernetes.io/component: filer
+spec:
+  selector:
+    {{- include "addon.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: filer
+  ports:
+    - port: 8888
+      targetPort: 8888
+      protocol: TCP
+      name: filer
+    - port: 18888
+      targetPort: 18888
+      protocol: TCP
+      name: filer-grpc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "addon.serviceName" . }}
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+    app.kubernetes.io/component: s3
+spec:
+  selector:
+    {{- include "addon.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: filer
+  ports:
+    - port: 8333
+      targetPort: 8333
+      protocol: TCP
+      name: s3-api
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "addon.name" . }}-master
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+    app.kubernetes.io/component: storage
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "addon.name" . }}-volume
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+    app.kubernetes.io/component: storage
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .storage }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "addon.name" . }}-filer
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+    app.kubernetes.io/component: storage
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+---
+{{- if .buckets }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "addon.name" . }}-s3-credentials
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+    app.kubernetes.io/component: config
+type: Opaque
+stringData:
+  {{- $namespace := include "project.namespace" $ }}
+  {{- $addonName := include "addon.name" . }}
+  {{- range .buckets }}
+  {{ .name }}-access-key: {{ printf "%s-%s-%s" $namespace $addonName .name | quote }}
+  {{ .name }}-secret-key: {{ printf "%s-%s-%s-secret" $namespace $addonName .name | quote }}
+  {{- end }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "addon.name" . }}-s3-config
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+    app.kubernetes.io/component: config
+type: Opaque
+stringData:
+  seaweedfs_s3_config: |
+    {
+      "identities": [
+        {{- $namespace := include "project.namespace" $ }}
+        {{- $addonName := include "addon.name" . }}
+        {{- range $index, $bucket := .buckets }}
+        {{- if $index }},{{ end }}
+        {
+          "name": "{{ $bucket.name }}-user",
+          "credentials": [
+            {
+              "accessKey": "{{ $namespace }}-{{ $addonName }}-{{ $bucket.name }}",
+              "secretKey": "{{ $namespace }}-{{ $addonName }}-{{ $bucket.name }}-secret"
+            }
+          ],
+          "actions": [
+            "Admin",
+            "Read:{{ $bucket.name }}/*",
+            "Write:{{ $bucket.name }}/*",
+            "List:{{ $bucket.name }}/*",
+            "Tagging:{{ $bucket.name }}/*"
+          ]
+        }
+        {{- end }}
+      ]
+    }
+{{- end }}
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "addon.name" . }}-master
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+    app.kubernetes.io/component: master
+spec:
+  serviceName: {{ include "addon.serviceName" . }}-master
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "addon.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: master
+  template:
+    metadata:
+      labels:
+        {{- include "addon.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: master
+    spec:
+      containers:
+        - name: master
+          image: chrislusf/seaweedfs:latest
+          command: [ "weed" ]
+          args:
+            - "master"
+            - "-port=9333"
+            - "-volumeSizeLimitMB=1024"
+            - "-mdir=/data"
+            - "-defaultReplication=000"
+          ports:
+            - containerPort: 9333
+              name: master
+            - containerPort: 19333
+              name: master-grpc
+          readinessProbe:
+            httpGet:
+              path: /cluster/status
+              port: 9333
+            initialDelaySeconds: 5
+            periodSeconds: 3
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              memory: 512Mi
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ include "addon.name" . }}-master
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "addon.name" . }}-volume
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+    app.kubernetes.io/component: volume
+spec:
+  serviceName: {{ include "addon.serviceName" . }}-volume
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "addon.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: volume
+  template:
+    metadata:
+      labels:
+        {{- include "addon.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: volume
+    spec:
+      containers:
+        - name: volume
+          image: chrislusf/seaweedfs:latest
+          command: [ "weed" ]
+          args:
+            - "volume"
+            - "-mserver={{ include "addon.serviceName" . }}-master:9333"
+            - "-port=8080"
+            - "-dir=/data"
+            - "-max=100"
+          ports:
+            - containerPort: 8080
+              name: volume
+            - containerPort: 18080
+              name: volume-grpc
+          readinessProbe:
+            httpGet:
+              path: /status
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 3
+          resources:
+            requests:
+              cpu: 200m
+              memory: 512Mi
+            limits:
+              memory: 1Gi
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ include "addon.name" . }}-volume
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "addon.name" . }}-filer
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+    app.kubernetes.io/component: filer
+spec:
+  serviceName: {{ include "addon.serviceName" . }}-filer
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "addon.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: filer
+  template:
+    metadata:
+      labels:
+        {{- include "addon.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: filer
+    spec:
+      containers:
+        - name: filer
+          image: chrislusf/seaweedfs:latest
+          command: [ "weed" ]
+          args:
+            - "filer"
+            - "-master={{ include "addon.serviceName" . }}-master:9333"
+            - "-port=8888"
+            {{- if .buckets }}
+            - "-s3"
+            - "-s3.port=8333"
+            - "-s3.config=/etc/seaweedfs/seaweedfs_s3_config"
+            {{- end }}
+          ports:
+            - containerPort: 8888
+              name: filer
+            - containerPort: 18888
+              name: filer-grpc
+            {{- if .buckets }}
+            - containerPort: 8333
+              name: s3-api
+            {{- end }}
+          env:
+            {{- if .buckets }}
+            {{- range .buckets }}
+            - name: BUCKET_{{ .name | upper | replace "-" "_" }}
+              value: {{ .name | quote }}
+            - name: ACCESS_KEY_{{ .name | upper | replace "-" "_" }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "addon.name" $ }}-s3-credentials
+                  key: {{ .name }}-access-key
+            - name: SECRET_KEY_{{ .name | upper | replace "-" "_" }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "addon.name" $ }}-s3-credentials
+                  key: {{ .name }}-secret-key
+            {{- end }}
+            {{- end }}
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8888
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          resources:
+            requests:
+              cpu: 200m
+              memory: 512Mi
+            limits:
+              memory: 1Gi
+          volumeMounts:
+            - name: data
+              mountPath: /data
+            {{- if .buckets }}
+            - name: s3-config
+              mountPath: /etc/seaweedfs
+            {{- end }}
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ include "addon.name" . }}-filer
+        {{- if .buckets }}
+        - name: s3-config
+          secret:
+            secretName: {{ include "addon.name" . }}-s3-config
+        {{- end }}
+---
+{{- if .buckets }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "addon.name" . }}-setup-buckets
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+    app.kubernetes.io/component: setup
+spec:
+  backoffLimit: 20
+  template:
+    metadata:
+      labels:
+        {{- include "addon.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: setup
+    spec:
+      restartPolicy: OnFailure
+      initContainers:
+        - name: wait-for-services
+          image: chrislusf/seaweedfs:latest
+          command:
+            - sh
+            - -c
+            - |
+              until weed shell -master {{ include "addon.serviceName" $ }}-master:9333 <<EOF
+              cluster.ps
+              EOF
+              do
+                sleep 5
+              done
+              until weed shell -master {{ include "addon.serviceName" $ }}-master:9333 <<EOF
+              volume.list
+              EOF
+              do
+                sleep 5
+              done
+              until wget -q --spider http://{{ include "addon.serviceName" $ }}-filer:8888/; do
+                sleep 5
+              done
+      containers:
+        - name: setup-buckets
+          image: chrislusf/seaweedfs:latest
+          command:
+            - sh
+            - -c
+            - |
+              {{- $namespace := include "project.namespace" $ }}
+              {{- $addonName := include "addon.name" . }}
+              {{- range .buckets }}
+              weed shell -master {{ include "addon.serviceName" $ }}-master:9333 <<EOF
+              s3.bucket.create -name {{ .name }}
+              s3.configure -access_key={{ $namespace }}-{{ $addonName }}-{{ .name }} -secret_key={{ $namespace }}-{{ $addonName }}-{{ .name }}-secret -user={{ .name }}-user -buckets={{ .name }} -actions=Admin,Read,Write,List,Tagging -apply
+              EOF
+              if [ $? -ne 0 ]; then
+                exit 1
+              fi
+              {{- end }}
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              memory: 256Mi
+{{- end }}
+{{- end }}
+{{- end }}
