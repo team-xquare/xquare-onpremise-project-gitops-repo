@@ -162,16 +162,14 @@ stringData:
   seaweedfs_s3_config: |
     {
       "identities": [
-        {{- $namespace := include "project.namespace" $ }}
-        {{- $addonName := include "addon.name" . }}
         {{- range $index, $bucket := .buckets }}
         {{- if $index }},{{ end }}
         {
           "name": "{{ $bucket.name }}-user",
           "credentials": [
             {
-              "accessKey": "{{ $namespace }}-{{ $addonName }}-{{ $bucket.name }}",
-              "secretKey": "{{ $namespace }}-{{ $addonName }}-{{ $bucket.name }}-secret"
+              "accessKey": "{{ include "project.namespace" $ }}-{{ include "addon.name" . }}-{{ $bucket.name }}",
+              "secretKey": "{{ include "project.namespace" $ }}-{{ include "addon.name" . }}-{{ $bucket.name }}-secret"
             }
           ],
           "actions": [
