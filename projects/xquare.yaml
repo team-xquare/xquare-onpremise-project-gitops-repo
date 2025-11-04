@@ -6,10 +6,9 @@ applications:
       branch: main
       installationId: "62433388"
     build:
-      go:
-        goVersion: "1.21"
-        buildCommand: "go build -o s3-test-app ."
-        binaryName: "s3-test-app"
+      docker:
+        dockerfilePath: "./Dockerfile"
+        contextPath: "."
     endpoints:
       - port: 8080
         routes:
