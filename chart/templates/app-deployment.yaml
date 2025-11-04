@@ -26,11 +26,7 @@ spec:
         {{- include "app.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: application
       annotations:
-        {{- if .endpoints }}
-        prometheus.io/scrape: "true"
-        prometheus.io/path: "/actuator/prometheus"
-        prometheus.io/port: "{{ (index .endpoints 0).port }}"
-        {{- end }}
+        profiles.grafana.com/cpu.ebpf.enabled: "true"
         cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
     spec:
       serviceAccountName: {{ include "project.vaultServiceAccount" $ }}
