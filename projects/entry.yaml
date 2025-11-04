@@ -211,3 +211,8 @@ addons:
   - name: capser-kafka
     type: kafka
     storage: 10Gi
+  - name: xquare-test
+    type: seaweedfs
+    storage: 1Gi
+    buckets:
+      - name: test-buckets
