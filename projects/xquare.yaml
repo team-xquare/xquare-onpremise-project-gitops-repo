@@ -14,9 +14,3 @@ applications:
       - port: 8080
         routes:
           - s3-test.dsmhs.kr
-addons:
-  - name: xquare-test
-    type: seaweedfs
-    storage: 1Gi
-    buckets:
-      - name: test-buckets
