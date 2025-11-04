@@ -1,4 +1,21 @@
 applications:
+  - name: s3-test-app
+    github:
+      owner: team-xquare
+      repo: s3-test-app
+      branch: main
+      installationId: "62433388"
+      hash: latest
+    build:
+      go:
+        goVersion: "1.21"
+        buildCommand: "go build -o s3-test-app ."
+        binaryName: "s3-test-app"
+    endpoints:
+      - port: 8080
+        routes:
+          - s3-test.dsmhs.kr
+
 addons:
   - name: xquare-test
     type: seaweedfs
