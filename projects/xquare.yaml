@@ -1,0 +1,7 @@
+applications:
+addons:
+  - name: xquare-test
+    type: seaweedfs
+    storage: 1Gi
+    buckets:
+      - name: test-buckets
