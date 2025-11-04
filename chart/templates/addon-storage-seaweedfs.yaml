@@ -160,6 +160,8 @@ metadata:
 type: Opaque
 stringData:
   seaweedfs_s3_config: |
+    {{- $namespace := include "project.namespace" $ }}
+    {{- $addonName := include "addon.name" . }}
     {
       "identities": [
         {{- range $index, $bucket := .buckets }}
@@ -168,8 +170,8 @@ stringData:
           "name": "{{ $bucket.name }}-user",
           "credentials": [
             {
-              "accessKey": "{{ include "project.namespace" $ }}-{{ include "addon.name" . }}-{{ $bucket.name }}",
-              "secretKey": "{{ include "project.namespace" $ }}-{{ include "addon.name" . }}-{{ $bucket.name }}-secret"
+              "accessKey": "{{ $namespace }}-{{ $addonName }}-{{ $bucket.name }}",
+              "secretKey": "{{ $namespace }}-{{ $addonName }}-{{ $bucket.name }}-secret"
             }
           ],
           "actions": [
@@ -342,18 +344,19 @@ spec:
             {{- end }}
           env:
             {{- if .buckets }}
+            {{- $addonName := include "addon.name" . }}
             {{- range .buckets }}
             - name: BUCKET_{{ .name | upper | replace "-" "_" }}
               value: {{ .name | quote }}
             - name: ACCESS_KEY_{{ .name | upper | replace "-" "_" }}
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "addon.name" $ }}-s3-credentials
+                  name: {{ $addonName }}-s3-credentials
                   key: {{ .name }}-access-key
             - name: SECRET_KEY_{{ .name | upper | replace "-" "_" }}
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "addon.name" $ }}-s3-credentials
+                  name: {{ $addonName }}-s3-credentials
                   key: {{ .name }}-secret-key
             {{- end }}
             {{- end }}
@@ -411,19 +414,19 @@ spec:
             - sh
             - -c
             - |
-              until weed shell -master {{ include "addon.serviceName" $ }}-master:9333 <<EOF
+              until weed shell -master {{ include "addon.serviceName" . }}-master:9333 <<EOF
               cluster.ps
               EOF
               do
                 sleep 5
               done
-              until weed shell -master {{ include "addon.serviceName" $ }}-master:9333 <<EOF
+              until weed shell -master {{ include "addon.serviceName" . }}-master:9333 <<EOF
               volume.list
               EOF
               do
                 sleep 5
               done
-              until wget -q --spider http://{{ include "addon.serviceName" $ }}-filer:8888/; do
+              until wget -q --spider http://{{ include "addon.serviceName" . }}-filer:8888/; do
                 sleep 5
               done
       containers:
@@ -435,8 +438,9 @@ spec:
             - |
               {{- $namespace := include "project.namespace" $ }}
               {{- $addonName := include "addon.name" . }}
+              {{- $serviceName := include "addon.serviceName" . }}
               {{- range .buckets }}
-              weed shell -master {{ include "addon.serviceName" $ }}-master:9333 <<EOF
+              weed shell -master {{ $serviceName }}-master:9333 <<EOF
               s3.bucket.create -name {{ .name }}
               s3.configure -access_key={{ $namespace }}-{{ $addonName }}-{{ .name }} -secret_key={{ $namespace }}-{{ $addonName }}-{{ .name }}-secret -user={{ .name }}-user -buckets={{ .name }} -actions=Admin,Read,Write,List,Tagging -apply
               EOF
