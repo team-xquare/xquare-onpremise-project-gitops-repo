@@ -47,7 +47,7 @@ Application-specific helpers
 
 {{- define "app.labels" -}}
 app.kubernetes.io/name: {{ .name | quote }}
-app.kubernetes.io/instance: {{ .name | quote }}
+app.kubernetes.io/instance: {{ .project | quote }}
 app.kubernetes.io/managed-by: Helm
 app.kubernetes.io/version: "1.0.0"
 helm.sh/chart: project-1.0.0
@@ -55,7 +55,7 @@ helm.sh/chart: project-1.0.0
 
 {{- define "app.selectorLabels" -}}
 app.kubernetes.io/name: {{ .name | quote }}
-app.kubernetes.io/instance: {{ .name | quote }}
+app.kubernetes.io/instance: {{ .project | quote }}
 {{- end }}
 
 {{- define "app.image" -}}

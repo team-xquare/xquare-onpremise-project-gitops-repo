@@ -13,6 +13,9 @@ Generate addon name
 Generate addon labels
 */}}
 {{- define "addon.labels" -}}
+app.kubernetes.io/name: {{ include "addon.name" . | quote }}
+app.kubernetes.io/instance: {{ include "project.namespace" $ | quote }}
+app.kubernetes.io/managed-by: Helm
 addon.xquare.io/name: {{ include "addon.name" . | quote }}
 addon.xquare.io/type: {{ .type | quote }}
 {{- end }}
