@@ -5,7 +5,6 @@ applications:
       repo: s3-test-app
       branch: main
       installationId: "62433388"
-      hash: latest
     build:
       go:
         goVersion: "1.21"
