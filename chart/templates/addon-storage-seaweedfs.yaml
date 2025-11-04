@@ -208,6 +208,10 @@ spec:
         {{- include "addon.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: master
     spec:
+      securityContext:
+        fsGroup: 0
+        runAsUser: 0
+        runAsNonRoot: false
       containers:
         - name: master
           image: chrislusf/seaweedfs:latest
@@ -264,6 +268,10 @@ spec:
         {{- include "addon.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: volume
     spec:
+      securityContext:
+        fsGroup: 0
+        runAsUser: 0
+        runAsNonRoot: false
       containers:
         - name: volume
           image: chrislusf/seaweedfs:latest
@@ -320,6 +328,10 @@ spec:
         {{- include "addon.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: filer
     spec:
+      securityContext:
+        fsGroup: 0
+        runAsUser: 0
+        runAsNonRoot: false
       containers:
         - name: filer
           image: chrislusf/seaweedfs:latest
