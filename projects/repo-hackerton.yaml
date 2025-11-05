@@ -1,0 +1,4 @@
+addons:
+  - name: qdrant
+    type: qdrant
+    storage: 2Gi
