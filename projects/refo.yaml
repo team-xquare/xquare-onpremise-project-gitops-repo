@@ -14,10 +14,10 @@ applications:
         routes:
           - refo-rag-hackerton.dsmhs.kr
 
-#addons:
-#  - name: qdrant
-#    type: qdrant
-#    storage: 2Gi
-#  - name: postgres
-#    type: postgresql
-#    storage: 2Gi
+addons:
+  - name: qdrant
+    type: qdrant
+    storage: 2Gi
+  - name: postgres
+    type: postgresql
+    storage: 2Gi
