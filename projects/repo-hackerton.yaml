@@ -1,19 +1,19 @@
 application:
-#  - name: repo-rag
-#    github:
-#      owner: team-exit-1
-#      repo: rag
-#      branch: main
-#      installationId: "93166509"
-#      hash:
-#    build:
-#      docker:
-#        dockerfilePath: "./Dockerfile"
-#        contextPath: "."
-#    endpoints:
-#      - port: 8080
-#        routes:
-#          - repo-rag-hackerton.dsmhs.kr
+  - name: repo-rag
+    github:
+      owner: team-exit-1
+      repo: rag
+      branch: main
+      installationId: "93166509"
+      hash: latest
+    build:
+      docker:
+        dockerfilePath: "./Dockerfile"
+        contextPath: "."
+    endpoints:
+      - port: 8080
+        routes:
+          - repo-rag-hackerton.dsmhs.kr
 
 addons:
   - name: qdrant
