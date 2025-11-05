@@ -53,7 +53,7 @@ applications:
       repo: DMS-Backend
       branch: main
       installationId: "64597732"
-      hash: 224ab89414631abf7182e584b0e38b633b4c7d81
+      hash: 5859a015b1c2e13399d68e8eed740dd4d8693331
     build:
       docker:
         dockerfilePath: "./dms-gateway/Dockerfile"
@@ -83,7 +83,7 @@ applications:
       repo: DMS-Backend
       branch: main
       installationId: "64597732"
-      hash: 224ab89414631abf7182e584b0e38b633b4c7d81
+      hash: 5859a015b1c2e13399d68e8eed740dd4d8693331
     build:
       docker:
         dockerfilePath: "./dms-main/Dockerfile"
@@ -109,7 +109,7 @@ applications:
       repo: DMS-Backend
       branch: main
       installationId: "64597732"
-      hash: 224ab89414631abf7182e584b0e38b633b4c7d81
+      hash: 5859a015b1c2e13399d68e8eed740dd4d8693331
     build:
       docker:
         dockerfilePath: "./dms-notification/Dockerfile"

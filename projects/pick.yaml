@@ -21,7 +21,7 @@ applications:
       repo: PICK_CORE_SERVER
       branch: develop
       installationId: "64595989"
-      hash: 794e3ee7cfdb003bba8856eec2e18a4d26c0e20f
+      hash: d3a36d2f16b39dc9e0c9820ea1605ddc00bbd1ee
     build:
       gradle:
         javaVersion: 17
@@ -53,7 +53,7 @@ applications:
       repo: PiCK2024_FRONT_V2
       branch: develop
       installationId: "64595989"
-      hash: 63da7904fbf082990cad9f0f512c5a9e7a37c77e
+      hash: 77bb948270d6ae194156dcb2125cc639db525f6b
     build:
       vite:
         nodeVersion: "18"
@@ -69,7 +69,7 @@ applications:
       repo: PiCK2024_FRONT_TEACHER_V2
       branch: main
       installationId: "64595989"
-      hash: 0ecfe3d6ce589c01b50e758ee3e9fb4ccd5674e6
+      hash: 8dad6beea196bbf6e8bb814ea5869617172cbc4e
     build:
       vite:
         nodeVersion: "18"
@@ -85,7 +85,7 @@ applications:
       repo: PiCK2024_FRONT_TEACHER_V2
       branch: develop
       installationId: "64595989"
-      hash: a492ae49a5c843cafa0e93b6afa15d317a2c945a
+      hash: 59892fbc76086cbfe97f7712e10941e9ce2597aa
     build:
       vite:
         nodeVersion: "18"

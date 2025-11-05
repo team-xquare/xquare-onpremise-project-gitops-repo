@@ -5,7 +5,7 @@ applications:
       repo: s3-test-app
       branch: main
       installationId: "62433388"
-      hash: d61a08172b840a07d437ff3d28df5a3ae254a9dd
+      hash: 67aa51ae713e48d8dbe162d86e3ff3ddf59e9d4c
     build:
       docker:
         dockerfilePath: "./Dockerfile"
@@ -14,7 +14,6 @@ applications:
       - port: 8080
         routes:
           - s3-test.dsmhs.kr
-
 addons:
   - name: xquare-test
     type: seaweedfs
