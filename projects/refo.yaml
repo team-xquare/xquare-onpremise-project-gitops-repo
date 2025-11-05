@@ -1,4 +1,4 @@
-application:
+applications:
   - name: refo-rag
     github:
       owner: team-exit-1
