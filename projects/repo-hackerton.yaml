@@ -2,7 +2,7 @@ application:
   - name: repo-rag
     github:
       owner: team-exit-1
-      repo: gateway
+      repo: rag
       branch: main
       installationId: "93166509"
       hash: 
