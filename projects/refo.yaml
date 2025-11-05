@@ -5,6 +5,7 @@ applications:
       repo: rag
       branch: main
       installationId: "93196994"
+      hash: 65495bd47df57c1cf9ea8bf994119e8d84902dbe
     build:
       docker:
         dockerfilePath: "./Dockerfile"
@@ -13,7 +14,6 @@ applications:
       - port: 8080
         routes:
           - refo-rag-hackerton.dsmhs.kr
-
 addons:
   - name: qdrant
     type: qdrant
