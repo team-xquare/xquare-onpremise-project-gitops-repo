@@ -50,6 +50,6 @@ addons:
   - name: postgres
     type: postgresql
     storage: 2Gi
-  - name: mysql
+  - name: core-mysql
     type: mysql
     storage: 2Gi
