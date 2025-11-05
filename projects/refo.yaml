@@ -50,3 +50,6 @@ addons:
   - name: postgres
     type: postgresql
     storage: 2Gi
+  - name: mysql
+    type: mysql
+    storage: 2Gi
