@@ -5,7 +5,6 @@ application:
       repo: rag
       branch: main
       installationId: "93166509"
-      hash: latest
     build:
       docker:
         dockerfilePath: "./Dockerfile"
