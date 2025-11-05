@@ -19,7 +19,7 @@ applications:
       repo: core
       branch: main
       installationId: "93196994"
-      hash: dbc273443ec3f6b30d4dbd10e90f0a96047190fe
+      hash: 7591f5214aebc6ba7553fa4370af7763456598e1
     build:
       docker:
         dockerfilePath: "./Dockerfile"
