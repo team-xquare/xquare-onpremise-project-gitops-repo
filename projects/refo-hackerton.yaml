@@ -1,5 +1,5 @@
 application:
-  - name: repo-rag
+  - name: refo-rag
     github:
       owner: team-exit-1
       repo: rag
@@ -13,7 +13,7 @@ application:
     endpoints:
       - port: 8080
         routes:
-          - repo-rag-hackerton.dsmhs.kr
+          - refo-rag-hackerton.dsmhs.kr
 
 addons:
   - name: qdrant
@@ -21,4 +21,4 @@ addons:
     storage: 2Gi
   - name: postgres
     type: postgresql
-    storage: 20Gi
+    storage: 2Gi
