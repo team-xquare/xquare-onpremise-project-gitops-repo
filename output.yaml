@@ -1,0 +1,1712 @@
+---
+# Source: xquare-project/templates/00-namespace.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: -dsm-project
+  labels:
+    app.kubernetes.io/name: 
+    app.kubernetes.io/instance: 
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "1.0"
+    app.kubernetes.io/component: project
+    helm.sh/chart: xquare-project-0.1.0
+    name: -dsm-project
+---
+# Source: xquare-project/templates/00-access-server.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: access-server-secret-generator
+  namespace: -dsm-project
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+---
+# Source: xquare-project/templates/app-vault-auth.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: -dsm-project-vault-service-account
+  namespace: -dsm-project
+  labels:
+    app.kubernetes.io/name: 
+    app.kubernetes.io/instance: 
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "1.0"
+    app.kubernetes.io/component: project
+    helm.sh/chart: xquare-project-0.1.0
+    app.kubernetes.io/component: vault-service-account
+---
+# Source: xquare-project/templates/ci-permissions.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kaniko-sa
+  namespace: -dsm-project
+  labels:
+    app.kubernetes.io/name: 
+    app.kubernetes.io/instance: 
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "1.0"
+    app.kubernetes.io/component: project
+    helm.sh/chart: xquare-project-0.1.0
+    app.kubernetes.io/component: ci-service-account
+  annotations:
+    secrets.hashicorp.com/vso-kv-path: avp/data/ci-cd-pipeline
+---
+# Source: xquare-project/templates/addon-storage-seaweedfs.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: xquare-test-s3-credentials
+  namespace: -dsm-project
+  labels:
+    addon.xquare.io/name: "xquare-test"
+    addon.xquare.io/type: "seaweedfs"
+    app.kubernetes.io/component: config
+type: Opaque
+stringData:
+  test-buckets-access-key: "-dsm-project-xquare-test-test-buckets"
+  test-buckets-secret-key: "-dsm-project-xquare-test-test-buckets-secret"
+---
+# Source: xquare-project/templates/addon-storage-seaweedfs.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: xquare-test-s3-config
+  namespace: -dsm-project
+  labels:
+    addon.xquare.io/name: "xquare-test"
+    addon.xquare.io/type: "seaweedfs"
+    app.kubernetes.io/component: config
+type: Opaque
+stringData:
+  seaweedfs_s3_config: |
+    {
+      "identities": [
+        {
+          "name": "test-buckets-user",
+          "credentials": [
+            {
+              "accessKey": "-dsm-project-xquare-test-test-buckets",
+              "secretKey": "-dsm-project-xquare-test-test-buckets-secret"
+            }
+          ],
+          "actions": [
+            "Admin",
+            "Read:test-buckets/*",
+            "Write:test-buckets/*",
+            "List:test-buckets/*",
+            "Tagging:test-buckets/*"
+          ]
+        }
+      ]
+    }
+---
+# Source: xquare-project/templates/app-imagepullsecrets.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: s3-test-app-imagepullsecrets
+  namespace: -dsm-project
+  labels:
+    app.kubernetes.io/name: "s3-test-app"
+    app.kubernetes.io/instance: "s3-test-app"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "1.0.0"
+    helm.sh/chart: project-1.0.0
+    app.kubernetes.io/component: registry-auth
+  annotations:
+    secrets.hashicorp.com/vso-kv-path: avp/data/ci-cd-pipeline
+type: kubernetes.io/dockerconfigjson
+stringData:
+  .dockerconfigjson: |
+    {
+      "auths": {
+        "harbor-xquare-infra.dsmhs.kr": {
+          "username": "<path:avp/data/ci-cd-pipeline#harborUsername>",
+          "password": "<path:avp/data/ci-cd-pipeline#harborPassword>",
+          "auth": "<path:avp/data/ci-cd-pipeline#harborAuth>"
+        }
+      }
+    }
+---
+# Source: xquare-project/templates/ci-github-secrets.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: github-app-pem
+  namespace: -dsm-project
+  labels:
+    app.kubernetes.io/name: 
+    app.kubernetes.io/instance: 
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "1.0"
+    app.kubernetes.io/component: project
+    helm.sh/chart: xquare-project-0.1.0
+    app.kubernetes.io/component: github-auth
+type: Opaque
+data:
+  privateKey.pem: "PHBhdGg6YXZwL2RhdGEvY2ktaW5mcmFzdHJ1Y3R1cmUjYXBwX3ByaXZhdGVfa2V5Pg=="
+---
+# Source: xquare-project/templates/ci-github-secrets.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: github-token
+  namespace: -dsm-project
+  labels:
+    app.kubernetes.io/name: 
+    app.kubernetes.io/instance: 
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "1.0"
+    app.kubernetes.io/component: project
+    helm.sh/chart: xquare-project-0.1.0
+    app.kubernetes.io/component: github-auth
+type: Opaque
+data:
+  token: "PHBhdGg6YXZwL2RhdGEvY2ktaW5mcmFzdHJ1Y3R1cmUjdG9rZW4+"
+---
+# Source: xquare-project/templates/ci-harbor-project.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: s3-test-app-harbor-project
+  namespace: -dsm-project
+  labels:
+    app.kubernetes.io/name: "s3-test-app"
+    app.kubernetes.io/instance: "s3-test-app"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "1.0.0"
+    helm.sh/chart: project-1.0.0
+    app.kubernetes.io/component: harbor-project
+  annotations:
+    secrets.hashicorp.com/vso-kv-path: avp/data/ci-cd-pipeline
+type: Opaque
+stringData:
+  project: -s3-test-app
+  service: s3-test-app
+---
+# Source: xquare-project/templates/ci-harbor-registry-credentials.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: harbor-registry-credentials
+  namespace: -dsm-project
+  labels:
+    app.kubernetes.io/name: 
+    app.kubernetes.io/instance: 
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "1.0"
+    app.kubernetes.io/component: project
+    helm.sh/chart: xquare-project-0.1.0
+    app.kubernetes.io/component: registry-auth
+  annotations:
+    secrets.hashicorp.com/vso-kv-path: avp/data/ci-cd-pipeline
+type: kubernetes.io/dockerconfigjson
+stringData:
+  .dockerconfigjson: |
+    {
+      "auths": {
+        "harbor-xquare-infra.dsmhs.kr": {
+          "username": "<path:avp/data/ci-cd-pipeline#harborUsername>",
+          "password": "<path:avp/data/ci-cd-pipeline#harborPassword>",
+          "auth": "<path:avp/data/ci-cd-pipeline#harborAuth>"
+        }
+      }
+    }
+---
+# Source: xquare-project/templates/ci-permissions.yaml
+apiVersion: v1
+kind: Secret
+type: kubernetes.io/service-account-token
+metadata:
+  name: kaniko-sa.service-account-token
+  namespace: -dsm-project
+  annotations:
+    kubernetes.io/service-account.name: "kaniko-sa"
+---
+# Source: xquare-project/templates/ci-dockerfile-templates-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: s3-test-app-dockerfile
+  namespace: -dsm-project
+  labels:
+    app.kubernetes.io/name: "s3-test-app"
+    app.kubernetes.io/instance: "s3-test-app"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "1.0.0"
+    helm.sh/chart: project-1.0.0
+    app.kubernetes.io/component: dockerfile
+data:
+  Dockerfile: |
+    # Custom Dockerfile build
+    # Using Dockerfile: ./Dockerfile
+    # Build context: .
+---
+# Source: xquare-project/templates/addon-storage-seaweedfs.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: xquare-test-master
+  namespace: -dsm-project
+  labels:
+    addon.xquare.io/name: "xquare-test"
+    addon.xquare.io/type: "seaweedfs"
+    app.kubernetes.io/component: storage
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+---
+# Source: xquare-project/templates/addon-storage-seaweedfs.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: xquare-test-volume
+  namespace: -dsm-project
+  labels:
+    addon.xquare.io/name: "xquare-test"
+    addon.xquare.io/type: "seaweedfs"
+    app.kubernetes.io/component: storage
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+# Source: xquare-project/templates/addon-storage-seaweedfs.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: xquare-test-filer
+  namespace: -dsm-project
+  labels:
+    addon.xquare.io/name: "xquare-test"
+    addon.xquare.io/type: "seaweedfs"
+    app.kubernetes.io/component: storage
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+---
+# Source: xquare-project/templates/00-access-server.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: access-server-secret-generator
+  namespace: -dsm-project
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+rules:
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["create", "get"]
+---
+# Source: xquare-project/templates/ci-permissions.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: ci-workflow-role
+  namespace: -dsm-project
+  labels:
+    app.kubernetes.io/name: 
+    app.kubernetes.io/instance: 
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "1.0"
+    app.kubernetes.io/component: project
+    helm.sh/chart: xquare-project-0.1.0
+    app.kubernetes.io/component: ci-role
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "pods/log"]
+    verbs: ["get", "watch", "patch", "list", "delete"]
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get"]
+  - apiGroups: [""]
+    resources: ["configmaps", "persistentvolumeclaims"]
+    verbs: ["get", "list", "watch", "create", "update", "delete", "patch"]
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["create", "patch", "list"]
+  - apiGroups: ["argoproj.io"]
+    resources: ["workflows", "workflows/finalizers", "workflowtaskresults", "workflowtasksets"]
+    verbs: ["get", "list", "watch", "update", "patch", "create", "delete"]
+  - apiGroups: ["argoproj.io"]
+    resources: ["workflowtasksets/status"]
+    verbs: ["patch", "update"]
+  - apiGroups: ["policy"]
+    resources: ["poddisruptionbudgets"]
+    verbs: ["create", "get", "delete"]
+  - apiGroups: ["coordination.k8s.io"]
+    resources: ["leases"]
+    verbs: ["get", "create", "update", "list"]
+---
+# Source: xquare-project/templates/00-access-server.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: access-server-secret-generator
+  namespace: -dsm-project
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: access-server-secret-generator
+subjects:
+- kind: ServiceAccount
+  name: access-server-secret-generator
+  namespace: -dsm-project
+---
+# Source: xquare-project/templates/ci-permissions.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: ci-workflow-rolebinding
+  namespace: -dsm-project
+  labels:
+    app.kubernetes.io/name: 
+    app.kubernetes.io/instance: 
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "1.0"
+    app.kubernetes.io/component: project
+    helm.sh/chart: xquare-project-0.1.0
+    app.kubernetes.io/component: ci-rolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: ci-workflow-role
+subjects:
+  - kind: ServiceAccount
+    name: kaniko-sa
+---
+# Source: xquare-project/templates/00-access-server.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: access-server
+  namespace: -dsm-project
+spec:
+  selector:
+    app: access-server
+  ports:
+    - port: 8080
+      targetPort: 8080
+      name: websocket
+  type: ClusterIP
+---
+# Source: xquare-project/templates/addon-storage-seaweedfs.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: xquare-test-master
+  namespace: -dsm-project
+  labels:
+    addon.xquare.io/name: "xquare-test"
+    addon.xquare.io/type: "seaweedfs"
+    app.kubernetes.io/component: master
+spec:
+  clusterIP: None
+  selector:
+    addon.xquare.io/name: "xquare-test"
+    addon.xquare.io/type: "seaweedfs"
+    app.kubernetes.io/component: master
+  ports:
+    - port: 9333
+      targetPort: 9333
+      protocol: TCP
+      name: master
+    - port: 19333
+      targetPort: 19333
+      protocol: TCP
+      name: master-grpc
+---
+# Source: xquare-project/templates/addon-storage-seaweedfs.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: xquare-test-volume
+  namespace: -dsm-project
+  labels:
+    addon.xquare.io/name: "xquare-test"
+    addon.xquare.io/type: "seaweedfs"
+    app.kubernetes.io/component: volume
+spec:
+  selector:
+    addon.xquare.io/name: "xquare-test"
+    addon.xquare.io/type: "seaweedfs"
+    app.kubernetes.io/component: volume
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+      name: volume
+    - port: 18080
+      targetPort: 18080
+      protocol: TCP
+      name: volume-grpc
+---
+# Source: xquare-project/templates/addon-storage-seaweedfs.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: xquare-test-filer
+  namespace: -dsm-project
+  labels:
+    addon.xquare.io/name: "xquare-test"
+    addon.xquare.io/type: "seaweedfs"
+    app.kubernetes.io/component: filer
+spec:
+  selector:
+    addon.xquare.io/name: "xquare-test"
+    addon.xquare.io/type: "seaweedfs"
+    app.kubernetes.io/component: filer
+  ports:
+    - port: 8888
+      targetPort: 8888
+      protocol: TCP
+      name: filer
+    - port: 18888
+      targetPort: 18888
+      protocol: TCP
+      name: filer-grpc
+---
+# Source: xquare-project/templates/addon-storage-seaweedfs.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: xquare-test
+  namespace: -dsm-project
+  labels:
+    addon.xquare.io/name: "xquare-test"
+    addon.xquare.io/type: "seaweedfs"
+    app.kubernetes.io/component: s3
+spec:
+  selector:
+    addon.xquare.io/name: "xquare-test"
+    addon.xquare.io/type: "seaweedfs"
+    app.kubernetes.io/component: filer
+  ports:
+    - port: 8333
+      targetPort: 8333
+      protocol: TCP
+      name: s3-api
+---
+# Source: xquare-project/templates/app-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: s3-test-app
+  namespace: -dsm-project
+  labels:
+    app.kubernetes.io/name: "s3-test-app"
+    app.kubernetes.io/instance: "s3-test-app"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "1.0.0"
+    helm.sh/chart: project-1.0.0
+    app.kubernetes.io/component: service
+spec:
+  selector:
+    app.kubernetes.io/name: "s3-test-app"
+    app.kubernetes.io/instance: "s3-test-app"
+  ports:
+    - port: 8080
+      targetPort: 8080
+      name: "p8080"
+---
+# Source: xquare-project/templates/00-access-server.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: access-server
+  namespace: -dsm-project
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: access-server
+  template:
+    metadata:
+      labels:
+        app: access-server
+    spec:
+      containers:
+        - name: access-server
+          image: xquare/access-server:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: access-server-password
+                  key: password
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
+---
+# Source: xquare-project/templates/app-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: s3-test-app
+  namespace: -dsm-project
+  labels:
+    app.kubernetes.io/name: "s3-test-app"
+    app.kubernetes.io/instance: "s3-test-app"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "1.0.0"
+    helm.sh/chart: project-1.0.0
+    app.kubernetes.io/component: application
+spec:
+  minReadySeconds: 5
+  progressDeadlineSeconds: 600
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: "s3-test-app"
+      app.kubernetes.io/instance: "s3-test-app"
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: "s3-test-app"
+        app.kubernetes.io/instance: "s3-test-app"
+        app.kubernetes.io/component: application
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/actuator/prometheus"
+        prometheus.io/port: "8080"
+        cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
+    spec:
+      serviceAccountName: -dsm-project-vault-service-account
+      terminationGracePeriodSeconds: 60
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app.kubernetes.io/name
+                      operator: In
+                      values:
+                        - s3-test-app
+                topologyKey: kubernetes.io/hostname
+      containers:
+        - name: s3-test-app
+          image: harbor-xquare-infra.dsmhs.kr/xquare/-s3-test-app:d61a08172b840a07d437ff3d28df5a3ae254a9dd
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          env:
+            - name: PORT
+              value: "8080"
+          envFrom:
+            - secretRef:
+                name: -s3-test-app
+          resources:
+            requests:
+              cpu: 200m
+              memory: 256Mi
+            limits:
+              memory: 256Mi
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/sh", "-c", "sleep 25"]
+          startupProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 0
+            periodSeconds: 5
+            timeoutSeconds: 3
+            successThreshold: 1
+            failureThreshold: 30
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 0
+            periodSeconds: 3
+            timeoutSeconds: 2
+            successThreshold: 1
+            failureThreshold: 2
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 0
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 3
+      imagePullSecrets:
+        - name: s3-test-app-imagepullsecrets
+---
+# Source: xquare-project/templates/addon-storage-seaweedfs.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: xquare-test-master
+  namespace: -dsm-project
+  labels:
+    addon.xquare.io/name: "xquare-test"
+    addon.xquare.io/type: "seaweedfs"
+    app.kubernetes.io/component: master
+spec:
+  serviceName: xquare-test-master
+  replicas: 1
+  selector:
+    matchLabels:
+      addon.xquare.io/name: "xquare-test"
+      addon.xquare.io/type: "seaweedfs"
+      app.kubernetes.io/component: master
+  template:
+    metadata:
+      labels:
+        addon.xquare.io/name: "xquare-test"
+        addon.xquare.io/type: "seaweedfs"
+        app.kubernetes.io/component: master
+    spec:
+      containers:
+        - name: master
+          image: chrislusf/seaweedfs:latest
+          command: [ "weed" ]
+          args:
+            - "master"
+            - "-port=9333"
+            - "-volumeSizeLimitMB=1024"
+            - "-mdir=/data"
+            - "-defaultReplication=000"
+          ports:
+            - containerPort: 9333
+              name: master
+            - containerPort: 19333
+              name: master-grpc
+          readinessProbe:
+            httpGet:
+              path: /cluster/status
+              port: 9333
+            initialDelaySeconds: 5
+            periodSeconds: 3
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              memory: 512Mi
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: xquare-test-master
+---
+# Source: xquare-project/templates/addon-storage-seaweedfs.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: xquare-test-volume
+  namespace: -dsm-project
+  labels:
+    addon.xquare.io/name: "xquare-test"
+    addon.xquare.io/type: "seaweedfs"
+    app.kubernetes.io/component: volume
+spec:
+  serviceName: xquare-test-volume
+  replicas: 1
+  selector:
+    matchLabels:
+      addon.xquare.io/name: "xquare-test"
+      addon.xquare.io/type: "seaweedfs"
+      app.kubernetes.io/component: volume
+  template:
+    metadata:
+      labels:
+        addon.xquare.io/name: "xquare-test"
+        addon.xquare.io/type: "seaweedfs"
+        app.kubernetes.io/component: volume
+    spec:
+      containers:
+        - name: volume
+          image: chrislusf/seaweedfs:latest
+          command: [ "weed" ]
+          args:
+            - "volume"
+            - "-mserver=xquare-test-master:9333"
+            - "-port=8080"
+            - "-dir=/data"
+            - "-max=100"
+          ports:
+            - containerPort: 8080
+              name: volume
+            - containerPort: 18080
+              name: volume-grpc
+          readinessProbe:
+            httpGet:
+              path: /status
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 3
+          resources:
+            requests:
+              cpu: 200m
+              memory: 512Mi
+            limits:
+              memory: 1Gi
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: xquare-test-volume
+---
+# Source: xquare-project/templates/addon-storage-seaweedfs.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: xquare-test-filer
+  namespace: -dsm-project
+  labels:
+    addon.xquare.io/name: "xquare-test"
+    addon.xquare.io/type: "seaweedfs"
+    app.kubernetes.io/component: filer
+spec:
+  serviceName: xquare-test-filer
+  replicas: 1
+  selector:
+    matchLabels:
+      addon.xquare.io/name: "xquare-test"
+      addon.xquare.io/type: "seaweedfs"
+      app.kubernetes.io/component: filer
+  template:
+    metadata:
+      labels:
+        addon.xquare.io/name: "xquare-test"
+        addon.xquare.io/type: "seaweedfs"
+        app.kubernetes.io/component: filer
+    spec:
+      containers:
+        - name: filer
+          image: chrislusf/seaweedfs:latest
+          command: [ "weed" ]
+          args:
+            - "filer"
+            - "-master=xquare-test-master:9333"
+            - "-port=8888"
+            - "-s3"
+            - "-s3.port=8333"
+            - "-s3.config=/etc/seaweedfs/seaweedfs_s3_config"
+          ports:
+            - containerPort: 8888
+              name: filer
+            - containerPort: 18888
+              name: filer-grpc
+            - containerPort: 8333
+              name: s3-api
+          env:
+            - name: BUCKET_TEST_BUCKETS
+              value: "test-buckets"
+            - name: ACCESS_KEY_TEST_BUCKETS
+              valueFrom:
+                secretKeyRef:
+                  name: xquare-test-s3-credentials
+                  key: test-buckets-access-key
+            - name: SECRET_KEY_TEST_BUCKETS
+              valueFrom:
+                secretKeyRef:
+                  name: xquare-test-s3-credentials
+                  key: test-buckets-secret-key
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8888
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          resources:
+            requests:
+              cpu: 200m
+              memory: 512Mi
+            limits:
+              memory: 1Gi
+          volumeMounts:
+            - name: data
+              mountPath: /data
+            - name: s3-config
+              mountPath: /etc/seaweedfs
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: xquare-test-filer
+        - name: s3-config
+          secret:
+            secretName: xquare-test-s3-config
+---
+# Source: xquare-project/templates/00-access-server.yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: access-server-secret-generator
+  namespace: -dsm-project
+  annotations:
+    argocd.argoproj.io/hook: Sync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+spec:
+  template:
+    spec:
+      containers:
+      - name: generator
+        image: bitnami/kubectl:latest
+        command:
+          - /bin/sh
+          - -c
+          - |
+            if ! kubectl get secret access-server-password -n -dsm-project 2>/dev/null; then
+              RAND=$(head -c 32 /dev/urandom | base64 | tr -d '/+=' | head -c 32)
+              kubectl create secret generic access-server-password \
+                --from-literal=password=$RAND \
+                --namespace=-dsm-project
+            fi
+      serviceAccountName: access-server-secret-generator
+      restartPolicy: OnFailure
+---
+# Source: xquare-project/templates/addon-storage-seaweedfs.yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: xquare-test-setup-buckets
+  namespace: -dsm-project
+  labels:
+    addon.xquare.io/name: "xquare-test"
+    addon.xquare.io/type: "seaweedfs"
+    app.kubernetes.io/component: setup
+spec:
+  backoffLimit: 20
+  template:
+    metadata:
+      labels:
+        addon.xquare.io/name: "xquare-test"
+        addon.xquare.io/type: "seaweedfs"
+        app.kubernetes.io/component: setup
+    spec:
+      restartPolicy: OnFailure
+      initContainers:
+        - name: wait-for-services
+          image: chrislusf/seaweedfs:latest
+          command:
+            - sh
+            - -c
+            - |
+              until weed shell -master xquare-test-master:9333 <<EOF
+              cluster.ps
+              EOF
+              do
+                sleep 5
+              done
+              until weed shell -master xquare-test-master:9333 <<EOF
+              volume.list
+              EOF
+              do
+                sleep 5
+              done
+              until wget -q --spider http://xquare-test-filer:8888/; do
+                sleep 5
+              done
+      containers:
+        - name: setup-buckets
+          image: chrislusf/seaweedfs:latest
+          command:
+            - sh
+            - -c
+            - |
+              weed shell -master xquare-test-master:9333 <<EOF
+              s3.bucket.create -name test-buckets
+              s3.configure -access_key=-dsm-project-xquare-test-test-buckets -secret_key=-dsm-project-xquare-test-test-buckets-secret -user=test-buckets-user -buckets=test-buckets -actions=Admin,Read,Write,List,Tagging -apply
+              EOF
+              if [ $? -ne 0 ]; then
+                exit 1
+              fi
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              memory: 256Mi
+---
+# Source: xquare-project/templates/00-access-server.yaml
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: access-server-network-policy
+  namespace: -dsm-project
+spec:
+  endpointSelector:
+    matchLabels:
+      app: access-server
+
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: -dsm-project
+---
+# Source: xquare-project/templates/app-cilium-network-policy.yaml
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: s3-test-app-network-policy
+  namespace: -dsm-project
+  labels:
+    app.kubernetes.io/name: "s3-test-app"
+    app.kubernetes.io/instance: "s3-test-app"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "1.0.0"
+    helm.sh/chart: project-1.0.0
+    app.kubernetes.io/component: network-policy
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: "s3-test-app"
+      app.kubernetes.io/instance: "s3-test-app"
+      app.kubernetes.io/component: application
+  
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+    - toEntities:
+        - world
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: -dsm-project
+---
+# Source: xquare-project/templates/ci-eventbus.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: EventBus
+metadata:
+  name: ci-eventbus
+  namespace: -dsm-project
+  labels:
+    app.kubernetes.io/name: 
+    app.kubernetes.io/instance: 
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "1.0"
+    app.kubernetes.io/component: project
+    helm.sh/chart: xquare-project-0.1.0
+    app.kubernetes.io/component: ci-eventbus
+spec:
+  nats:
+    native:
+      metadata:
+        annotations: {}
+      replicas: 3
+      antiAffinity: false
+      auth: none
+      containerTemplate:
+        resources:
+          requests:
+            cpu: 15m
+            memory: 55Mi
+          limits:
+            cpu: 40m
+            memory: 80Mi
+---
+# Source: xquare-project/templates/ci-event-source.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: EventSource
+metadata:
+  name: s3-test-app-github-webhook
+  namespace: -dsm-project
+  labels:
+    app.kubernetes.io/name: "s3-test-app"
+    app.kubernetes.io/instance: "s3-test-app"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "1.0.0"
+    helm.sh/chart: project-1.0.0
+    app.kubernetes.io/component: ci-webhook
+  annotations: {}
+spec:
+  eventBusName: ci-eventbus
+  service:
+    ports:
+      - port: 12000
+        targetPort: 12000
+  github:
+    s3_test_app:
+      repositories:
+        - owner: team-xquare
+          names:
+            - s3-test-app
+      githubApp:
+        privateKey:
+          name: github-app-pem
+          key: privateKey.pem
+        appID: 1172114
+        installationID: 62433388
+      webhook:
+        endpoint: /webhooks/-s3-test-app
+        port: "12000"
+        method: POST
+        url: https://argo-events-xquare-infra.dsmhs.kr
+      events:
+        - push
+        - ping
+      insecure: false
+      active: true
+      contentType: json
+---
+# Source: xquare-project/templates/00-access-server.yaml
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: access-server-httproute
+  namespace: -dsm-project
+spec:
+  parentRefs:
+    - name: external-gateway
+      namespace: gateway
+      sectionName: http
+    - name: external-gateway
+      namespace: gateway
+      sectionName: https
+  hostnames:
+    - xquare-remote-access-.dsmhs.kr
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: access-server
+          port: 8080
+---
+# Source: xquare-project/templates/app-httproute.yaml
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: s3-test-app-8080-s3-test-dsmhs-kr-httproute
+  namespace: -dsm-project
+  labels:
+    app.kubernetes.io/name: "s3-test-app"
+    app.kubernetes.io/instance: "s3-test-app"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "1.0.0"
+    helm.sh/chart: project-1.0.0
+    app.kubernetes.io/component: http-route
+spec:
+  parentRefs:
+    - name: external-gateway
+      namespace: gateway
+      sectionName: http
+    - name: external-gateway
+      namespace: gateway
+      sectionName: https
+  hostnames:
+    - s3-test.dsmhs.kr
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: s3-test-app
+          port: 8080
+---
+# Source: xquare-project/templates/ci-httproute.yaml
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: s3-test-app-webhook-httproute
+  namespace: -dsm-project
+  labels:
+    app.kubernetes.io/name: "s3-test-app"
+    app.kubernetes.io/instance: "s3-test-app"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "1.0.0"
+    helm.sh/chart: project-1.0.0
+    app.kubernetes.io/component: ci-webhook-route
+spec:
+  parentRefs:
+    - name: external-gateway
+      namespace: gateway
+      sectionName: http
+    - name: external-gateway
+      namespace: gateway
+      sectionName: https
+  hostnames:
+    - argo-events-xquare-infra.dsmhs.kr
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /webhooks/-s3-test-app
+      backendRefs:
+        - name: s3-test-app-github-webhook-eventsource-svc
+          port: 12000
+---
+# Source: xquare-project/templates/ci-sensor.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: s3-test-app-sensor
+  namespace: -dsm-project
+  labels:
+    app.kubernetes.io/name: "s3-test-app"
+    app.kubernetes.io/instance: "s3-test-app"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "1.0.0"
+    helm.sh/chart: project-1.0.0
+    app.kubernetes.io/component: ci-sensor
+spec:
+  dependencies:
+    - name: s3-test-app-github-event
+      eventName: s3_test_app
+      eventSourceName: s3-test-app-github-webhook
+      filters:
+        script: |
+          if event.body['X-GitHub-Event'] == 'ping' then return true end
+          if event.body.ref ~= 'refs/heads/main' or event.body['X-GitHub-Event'] ~= 'push' then return false end
+          return true
+  
+  eventBusName: ci-eventbus
+  template:
+    serviceAccountName: kaniko-sa
+    container:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 30Mi
+        limits:
+          cpu: 50m
+          memory: 60Mi
+  
+  triggers:
+    - retryStrategy:
+        steps: 3
+      template:
+        k8s:
+          operation: create
+          parameters:
+            - src:
+                dependencyName: s3-test-app-github-event
+                dataKey: body.X-GitHub-Event
+                value: ""
+              dest: spec.arguments.parameters.0.value
+            - src:
+                dependencyName: s3-test-app-github-event
+                dataKey: body.after
+                value: ""
+              dest: spec.arguments.parameters.1.value
+          source:
+            resource:
+              apiVersion: argoproj.io/v1alpha1
+              kind: Workflow
+              metadata:
+                generateName: s3-test-app-ci-
+                namespace: -dsm-project
+                labels:
+                  app.kubernetes.io/name: "s3-test-app"
+                  app.kubernetes.io/instance: "s3-test-app"
+                  app.kubernetes.io/component: ci-workflow
+              spec:
+                workflowTemplateRef:
+                  name: s3-test-app-ci-pipeline-template
+                arguments:
+                  parameters:
+                    - name: github-event-type
+                      value: ""
+                    - name: github-sha
+                      value: ""
+                podGC:
+                  strategy: OnPodCompletion
+                  deleteDelayDuration: 72h
+                serviceAccountName: kaniko-sa
+        name: s3-test-app-workflow-trigger
+---
+# Source: xquare-project/templates/app-vault-auth.yaml
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultAuth
+metadata:
+  name: -dsm-project-vault-auth
+  namespace: -dsm-project
+  labels:
+    app.kubernetes.io/name: 
+    app.kubernetes.io/instance: 
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "1.0"
+    app.kubernetes.io/component: project
+    helm.sh/chart: xquare-project-0.1.0
+    app.kubernetes.io/component: vault-auth
+spec:
+  method: kubernetes
+  mount: kubernetes
+  kubernetes:
+    role: xquare-app
+    serviceAccount: -dsm-project-vault-service-account
+    audiences:
+      - vault
+---
+# Source: xquare-project/templates/app-vault-static-secret.yaml
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  name: s3-test-app
+  namespace: -dsm-project
+  labels:
+    app.kubernetes.io/name: "s3-test-app"
+    app.kubernetes.io/instance: "s3-test-app"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "1.0.0"
+    helm.sh/chart: project-1.0.0
+    app.kubernetes.io/component: vault-secret
+spec:
+  type: kv-v1
+  mount: xquare-kv
+  path: -s3-test-app
+  destination:
+    name: -s3-test-app
+    create: true
+  rolloutRestartTargets:
+    - kind: Deployment
+      name: s3-test-app
+  vaultAuthRef: -dsm-project/-dsm-project-vault-auth
+---
+# Source: xquare-project/templates/app-vpa.yaml
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: s3-test-app
+  namespace: -dsm-project
+  labels:
+    app.kubernetes.io/name: "s3-test-app"
+    app.kubernetes.io/instance: "s3-test-app"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "1.0.0"
+    helm.sh/chart: project-1.0.0
+    app.kubernetes.io/component: autoscaling
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: s3-test-app
+  updatePolicy:
+    updateMode: Auto
+  resourcePolicy:
+    containerPolicies:
+    - containerName: s3-test-app
+      controlledResources:
+      - cpu
+      - memory
+      controlledValues: RequestsAndLimits
+      minAllowed:
+        cpu: 50m
+        memory: 64Mi
+      maxAllowed:
+        cpu: 4000m
+        memory: 8Gi
+---
+# Source: xquare-project/templates/ci-workflow-template.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: s3-test-app-ci-pipeline-template
+  namespace: -dsm-project
+  labels:
+    app.kubernetes.io/name: "s3-test-app"
+    app.kubernetes.io/instance: "s3-test-app"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/version: "1.0.0"
+    helm.sh/chart: project-1.0.0
+    app.kubernetes.io/component: ci-workflow-template
+spec:
+  entrypoint: ci-pipeline
+  arguments:
+    parameters:
+      - name: github-event-type
+      - name: github-sha
+        value: ""
+
+  templates:
+    - name: ci-pipeline
+      dag:
+        tasks:
+          - name: get-github-token
+            template: github-token-generator
+
+          - name: get-latest-sha
+            depends: "get-github-token.Succeeded"
+            template: fetch-latest-commit-sha
+            when: "{{workflow.parameters.github-event-type}} != 'push'"
+            arguments:
+              parameters:
+                - name: github-token
+                  value: "{{tasks.get-github-token.outputs.parameters.github-token}}"
+
+          - name: create-check-run-start
+            template: create-check-run
+            depends: "get-github-token.Succeeded && (get-latest-sha.Succeeded || get-latest-sha.Skipped)"
+            arguments:
+              parameters:
+                - name: github-token
+                  value: "{{tasks.get-github-token.outputs.parameters.github-token}}"
+                - name: status
+                  value: "in_progress"
+                - name: conclusion
+                  value: ""
+                - name: title
+                  value: "빌드 진행 중"
+                - name: summary
+                  value: "애플리케이션 빌드를 시작합니다"
+                - name: sha
+                  value: "{{= workflow.parameters['github-event-type'] == 'push' ? workflow.parameters['github-sha'] : tasks['get-latest-sha'].outputs.parameters['commit-sha'] }}"
+
+          - name: kaniko-build
+            template: docker-build
+            depends: "get-github-token.Succeeded && (get-latest-sha.Succeeded || get-latest-sha.Skipped)"
+            arguments:
+              parameters:
+                - name: github-token
+                  value: "{{tasks.get-github-token.outputs.parameters.github-token}}"
+                - name: git-sha
+                  value: "{{= workflow.parameters['github-event-type'] == 'push' ? workflow.parameters['github-sha'] : tasks['get-latest-sha'].outputs.parameters['commit-sha'] }}"
+
+          - name: check-run-build-success
+            template: update-check-run
+            depends: "kaniko-build.Succeeded && create-check-run-start.Succeeded"
+            arguments:
+              parameters:
+                - name: github-token
+                  value: "{{tasks.get-github-token.outputs.parameters.github-token}}"
+                - name: check-run-id
+                  value: "{{tasks.create-check-run-start.outputs.parameters.check-run-id}}"
+                - name: status
+                  value: "in_progress"
+                - name: conclusion
+                  value: ""
+                - name: title
+                  value: "빌드 완료 - 배포 준비 중"
+                - name: summary
+                  value: "빌드가 성공적으로 완료되었습니다. 배포를 준비하고 있습니다"
+
+          - name: check-run-build-failed
+            template: update-check-run
+            depends: "kaniko-build.Failed && create-check-run-start.Succeeded"
+            arguments:
+              parameters:
+                - name: github-token
+                  value: "{{tasks.get-github-token.outputs.parameters.github-token}}"
+                - name: check-run-id
+                  value: "{{tasks.create-check-run-start.outputs.parameters.check-run-id}}"
+                - name: status
+                  value: "completed"
+                - name: conclusion
+                  value: "failure"
+                - name: title
+                  value: "빌드 실패"
+                - name: summary
+                  value: "빌드 과정에서 오류가 발생했습니다. 로그를 확인해주세요"
+
+          - name: gitops-update
+            template: update-gitops-repo
+            depends: "kaniko-build.Succeeded"
+            arguments:
+              parameters:
+                - name: image-tag
+                  value: "{{= workflow.parameters['github-event-type'] == 'push' ? workflow.parameters['github-sha'] : tasks['get-latest-sha'].outputs.parameters['commit-sha'] }}"
+
+          - name: check-run-gitops-success
+            template: update-check-run
+            depends: "gitops-update.Succeeded && create-check-run-start.Succeeded"
+            arguments:
+              parameters:
+                - name: github-token
+                  value: "{{tasks.get-github-token.outputs.parameters.github-token}}"
+                - name: check-run-id
+                  value: "{{tasks.create-check-run-start.outputs.parameters.check-run-id}}"
+                - name: status
+                  value: "completed"
+                - name: conclusion
+                  value: "success"
+                - name: title
+                  value: "배포 트리거 성공"
+                - name: summary
+                  value: "빌드 및 배포 트리거가 성공적으로 완료되었습니다"
+
+          - name: check-run-gitops-failed
+            template: update-check-run
+            depends: "gitops-update.Failed && create-check-run-start.Succeeded"
+            arguments:
+              parameters:
+                - name: github-token
+                  value: "{{tasks.get-github-token.outputs.parameters.github-token}}"
+                - name: check-run-id
+                  value: "{{tasks.create-check-run-start.outputs.parameters.check-run-id}}"
+                - name: status
+                  value: "completed"
+                - name: conclusion
+                  value: "failure"
+                - name: title
+                  value: "배포 트리거 실패"
+                - name: summary
+                  value: "배포 트리거 과정에서 오류가 발생했습니다. 설정을 확인해주세요"
+
+    - name: github-token-generator
+      container:
+        image: alpine:3.18
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            set -e
+            apk add --no-cache jq curl openssl
+
+            APP_ID=1172114
+            INSTALL_ID=62433388
+            echo "$GITHUB_PRIVATE_KEY" > /tmp/key.pem
+            chmod 600 /tmp/key.pem
+            
+            now=$(date +%s); iat=$((now-60)); exp=$((now+600))
+            b64enc() { openssl base64 | tr -d '=' | tr '/+' '_-' | tr -d '\n'; }
+            header_encoded=$(echo -n '{"typ":"JWT","alg":"RS256"}' | b64enc)
+            payload_encoded=$(echo -n "{\"iat\":${iat},\"exp\":${exp},\"iss\":\"${APP_ID}\"}" | b64enc)
+            JWT="${header_encoded}.${payload_encoded}.$(openssl dgst -sha256 -sign /tmp/key.pem <(echo -n "${header_encoded}.${payload_encoded}") | b64enc)"
+            
+            TOKEN=$(curl -s -X POST -H "Authorization: Bearer ${JWT}" -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/app/installations/${INSTALL_ID}/access_tokens" | jq -r '.token')
+            
+            [ -z "$TOKEN" ] || [ "$TOKEN" = "null" ] && { echo "ERROR: Failed to get GitHub token"; exit 1; }
+            
+            echo "$TOKEN" > /tmp/github_token.txt
+        env:
+          - name: GITHUB_PRIVATE_KEY
+            valueFrom:
+              secretKeyRef:
+                name: github-app-pem
+                key: privateKey.pem
+      outputs:
+        parameters:
+          - name: github-token
+            valueFrom:
+              path: /tmp/github_token.txt
+
+    - name: fetch-latest-commit-sha
+      inputs:
+        parameters:
+          - name: github-token
+      container:
+        image: alpine:3.18
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            set -e
+            apk add --no-cache curl jq
+    
+            COMMIT_SHA=$(curl -s -H "Authorization: Bearer {{inputs.parameters.github-token}}" \
+              -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/team-xquare/s3-test-app/branches/main" \
+              | jq -r '.commit.sha')
+            echo "$COMMIT_SHA" > /tmp/commit_sha.txt
+      outputs:
+        parameters:
+          - name: commit-sha
+            valueFrom:
+              path: /tmp/commit_sha.txt
+    
+    - name: create-check-run
+      inputs:
+        parameters:
+          - name: github-token
+          - name: status
+          - name: conclusion
+            value: ""
+          - name: title
+          - name: summary
+          - name: sha
+      container:
+        image: alpine:3.18
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            set -e
+            apk add --no-cache curl jq
+    
+            CHECK_RUN_ID=$(curl -s -X POST \
+              -H "Authorization: Bearer {{inputs.parameters.github-token}}" \
+              -H "Accept: application/vnd.github+json" \
+              -H "Content-Type: application/json" \
+              -d '{
+                "name": "s3-test-app",
+                "head_sha": "{{inputs.parameters.sha}}",
+                "status": "{{inputs.parameters.status}}",
+                "output": {
+                  "title": "{{inputs.parameters.title}}",
+                  "summary": "{{inputs.parameters.summary}}"
+                }
+              }' \
+              "https://api.github.com/repos/team-xquare/s3-test-app/check-runs" \
+              | jq -r '.id')
+            echo "$CHECK_RUN_ID" > /tmp/check_run_id.txt
+      outputs:
+        parameters:
+          - name: check-run-id
+            valueFrom:
+              path: /tmp/check_run_id.txt
+
+    - name: update-check-run
+      inputs:
+        parameters:
+          - name: github-token
+          - name: check-run-id
+          - name: status
+          - name: conclusion
+            value: ""
+          - name: title
+          - name: summary
+      container:
+        image: curlimages/curl:latest
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            set -e
+            
+            CONCLUSION_JSON=""
+            if [ "{{inputs.parameters.conclusion}}" != "" ]; then
+              CONCLUSION_JSON='"conclusion": "{{inputs.parameters.conclusion}}",'
+            fi
+            
+            curl -s -X PATCH \
+              -H "Authorization: Bearer {{inputs.parameters.github-token}}" \
+              -H "Accept: application/vnd.github+json" \
+              -H "Content-Type: application/json" \
+              -d "{
+                \"status\": \"{{inputs.parameters.status}}\",
+                $CONCLUSION_JSON
+                \"output\": {
+                  \"title\": \"{{inputs.parameters.title}}\",
+                  \"summary\": \"{{inputs.parameters.summary}}\"
+                }
+              }" \
+              "https://api.github.com/repos/team-xquare/s3-test-app/check-runs/{{inputs.parameters.check-run-id}}"
+            
+            echo "Check run updated successfully"
+
+    - name: docker-build
+      inputs:
+        parameters:
+          - name: github-token
+          - name: git-sha
+      volumes:
+        - name: workspace
+          emptyDir: {}
+        - name: docker-config
+          secret:
+            secretName: harbor-registry-credentials
+            items:
+              - key: .dockerconfigjson
+                path: config.json
+        - name: app-dockerfile
+          configMap:
+            name: s3-test-app-dockerfile
+      container:
+        image: gcr.io/kaniko-project/executor:latest
+        args:
+          - "--context=/workspace/repo/."
+          - "--dockerfile=./Dockerfile"
+          - "--destination=harbor-xquare-infra.dsmhs.kr/xquare/-s3-test-app:latest"
+          - "--destination=harbor-xquare-infra.dsmhs.kr/xquare/-s3-test-app:{{inputs.parameters.git-sha}}"
+          - "--registry-mirror=mirror.gcr.io"
+          - "--cache=true"
+          - "--cache-repo=harbor-xquare-infra.dsmhs.kr/xquare/cache"
+          - "--snapshot-mode=redo"
+          - "--use-new-run=true"
+        env:
+          - name: DOCKER_CONFIG
+            value: "/kaniko/.docker"
+        volumeMounts:
+          - name: workspace
+            mountPath: /workspace
+          - name: docker-config
+            mountPath: /kaniko/.docker
+      initContainers:
+        - name: checkout-and-prepare
+          image: alpine:3.18
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              set -e
+              apk add --no-cache git
+              
+              TOKEN="{{inputs.parameters.github-token}}"
+              git clone -b main --single-branch \
+                https://x-access-token:${TOKEN}@github.com/team-xquare/s3-test-app.git /workspace/repo
+              
+              cd /workspace/repo
+              git checkout "{{inputs.parameters.git-sha}}"
+              echo "Using Dockerfile from specified path: ./Dockerfile"
+          volumeMounts:
+            - name: workspace
+              mountPath: /workspace
+            - name: app-dockerfile
+              mountPath: /app-dockerfile
+
+    - name: update-gitops-repo
+      inputs:
+        parameters:
+          - name: image-tag
+      container:
+        image: curlimages/curl:latest
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            set -e
+            
+            curl -X POST \
+              -H "Authorization: token $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github.v3+json" \
+              -H "Content-Type: application/json" \
+              -d '{
+                "event_type": "config-api",
+                "client_payload": {
+                  "path": "projects//applications/s3-test-app",
+                  "action": "apply",
+                  "spec": {
+                    "github": {
+                      "hash": "{{inputs.parameters.image-tag}}"
+                    }
+                  }
+                }
+              }' \
+              "https://api.github.com/repos/team-xquare/xquare-onpremise-project-gitops-repo/dispatches"
+        env:
+          - name: GITHUB_TOKEN
+            valueFrom:
+              secretKeyRef:
+                key: token
+                name: github-token
