@@ -33,7 +33,7 @@ applications:
       repo: rag
       branch: main
       installationId: "93196994"
-      hash: bad2d41e9de8ddf88c7afde8adf314ea3eab3666
+      hash: 4553def7043ab02ea7ddfcf8c3796ce7b42d02cd
     build:
       docker:
         dockerfilePath: "./Dockerfile"
