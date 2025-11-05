@@ -65,9 +65,6 @@ spec:
               name: http
             - containerPort: 6334
               name: grpc
-          env:
-            - name: QDRANT__SERVICE__API_KEY
-              value: {{ include "addon.name" . | quote }}
           resources:
             requests:
               cpu: 200m
