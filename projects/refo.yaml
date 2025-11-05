@@ -1,4 +1,32 @@
 applications:
+  - name: refo-gateway
+    github:
+      owner: team-exit-1
+      repo: gateway
+      branch: main
+      installationId: "93196994"
+    build:
+      docker:
+        dockerfilePath: "./Dockerfile"
+        contextPath: "."
+    endpoints:
+      - port: 8080
+        routes:
+          - refo-hackerton.dsmhs.kr
+  - name: refo-core
+    github:
+      owner: team-exit-1
+      repo: core
+      branch: main
+      installationId: "93196994"
+    build:
+      docker:
+        dockerfilePath: "./Dockerfile"
+        contextPath: "."
+    endpoints:
+      - port: 8080
+        routes:
+          - refo-core-hackerton.dsmhs.kr
   - name: refo-rag
     github:
       owner: team-exit-1
