@@ -4,7 +4,7 @@ applications:
       owner: team-exit-1
       repo: rag
       branch: main
-      installationId: "93166509"
+      installationId: "93196994"
     build:
       docker:
         dockerfilePath: "./Dockerfile"
