@@ -5,7 +5,7 @@ applications:
       repo: s3-test-app
       branch: main
       installationId: "62433388"
-      hash: a3edaabd769f5ef84ff7c75d37e34bbb8d4900e0
+      hash: a92221321343ce8902a8c7b5cccbe6ad75447447
     build:
       docker:
         dockerfilePath: "./Dockerfile"
