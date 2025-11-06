@@ -48,7 +48,7 @@ spec:
     spec:
       containers:
       - name: generator
-        image: bitnami/kubectl:latest
+        image: cgr.dev/chainguard/kubectl-fips:latest
         command:
           - /bin/sh
           - -c
