@@ -5,7 +5,7 @@ applications:
       repo: server
       branch: main
       installationId: "93239915"
-      hash: 538c0b3231fb66e73a6383e623cdce20fc955c35
+      hash: d2e517e9ff308c963f704a9701a99a2406950a9f
     build:
       docker:
         dockerfilePath: "./Dockerfile"
