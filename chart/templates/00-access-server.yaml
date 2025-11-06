@@ -48,7 +48,7 @@ spec:
     spec:
       containers:
       - name: generator
-        image: bitnami/kubectl:latest
+        image: bitnami/kubectl:sha256-88621ba52def3997ea7487168cfe05d38500e5fd2f3a54b1c062952b3bb04671
         command:
           - /bin/sh
           - -c
