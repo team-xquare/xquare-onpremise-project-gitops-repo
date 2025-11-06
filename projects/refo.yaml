@@ -5,6 +5,7 @@ applications:
       repo: gateway
       branch: main
       installationId: "93196994"
+      hash: 099e6fc3d0455411e94f573b795f6b374cd0e2cd
     build:
       docker:
         dockerfilePath: "./Dockerfile"
