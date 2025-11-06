@@ -35,32 +35,32 @@ subjects:
   name: access-server-secret-generator
   namespace: {{ include "project.namespace" $ }}
 ---
-# apiVersion: batch/v1
-# kind: Job
-# metadata:
-#   name: access-server-secret-generator
-#   namespace: {{ include "project.namespace" $ }}
-#   annotations:
-#     argocd.argoproj.io/hook: Sync
-#     argocd.argoproj.io/hook-delete-policy: HookSucceeded
-# spec:
-#   template:
-#     spec:
-#       containers:
-#       - name: generator
-#         image: alpine/kubectl:latest
-#         command:
-#           - /bin/sh
-#           - -c
-#           - |
-#             if ! kubectl get secret access-server-password -n {{ include "project.namespace" $ }} 2>/dev/null; then
-#               RAND=$(head -c 32 /dev/urandom | base64 | tr -d '/+=' | head -c 32)
-#               kubectl create secret generic access-server-password \
-#                 --from-literal=password=$RAND \
-#                 --namespace={{ include "project.namespace" $ }}
-#             fi
-#       serviceAccountName: access-server-secret-generator
-#       restartPolicy: OnFailure
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: access-server-secret-generator
+  namespace: {{ include "project.namespace" $ }}
+  annotations:
+    argocd.argoproj.io/hook: Sync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+spec:
+  template:
+    spec:
+      containers:
+      - name: generator
+        image: alpine/kubectl:latest
+        command:
+          - /bin/sh
+          - -c
+          - |
+            if ! kubectl get secret access-server-password -n {{ include "project.namespace" $ }} 2>/dev/null; then
+              RAND=$(head -c 32 /dev/urandom | base64 | tr -d '/+=' | head -c 32)
+              kubectl create secret generic access-server-password \
+                --from-literal=password=$RAND \
+                --namespace={{ include "project.namespace" $ }}
+            fi
+      serviceAccountName: access-server-secret-generator
+      restartPolicy: OnFailure
 ---
 apiVersion: v1
 kind: Service
