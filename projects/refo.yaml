@@ -34,7 +34,7 @@ applications:
       repo: llm
       branch: main
       installationId: "93196994"
-      hash: 2828351802775d25cbc7ac19f877c8f0c12f5061
+      hash: c914765031f90dd8a072a76d72116181235542b9
     build:
       docker:
         dockerfilePath: "./Dockerfile"
