@@ -108,6 +108,11 @@ spec:
                 dataKey: body.after
                 value: ""
               dest: spec.arguments.parameters.1.value
+            - src:
+                dependencyName: {{ include "app.serviceName" . }}-github-event
+                dataKey: body.after
+                value: ""
+              dest: metadata.annotations.app\.kubernetes\.io/git-sha
           source:
             resource:
               apiVersion: argoproj.io/v1alpha1
@@ -118,6 +123,8 @@ spec:
                 labels:
                   {{- include "app.selectorLabels" . | nindent 18 }}
                   app.kubernetes.io/component: ci-workflow
+                annotations:
+                  app.kubernetes.io/git-sha: ""
               spec:
                 workflowTemplateRef:
                   name: {{ include "app.serviceName" . }}-ci-pipeline-template
