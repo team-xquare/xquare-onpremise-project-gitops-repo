@@ -8,6 +8,10 @@ metadata:
   labels:
     {{- include "app.labels" . | nindent 4 }}
     app.kubernetes.io/component: ci-workflow-template
+  {{- if .github.hash }}
+  annotations:
+    app.kubernetes.io/git-sha: {{ .github.hash | quote }}
+  {{- end }}
 spec:
   entrypoint: ci-pipeline
   arguments:
