@@ -28,6 +28,7 @@ spec:
       annotations:
         profiles.grafana.com/cpu.ebpf.enabled: "true"
         cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
+        app.kubernetes.io/git-sha: {{ .github.hash | quote }}
     spec:
       serviceAccountName: {{ include "project.vaultServiceAccount" $ }}
       terminationGracePeriodSeconds: 60
