@@ -16,4 +16,4 @@ applications:
 addons:
   - name: xquare-opensearch-test
     type: opensearch
-    storage: 1Gi
+    storage: 5Gi
