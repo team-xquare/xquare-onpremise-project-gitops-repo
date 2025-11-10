@@ -14,6 +14,6 @@ applications:
         routes:
           - yuon-api.dsmhs.kr
 addons:
-  - name: xquare-opensearch-test
+  - name: youn-opensearch-test
     type: opensearch
     storage: 5Gi
