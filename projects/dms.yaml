@@ -37,7 +37,7 @@ applications:
       repo: dms-webview
       branch: main
       installationId: "64597732"
-      hash: 8ef63b73b97822b5174f468dd7a8aa389377617d
+      hash: 182031fa7468f1a213eda502b5bfb980e8880808
     build:
       react:
         nodeVersion: "22"
