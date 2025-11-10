@@ -1,4 +1,18 @@
 applications:
+  - name: server
+    github:
+      owner: team-xquare
+      repo: server
+      branch: main
+      installationId: "93919948"
+    build:
+      docker:
+        dockerfilePath: "./Dockerfile"
+        contextPath: "."
+    endpoints:
+      - port: 8080
+        routes:
+          - yuon-api.dsmhs.kr
 addons:
   - name: xquare-opensearch-test
     type: opensearch
