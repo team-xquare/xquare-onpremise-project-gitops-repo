@@ -189,12 +189,9 @@ addons:
   - name: jobis-redis
     type: redis
     storage: 1Gi
-  - name: jobis-prod-mysql
+  - name: prod-mysql
     type: mysql
     storage: 1Gi
-  - name: jobis-stag-mysql
+  - name: stag-mysql
     type: mysql
     storage: 1Gi
-  - name: log
-    type: elk
-    storage: 2Gi
