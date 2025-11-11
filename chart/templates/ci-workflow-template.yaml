@@ -285,8 +285,6 @@ spec:
           - name: github-token
           - name: git-sha
       volumes:
-        - name: workspace
-          emptyDir: {}
         - name: docker-config
           secret:
             secretName: harbor-registry-credentials
@@ -304,66 +302,46 @@ spec:
             set -e
             export BUILDKIT_HOST=tcp://buildkit.buildkit.svc.cluster.local:1234
 
-            CONTEXT_PATH="/workspace/repo/{{- if .build.docker }}{{- if .build.docker.contextPath }}{{ .build.docker.contextPath }}{{- else }}.{{- end }}{{- else }}.{{- end }}"
+            TOKEN="{{`{{inputs.parameters.github-token}}`}}"
+            GIT_URL="https://x-access-token:${TOKEN}@github.com/{{ .github.owner }}/{{ .github.repo }}.git"
+            GIT_REF="{{`{{inputs.parameters.git-sha}}`}}"
+
             {{- if .build.docker }}
-            {{- if .build.docker.dockerfilePath }}
-            DOCKERFILE_PATH="{{ .build.docker.dockerfilePath }}"
+            {{- if .build.docker.contextPath }}
+            CONTEXT_SUBDIR="{{ .build.docker.contextPath }}"
             {{- else }}
-            DOCKERFILE_PATH="Dockerfile"
+            CONTEXT_SUBDIR="."
             {{- end }}
+            {{- if .build.docker.dockerfilePath }}
+            DOCKERFILE_NAME="{{ .build.docker.dockerfilePath }}"
             {{- else }}
-            DOCKERFILE_PATH="Dockerfile"
+            DOCKERFILE_NAME="Dockerfile"
+            {{- end }}
+            USE_LOCAL_DOCKERFILE=""
+            {{- else }}
+            CONTEXT_SUBDIR="."
+            DOCKERFILE_NAME="Dockerfile"
+            USE_LOCAL_DOCKERFILE="--local dockerfile=/app-dockerfile"
             {{- end }}
 
-            cd $CONTEXT_PATH
+            IMAGE_NAME="{{ include "project.harborRegistry" $ }}/xquare/{{ $.Values.project }}-{{ include "app.serviceName" . }}"
 
             buildctl build \
               --frontend dockerfile.v0 \
-              --local context=. \
-              --local dockerfile=. \
-              --opt filename=$DOCKERFILE_PATH \
+              --opt context="${GIT_URL}#${GIT_REF}:${CONTEXT_SUBDIR}" \
+              ${USE_LOCAL_DOCKERFILE} \
+              --opt filename=${DOCKERFILE_NAME} \
               --opt platform=linux/amd64 \
               --progress=plain \
-              --output type=image,"name={{ include "project.harborRegistry" $ }}/xquare/{{ $.Values.project }}-{{ include "app.serviceName" . }}:latest,{{ include "project.harborRegistry" $ }}/xquare/{{ $.Values.project }}-{{ include "app.serviceName" . }}:{{`{{inputs.parameters.git-sha}}`}}",compression=zstd,compression-level=3,oci-mediatypes=true,push=true
+              --output "type=image,name=${IMAGE_NAME}:latest,${IMAGE_NAME}:${GIT_REF},compression=zstd,compression-level=3,oci-mediatypes=true,push=true"
         env:
           - name: DOCKER_CONFIG
             value: "/docker-config"
         volumeMounts:
-          - name: workspace
-            mountPath: /workspace
           - name: docker-config
             mountPath: /docker-config
-      initContainers:
-        - name: checkout-and-prepare
-          image: alpine:3.18
-          command: ["/bin/sh", "-c"]
-          args:
-            - |
-              set -e
-              apk add --no-cache git
-              
-              TOKEN="{{`{{inputs.parameters.github-token}}`}}"
-              git clone -b {{ .github.branch }} --single-branch \
-                https://x-access-token:${TOKEN}@github.com/{{ .github.owner }}/{{ .github.repo }}.git /workspace/repo
-              
-              cd /workspace/repo
-              git checkout "{{`{{inputs.parameters.git-sha}}`}}"
-              
-              {{- if .build.docker }}
-              {{- if .build.docker.dockerfilePath }}
-              echo "Using Dockerfile from specified path: {{ .build.docker.dockerfilePath }}"
-              {{- else }}
-              echo "Using existing Dockerfile from repository root"
-              {{- end }}
-              {{- else }}
-              echo "Using generated Dockerfile from template"
-              cp /app-dockerfile/Dockerfile /workspace/repo/Dockerfile
-              {{- end }}
-          volumeMounts:
-            - name: workspace
-              mountPath: /workspace
-            - name: app-dockerfile
-              mountPath: /app-dockerfile
+          - name: app-dockerfile
+            mountPath: /app-dockerfile
 
     - name: update-gitops-repo
       inputs:
