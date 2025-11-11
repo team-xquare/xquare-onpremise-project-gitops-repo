@@ -295,17 +295,11 @@ spec:
           configMap:
             name: {{ include "app.serviceName" . }}-dockerfile
       container:
-        image: docker:27-cli
+        image: docker/cli:latest
         command: ["/bin/sh", "-c"]
         args:
           - |
             set -e
-
-            apk add --no-cache docker-cli-buildx
-
-            export DOCKER_CONFIG=/tmp/docker-config
-            mkdir -p ${DOCKER_CONFIG}
-            cp /docker-config-ro/config.json ${DOCKER_CONFIG}/config.json
 
             TOKEN="{{`{{inputs.parameters.github-token}}`}}"
             IMAGE="{{ include "project.harborRegistry" $ }}/xquare/{{ $.Values.project }}-{{ include "app.serviceName" . }}"
@@ -334,13 +328,14 @@ spec:
               "${GIT_CONTEXT}" \
               < /app-dockerfile/Dockerfile.generated
             {{- end }}
+        env:
+          - name: DOCKER_CONFIG
+            value: /docker-config
         volumeMounts:
           - name: docker-config
-            mountPath: /docker-config-ro
-            readOnly: true
+            mountPath: /docker-config
           - name: app-dockerfile
             mountPath: /app-dockerfile
-            readOnly: true
 
     - name: update-gitops-repo
       inputs:
