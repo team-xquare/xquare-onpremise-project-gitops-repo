@@ -185,6 +185,70 @@ applications:
       - port: 8080
         routes:
           - jobis-stag.dsmhs.kr
+  - name: v1-fe-student-stag
+    github:
+      owner: Team-return
+      repo: JOBIS-DSM-STUDENT-FE
+      branch: develop
+      installationId: "82814703"
+      triggerPaths:
+        - src/**
+        - app/**
+        - public/**
+        - package.json
+        - yarn.lock
+        - next.config.js
+    build:
+      nextjs:
+        nodeVersion: "23.11.0"
+        distPath: /out
+        buildCommand: "yarn install && yarn build"
+    endpoints:
+      - port: 8080
+        routes:
+          - v1-jobis-stag.dsmhs.kr
+  - name: v1-fe-admin-stag
+    github:
+      owner: Team-return
+      repo: JOBIS-DSM-ADMIN-FE
+      branch: develop
+      installationId: "82814703"
+      triggerPaths:
+        - src/**
+        - public/**
+        - package.json
+        - package-lock.json
+    build:
+      cra:
+        nodeVersion: "23.11.0"
+        distPath: /build
+        buildCommand: "npm install && npm run build"
+    endpoints:
+      - port: 8080
+        routes:
+          - v1-jobis-admin-stag.dsmhs.kr
+  - name: v1-fe-company-stag
+    github:
+      owner: Team-return
+      repo: JOBIS-DSM-COMPANY-FE
+      branch: develop
+      installationId: "82814703"
+      triggerPaths:
+        - src/**
+        - app/**
+        - public/**
+        - package.json
+        - yarn.lock
+        - next.config.js
+    build:
+      nextjs:
+        nodeVersion: "23.11.0"
+        distPath: /out
+        buildCommand: "yarn install && yarn build"
+    endpoints:
+      - port: 8080
+        routes:
+          - v1-jobis-company-stag.dsmhs.kr
 addons:
   - name: jobis-redis
     type: redis
