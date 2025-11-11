@@ -295,45 +295,33 @@ spec:
           configMap:
             name: {{ include "app.serviceName" . }}-dockerfile
       container:
-        image: moby/buildkit:v0.25.2
+        image: alpine/docker-with-buildx:latest
         command: ["/bin/sh", "-c"]
         args:
           - |
             set -e
-            export BUILDKIT_HOST=tcp://buildkit.buildkit.svc.cluster.local:1234
 
             TOKEN="{{`{{inputs.parameters.github-token}}`}}"
-            GIT_URL="https://x-access-token:${TOKEN}@github.com/{{ .github.owner }}/{{ .github.repo }}.git"
+            IMAGE="{{ include "project.harborRegistry" $ }}/xquare/{{ $.Values.project }}-{{ include "app.serviceName" . }}"
             GIT_REF="{{`{{inputs.parameters.git-sha}}`}}"
+            GIT_CONTEXT="https://x-access-token:${TOKEN}@github.com/{{ .github.owner }}/{{ .github.repo }}.git#${GIT_REF}:{{ .build.docker.contextPath | default "." }}"
+
+            docker buildx rm "builder-{{ include "app.serviceName" . }}" 2>/dev/null || true
+            docker buildx create --name "builder-{{ include "app.serviceName" . }}" --driver remote tcp://buildkit.buildkit.svc.cluster.local:1234 --use
 
             {{- if .build.docker }}
-            {{- if .build.docker.contextPath }}
-            CONTEXT_SUBDIR="{{ .build.docker.contextPath }}"
+            docker buildx build -f "{{ .build.docker.dockerfilePath | default "Dockerfile" }}" \
             {{- else }}
-            CONTEXT_SUBDIR="."
+            docker buildx build -f - \
             {{- end }}
-            {{- if .build.docker.dockerfilePath }}
-            DOCKERFILE_NAME="{{ .build.docker.dockerfilePath }}"
-            {{- else }}
-            DOCKERFILE_NAME="Dockerfile"
-            {{- end }}
-            USE_LOCAL_DOCKERFILE=""
-            {{- else }}
-            CONTEXT_SUBDIR="."
-            DOCKERFILE_NAME="Dockerfile.generated"
-            USE_LOCAL_DOCKERFILE="--local dockerfile=/app-dockerfile"
-            {{- end }}
-
-            IMAGE_NAME="{{ include "project.harborRegistry" $ }}/xquare/{{ $.Values.project }}-{{ include "app.serviceName" . }}"
-
-            buildctl build \
-              --frontend dockerfile.v0 \
-              --opt context="${GIT_URL}#${GIT_REF}:${CONTEXT_SUBDIR}" \
-              ${USE_LOCAL_DOCKERFILE} \
-              --opt filename=${DOCKERFILE_NAME} \
-              --opt platform=linux/amd64 \
-              --progress=plain \
-              --output type=image,\"name=${IMAGE_NAME}:latest,${IMAGE_NAME}:${GIT_REF}\",compression=zstd,compression-level=3,oci-mediatypes=true,push=true
+              -t "${IMAGE}:latest" -t "${IMAGE}:${GIT_REF}" \
+              --platform linux/amd64 --progress plain --provenance false --sbom false \
+              --output type=image,compression=zstd,compression-level=3,oci-mediatypes=true,push=true \
+              {{- if .build.docker }}
+              "${GIT_CONTEXT}"
+              {{- else }}
+              "${GIT_CONTEXT}" < /app-dockerfile/Dockerfile.generated
+              {{- end }}
         env:
           - name: DOCKER_CONFIG
             value: "/docker-config"
