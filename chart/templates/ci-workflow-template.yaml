@@ -295,7 +295,7 @@ spec:
           configMap:
             name: {{ include "app.serviceName" . }}-dockerfile
       container:
-        image: docker/cli:latest
+        image: docker:cli
         command: ["/bin/sh", "-c"]
         args:
           - |
