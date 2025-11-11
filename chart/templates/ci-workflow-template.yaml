@@ -295,35 +295,41 @@ spec:
           configMap:
             name: {{ include "app.serviceName" . }}-dockerfile
       container:
-        image: moby/buildkit:v0.25.2
+        image: docker:27-cli
         command: ["/bin/sh", "-c"]
         args:
           - |
             set -e
-            export BUILDKIT_HOST=tcp://buildkit.buildkit.svc.cluster.local:1234
+
+            apk add --no-cache docker-buildx
 
             TOKEN="{{`{{inputs.parameters.github-token}}`}}"
             IMAGE="{{ include "project.harborRegistry" $ }}/xquare/{{ $.Values.project }}-{{ include "app.serviceName" . }}"
             GIT_REF="{{`{{inputs.parameters.git-sha}}`}}"
             {{- if .build.docker }}
             GIT_CONTEXT="https://x-access-token:${TOKEN}@github.com/{{ .github.owner }}/{{ .github.repo }}.git#${GIT_REF}:{{ .build.docker.contextPath | default "." }}"
-            DOCKERFILE="{{ .build.docker.dockerfilePath | default "Dockerfile" }}"
             {{- else }}
             GIT_CONTEXT="https://x-access-token:${TOKEN}@github.com/{{ .github.owner }}/{{ .github.repo }}.git#${GIT_REF}:."
-            DOCKERFILE="/app-dockerfile/Dockerfile.generated"
             {{- end }}
 
-            buildctl build \
-              --frontend dockerfile.v0 \
-              --opt context="${GIT_CONTEXT}" \
-              {{- if .build.docker }}
-              --opt filename="${DOCKERFILE}" \
-              {{- else }}
-              --local dockerfile=/app-dockerfile \
-              --opt filename=Dockerfile.generated \
-              {{- end }}
-              --opt platform=linux/amd64 \
-              --output type=image,\"name=${IMAGE}:latest,${IMAGE}:${GIT_REF}\",compression=zstd,compression-level=3,oci-mediatypes=true,push=true
+            docker buildx create --name builder --driver remote tcp://buildkit.buildkit.svc.cluster.local:1234 --use
+
+            {{- if .build.docker }}
+            docker buildx build \
+              -f "{{ .build.docker.dockerfilePath | default "Dockerfile" }}" \
+              -t "${IMAGE}:latest" -t "${IMAGE}:${GIT_REF}" \
+              --platform linux/amd64 --progress plain --provenance false --sbom false \
+              --output type=image,compression=zstd,compression-level=3,oci-mediatypes=true,push=true \
+              "${GIT_CONTEXT}"
+            {{- else }}
+            docker buildx build \
+              -f - \
+              -t "${IMAGE}:latest" -t "${IMAGE}:${GIT_REF}" \
+              --platform linux/amd64 --progress plain --provenance false --sbom false \
+              --output type=image,compression=zstd,compression-level=3,oci-mediatypes=true,push=true \
+              "${GIT_CONTEXT}" \
+              < /app-dockerfile/Dockerfile.generated
+            {{- end }}
         env:
           - name: DOCKER_CONFIG
             value: "/docker-config"
