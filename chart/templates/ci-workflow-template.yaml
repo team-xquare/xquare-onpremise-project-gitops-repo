@@ -331,6 +331,8 @@ spec:
         env:
           - name: DOCKER_CONFIG
             value: /docker-config
+          - name: BUILDX_CONFIG
+            value: /tmp/buildx
         volumeMounts:
           - name: docker-config
             mountPath: /docker-config
