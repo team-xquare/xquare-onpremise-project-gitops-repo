@@ -301,7 +301,7 @@ spec:
           - |
             set -e
 
-            apk add --no-cache docker-buildx
+            apk add --no-cache docker-cli-buildx
 
             TOKEN="{{`{{inputs.parameters.github-token}}`}}"
             IMAGE="{{ include "project.harborRegistry" $ }}/xquare/{{ $.Values.project }}-{{ include "app.serviceName" . }}"
