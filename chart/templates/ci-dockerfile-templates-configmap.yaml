@@ -136,18 +136,65 @@ data:
 {{- else if .build.nextjs }}
     FROM node:{{ .build.nextjs.nodeVersion }}-alpine AS build
     RUN corepack enable
+    RUN apk add --no-cache coreutils
     WORKDIR /app
     COPY ./ .
-    RUN {{ .build.nextjs.buildCommand }}
+    RUN (find . -maxdepth 2 -name ".env*" -type f -exec grep -oE '^[A-Z_][A-Z0-9_]*=' {} + 2>/dev/null | sed 's/=$//' && \
+      find . -type f \( -name "*.js" -o -name "*.jsx" -o -name "*.ts" -o -name "*.tsx" \) \
+      ! -path "*/node_modules/*" ! -path "*/.git/*" ! -path "*/build/*" ! -path "*/dist/*" \
+      ! -path "*/.yarn/*" ! -path "*/.next/*" ! -path "*/.cache/*" ! -path "*/.turbo/*" \
+      ! -path "*/coverage/*" ! -path "*/out/*" \
+      -exec grep -ohE 'process\.env\.[A-Z_][A-Z0-9_]*|import\.meta\.env\.[A-Z_][A-Z0-9_]*' {} + 2>/dev/null | \
+      sed -e 's/process\.env\.//' -e 's/import\.meta\.env\.//') | sort -u | \
+      grep -vE '^(NODE_ENV|PUBLIC_URL|PATH|HOME|USER|SHELL|TERM|LANG|LC_ALL|PWD|OLDPWD|TMPDIR|MODE|DEV|PROD|SSR|BASE_URL|NEXT_PUBLIC_)' | \
+      while read var; do \
+        uuid=$(echo -n "$var" | md5sum | cut -d' ' -f1); \
+        echo "$var=__ENV_NOT_SET__${var}__${uuid}__"; \
+      done > /tmp/.env.mappings && \
+      echo "Found env vars: $(cat /tmp/.env.mappings | cut -d'=' -f1 | tr '\n' ' ')"
+    RUN export $(cat /tmp/.env.mappings | xargs) && {{ .build.nextjs.buildCommand }}
     FROM node:{{ .build.nextjs.nodeVersion }}-alpine
     RUN apk add --no-cache dumb-init tzdata && addgroup -g 1001 appgroup && adduser -u 1001 -G appgroup -s /bin/sh -D appuser
     WORKDIR /app
+    COPY --from=build --chown=appuser:appgroup /tmp/.env.mappings /.env.mappings
     COPY --from=build --chown=appuser:appgroup /app/.next ./.next
     COPY --from=build --chown=appuser:appgroup /app/public ./public 2>/dev/null || true
+    COPY --from=build --chown=appuser:appgroup /app/package.json ./package.json
+    COPY --from=build --chown=appuser:appgroup /app/node_modules ./node_modules 2>/dev/null || true
+    RUN printf '#!/bin/sh\nset -e\nif [ ! -f /.env.mappings ] || [ ! -s /.env.mappings ]; then\n  exec "$@"\nfi\nsed_script="/tmp/replace.sed"\n> "$sed_script"\nwhile IFS='\''='\'' read -r key placeholder; do\n  value=$(printenv "$key" || echo "")\n  if [ -n "$value" ]; then\n    escaped=$(printf '\''%%s\\n'\'' "$value" | sed '\''s/[&/\\]/\\\\&/g'\'')\n    echo "s|$placeholder|$escaped|g" >> "$sed_script"\n  fi\ndone < /.env.mappings\nif [ -s "$sed_script" ]; then\n  find /app/.next -type f -name "*.js" -exec sed -i -f "$sed_script" {} +\nfi\nrm -f "$sed_script"\nexec "$@"\n' > /entrypoint.sh && chmod +x /entrypoint.sh
     USER appuser
-    ENTRYPOINT ["dumb-init", "--"]
+    ENTRYPOINT ["/entrypoint.sh", "dumb-init", "--"]
     {{- $startCmd := (splitList " " (.build.nextjs.startCommand | default "npm start")) }}
     CMD [{{- range $i, $cmd := $startCmd }}{{if $i}}, {{end}}"{{ $cmd }}"{{- end }}]
+{{- else if index .build "nextjs-export" }}
+    FROM node:{{ index .build "nextjs-export" "nodeVersion" }}-alpine AS build
+    RUN corepack enable
+    RUN apk add --no-cache coreutils
+    WORKDIR /app
+    COPY ./ .
+    RUN (find . -maxdepth 2 -name ".env*" -type f -exec grep -oE '^[A-Z_][A-Z0-9_]*=' {} + 2>/dev/null | sed 's/=$//' && \
+      find . -type f \( -name "*.js" -o -name "*.jsx" -o -name "*.ts" -o -name "*.tsx" \) \
+      ! -path "*/node_modules/*" ! -path "*/.git/*" ! -path "*/build/*" ! -path "*/dist/*" \
+      ! -path "*/.yarn/*" ! -path "*/.next/*" ! -path "*/.cache/*" ! -path "*/.turbo/*" \
+      ! -path "*/coverage/*" ! -path "*/out/*" \
+      -exec grep -ohE 'process\.env\.[A-Z_][A-Z0-9_]*|import\.meta\.env\.[A-Z_][A-Z0-9_]*' {} + 2>/dev/null | \
+      sed -e 's/process\.env\.//' -e 's/import\.meta\.env\.//') | sort -u | \
+      grep -vE '^(NODE_ENV|PUBLIC_URL|PATH|HOME|USER|SHELL|TERM|LANG|LC_ALL|PWD|OLDPWD|TMPDIR|MODE|DEV|PROD|SSR|BASE_URL|NEXT_PUBLIC_)' | \
+      while read var; do \
+        uuid=$(echo -n "$var" | md5sum | cut -d' ' -f1); \
+        echo "$var=__ENV_NOT_SET__${var}__${uuid}__"; \
+      done > /tmp/.env.mappings && \
+      echo "Found env vars: $(cat /tmp/.env.mappings | cut -d'=' -f1 | tr '\n' ' ')"
+    RUN export $(cat /tmp/.env.mappings | xargs) && {{ index .build "nextjs-export" "buildCommand" }}
+    FROM nginx:alpine
+    RUN apk add --no-cache tzdata wget && addgroup -g 101 nginx-group || true && adduser -u 101 -G nginx-group -s /bin/sh -D nginx-user || true
+    COPY --from=build /app{{ index .build "nextjs-export" "distPath" | default "/out" }} /usr/share/nginx/html
+    COPY --from=build /tmp/.env.mappings /.env.mappings
+    RUN echo 'server { listen 8080; server_name _; root /usr/share/nginx/html; index index.html; add_header X-Frame-Options "SAMEORIGIN" always; add_header X-Content-Type-Options "nosniff" always; add_header X-XSS-Protection "1; mode=block" always; gzip on; gzip_vary on; gzip_types text/plain text/css application/json application/javascript text/xml application/xml text/javascript; location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ { expires 1y; add_header Cache-Control "public, immutable"; } location / { try_files $uri $uri/ /index.html; } location /health { access_log off; return 200 "healthy\\n"; add_header Content-Type text/plain; } }' > /etc/nginx/conf.d/default.conf
+    RUN rm -f /etc/nginx/conf.d/default.conf.default
+    RUN printf '#!/bin/sh\nset -e\nif [ ! -f /.env.mappings ] || [ ! -s /.env.mappings ]; then\n  exit 0\nfi\nsed_script="/tmp/replace.sed"\n> "$sed_script"\nwhile IFS='\''='\'' read -r key placeholder; do\n  value=$(printenv "$key" || echo "")\n  if [ -n "$value" ]; then\n    escaped=$(printf '\''%%s\\n'\'' "$value" | sed '\''s/[&/\\]/\\\\&/g'\'')\n    echo "s|$placeholder|$escaped|g" >> "$sed_script"\n  fi\ndone < /.env.mappings\nif [ -s "$sed_script" ]; then\n  find /usr/share/nginx/html -type f -name "*.js" -exec sed -i -f "$sed_script" {} +\nfi\nrm -f "$sed_script"\n' > /docker-entrypoint.d/40-inject-env.sh
+    RUN chmod +x /docker-entrypoint.d/40-inject-env.sh
+    CMD ["nginx", "-g", "daemon off;"]
 {{- else if .build.go }}
     FROM golang:{{ .build.go.goVersion }}-alpine AS build
     RUN apk add --no-cache git ca-certificates tzdata

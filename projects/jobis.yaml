@@ -199,8 +199,8 @@ applications:
         - yarn.lock
         - next.config.js
     build:
-      nextjs:
-        nodeVersion: "23.11.0"
+      nextjs-export:
+        nodeVersion: "18.17.1"
         distPath: /out
         buildCommand: "yarn install && yarn build"
     endpoints:
@@ -218,10 +218,9 @@ applications:
         - public/**
         - package.json
         - package-lock.json
-      hash: dfc1d63175f9ce3a88f77822d271bb72e8b79a3f
     build:
-      cra:
-        nodeVersion: "23.11.0"
+      react:
+        nodeVersion: "18.17.1"
         distPath: /build
         buildCommand: "npm install && npm run build"
     endpoints:
@@ -242,8 +241,8 @@ applications:
         - yarn.lock
         - next.config.js
     build:
-      nextjs:
-        nodeVersion: "23.11.0"
+      nextjs-export:
+        nodeVersion: "18.14.0"
         distPath: /out
         buildCommand: "yarn install && yarn build"
     endpoints:

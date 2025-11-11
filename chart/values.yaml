@@ -122,7 +122,7 @@ applications: []
 #         routes:
 #           - vue.dsmhs.kr
 #
-#   # Next.js Full-stack
+#   # Next.js SSR (Server-Side Rendering)
 #   - name: example-nextjs-app
 #     github:
 #       owner: team-xquare
@@ -139,6 +139,30 @@ applications: []
 #       - port: 8080
 #         routes:
 #           - nextjs.dsmhs.kr
+#
+#   # Next.js Static Export (output: 'export')
+#   - name: example-nextjs-static
+#     github:
+#       owner: team-xquare
+#       repo: nextjs-static-app
+#       branch: main
+#       installationId: "12345678"
+#       hash: latest
+#       triggerPaths:
+#         - "src/**"
+#         - "app/**"
+#         - "public/**"
+#         - "package.json"
+#         - "next.config.js"
+#     build:
+#       nextjs-export:
+#         nodeVersion: "20"
+#         buildCommand: "npm ci && npm run build"
+#         distPath: "/out"
+#     endpoints:
+#       - port: 8080
+#         routes:
+#           - nextjs-static.dsmhs.kr
 #
 #   # Go Backend
 #   - name: example-go-service
