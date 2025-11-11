@@ -50,7 +50,7 @@ spec:
                 - name: sha
                   value: "{{`{{= workflow.parameters['github-event-type'] == 'push' ? workflow.parameters['github-sha'] : tasks['get-latest-sha'].outputs.parameters['commit-sha'] }}`}}"
 
-          - name: kaniko-build
+          - name: buildkit-build
             template: docker-build
             depends: "get-github-token.Succeeded && (get-latest-sha.Succeeded || get-latest-sha.Skipped)"
             arguments:
@@ -62,7 +62,7 @@ spec:
 
           - name: check-run-build-success
             template: update-check-run
-            depends: "kaniko-build.Succeeded && create-check-run-start.Succeeded"
+            depends: "buildkit-build.Succeeded && create-check-run-start.Succeeded"
             arguments:
               parameters:
                 - name: github-token
@@ -80,7 +80,7 @@ spec:
 
           - name: check-run-build-failed
             template: update-check-run
-            depends: "kaniko-build.Failed && create-check-run-start.Succeeded"
+            depends: "buildkit-build.Failed && create-check-run-start.Succeeded"
             arguments:
               parameters:
                 - name: github-token
@@ -98,7 +98,7 @@ spec:
 
           - name: gitops-update
             template: update-gitops-repo
-            depends: "kaniko-build.Succeeded"
+            depends: "buildkit-build.Succeeded"
             arguments:
               parameters:
                 - name: image-tag
@@ -297,31 +297,42 @@ spec:
           configMap:
             name: {{ include "app.serviceName" . }}-dockerfile
       container:
-        image: gcr.io/kaniko-project/executor:latest
+        image: moby/buildkit:v0.25.2
+        command: ["/bin/sh", "-c"]
         args:
-          - "--context=/workspace/repo/{{- if .build.docker }}{{- if .build.docker.contextPath }}{{ .build.docker.contextPath }}{{- else }}.{{- end }}{{- else }}.{{- end }}"
-          {{- if .build.docker }}
-          {{- if .build.docker.dockerfilePath }}
-          - "--dockerfile={{ .build.docker.dockerfilePath }}"
-          {{- end }}
-          {{- else }}
-          - "--dockerfile=Dockerfile"
-          {{- end }}
-          - "--destination={{ include "project.harborRegistry" $ }}/xquare/{{ $.Values.project }}-{{ include "app.serviceName" . }}:latest"
-          - "--destination={{ include "project.harborRegistry" $ }}/xquare/{{ $.Values.project }}-{{ include "app.serviceName" . }}:{{`{{inputs.parameters.git-sha}}`}}"
-          - "--registry-mirror=mirror.gcr.io"
-          - "--cache=true"
-          - "--cache-repo={{ include "project.harborRegistry" $ }}/xquare/cache"
-          - "--snapshot-mode=redo"
-          - "--use-new-run=true"
+          - |
+            set -e
+            export BUILDKIT_HOST=tcp://buildkit.buildkit.svc.cluster.local:1234
+
+            CONTEXT_PATH="/workspace/repo/{{- if .build.docker }}{{- if .build.docker.contextPath }}{{ .build.docker.contextPath }}{{- else }}.{{- end }}{{- else }}.{{- end }}"
+            {{- if .build.docker }}
+            {{- if .build.docker.dockerfilePath }}
+            DOCKERFILE_PATH="{{ .build.docker.dockerfilePath }}"
+            {{- else }}
+            DOCKERFILE_PATH="Dockerfile"
+            {{- end }}
+            {{- else }}
+            DOCKERFILE_PATH="Dockerfile"
+            {{- end }}
+
+            cd $CONTEXT_PATH
+
+            buildctl build \
+              --frontend dockerfile.v0 \
+              --local context=. \
+              --local dockerfile=. \
+              --opt filename=$DOCKERFILE_PATH \
+              --opt platform=linux/amd64 \
+              --progress=plain \
+              --output type=image,"name={{ include "project.harborRegistry" $ }}/xquare/{{ $.Values.project }}-{{ include "app.serviceName" . }}:latest,{{ include "project.harborRegistry" $ }}/xquare/{{ $.Values.project }}-{{ include "app.serviceName" . }}:{{`{{inputs.parameters.git-sha}}`}}",compression=zstd,compression-level=3,oci-mediatypes=true,push=true
         env:
           - name: DOCKER_CONFIG
-            value: "/kaniko/.docker"
+            value: "/docker-config"
         volumeMounts:
           - name: workspace
             mountPath: /workspace
           - name: docker-config
-            mountPath: /kaniko/.docker
+            mountPath: /docker-config
       initContainers:
         - name: checkout-and-prepare
           image: alpine:3.18
