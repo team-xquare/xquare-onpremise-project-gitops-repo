@@ -333,7 +333,7 @@ spec:
               --opt filename=${DOCKERFILE_NAME} \
               --opt platform=linux/amd64 \
               --progress=plain \
-              --output "type=image,name=${IMAGE_NAME}:latest,${IMAGE_NAME}:${GIT_REF},compression=zstd,compression-level=3,oci-mediatypes=true,push=true"
+              --output type=image,\"name=${IMAGE_NAME}:latest,${IMAGE_NAME}:${GIT_REF}\",compression=zstd,compression-level=3,oci-mediatypes=true,push=true
         env:
           - name: DOCKER_CONFIG
             value: "/docker-config"
