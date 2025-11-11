@@ -10,10 +10,12 @@ metadata:
     app.kubernetes.io/component: ci-webhook-route
 spec:
   parentRefs:
-    - name: external-gateway
+    - group: gateway.networking.k8s.io
+      name: external-gateway
       namespace: gateway
       sectionName: http
-    - name: external-gateway
+    - group: gateway.networking.k8s.io
+      name: external-gateway
       namespace: gateway
       sectionName: https
   hostnames:

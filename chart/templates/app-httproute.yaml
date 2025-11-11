@@ -20,10 +20,14 @@ metadata:
     app.kubernetes.io/component: http-route
 spec:
   parentRefs:
-    - name: external-gateway
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: external-gateway
       namespace: gateway
       sectionName: http
-    - name: external-gateway
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: external-gateway
       namespace: gateway
       sectionName: https
   hostnames:
