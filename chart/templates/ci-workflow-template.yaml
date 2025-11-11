@@ -304,7 +304,11 @@ spec:
             TOKEN="{{`{{inputs.parameters.github-token}}`}}"
             IMAGE="{{ include "project.harborRegistry" $ }}/xquare/{{ $.Values.project }}-{{ include "app.serviceName" . }}"
             GIT_REF="{{`{{inputs.parameters.git-sha}}`}}"
+            {{- if .build.docker }}
             GIT_CONTEXT="https://x-access-token:${TOKEN}@github.com/{{ .github.owner }}/{{ .github.repo }}.git#${GIT_REF}:{{ .build.docker.contextPath | default "." }}"
+            {{- else }}
+            GIT_CONTEXT="https://x-access-token:${TOKEN}@github.com/{{ .github.owner }}/{{ .github.repo }}.git#${GIT_REF}:."
+            {{- end }}
 
             docker buildx rm "builder-{{ include "app.serviceName" . }}" 2>/dev/null || true
             docker buildx create --name "builder-{{ include "app.serviceName" . }}" --driver remote tcp://buildkit.buildkit.svc.cluster.local:1234 --use
