@@ -7,9 +7,9 @@ applications:
       installationId: "64597732"
       hash: 220e4bf0cb737c631b8381b7779eb576207ca0ec
     build:
-      react:
+      vite:
         nodeVersion: "22"
-        distPath: /services/admin/build
+        distPath: /services/admin/dist
         buildCommand: yarn install && yarn workspace @service/admin build
     endpoints:
       - port: 8080
@@ -23,9 +23,9 @@ applications:
       installationId: "64597732"
       hash: 38e4b7b149323512bbd59d9ef7e84da8d7eaa5ab
     build:
-      react:
+      vite:
         nodeVersion: "22"
-        distPath: /services/admin/build
+        distPath: /services/admin/dist
         buildCommand: yarn install && yarn workspace @service/admin build
     endpoints:
       - port: 8080
