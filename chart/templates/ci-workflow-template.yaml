@@ -320,7 +320,7 @@ spec:
             USE_LOCAL_DOCKERFILE=""
             {{- else }}
             CONTEXT_SUBDIR="."
-            DOCKERFILE_NAME="Dockerfile"
+            DOCKERFILE_NAME="Dockerfile.generated"
             USE_LOCAL_DOCKERFILE="--local dockerfile=/app-dockerfile"
             {{- end }}
 

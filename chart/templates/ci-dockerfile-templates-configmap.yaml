@@ -9,7 +9,7 @@ metadata:
     {{- include "app.labels" . | nindent 4 }}
     app.kubernetes.io/component: dockerfile
 data:
-  Dockerfile: |
+  Dockerfile.generated: |
 {{- if .build.gradle }}
     FROM eclipse-temurin:{{ .build.gradle.javaVersion }}-jdk-alpine AS build
     WORKDIR /app
