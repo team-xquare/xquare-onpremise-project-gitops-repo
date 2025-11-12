@@ -219,7 +219,7 @@ applications:
         - public/**
         - package.json
         - package-lock.json
-      hash: dfc1d63175f9ce3a88f77822d271bb72e8b79a3f
+      hash: 9b341aff6edfbbd1beb31af88ae27e82dbcda74c
     build:
       react:
         nodeVersion: "18.17.1"
