@@ -143,6 +143,7 @@ spec:
     - name: github-token-generator
       container:
         image: alpine:3.18
+        imagePullPolicy: IfNotPresent
         command: ["/bin/sh", "-c"]
         args:
           - |
@@ -184,6 +185,7 @@ spec:
           - name: github-token
       container:
         image: alpine:3.18
+        imagePullPolicy: IfNotPresent
         command: ["/bin/sh", "-c"]
         args:
           - |
@@ -213,6 +215,7 @@ spec:
           - name: sha
       container:
         image: alpine:3.18
+        imagePullPolicy: IfNotPresent
         command: ["/bin/sh", "-c"]
         args:
           - |
@@ -253,6 +256,7 @@ spec:
           - name: summary
       container:
         image: curlimages/curl:latest
+        imagePullPolicy: IfNotPresent
         command: ["/bin/sh", "-c"]
         args:
           - |
@@ -296,6 +300,7 @@ spec:
             name: {{ include "app.serviceName" . }}-dockerfile
       container:
         image: docker:cli
+        imagePullPolicy: IfNotPresent
         command: ["/bin/sh", "-c"]
         args:
           - |
@@ -345,6 +350,7 @@ spec:
           - name: image-tag
       container:
         image: curlimages/curl:latest
+        imagePullPolicy: IfNotPresent
         command: ["/bin/sh", "-c"]
         args:
           - |
