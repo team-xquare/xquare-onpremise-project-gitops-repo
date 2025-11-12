@@ -54,6 +54,13 @@ applications:
       branch: main
       installationId: "64597732"
       hash: b54143dd3e6a6a102b9aa968eb0afe63fcfaae36
+      triggerPaths:
+        - dms-gateway/**
+        - contracts/**
+        - build.gradle.kts
+        - settings.gradle.kts
+        - gradle.properties
+        - buildSrc/**
     build:
       docker:
         dockerfilePath: "./dms-gateway/Dockerfile"
@@ -69,6 +76,13 @@ applications:
       branch: develop
       installationId: "64597732"
       hash: d50c468408c381ab20c934bb4a6dbfb1d6e9ceef
+      triggerPaths:
+        - dms-gateway/**
+        - contracts/**
+        - build.gradle.kts
+        - settings.gradle.kts
+        - gradle.properties
+        - buildSrc/**
     build:
       docker:
         dockerfilePath: "./dms-gateway/Dockerfile"
@@ -84,6 +98,13 @@ applications:
       branch: main
       installationId: "64597732"
       hash: b54143dd3e6a6a102b9aa968eb0afe63fcfaae36
+      triggerPaths:
+        - dms-main/**
+        - contracts/**
+        - build.gradle.kts
+        - settings.gradle.kts
+        - gradle.properties
+        - buildSrc/**
     build:
       docker:
         dockerfilePath: "./dms-main/Dockerfile"
@@ -97,6 +118,13 @@ applications:
       branch: develop
       installationId: "64597732"
       hash: d50c468408c381ab20c934bb4a6dbfb1d6e9ceef
+      triggerPaths:
+        - dms-main/**
+        - contracts/**
+        - build.gradle.kts
+        - settings.gradle.kts
+        - gradle.properties
+        - buildSrc/**
     build:
       docker:
         dockerfilePath: "./dms-main/Dockerfile"
@@ -110,6 +138,13 @@ applications:
       branch: main
       installationId: "64597732"
       hash: b54143dd3e6a6a102b9aa968eb0afe63fcfaae36
+      triggerPaths:
+        - dms-notification/**
+        - contracts/**
+        - build.gradle.kts
+        - settings.gradle.kts
+        - gradle.properties
+        - buildSrc/**
     build:
       docker:
         dockerfilePath: "./dms-notification/Dockerfile"
@@ -124,6 +159,13 @@ applications:
       branch: develop
       installationId: "64597732"
       hash: d50c468408c381ab20c934bb4a6dbfb1d6e9ceef
+      triggerPaths:
+        - dms-notification/**
+        - contracts/**
+        - build.gradle.kts
+        - settings.gradle.kts
+        - gradle.properties
+        - buildSrc/**
     build:
       docker:
         dockerfilePath: "./dms-notification/Dockerfile"
