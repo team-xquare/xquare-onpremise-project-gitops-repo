@@ -189,7 +189,7 @@ applications:
     github:
       owner: Team-return
       repo: JOBIS-DSM-STUDENT-FE
-      branch: develop
+      branch: main
       installationId: "82814703"
       triggerPaths:
         - src/**
@@ -212,7 +212,7 @@ applications:
     github:
       owner: Team-return
       repo: JOBIS-DSM-ADMIN-FE
-      branch: develop
+      branch: main
       installationId: "82814703"
       triggerPaths:
         - src/**
@@ -233,7 +233,7 @@ applications:
     github:
       owner: Team-return
       repo: JOBIS-DSM-COMPANY-FE
-      branch: develop
+      branch: main
       installationId: "82814703"
       triggerPaths:
         - src/**
