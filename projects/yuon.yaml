@@ -1,7 +1,7 @@
 applications:
   - name: server
     github:
-      owner: team-xquare
+      owner: team-yuon
       repo: server
       branch: main
       installationId: "93919948"
