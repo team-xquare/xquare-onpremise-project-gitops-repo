@@ -252,6 +252,36 @@ applications:
       - port: 8080
         routes:
           - v1-jobis-company-stag.dsmhs.kr
+  - name: fe-webview-prod
+    github:
+      owner: Team-return
+      repo: JOBIS-WEBVIEW
+      branch: main
+      installationId: "82814703"
+    build:
+      vite:
+        nodeVersion: "23.11.0"
+        distPath: ./dist
+        buildCommand: "yarn build"
+    endpoints:
+      - port: 8080
+        routes:
+          - jobis-webview.dsmhs.kr
+  - name: fe-webview-stag
+    github:
+      owner: Team-return
+      repo: JOBIS-WEBVIEW
+      branch: develop
+      installationId: "82814703"
+    build:
+      vite:
+        nodeVersion: "23.11.0"
+        distPath: ./dist
+        buildCommand: "yarn build"
+    endpoints:
+      - port: 8080
+        routes:
+          - jobis-webview-stag.dsmhs.kr
 addons:
   - name: jobis-redis
     type: redis
