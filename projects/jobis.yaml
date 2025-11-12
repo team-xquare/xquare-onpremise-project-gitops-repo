@@ -242,7 +242,7 @@ applications:
         - package.json
         - yarn.lock
         - next.config.js
-      hash: 0f7063587796fb2e7ef202ff65c9d61b422df5fa
+      hash: bd2ab9a9f30c4970014a470f4ba4b04bf23790f5
     build:
       nextjs-export:
         nodeVersion: "18.14.0"
