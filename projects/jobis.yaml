@@ -273,6 +273,7 @@ applications:
       repo: JOBIS-WEBVIEW
       branch: develop
       installationId: "82814703"
+      hash: 64607063e87f17c3cb5b6d4652e31934cf4f386d
     build:
       vite:
         nodeVersion: "23.11.0"
