@@ -154,18 +154,18 @@ spec:
             INSTALL_ID={{ include "ci.installationId" . }}
             echo "$GITHUB_PRIVATE_KEY" > /tmp/key.pem
             chmod 600 /tmp/key.pem
-            
+
             now=$(date +%s); iat=$((now-60)); exp=$((now+600))
             b64enc() { openssl base64 | tr -d '=' | tr '/+' '_-' | tr -d '\n'; }
             header_encoded=$(echo -n '{"typ":"JWT","alg":"RS256"}' | b64enc)
             payload_encoded=$(echo -n "{\"iat\":${iat},\"exp\":${exp},\"iss\":\"${APP_ID}\"}" | b64enc)
             JWT="${header_encoded}.${payload_encoded}.$(openssl dgst -sha256 -sign /tmp/key.pem <(echo -n "${header_encoded}.${payload_encoded}") | b64enc)"
-            
+
             TOKEN=$(curl -s -X POST -H "Authorization: Bearer ${JWT}" -H "Accept: application/vnd.github+json" \
               "https://api.github.com/app/installations/${INSTALL_ID}/access_tokens" | jq -r '.token')
-            
+
             [ -z "$TOKEN" ] || [ "$TOKEN" = "null" ] && { echo "ERROR: Failed to get GitHub token"; exit 1; }
-            
+
             echo "$TOKEN" > /tmp/github_token.txt
         env:
           - name: GITHUB_PRIVATE_KEY
@@ -191,7 +191,7 @@ spec:
           - |
             set -e
             apk add --no-cache curl jq
-    
+
             COMMIT_SHA=$(curl -s -H "Authorization: Bearer {{`{{inputs.parameters.github-token}}`}}" \
               -H "Accept: application/vnd.github+json" \
               "https://api.github.com/repos/{{ .github.owner }}/{{ .github.repo }}/branches/{{ .github.branch }}" \
@@ -202,7 +202,7 @@ spec:
           - name: commit-sha
             valueFrom:
               path: /tmp/commit_sha.txt
-    
+
     - name: create-check-run
       inputs:
         parameters:
@@ -221,7 +221,7 @@ spec:
           - |
             set -e
             apk add --no-cache curl jq
-    
+
             CHECK_RUN_ID=$(curl -s -X POST \
               -H "Authorization: Bearer {{`{{inputs.parameters.github-token}}`}}" \
               -H "Accept: application/vnd.github+json" \
@@ -261,12 +261,12 @@ spec:
         args:
           - |
             set -e
-            
+
             CONCLUSION_JSON=""
             if [ "{{`{{inputs.parameters.conclusion}}`}}" != "" ]; then
               CONCLUSION_JSON='"conclusion": "{{`{{inputs.parameters.conclusion}}`}}",'
             fi
-            
+
             curl -s -X PATCH \
               -H "Authorization: Bearer {{`{{inputs.parameters.github-token}}`}}" \
               -H "Accept: application/vnd.github+json" \
@@ -280,7 +280,7 @@ spec:
                 }
               }" \
               "https://api.github.com/repos/{{ .github.owner }}/{{ .github.repo }}/check-runs/{{`{{inputs.parameters.check-run-id}}`}}"
-            
+
             echo "Check run updated successfully"
 
     - name: docker-build
@@ -355,7 +355,7 @@ spec:
         args:
           - |
             set -e
-            
+
             curl -X POST \
               -H "Authorization: token $GITHUB_TOKEN" \
               -H "Accept: application/vnd.github.v3+json" \
