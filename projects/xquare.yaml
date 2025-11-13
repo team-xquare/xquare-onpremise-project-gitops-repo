@@ -14,9 +14,27 @@ applications:
       - port: 8080
         routes:
           - s3-test.dsmhs.kr
+  - name: infra-backend-prod
+    github:
+      owner: team-xquare
+      repo: xquare-infra-backend-v3
+      branch: main
+      installationId: "62433388"
+    build:
+      gradle:
+        javaVersion: 17
+        jarOutputPath: /build/libs/*.jar
+        buildCommand: ./gradlew bootJar -x test
+    endpoints:
+      - port: 8080
+        routes:
+          - infra-backend.dsmhs.kr
 addons:
   - name: xquare-test
     type: seaweedfs
     storage: 1Gi
     buckets:
       - name: test-buckets
+  - name: xquare-infra-mysql
+    type: mysql
+    storage: 1Gi
