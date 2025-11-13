@@ -261,7 +261,7 @@ applications:
     build:
       vite:
         nodeVersion: "23.11.0"
-        distPath: ./dist
+        distPath: /dist
         buildCommand: "yarn install && yarn build"
     endpoints:
       - port: 8080
@@ -276,7 +276,7 @@ applications:
     build:
       vite:
         nodeVersion: "23.11.0"
-        distPath: ./dist
+        distPath: /dist
         buildCommand: "yarn install && yarn build"
     endpoints:
       - port: 8080
