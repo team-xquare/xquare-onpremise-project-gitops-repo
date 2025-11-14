@@ -16,15 +16,15 @@ data:
     WORKDIR /app
     RUN apk add --no-cache bash findutils gcompat
     COPY ./build.gradle* ./settings.gradle* ./gradle.properties* ./gradlew* ./
-    COPY ./gradle gradle 2>/dev/null || true
-    RUN chmod +x gradlew 2>/dev/null || true
+    RUN --mount=type=bind,source=gradle,target=/tmp/gradle cp -r /tmp/gradle . 2>/dev/null || mkdir -p gradle
+    RUN chmod +x gradlew 2>/dev/null || chmod +x ./gradlew 2>/dev/null || true
     RUN --mount=type=cache,target=/root/.gradle,sharing=locked ./gradlew dependencies --no-daemon 2>/dev/null || true
     FROM eclipse-temurin:{{ .build.gradle.javaVersion }}-jdk-alpine AS build
     WORKDIR /app
     RUN apk add --no-cache bash findutils gcompat
     ENV GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.parallel=true -Dorg.gradle.caching=true -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
     COPY ./build.gradle* ./settings.gradle* ./gradle.properties* ./gradlew* ./
-    COPY ./gradle gradle 2>/dev/null || true
+    RUN --mount=type=bind,source=gradle,target=/tmp/gradle cp -r /tmp/gradle . 2>/dev/null || mkdir -p gradle
     COPY ./ .
     RUN --mount=type=cache,target=/root/.gradle,sharing=locked chmod +x gradlew 2>/dev/null || true && {{ .build.gradle.buildCommand }} --no-daemon
     FROM eclipse-temurin:{{ .build.gradle.javaVersion }}-jdk-alpine AS extract
