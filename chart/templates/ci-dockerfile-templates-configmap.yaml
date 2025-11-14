@@ -11,27 +11,37 @@ metadata:
 data:
   Dockerfile.generated: |
 {{- if .build.gradle }}
+    # syntax=docker/dockerfile:1.10
+    FROM eclipse-temurin:{{ .build.gradle.javaVersion }}-jdk-alpine AS deps
+    WORKDIR /app
+    RUN apk add --no-cache bash findutils gcompat
+    COPY ./build.gradle* ./settings.gradle* ./gradle.properties* ./gradlew* ./
+    COPY ./gradle gradle 2>/dev/null || true
+    RUN chmod +x gradlew 2>/dev/null || true
+    RUN --mount=type=cache,target=/root/.gradle,sharing=locked ./gradlew dependencies --no-daemon 2>/dev/null || true
     FROM eclipse-temurin:{{ .build.gradle.javaVersion }}-jdk-alpine AS build
     WORKDIR /app
     RUN apk add --no-cache bash findutils gcompat
-    ENV GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.parallel=true -Dorg.gradle.configureondemand=true -Dorg.gradle.caching=true -Dorg.gradle.configuration-cache=true -Dorg.gradle.unsafe.configuration-cache=true -Dorg.gradle.unsafe.configuration-cache-problems=warn -Dorg.gradle.workers.max=4 -Dorg.gradle.logging.level=lifecycle -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -XX:+UseG1GC -XX:G1HeapRegionSize=16m -XX:+UseStringDeduplication -XX:-UsePerfData -XX:+DisableExplicitGC -XX:MaxMetaspaceSize=512m -Dkotlin.compiler.execution.strategy=in-process -Dkotlin.incremental=false -Dkotlin.daemon.jvm.options=-Xmx1g -Dkotlin.parallel.tasks.in.project=true -Dfile.encoding=UTF-8 -Duser.country=US -Duser.language=en -Duser.timezone=UTC -Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom -Dorg.gradle.internal.http.connectionTimeout=60000 -Dorg.gradle.internal.http.socketTimeout=60000 -Dorg.gradle.internal.repository.max.tentatives=1 -Dorg.gradle.internal.repository.initial.backoff=500 -Dorg.gradle.internal.network.retry.max.times=2"
-    ENV GRADLE_USER_HOME="/cache/.gradle"
-    RUN mkdir -p /cache/.gradle
+    ENV GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.parallel=true -Dorg.gradle.caching=true -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
     COPY ./build.gradle* ./settings.gradle* ./gradle.properties* ./gradlew* ./
-    COPY ./gradle gradle
-    RUN chmod +x gradlew && ./gradlew --version
-    RUN chmod +x gradlew && ./gradlew dependencies || true
+    COPY ./gradle gradle 2>/dev/null || true
     COPY ./ .
-    RUN chmod +x gradlew && {{ .build.gradle.buildCommand }} && \
-        rm -rf .gradle /app/.gradle /root/.kotlin /tmp/* /var/tmp/* /tmp/kotlin-daemon*.log* 2>/dev/null || true
+    RUN --mount=type=cache,target=/root/.gradle,sharing=locked chmod +x gradlew 2>/dev/null || true && {{ .build.gradle.buildCommand }} --no-daemon
+    FROM eclipse-temurin:{{ .build.gradle.javaVersion }}-jdk-alpine AS extract
+    WORKDIR /extract
+    RUN apk add --no-cache unzip
+    COPY --from=build /app{{ .build.gradle.jarOutputPath | default "/build/libs/*.jar" }} app.jar
+    RUN set -ex && if java -Djarmode=tools -jar app.jar list-layers >/dev/null 2>&1; then java -Djarmode=tools -jar app.jar extract --layers --destination /extract; elif java -Djarmode=layertools -jar app.jar list >/dev/null 2>&1; then java -Djarmode=layertools -jar app.jar extract --destination /extract; else mkdir -p dependencies spring-boot-loader snapshot-dependencies application && unzip -q app.jar && [ -d BOOT-INF/lib ] && mv BOOT-INF/lib/* dependencies/ 2>/dev/null || true && find dependencies/ -name '*-SNAPSHOT.jar' -exec mv {} snapshot-dependencies/ \; 2>/dev/null || true && [ -d org/springframework/boot/loader ] && mkdir -p spring-boot-loader/org/springframework/boot && mv org/springframework/boot/loader spring-boot-loader/org/springframework/boot/ 2>/dev/null || true && [ -d BOOT-INF/classes ] && mv BOOT-INF/classes/* application/ 2>/dev/null || true && [ -d META-INF ] && mv META-INF application/ 2>/dev/null || true; fi && rm -f app.jar
     FROM eclipse-temurin:{{ .build.gradle.javaVersion }}-jre-alpine
-    RUN apk add --no-cache tzdata && addgroup -g 1001 appgroup && adduser -u 1001 -G appgroup -s /bin/sh -D appuser
+    RUN apk add --no-cache tzdata curl ca-certificates && addgroup -g 1001 appgroup && adduser -u 1001 -G appgroup -s /bin/sh -D appuser && rm -rf /var/cache/apk/*
     WORKDIR /app
-    ENV TZ=Asia/Seoul JAVA_OPTS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -XX:+UseG1GC -XX:G1HeapRegionSize=16m -XX:+UseStringDeduplication -XX:-UsePerfData"
-    COPY --from=build --chown=appuser:appgroup /app{{ .build.gradle.jarOutputPath | default "/build/libs/*.jar" }} /tmp/libs/
-    RUN find /tmp/libs -name "*.jar" ! -name "*-plain.jar" -exec cp {} /app/app.jar \; && rm -rf /tmp/libs && chown appuser:appgroup /app/app.jar
+    ENV TZ=Asia/Seoul JAVA_OPTS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -XX:+UseG1GC -Djava.security.egd=file:/dev/./urandom" JAVA_TOOL_OPTIONS="-XX:+ExitOnOutOfMemoryError"
+    COPY --from=extract --chown=appuser:appgroup /extract/dependencies/ ./
+    COPY --from=extract --chown=appuser:appgroup /extract/spring-boot-loader/ ./
+    COPY --from=extract --chown=appuser:appgroup /extract/snapshot-dependencies/ ./
+    COPY --from=extract --chown=appuser:appgroup /extract/application/ ./
     USER appuser
-    ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar /app/app.jar"]
+    ENTRYPOINT ["sh","-c","exec java $JAVA_OPTS org.springframework.boot.loader.launch.JarLauncher 2>/dev/null || exec java $JAVA_OPTS org.springframework.boot.loader.JarLauncher"]
 {{- else if .build.nodejs }}
     FROM node:{{ .build.nodejs.nodeVersion }}-alpine AS build
     RUN corepack enable
