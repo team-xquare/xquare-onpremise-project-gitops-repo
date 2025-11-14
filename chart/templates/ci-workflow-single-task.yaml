@@ -1,0 +1,164 @@
+{{- range .Values.applications }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: {{ include "app.serviceName" . }}-ci-pipeline-template
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "app.labels" . | nindent 4 }}
+    app.kubernetes.io/component: ci-workflow-template
+spec:
+  entrypoint: ci-pipeline
+  arguments:
+    parameters:
+      - name: github-event-type
+      - name: github-sha
+        value: ""
+
+  templates:
+    - name: ci-pipeline
+      volumes:
+        - name: docker-config
+          secret:
+            secretName: harbor-registry-credentials
+            items:
+              - key: .dockerconfigjson
+                path: config.json
+        - name: app-dockerfile
+          configMap:
+            name: {{ include "app.serviceName" . }}-dockerfile
+      script:
+        image: docker:cli
+        imagePullPolicy: IfNotPresent
+        command: [sh]
+        source: |
+          set -e
+          apk add --no-cache jq curl openssl
+
+          GITHUB_API="https://api.github.com"
+          REPO_PATH="{{ .github.owner }}/{{ .github.repo }}"
+          IMAGE="{{ include "project.harborRegistry" $ }}/xquare/{{ $.Values.project }}-{{ include "app.serviceName" . }}"
+
+          # Generate GitHub App JWT and get access token
+          generate_github_token() {
+            echo "$GITHUB_PRIVATE_KEY" > /tmp/key.pem
+            chmod 600 /tmp/key.pem
+
+            now=$(date +%s); iat=$((now-60)); exp=$((now+600))
+            b64enc() { openssl base64 | tr -d '=' | tr '/+' '_-' | tr -d '\n'; }
+            header=$(echo -n '{"typ":"JWT","alg":"RS256"}' | b64enc)
+            payload=$(echo -n "{\"iat\":${iat},\"exp\":${exp},\"iss\":\"{{ include "ci.githubAppID" $ }}\"}" | b64enc)
+            signature=$(openssl dgst -sha256 -sign /tmp/key.pem <(echo -n "${header}.${payload}") | b64enc)
+
+            curl -s -X POST \
+              -H "Authorization: Bearer ${header}.${payload}.${signature}" \
+              -H "Accept: application/vnd.github+json" \
+              "${GITHUB_API}/app/installations/{{ include "ci.installationId" . }}/access_tokens" \
+              | jq -r '.token'
+          }
+
+          # Update GitHub check run status
+          update_check_run() {
+            local conclusion_json=""
+            [ -n "$2" ] && conclusion_json="\"conclusion\": \"$2\","
+
+            curl -s -X PATCH \
+              -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+              -H "Accept: application/vnd.github+json" \
+              -H "Content-Type: application/json" \
+              -d "{\"status\":\"$1\",${conclusion_json}\"output\":{\"title\":\"$3\",\"summary\":\"$4\"}}" \
+              "${GITHUB_API}/repos/${REPO_PATH}/check-runs/${CHECK_RUN_ID}" > /dev/null
+          }
+
+          # Get GitHub token
+          GITHUB_TOKEN=$(generate_github_token)
+          [ -z "$GITHUB_TOKEN" ] || [ "$GITHUB_TOKEN" = "null" ] && { echo "ERROR: Failed to get GitHub token"; exit 1; }
+
+          # Get commit SHA
+          {{`if [ "{{workflow.parameters.github-event-type}}" = "push" ]; then`}}
+            {{`GIT_SHA="{{workflow.parameters.github-sha}}"`}}
+          else
+            GIT_SHA=$(curl -s -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+              "${GITHUB_API}/repos/${REPO_PATH}/branches/{{ .github.branch }}" | jq -r '.commit.sha')
+          fi
+
+          # Create check run (background) & build image (foreground)
+          (
+            CHECK_RUN_ID=$(curl -s -X POST \
+              -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+              -H "Accept: application/vnd.github+json" \
+              -d "{\"name\":\"{{ include "app.serviceName" . }}\",\"head_sha\":\"${GIT_SHA}\",\"status\":\"in_progress\",\"output\":{\"title\":\"빌드 진행 중\",\"summary\":\"애플리케이션 빌드를 시작합니다\"}}" \
+              "${GITHUB_API}/repos/${REPO_PATH}/check-runs" | jq -r '.id')
+            echo "$CHECK_RUN_ID" > /tmp/check_run_id.txt
+          ) &
+
+          {{- if .build.docker }}
+          GIT_CONTEXT="https://x-access-token:${GITHUB_TOKEN}@github.com/${REPO_PATH}.git#${GIT_SHA}:{{ .build.docker.contextPath | default "." }}"
+          DOCKERFILE_ARG="-f {{ .build.docker.dockerfilePath | default "Dockerfile" }}"
+          {{- else }}
+          GIT_CONTEXT="https://x-access-token:${GITHUB_TOKEN}@github.com/${REPO_PATH}.git#${GIT_SHA}:."
+          DOCKERFILE_ARG="-f -"
+          {{- end }}
+
+          docker buildx create --name builder --driver remote tcp://buildkit.buildkit.svc.cluster.local:1234 --use
+
+          BUILD_SUCCESS=0
+          {{- if .build.docker }}
+          docker buildx build ${DOCKERFILE_ARG} \
+            -t "${IMAGE}:latest" -t "${IMAGE}:${GIT_SHA}" \
+            --platform linux/amd64 --progress plain --provenance false --sbom false \
+            --output type=image,compression=zstd,compression-level=3,oci-mediatypes=true,push=true \
+            "${GIT_CONTEXT}" && BUILD_SUCCESS=1
+          {{- else }}
+          docker buildx build ${DOCKERFILE_ARG} \
+            -t "${IMAGE}:latest" -t "${IMAGE}:${GIT_SHA}" \
+            --platform linux/amd64 --progress plain --provenance false --sbom false \
+            --output type=image,compression=zstd,compression-level=3,oci-mediatypes=true,push=true \
+            "${GIT_CONTEXT}" < /app-dockerfile/Dockerfile.generated && BUILD_SUCCESS=1
+          {{- end }}
+
+          # Wait for check run creation
+          wait
+          CHECK_RUN_ID=$(cat /tmp/check_run_id.txt)
+
+          # Update build status
+          if [ "$BUILD_SUCCESS" -eq 1 ]; then
+            update_check_run "in_progress" "" "빌드 완료 - 배포 준비 중" "빌드가 성공적으로 완료되었습니다"
+          else
+            update_check_run "completed" "failure" "빌드 실패" "빌드 과정에서 오류가 발생했습니다"
+            exit 1
+          fi
+
+          # Trigger GitOps update
+          if curl -s -X POST \
+            -H "Authorization: token $GITOPS_TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            -d "{\"event_type\":\"config-api\",\"client_payload\":{\"path\":\"projects/{{ $.Values.project }}/applications/{{ include "app.serviceName" . }}\",\"action\":\"apply\",\"spec\":{\"github\":{\"hash\":\"${GIT_SHA}\"}}}}" \
+            "${GITHUB_API}/repos/{{ include "ci.gitopsRepo" $ }}/dispatches" > /dev/null; then
+            update_check_run "completed" "success" "배포 트리거 성공" "빌드 및 배포가 성공적으로 완료되었습니다"
+          else
+            update_check_run "completed" "failure" "배포 트리거 실패" "배포 트리거 과정에서 오류가 발생했습니다"
+            exit 1
+          fi
+        env:
+          - name: GITHUB_PRIVATE_KEY
+            valueFrom:
+              secretKeyRef:
+                name: github-app-pem
+                key: privateKey.pem
+          - name: GITOPS_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: github-token
+                key: token
+          - name: DOCKER_CONFIG
+            value: /docker-config
+          - name: BUILDX_CONFIG
+            value: /tmp/buildx
+        volumeMounts:
+          - name: docker-config
+            mountPath: /docker-config
+          - name: app-dockerfile
+            mountPath: /app-dockerfile
+{{- end }}
