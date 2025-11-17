@@ -26,22 +26,15 @@ data:
     COPY ./build.gradle* ./settings.gradle* ./gradle.properties* ./gradlew* ./
     RUN --mount=type=bind,source=gradle,target=/tmp/gradle cp -r /tmp/gradle . 2>/dev/null || mkdir -p gradle
     COPY ./ .
-    RUN --mount=type=cache,target=/root/.gradle,sharing=locked chmod +x gradlew 2>/dev/null || true && {{ .build.gradle.buildCommand }} --no-daemon
-    FROM eclipse-temurin:{{ .build.gradle.javaVersion }}-jdk-alpine AS extract
-    WORKDIR /extract
-    RUN apk add --no-cache unzip
-    COPY --from=build /app{{ .build.gradle.jarOutputPath | default "/build/libs/*.jar" }} app.jar
-    RUN set -ex && if java -Djarmode=tools -jar app.jar list-layers >/dev/null 2>&1; then java -Djarmode=tools -jar app.jar extract --layers --destination /extract; elif java -Djarmode=layertools -jar app.jar list >/dev/null 2>&1; then java -Djarmode=layertools -jar app.jar extract --destination /extract; else mkdir -p dependencies spring-boot-loader snapshot-dependencies application && unzip -q app.jar && [ -d BOOT-INF/lib ] && mv BOOT-INF/lib/* dependencies/ 2>/dev/null || true && find dependencies/ -name '*-SNAPSHOT.jar' -exec mv {} snapshot-dependencies/ \; 2>/dev/null || true && [ -d org/springframework/boot/loader ] && mkdir -p spring-boot-loader/org/springframework/boot && mv org/springframework/boot/loader spring-boot-loader/org/springframework/boot/ 2>/dev/null || true && [ -d BOOT-INF/classes ] && mv BOOT-INF/classes/* application/ 2>/dev/null || true && [ -d META-INF ] && mv META-INF application/ 2>/dev/null || true; fi && rm -f app.jar
+    RUN --mount=type=cache,target=/root/.gradle,sharing=locked chmod +x gradlew 2>/dev/null || true && {{ .build.gradle.buildCommand }} -x jar --no-daemon
     FROM eclipse-temurin:{{ .build.gradle.javaVersion }}-jre-alpine
     RUN apk add --no-cache tzdata curl ca-certificates && addgroup -g 1001 appgroup && adduser -u 1001 -G appgroup -s /bin/sh -D appuser && rm -rf /var/cache/apk/*
     WORKDIR /app
     ENV TZ=Asia/Seoul JAVA_OPTS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -XX:+UseG1GC -Djava.security.egd=file:/dev/./urandom" JAVA_TOOL_OPTIONS="-XX:+ExitOnOutOfMemoryError"
-    COPY --from=extract --chown=appuser:appgroup /extract/dependencies/ ./
-    COPY --from=extract --chown=appuser:appgroup /extract/spring-boot-loader/ ./
-    COPY --from=extract --chown=appuser:appgroup /extract/snapshot-dependencies/ ./
-    COPY --from=extract --chown=appuser:appgroup /extract/application/ ./
+    {{- $jarPath := .build.gradle.jarOutputPath | default "/build/libs/*.jar" }}
+    COPY --from=build --chown=appuser:appgroup /app{{ $jarPath }} app.jar
     USER appuser
-    ENTRYPOINT ["sh","-c","exec java $JAVA_OPTS org.springframework.boot.loader.launch.JarLauncher 2>/dev/null || exec java $JAVA_OPTS org.springframework.boot.loader.JarLauncher"]
+    ENTRYPOINT ["sh","-c","java $JAVA_OPTS -jar app.jar"]
 {{- else if .build.nodejs }}
     FROM node:{{ .build.nodejs.nodeVersion }}-alpine AS build
     RUN corepack enable
