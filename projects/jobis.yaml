@@ -18,7 +18,7 @@ applications:
       gradle:
         javaVersion: "17"
         jarOutputPath: /jobis-infrastructure/build/libs/*.jar
-        buildCommand: "./gradlew :jobis-infrastructure:bootJar"
+        buildCommand: "./gradlew build"
     endpoints:
       - port: 8080
         routes:
@@ -42,7 +42,7 @@ applications:
       gradle:
         javaVersion: "17"
         jarOutputPath: /jobis-infrastructure/build/libs/*.jar
-        buildCommand: "./gradlew :jobis-infrastructure:bootJar"
+        buildCommand: "./gradlew build"
     endpoints:
       - port: 8080
         routes:
