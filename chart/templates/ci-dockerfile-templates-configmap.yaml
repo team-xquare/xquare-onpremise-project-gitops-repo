@@ -26,7 +26,7 @@ data:
     COPY ./build.gradle* ./settings.gradle* ./gradle.properties* ./gradlew* ./
     RUN --mount=type=bind,source=gradle,target=/tmp/gradle cp -r /tmp/gradle . 2>/dev/null || mkdir -p gradle
     COPY ./ .
-    RUN --mount=type=cache,target=/root/.gradle,sharing=locked chmod +x gradlew 2>/dev/null || true && {{ .build.gradle.buildCommand }} -x jar --no-daemon
+    RUN --mount=type=cache,target=/root/.gradle,sharing=locked chmod +x gradlew 2>/dev/null || true && {{ .build.gradle.buildCommand }} -x test --no-daemon && find /app -type f -name '*-plain.jar' -delete
     FROM eclipse-temurin:{{ .build.gradle.javaVersion }}-jre-alpine
     RUN apk add --no-cache tzdata curl ca-certificates && addgroup -g 1001 appgroup && adduser -u 1001 -G appgroup -s /bin/sh -D appuser && rm -rf /var/cache/apk/*
     WORKDIR /app
