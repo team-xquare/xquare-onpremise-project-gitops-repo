@@ -103,3 +103,6 @@ addons:
   - name: pick-pick-core-stag-mysql
     type: mysql
     storage: 1Gi
+  - name: pick-kafka
+    type: kafka
+    storage: 5Gi
