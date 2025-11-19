@@ -106,7 +106,7 @@ addons:
   - name: pick-kafka
     type: kafka
     storage: 5Gi
-#  - name: pick-debezium
-#    type: debezium
-#    storage: 5Gi
-#    bootstrap: "pick-kafka:9092" 
+  - name: pick-debezium
+    type: debezium
+    storage: 5Gi
+    bootstrap: "pick-kafka:9092" 
