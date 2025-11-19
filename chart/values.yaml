@@ -308,3 +308,9 @@ addons: []
 #   - name: example-elk
 #     type: elk
 #     storage: 50Gi
+#
+#   # Debezium CDC (Change Data Capture)
+#   - name: example-debezium
+#     type: debezium
+#     storage: 20Gi
+#     bootstrap: "example-kafka:9092"

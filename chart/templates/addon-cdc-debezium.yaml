@@ -1,0 +1,129 @@
+{{- range .Values.addons }}
+{{- if eq .type "debezium" }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "addon.serviceName" . }}
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+    app.kubernetes.io/component: service
+spec:
+  selector:
+    {{- include "addon.selectorLabels" . | nindent 4 }}
+  ports:
+    - port: 8083
+      targetPort: 8083
+      protocol: TCP
+      name: rest-api
+  type: ClusterIP
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "addon.name" . }}-data
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+    app.kubernetes.io/component: storage
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .storage }}
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "addon.name" . }}
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "addon.labels" . | nindent 4 }}
+    app.kubernetes.io/component: cdc
+spec:
+  serviceName: {{ include "addon.serviceName" . }}
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "addon.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "addon.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: debezium-connect
+          image: quay.io/debezium/connect:3.3
+          ports:
+            - containerPort: 8083
+              name: rest-api
+          env:
+            - name: BOOTSTRAP_SERVERS
+              value: {{ .bootstrap | quote }}
+            - name: GROUP_ID
+              value: {{ include "addon.name" . | quote }}
+            - name: CONFIG_STORAGE_TOPIC
+              value: {{ printf "%s-configs" (include "addon.name" .) | quote }}
+            - name: OFFSET_STORAGE_TOPIC
+              value: {{ printf "%s-offsets" (include "addon.name" .) | quote }}
+            - name: STATUS_STORAGE_TOPIC
+              value: {{ printf "%s-status" (include "addon.name" .) | quote }}
+            - name: CONFIG_STORAGE_REPLICATION_FACTOR
+              value: "1"
+            - name: OFFSET_STORAGE_REPLICATION_FACTOR
+              value: "1"
+            - name: STATUS_STORAGE_REPLICATION_FACTOR
+              value: "1"
+            - name: KEY_CONVERTER
+              value: "org.apache.kafka.connect.json.JsonConverter"
+            - name: VALUE_CONVERTER
+              value: "org.apache.kafka.connect.json.JsonConverter"
+            - name: CONNECT_KEY_CONVERTER_SCHEMAS_ENABLE
+              value: "false"
+            - name: CONNECT_VALUE_CONVERTER_SCHEMAS_ENABLE
+              value: "false"
+            - name: INTERNAL_KEY_CONVERTER
+              value: "org.apache.kafka.connect.json.JsonConverter"
+            - name: INTERNAL_VALUE_CONVERTER
+              value: "org.apache.kafka.connect.json.JsonConverter"
+            - name: CONNECT_REST_ADVERTISED_HOST_NAME
+              value: {{ include "addon.serviceName" . | quote }}
+            - name: CONNECT_REST_PORT
+              value: "8083"
+            - name: CONNECT_PLUGIN_PATH
+              value: "/kafka/connect"
+            - name: LOG_LEVEL
+              value: "INFO"
+          resources:
+            requests:
+              cpu: 500m
+              memory: 1Gi
+            limits:
+              memory: 2Gi
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8083
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8083
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          volumeMounts:
+            - name: data
+              mountPath: /kafka/data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ include "addon.name" . }}-data
+{{- end }}
+{{- end }}
