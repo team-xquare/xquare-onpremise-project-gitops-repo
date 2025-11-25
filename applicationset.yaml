@@ -23,12 +23,13 @@ spec:
         repoURL: https://github.com/team-xquare/xquare-onpremise-project-gitops-repo
         targetRevision: HEAD
         path: chart
-        helm:
-          valueFiles:
-            - '../{{.path.path}}/{{.path.filename}}'
-          parameters:
-            - name: project
-              value: '{{.path.filenameNormalized | trimSuffix ".yaml"}}'
+        plugin:
+          name: argocd-vault-plugin-helm
+          env:
+            - name: HELM_ARGS
+              value: >-
+                --values ../{{.path.path}}/{{.path.filename}}
+                --set project={{.path.filenameNormalized | trimSuffix ".yaml"}}
       destination:
         server: https://kubernetes.default.svc
         namespace: '{{.path.filenameNormalized | trimSuffix ".yaml"}}-dsm-project'
@@ -43,3 +44,4 @@ spec:
           - RespectIgnoreDifferences=true
           - ApplyOutOfSyncOnly=true
           - Validate=true
+
