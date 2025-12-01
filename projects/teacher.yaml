@@ -1,0 +1,15 @@
+applications:
+  - name: 
+    github:
+      owner: SeoMuseong
+      repo: DSMLearnCast
+      branch: main
+      installationId: "97445913"
+    nodejs:
+      nodeVersion: "22"
+      buildCommand: "npm ci && npm run build"
+      startCommand: "npm start"
+    endpoints:
+      - port: 8080
+        routes:
+          - learn.dsmhs.kr
