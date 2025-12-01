@@ -1,16 +1,17 @@
+
 applications:
-  - name: learn
+  - name: mozu-server-prod
     github:
-      owner: SeoMuseong
+      owner: SeoMuseong 
       repo: DSMLearnCast
       branch: main
       installationId: "97445913"
-    nodejs:
-      nodeVersion: "22"
-      buildCommand: "npm ci && npm run build"
-      startCommand: "npm start"
+    build:
+      nodejs:
+        nodeVersion: "22.11.0"
+        buildCommand: npm ci && npm run build
+        startCommand: npm run start
     endpoints:
-      - port: 8080
+      - port: 3000
         routes:
           - learn.dsmhs.kr
-addons:
