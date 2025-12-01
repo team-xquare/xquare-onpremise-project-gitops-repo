@@ -13,3 +13,4 @@ applications:
       - port: 8080
         routes:
           - learn.dsmhs.kr
+addons:
