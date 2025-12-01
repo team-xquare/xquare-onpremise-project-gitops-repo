@@ -1,6 +1,6 @@
 
 applications:
-  - name: mozu-server-prod
+  - name: teacher-prod
     github:
       owner: SeoMuseong 
       repo: DSMLearnCast
