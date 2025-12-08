@@ -1,0 +1,39 @@
+{{- $tenantId := include "project.namespace" . | adler32sum }}
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMUser
+metadata:
+  name: tenant-{{ include "project.namespace" . }}
+  namespace: {{ include "project.namespace" . }}
+spec:
+  username: tenant-{{ include "project.namespace" . }}
+  generatePassword: true
+  targetRefs:
+  - crd:
+      kind: VMCluster/vmselect
+      name: victoria-metrics
+      namespace: monitoring
+    paths:
+    - "/vm/tenant-{{ include "project.namespace" . }}/.*"
+    headers:
+    - "AccountID: {{ $tenantId }}"
+    drop_src_path_prefix_parts: 2
+    target_path_suffix: "/select/{{ $tenantId }}/prometheus"
+  - crd:
+      kind: VLSingle
+      name: victoria-logs
+      namespace: monitoring
+    paths:
+    - "/vl/tenant-{{ include "project.namespace" . }}/.*"
+    headers:
+    - "AccountID: {{ $tenantId }}"
+    drop_src_path_prefix_parts: 2
+  - crd:
+      kind: VTSingle
+      name: victoria-traces
+      namespace: monitoring
+    paths:
+    - "/vt/tenant-{{ include "project.namespace" . }}/.*"
+    headers:
+    - "AccountID: {{ $tenantId }}"
+    drop_src_path_prefix_parts: 2
+    target_path_suffix: "/select/jaeger"

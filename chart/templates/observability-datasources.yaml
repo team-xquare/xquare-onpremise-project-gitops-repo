@@ -1,0 +1,125 @@
+{{- $tenantId := include "project.namespace" . | adler32sum }}
+{{- $ns := include "project.namespace" . }}
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDatasource
+metadata:
+  name: victoriametrics
+  namespace: {{ $ns }}
+  labels:
+    {{- include "project.labels" . | nindent 4 }}
+spec:
+  instanceSelector:
+    matchLabels:
+      app: grafana-instance
+  datasource:
+    uid: victoriametrics
+    name: Metrics
+    type: prometheus
+    access: proxy
+    url: http://vmauth-victoria-auth.monitoring.svc:8427/vm/tenant-{{ $ns }}/
+    basicAuth: true
+    basicAuthUser: ${username}
+    isDefault: true
+    editable: false
+    jsonData:
+      httpMethod: POST
+    secureJsonData:
+      basicAuthPassword: ${password}
+  valuesFrom:
+  - targetPath: basicAuthUser
+    valueFrom:
+      secretKeyRef:
+        name: vmuser-tenant-{{ $ns }}
+        key: username
+  - targetPath: secureJsonData.basicAuthPassword
+    valueFrom:
+      secretKeyRef:
+        name: vmuser-tenant-{{ $ns }}
+        key: password
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDatasource
+metadata:
+  name: victorialogs
+  namespace: {{ $ns }}
+  labels:
+    {{- include "project.labels" . | nindent 4 }}
+spec:
+  instanceSelector:
+    matchLabels:
+      app: grafana-instance
+  datasource:
+    uid: victorialogs
+    name: Logs
+    type: victoriametrics-logs-datasource
+    access: proxy
+    url: http://vmauth-victoria-auth.monitoring.svc:8427/vl/tenant-{{ $ns }}/
+    basicAuth: true
+    basicAuthUser: ${username}
+    editable: false
+    jsonData:
+      httpMethod: POST
+      derivedFields:
+      - name: TraceID
+        matcherName: trace_id
+        url: "${__value.raw}"
+        datasourceUid: victoriatraces
+    secureJsonData:
+      basicAuthPassword: ${password}
+  valuesFrom:
+  - targetPath: basicAuthUser
+    valueFrom:
+      secretKeyRef:
+        name: vmuser-tenant-{{ $ns }}
+        key: username
+  - targetPath: secureJsonData.basicAuthPassword
+    valueFrom:
+      secretKeyRef:
+        name: vmuser-tenant-{{ $ns }}
+        key: password
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDatasource
+metadata:
+  name: victoriatraces
+  namespace: {{ $ns }}
+  labels:
+    {{- include "project.labels" . | nindent 4 }}
+spec:
+  instanceSelector:
+    matchLabels:
+      app: grafana-instance
+  datasource:
+    uid: victoriatraces
+    name: Traces
+    type: jaeger
+    access: proxy
+    url: http://vmauth-victoria-auth.monitoring.svc:8427/vt/tenant-{{ $ns }}
+    basicAuth: true
+    basicAuthUser: ${username}
+    editable: false
+    jsonData:
+      tracesToLogsV2:
+        datasourceUid: victorialogs
+        spanStartTimeShift: '-1h'
+        spanEndTimeShift: '1h'
+        filterByTraceID: true
+        filterBySpanID: true
+        customQuery: true
+        query: 'trace_id:="${__trace.traceId}"'
+      nodeGraph:
+        enabled: true
+    secureJsonData:
+      basicAuthPassword: ${password}
+  valuesFrom:
+  - targetPath: basicAuthUser
+    valueFrom:
+      secretKeyRef:
+        name: vmuser-tenant-{{ $ns }}
+        key: username
+  - targetPath: secureJsonData.basicAuthPassword
+    valueFrom:
+      secretKeyRef:
+        name: vmuser-tenant-{{ $ns }}
+        key: password

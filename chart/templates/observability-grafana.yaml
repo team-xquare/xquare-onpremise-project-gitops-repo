@@ -1,0 +1,46 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: Grafana
+metadata:
+  name: grafana
+  namespace: {{ include "project.namespace" . }}
+  labels:
+    {{- include "project.labels" . | nindent 4 }}
+    dashboards: "grafana"
+    app: grafana-instance
+spec:
+  config:
+    log:
+      mode: "console"
+    auth:
+      disable_login_form: "false"
+    security:
+      admin_user: admin
+      admin_password: admin
+    plugins:
+      plugin_admin_enabled: "true"
+  deployment:
+    spec:
+      replicas: 1
+      template:
+        spec:
+          containers:
+          - name: grafana
+            image: docker.io/grafana/grafana:12.3.0
+            env:
+            - name: GF_INSTALL_PLUGINS
+              value: "victoriametrics-logs-datasource"
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                cpu: 500m
+                memory: 1Gi
+  service:
+    spec:
+      type: NodePort
+      ports:
+      - name: grafana
+        port: 3000
+        protocol: TCP
+        targetPort: 3000
