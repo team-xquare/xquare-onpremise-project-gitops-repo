@@ -1,0 +1,30 @@
+applications:
+  - name: be-prod
+    github:
+      owner: Team-selfton
+      repo: JakBu_BE
+      branch: main
+      installationId: "98579662"
+      triggerPaths:
+        - src/**
+        - build.gradle
+        - settings.gradle
+        - gradle/**
+        - gradlew
+        - gradlew.bat
+    build:
+      gradle:
+        javaVersion: "17"
+        jarOutputPath: /build/libs/*.jar
+        buildCommand: "./gradlew bootJar -x test"
+    endpoints:
+      - port: 8080
+        routes:
+          - jakbu-api.dsmhs.kr
+addons:
+  - name: jakbu-mysql
+    type: mysql
+    storage: 1Gi
+  - name: jakbu-redis
+    type: redis
+    storage: 1Gi
