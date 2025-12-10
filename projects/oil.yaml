@@ -21,8 +21,33 @@ applications:
       - port: 8080
         routes:
           - oil-api.dsmhs.kr
+  - name: be-stag
+    github:
+      owner: team-OIL
+      repo: OIL-BE
+      branch: develop
+      installationId: "98874619"
+      triggerPaths:
+        - src/**
+        - build.gradle
+        - settings.gradle
+        - gradle/**
+        - gradlew
+        - gradlew.bat
+    build:
+      gradle:
+        javaVersion: "17"
+        jarOutputPath: /build/libs/*.jar
+        buildCommand: "./gradlew bootJar -x test"
+    endpoints:
+      - port: 8080
+        routes:
+          - oil-api-stag.dsmhs.kr
 addons:
-  - name: oil-mysql
+  - name: prod-mysql
+    type: mysql
+    storage: 1Gi
+  - name: stag-mysql
     type: mysql
     storage: 1Gi
   - name: oil-redis
