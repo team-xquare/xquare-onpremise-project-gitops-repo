@@ -1,0 +1,31 @@
+applications:
+  - name: be-prod
+    github:
+      owner: team-OIL
+      repo: OIL-BE
+      branch: main
+      installationId: "98874619"
+      hash: 6bebde1c96b645b9122bbe05d3a0e0ce275c014b
+      triggerPaths:
+        - src/**
+        - build.gradle
+        - settings.gradle
+        - gradle/**
+        - gradlew
+        - gradlew.bat
+    build:
+      gradle:
+        javaVersion: "17"
+        jarOutputPath: /build/libs/*.jar
+        buildCommand: "./gradlew bootJar -x test"
+    endpoints:
+      - port: 8080
+        routes:
+          - oil-api.dsmhs.kr
+addons:
+  - name: oil-mysql
+    type: mysql
+    storage: 1Gi
+  - name: oil-redis
+    type: redis
+    storage: 1Gi
