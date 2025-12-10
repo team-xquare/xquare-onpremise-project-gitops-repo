@@ -5,7 +5,6 @@ applications:
       repo: OIL-BE
       branch: main
       installationId: "98874619"
-      hash: 6bebde1c96b645b9122bbe05d3a0e0ce275c014b
       triggerPaths:
         - src/**
         - build.gradle
