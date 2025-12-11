@@ -5,7 +5,7 @@ applications:
       repo: GuJeuk-Check-In_server
       branch: main
       installationId: "90332669"
-      hash: 70d0848998e3341b8182f8dc346683fb3f58d293
+      hash: 619bd5738ad9ac4da6c8d55ae1dcd265158b11f7
     build:
       gradle:
         javaVersion: 17
