@@ -19,7 +19,7 @@ addons:
     type: opensearch
     storage: 5Gi
   - name: yuon-postgres
-    type: postgres
+    type: postgresql
     version: "16"
     storage: 2Gi
   - name: yuon-qdrant
