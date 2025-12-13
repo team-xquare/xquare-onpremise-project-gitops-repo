@@ -69,9 +69,9 @@ spec:
           "fieldConfig": {
             "defaults": {
               "mappings": [
-                {"type": "value", "options": {"0": {"index": 0, "text": "안정"}, "1": {"index": 1, "text": "빌드중"}}}
+                {"type": "value", "options": {"0": {"index": 0, "text": "빌드 대기중"}, "1": {"index": 1, "text": "빌드 진행중"}}}
               ],
-              "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": 0}, {"color": "red", "value": 1}]}
+              "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": 0}, {"color": "orange", "value": 1}]}
             }
           },
           "options": {
@@ -87,9 +87,9 @@ spec:
         {
           "id": 3,
           "type": "table",
-          "title": "Traces",
+          "title": "Recent Traces",
           "datasource": {"type": "jaeger", "uid": "victoriatraces"},
-          "gridPos": {"h": 4, "w": 8, "x": 16, "y": 0},
+          "gridPos": {"h": 8, "w": 24, "x": 0, "y": 4},
           "targets": [{
             "datasource": {"type": "jaeger", "uid": "victoriatraces"},
             "queryType": "search",
@@ -99,19 +99,23 @@ spec:
           "fieldConfig": {
             "defaults": {
               "color": {"mode": "thresholds"},
-              "custom": {"align": "auto", "cellOptions": {"type": "auto"}, "inspect": false, "minWidth": 500},
+              "custom": {"align": "auto", "cellOptions": {"type": "auto"}, "inspect": false},
               "mappings": [],
-              "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": 0}, {"color": "red", "value": 80}]}
+              "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": 0}]}
             }
           },
-          "options": {"cellHeight": "sm", "showHeader": true}
+          "options": {
+            "cellHeight": "sm",
+            "showHeader": true,
+            "sortBy": []
+          }
         },
         {
           "id": 4,
           "type": "timeseries",
           "title": "CPU Usage (cores)",
           "datasource": {"type": "prometheus", "uid": "victoriametrics"},
-          "gridPos": {"h": 8, "w": 12, "x": 0, "y": 4},
+          "gridPos": {"h": 8, "w": 12, "x": 0, "y": 12},
           "targets": [{
             "datasource": {"type": "prometheus", "uid": "victoriametrics"},
             "editorMode": "builder",
@@ -153,7 +157,7 @@ spec:
           "type": "timeseries",
           "title": "Memory Usage",
           "datasource": {"type": "prometheus", "uid": "victoriametrics"},
-          "gridPos": {"h": 8, "w": 12, "x": 12, "y": 4},
+          "gridPos": {"h": 8, "w": 12, "x": 12, "y": 12},
           "targets": [{
             "datasource": {"type": "prometheus", "uid": "victoriametrics"},
             "editorMode": "builder",
@@ -195,7 +199,7 @@ spec:
           "type": "logs",
           "title": "Build Logs",
           "datasource": {"type": "victoriametrics-logs-datasource", "uid": "victorialogs"},
-          "gridPos": {"h": 10, "w": 24, "x": 0, "y": 12},
+          "gridPos": {"h": 10, "w": 24, "x": 0, "y": 20},
           "targets": [{
             "datasource": {"type": "victoriametrics-logs-datasource", "uid": "victorialogs"},
             "editorMode": "code",
@@ -222,7 +226,7 @@ spec:
           "type": "logs",
           "title": "Application Logs",
           "datasource": {"type": "victoriametrics-logs-datasource", "uid": "victorialogs"},
-          "gridPos": {"h": 10, "w": 24, "x": 0, "y": 22},
+          "gridPos": {"h": 10, "w": 24, "x": 0, "y": 30},
           "targets": [{
             "datasource": {"type": "victoriametrics-logs-datasource", "uid": "victorialogs"},
             "editorMode": "builder",
