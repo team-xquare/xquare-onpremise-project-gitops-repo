@@ -23,7 +23,7 @@ applications:
       repo: Entry-Admission
       branch: develop
       installationId: "77967720"
-      hash: 635d11f23ab7425f500d7afb9eafd0f7cb1b47fe
+      hash: 594779e1762bd0f3651f7994548b9b3f0cb20fe7
       triggerPaths:
         - apps/entry-admin/**
     build:
