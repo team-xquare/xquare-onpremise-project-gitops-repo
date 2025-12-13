@@ -207,8 +207,8 @@ spec:
           "gridPos": {"h": 15, "w": 24, "x": 0, "y": 0},
           "targets": [{
             "datasource": {"type": "victoriametrics-logs-datasource", "uid": "victorialogs"},
-            "editorMode": "builder",
-            "expr": "k8s.deployment.name: \"{{ .name }}\"",
+            "editorMode": "code",
+            "expr": "k8s.deployment.name:=\"{{ .name }}\"\nAND _msg:!~\"^missing _msg field\"",
             "queryType": "instant",
             "refId": "A"
           }],
@@ -235,7 +235,7 @@ spec:
           "targets": [{
             "datasource": {"type": "victoriametrics-logs-datasource", "uid": "victorialogs"},
             "editorMode": "code",
-            "expr": "k8s.namespace.name:\"{{ include "project.namespace" $ }}\"\nAND k8s.container.name:\"main\"\nAND k8s.pod.name:~\"^{{ .name }}-ci-.*\"\nAND _msg:!~\"^missing _msg field\"",
+            "expr": "k8s.namespace.name:=\"{{ include "project.namespace" $ }}\"\nAND k8s.container.name:=\"main\"\nAND k8s.pod.name:~\"^{{ .name }}-ci-.*\"\nAND _msg:!~\"^missing _msg field\"",
             "queryType": "instant",
             "refId": "A"
           }],
@@ -389,7 +389,7 @@ spec:
           "targets": [{
             "datasource": {"type": "victoriametrics-logs-datasource", "uid": "victorialogs"},
             "editorMode": "code",
-            "expr": "k8s.namespace.name:\"{{ include "project.namespace" $ }}\" AND k8s.pod.name:~\"{{ .name }}-.*\"",
+            "expr": "k8s.namespace.name:=\"{{ include "project.namespace" $ }}\"\nAND k8s.pod.name:~\"^{{ .name }}-\"\nAND _msg:!~\"^missing _msg field\"",
             "queryType": "instant",
             "refId": "A"
           }],
