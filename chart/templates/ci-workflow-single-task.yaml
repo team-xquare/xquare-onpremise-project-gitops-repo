@@ -94,10 +94,10 @@ spec:
           ) &
 
           {{- if .build.docker }}
-          GIT_CONTEXT="https://x-access-token:${GITHUB_TOKEN}@github.com/${REPO_PATH}.git#${GIT_SHA}:{{ .build.docker.contextPath | default "." }}"
+          GIT_CONTEXT="https://github.com/${REPO_PATH}.git#${GIT_SHA}:{{ .build.docker.contextPath | default "." }}"
           DOCKERFILE_ARG="-f {{ .build.docker.dockerfilePath | default "Dockerfile" }}"
           {{- else }}
-          GIT_CONTEXT="https://x-access-token:${GITHUB_TOKEN}@github.com/${REPO_PATH}.git#${GIT_SHA}:."
+          GIT_CONTEXT="https://github.com/${REPO_PATH}.git#${GIT_SHA}:."
           DOCKERFILE_ARG="-f -"
           {{- end }}
 
@@ -106,12 +106,14 @@ spec:
           BUILD_SUCCESS=0
           {{- if .build.docker }}
           docker buildx build ${DOCKERFILE_ARG} \
+            --secret id=GIT_AUTH_TOKEN,env=GITHUB_TOKEN \
             -t "${IMAGE}:latest" -t "${IMAGE}:${GIT_SHA}" \
             --platform linux/amd64 --progress plain --provenance false --sbom false \
             --output type=image,compression=zstd,compression-level=3,oci-mediatypes=true,push=true \
             "${GIT_CONTEXT}" && BUILD_SUCCESS=1
           {{- else }}
           docker buildx build ${DOCKERFILE_ARG} \
+            --secret id=GIT_AUTH_TOKEN,env=GITHUB_TOKEN \
             -t "${IMAGE}:latest" -t "${IMAGE}:${GIT_SHA}" \
             --platform linux/amd64 --progress plain --provenance false --sbom false \
             --output type=image,compression=zstd,compression-level=3,oci-mediatypes=true,push=true \
