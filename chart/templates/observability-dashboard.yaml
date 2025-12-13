@@ -28,7 +28,7 @@ spec:
           "type": "stat",
           "title": "Running Pods",
           "datasource": {"type": "prometheus", "uid": "victoriametrics"},
-          "gridPos": {"h": 4, "w": 8, "x": 0, "y": 0},
+          "gridPos": {"h": 4, "w": 12, "x": 0, "y": 0},
           "targets": [{
             "datasource": {"type": "prometheus", "uid": "victoriametrics"},
             "editorMode": "code",
@@ -58,7 +58,7 @@ spec:
           "type": "stat",
           "title": "Build Status",
           "datasource": {"type": "prometheus", "uid": "victoriametrics"},
-          "gridPos": {"h": 4, "w": 8, "x": 8, "y": 0},
+          "gridPos": {"h": 4, "w": 12, "x": 12, "y": 0},
           "targets": [{
             "datasource": {"type": "prometheus", "uid": "victoriametrics"},
             "editorMode": "code",
