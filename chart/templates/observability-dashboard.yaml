@@ -16,83 +16,233 @@ spec:
       "title": "{{ .name }} - Application",
       "uid": "app-{{ .name }}",
       "timezone": "browser",
-      "schemaVersion": 16,
+      "schemaVersion": 42,
       "refresh": "30s",
-      "time": {"from": "now-1h", "to": "now"},
+      "time": {"from": "now-30m", "to": "now"},
+      "editable": true,
+      "fiscalYearStartMonth": 0,
+      "graphTooltip": 0,
       "panels": [
         {
           "id": 1,
-          "type": "timeseries",
-          "title": "CPU Usage (cores)",
-          "gridPos": {"x": 0, "y": 0, "w": 12, "h": 8},
+          "type": "stat",
+          "title": "Running Pods",
+          "datasource": {"type": "prometheus", "uid": "victoriametrics"},
+          "gridPos": {"h": 4, "w": 8, "x": 0, "y": 0},
           "targets": [{
             "datasource": {"type": "prometheus", "uid": "victoriametrics"},
-            "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"{{ include "project.namespace" $ }}\",pod=~\"{{ .name }}-.*\",container!=\"POD\",container!=\"\"}[5m])) by (pod)",
-            "legendFormat": "{{`{{ pod }}`}}",
+            "editorMode": "code",
+            "expr": "count(k8s.pod.cpu.usage{k8s.namespace.name=\"{{ include "project.namespace" $ }}\",k8s.deployment.name=\"{{ .name }}\"})",
+            "range": true,
             "refId": "A"
           }],
-          "fieldConfig": {"defaults": {"unit": "short", "custom": {"drawStyle": "line", "fillOpacity": 10}}}
+          "fieldConfig": {
+            "defaults": {
+              "mappings": [],
+              "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": 0}]},
+              "unit": "short"
+            }
+          },
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false},
+            "textMode": "auto",
+            "wideLayout": true
+          }
         },
         {
           "id": 2,
-          "type": "timeseries",
-          "title": "Memory Usage",
-          "gridPos": {"x": 12, "y": 0, "w": 12, "h": 8},
+          "type": "stat",
+          "title": "Build Status",
+          "datasource": {"type": "prometheus", "uid": "victoriametrics"},
+          "gridPos": {"h": 4, "w": 8, "x": 8, "y": 0},
           "targets": [{
             "datasource": {"type": "prometheus", "uid": "victoriametrics"},
-            "expr": "sum(container_memory_working_set_bytes{namespace=\"{{ include "project.namespace" $ }}\",pod=~\"{{ .name }}-.*\",container!=\"POD\",container!=\"\"}) by (pod)",
-            "legendFormat": "{{`{{ pod }}`}}",
+            "editorMode": "code",
+            "expr": "(count(k8s.pod.cpu.usage{k8s.namespace.name=\"{{ include "project.namespace" $ }}\",k8s.pod.name=~\"^{{ .name }}-ci-.*\"}) > bool 0) or vector(0)",
+            "range": true,
             "refId": "A"
           }],
-          "fieldConfig": {"defaults": {"unit": "bytes", "custom": {"drawStyle": "line", "fillOpacity": 10}}}
+          "fieldConfig": {
+            "defaults": {
+              "mappings": [
+                {"type": "value", "options": {"0": {"index": 0, "text": "안정"}, "1": {"index": 1, "text": "빌드중"}}}
+              ],
+              "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": 0}, {"color": "red", "value": 1}]}
+            }
+          },
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false},
+            "textMode": "auto",
+            "wideLayout": true
+          }
         },
         {
           "id": 3,
-          "type": "logs",
-          "title": "Application Logs",
-          "gridPos": {"x": 0, "y": 8, "w": 24, "h": 10},
+          "type": "table",
+          "title": "Traces",
+          "datasource": {"type": "jaeger", "uid": "victoriatraces"},
+          "gridPos": {"h": 4, "w": 8, "x": 16, "y": 0},
           "targets": [{
-            "datasource": {"type": "victoriametrics-logs-datasource", "uid": "victorialogs"},
-            "expr": "{namespace=\"{{ include "project.namespace" $ }}\",pod=~\"{{ .name }}-.*\"}",
+            "datasource": {"type": "jaeger", "uid": "victoriatraces"},
+            "queryType": "search",
+            "service": "{{ .name }}",
             "refId": "A"
           }],
-          "options": {"showTime": true, "showLabels": false, "wrapLogMessage": true, "sortOrder": "Descending"}
+          "fieldConfig": {
+            "defaults": {
+              "color": {"mode": "thresholds"},
+              "custom": {"align": "auto", "cellOptions": {"type": "auto"}, "inspect": false, "minWidth": 500},
+              "mappings": [],
+              "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": 0}, {"color": "red", "value": 80}]}
+            }
+          },
+          "options": {"cellHeight": "sm", "showHeader": true}
         },
         {
           "id": 4,
-          "type": "stat",
-          "title": "Running Pods",
-          "gridPos": {"x": 0, "y": 18, "w": 8, "h": 4},
+          "type": "timeseries",
+          "title": "CPU Usage (cores)",
+          "datasource": {"type": "prometheus", "uid": "victoriametrics"},
+          "gridPos": {"h": 8, "w": 12, "x": 0, "y": 4},
           "targets": [{
             "datasource": {"type": "prometheus", "uid": "victoriametrics"},
-            "expr": "count(kube_pod_status_phase{namespace=\"{{ include "project.namespace" $ }}\",pod=~\"{{ .name }}-.*\",phase=\"Running\"})",
+            "editorMode": "builder",
+            "expr": "{\"k8s.pod.cpu.usage\",\"k8s.deployment.name\"=\"{{ .name }}\"}",
+            "legendFormat": "{{`{{ pod }}`}}",
+            "range": true,
             "refId": "A"
           }],
-          "fieldConfig": {"defaults": {"unit": "short", "thresholds": {"mode": "absolute", "steps": [{"value": null, "color": "green"}]}}}
+          "fieldConfig": {
+            "defaults": {
+              "color": {"mode": "palette-classic"},
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisPlacement": "auto",
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {"group": "A", "mode": "none"},
+                "thresholdsStyle": {"mode": "off"}
+              },
+              "mappings": [],
+              "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": 0}, {"color": "red", "value": 80}]}
+            }
+          },
+          "options": {
+            "legend": {"calcs": [], "displayMode": "hidden", "placement": "right", "showLegend": false},
+            "tooltip": {"mode": "single", "sort": "none"}
+          }
         },
         {
           "id": 5,
-          "type": "stat",
-          "title": "Failed Pods",
-          "gridPos": {"x": 8, "y": 18, "w": 8, "h": 4},
+          "type": "timeseries",
+          "title": "Memory Usage",
+          "datasource": {"type": "prometheus", "uid": "victoriametrics"},
+          "gridPos": {"h": 8, "w": 12, "x": 12, "y": 4},
           "targets": [{
             "datasource": {"type": "prometheus", "uid": "victoriametrics"},
-            "expr": "count(kube_pod_status_phase{namespace=\"{{ include "project.namespace" $ }}\",pod=~\"{{ .name }}-.*\",phase=\"Failed\"}) or vector(0)",
+            "editorMode": "builder",
+            "expr": "{\"k8s.pod.memory.usage\",\"k8s.deployment.name\"=\"{{ .name }}\"}",
+            "legendFormat": "__auto",
+            "range": true,
             "refId": "A"
           }],
-          "fieldConfig": {"defaults": {"unit": "short", "thresholds": {"mode": "absolute", "steps": [{"value": null, "color": "green"}, {"value": 1, "color": "red"}]}}}
+          "fieldConfig": {
+            "defaults": {
+              "color": {"mode": "palette-classic"},
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisPlacement": "auto",
+                "drawStyle": "line",
+                "fillOpacity": 25,
+                "gradientMode": "none",
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {"group": "A", "mode": "none"},
+                "thresholdsStyle": {"mode": "off"}
+              },
+              "mappings": [],
+              "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": 0}, {"color": "red", "value": 80}]}
+            }
+          },
+          "options": {
+            "legend": {"calcs": [], "displayMode": "hidden", "placement": "right", "showLegend": false},
+            "tooltip": {"mode": "single", "sort": "none"}
+          }
         },
         {
           "id": 6,
-          "type": "stat",
-          "title": "Restart Count (24h)",
-          "gridPos": {"x": 16, "y": 18, "w": 8, "h": 4},
+          "type": "logs",
+          "title": "Build Logs",
+          "datasource": {"type": "victoriametrics-logs-datasource", "uid": "victorialogs"},
+          "gridPos": {"h": 10, "w": 24, "x": 0, "y": 12},
           "targets": [{
-            "datasource": {"type": "prometheus", "uid": "victoriametrics"},
-            "expr": "sum(increase(kube_pod_container_status_restarts_total{namespace=\"{{ include "project.namespace" $ }}\",pod=~\"{{ .name }}-.*\"}[24h]))",
+            "datasource": {"type": "victoriametrics-logs-datasource", "uid": "victorialogs"},
+            "editorMode": "code",
+            "expr": "k8s.namespace.name:\"{{ include "project.namespace" $ }}\"\nAND k8s.container.name:\"main\"\nAND k8s.pod.name:~\"^{{ .name }}-ci-.*\"\nAND _msg:!~\"^missing _msg field\"",
+            "queryType": "instant",
             "refId": "A"
           }],
-          "fieldConfig": {"defaults": {"unit": "short", "thresholds": {"mode": "absolute", "steps": [{"value": null, "color": "green"}, {"value": 5, "color": "yellow"}, {"value": 10, "color": "red"}]}}}
+          "options": {
+            "dedupStrategy": "none",
+            "enableInfiniteScrolling": false,
+            "enableLogDetails": true,
+            "fontSize": "small",
+            "showControls": false,
+            "showLabels": false,
+            "showTime": false,
+            "sortOrder": "Ascending",
+            "timestampResolution": "ms",
+            "wrapLogMessage": false
+          },
+          "transparent": true
+        },
+        {
+          "id": 7,
+          "type": "logs",
+          "title": "Application Logs",
+          "datasource": {"type": "victoriametrics-logs-datasource", "uid": "victorialogs"},
+          "gridPos": {"h": 10, "w": 24, "x": 0, "y": 22},
+          "targets": [{
+            "datasource": {"type": "victoriametrics-logs-datasource", "uid": "victorialogs"},
+            "editorMode": "builder",
+            "expr": "k8s.deployment.name: \"{{ .name }}\"",
+            "queryType": "instant",
+            "refId": "A"
+          }],
+          "options": {
+            "dedupStrategy": "none",
+            "enableInfiniteScrolling": false,
+            "enableLogDetails": true,
+            "fontSize": "small",
+            "showControls": false,
+            "showLabels": false,
+            "showTime": false,
+            "sortOrder": "Ascending",
+            "timestampResolution": "ms",
+            "wrapLogMessage": false
+          },
+          "transparent": true
         }
       ]
     }
@@ -115,71 +265,134 @@ spec:
       "title": "{{ .name }} - {{ .type | title }}",
       "uid": "addon-{{ .name }}",
       "timezone": "browser",
-      "schemaVersion": 16,
+      "schemaVersion": 42,
       "refresh": "30s",
-      "time": {"from": "now-1h", "to": "now"},
+      "time": {"from": "now-30m", "to": "now"},
+      "editable": true,
+      "fiscalYearStartMonth": 0,
+      "graphTooltip": 0,
       "panels": [
         {
           "id": 1,
-          "type": "timeseries",
-          "title": "CPU Usage (cores)",
-          "gridPos": {"x": 0, "y": 0, "w": 12, "h": 8},
+          "type": "stat",
+          "title": "Running Pods",
+          "datasource": {"type": "prometheus", "uid": "victoriametrics"},
+          "gridPos": {"h": 4, "w": 12, "x": 0, "y": 0},
           "targets": [{
             "datasource": {"type": "prometheus", "uid": "victoriametrics"},
-            "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"{{ include "project.namespace" $ }}\",pod=~\"{{ .name }}-.*\",container!=\"POD\",container!=\"\"}[5m])) by (pod)",
-            "legendFormat": "{{`{{ pod }}`}}",
+            "editorMode": "code",
+            "expr": "count(k8s.pod.cpu.usage{k8s.namespace.name=\"{{ include "project.namespace" $ }}\",k8s.pod.name=~\"{{ .name }}-.*\"})",
+            "range": true,
             "refId": "A"
           }],
-          "fieldConfig": {"defaults": {"unit": "short", "custom": {"drawStyle": "line", "fillOpacity": 10}}}
+          "fieldConfig": {
+            "defaults": {
+              "mappings": [],
+              "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": 0}]},
+              "unit": "short"
+            }
+          },
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false},
+            "textMode": "auto",
+            "wideLayout": true
+          }
         },
         {
           "id": 2,
           "type": "timeseries",
-          "title": "Memory Usage",
-          "gridPos": {"x": 12, "y": 0, "w": 12, "h": 8},
+          "title": "CPU Usage (cores)",
+          "datasource": {"type": "prometheus", "uid": "victoriametrics"},
+          "gridPos": {"h": 8, "w": 12, "x": 0, "y": 4},
           "targets": [{
             "datasource": {"type": "prometheus", "uid": "victoriametrics"},
-            "expr": "sum(container_memory_working_set_bytes{namespace=\"{{ include "project.namespace" $ }}\",pod=~\"{{ .name }}-.*\",container!=\"POD\",container!=\"\"}) by (pod)",
+            "editorMode": "code",
+            "expr": "k8s.pod.cpu.usage{k8s.namespace.name=\"{{ include "project.namespace" $ }}\",k8s.pod.name=~\"{{ .name }}-.*\"}",
             "legendFormat": "{{`{{ pod }}`}}",
+            "range": true,
             "refId": "A"
           }],
-          "fieldConfig": {"defaults": {"unit": "bytes", "custom": {"drawStyle": "line", "fillOpacity": 10}}}
+          "fieldConfig": {
+            "defaults": {
+              "color": {"mode": "palette-classic"},
+              "custom": {
+                "axisBorderShow": false,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "lineWidth": 1,
+                "pointSize": 5,
+                "showPoints": "auto",
+                "spanNulls": false
+              }
+            }
+          },
+          "options": {
+            "legend": {"displayMode": "hidden", "showLegend": false},
+            "tooltip": {"mode": "single"}
+          }
         },
         {
           "id": 3,
-          "type": "logs",
-          "title": "Addon Logs",
-          "gridPos": {"x": 0, "y": 8, "w": 24, "h": 10},
+          "type": "timeseries",
+          "title": "Memory Usage",
+          "datasource": {"type": "prometheus", "uid": "victoriametrics"},
+          "gridPos": {"h": 8, "w": 12, "x": 12, "y": 4},
           "targets": [{
-            "datasource": {"type": "victoriametrics-logs-datasource", "uid": "victorialogs"},
-            "expr": "{namespace=\"{{ include "project.namespace" $ }}\",pod=~\"{{ .name }}-.*\"}",
+            "datasource": {"type": "prometheus", "uid": "victoriametrics"},
+            "editorMode": "code",
+            "expr": "k8s.pod.memory.usage{k8s.namespace.name=\"{{ include "project.namespace" $ }}\",k8s.pod.name=~\"{{ .name }}-.*\"}",
+            "legendFormat": "__auto",
+            "range": true,
             "refId": "A"
           }],
-          "options": {"showTime": true, "showLabels": false, "wrapLogMessage": true, "sortOrder": "Descending"}
+          "fieldConfig": {
+            "defaults": {
+              "color": {"mode": "palette-classic"},
+              "custom": {
+                "axisBorderShow": false,
+                "drawStyle": "line",
+                "fillOpacity": 25,
+                "lineWidth": 1,
+                "pointSize": 5,
+                "showPoints": "auto",
+                "spanNulls": false
+              }
+            }
+          },
+          "options": {
+            "legend": {"displayMode": "hidden", "showLegend": false},
+            "tooltip": {"mode": "single"}
+          }
         },
         {
           "id": 4,
-          "type": "stat",
-          "title": "Running Pods",
-          "gridPos": {"x": 0, "y": 18, "w": 12, "h": 4},
+          "type": "logs",
+          "title": "Addon Logs",
+          "datasource": {"type": "victoriametrics-logs-datasource", "uid": "victorialogs"},
+          "gridPos": {"h": 10, "w": 24, "x": 0, "y": 12},
           "targets": [{
-            "datasource": {"type": "prometheus", "uid": "victoriametrics"},
-            "expr": "count(kube_pod_status_phase{namespace=\"{{ include "project.namespace" $ }}\",pod=~\"{{ .name }}-.*\",phase=\"Running\"})",
+            "datasource": {"type": "victoriametrics-logs-datasource", "uid": "victorialogs"},
+            "editorMode": "code",
+            "expr": "k8s.namespace.name:\"{{ include "project.namespace" $ }}\" AND k8s.pod.name:~\"{{ .name }}-.*\"",
+            "queryType": "instant",
             "refId": "A"
           }],
-          "fieldConfig": {"defaults": {"unit": "short", "thresholds": {"mode": "absolute", "steps": [{"value": null, "color": "green"}]}}}
-        },
-        {
-          "id": 5,
-          "type": "stat",
-          "title": "Failed Pods",
-          "gridPos": {"x": 12, "y": 18, "w": 12, "h": 4},
-          "targets": [{
-            "datasource": {"type": "prometheus", "uid": "victoriametrics"},
-            "expr": "count(kube_pod_status_phase{namespace=\"{{ include "project.namespace" $ }}\",pod=~\"{{ .name }}-.*\",phase=\"Failed\"}) or vector(0)",
-            "refId": "A"
-          }],
-          "fieldConfig": {"defaults": {"unit": "short", "thresholds": {"mode": "absolute", "steps": [{"value": null, "color": "green"}, {"value": 1, "color": "red"}]}}}
+          "options": {
+            "dedupStrategy": "none",
+            "enableInfiniteScrolling": false,
+            "enableLogDetails": true,
+            "fontSize": "small",
+            "showControls": false,
+            "showLabels": false,
+            "showTime": false,
+            "sortOrder": "Ascending",
+            "wrapLogMessage": false
+          },
+          "transparent": true
         }
       ]
     }
