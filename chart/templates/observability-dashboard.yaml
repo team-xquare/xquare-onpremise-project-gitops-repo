@@ -28,7 +28,7 @@ spec:
           "type": "stat",
           "title": "Running Pods",
           "datasource": {"type": "prometheus", "uid": "victoriametrics"},
-          "gridPos": {"h": 4, "w": 12, "x": 0, "y": 0},
+          "gridPos": {"h": 4, "w": 12, "x": 0, "y": 30},
           "targets": [{
             "datasource": {"type": "prometheus", "uid": "victoriametrics"},
             "editorMode": "code",
@@ -51,14 +51,15 @@ spec:
             "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false},
             "textMode": "auto",
             "wideLayout": true
-          }
+          },
+          "transparent": true
         },
         {
           "id": 2,
           "type": "stat",
           "title": "Build Status",
           "datasource": {"type": "prometheus", "uid": "victoriametrics"},
-          "gridPos": {"h": 4, "w": 12, "x": 12, "y": 0},
+          "gridPos": {"h": 4, "w": 12, "x": 12, "y": 30},
           "targets": [{
             "datasource": {"type": "prometheus", "uid": "victoriametrics"},
             "editorMode": "code",
@@ -82,14 +83,15 @@ spec:
             "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false},
             "textMode": "auto",
             "wideLayout": true
-          }
+          },
+          "transparent": true
         },
         {
           "id": 3,
           "type": "table",
           "title": "Recent Traces",
           "datasource": {"type": "jaeger", "uid": "victoriatraces"},
-          "gridPos": {"h": 8, "w": 24, "x": 0, "y": 4},
+          "gridPos": {"h": 8, "w": 24, "x": 0, "y": 42},
           "targets": [{
             "datasource": {"type": "jaeger", "uid": "victoriatraces"},
             "queryType": "search",
@@ -108,14 +110,15 @@ spec:
             "cellHeight": "sm",
             "showHeader": true,
             "sortBy": []
-          }
+          },
+          "transparent": true
         },
         {
           "id": 4,
           "type": "timeseries",
           "title": "CPU Usage (cores)",
           "datasource": {"type": "prometheus", "uid": "victoriametrics"},
-          "gridPos": {"h": 8, "w": 12, "x": 0, "y": 12},
+          "gridPos": {"h": 8, "w": 12, "x": 0, "y": 34},
           "targets": [{
             "datasource": {"type": "prometheus", "uid": "victoriametrics"},
             "editorMode": "builder",
@@ -150,14 +153,15 @@ spec:
           "options": {
             "legend": {"calcs": [], "displayMode": "hidden", "placement": "right", "showLegend": false},
             "tooltip": {"mode": "single", "sort": "none"}
-          }
+          },
+          "transparent": true
         },
         {
           "id": 5,
           "type": "timeseries",
           "title": "Memory Usage",
           "datasource": {"type": "prometheus", "uid": "victoriametrics"},
-          "gridPos": {"h": 8, "w": 12, "x": 12, "y": 12},
+          "gridPos": {"h": 8, "w": 12, "x": 12, "y": 34},
           "targets": [{
             "datasource": {"type": "prometheus", "uid": "victoriametrics"},
             "editorMode": "builder",
@@ -192,18 +196,19 @@ spec:
           "options": {
             "legend": {"calcs": [], "displayMode": "hidden", "placement": "right", "showLegend": false},
             "tooltip": {"mode": "single", "sort": "none"}
-          }
+          },
+          "transparent": true
         },
         {
           "id": 6,
           "type": "logs",
-          "title": "Build Logs",
+          "title": "Application Logs",
           "datasource": {"type": "victoriametrics-logs-datasource", "uid": "victorialogs"},
-          "gridPos": {"h": 10, "w": 24, "x": 0, "y": 20},
+          "gridPos": {"h": 15, "w": 24, "x": 0, "y": 0},
           "targets": [{
             "datasource": {"type": "victoriametrics-logs-datasource", "uid": "victorialogs"},
-            "editorMode": "code",
-            "expr": "k8s.namespace.name:\"{{ include "project.namespace" $ }}\"\nAND k8s.container.name:\"main\"\nAND k8s.pod.name:~\"^{{ .name }}-ci-.*\"\nAND _msg:!~\"^missing _msg field\"",
+            "editorMode": "builder",
+            "expr": "k8s.deployment.name: \"{{ .name }}\"",
             "queryType": "instant",
             "refId": "A"
           }],
@@ -224,13 +229,13 @@ spec:
         {
           "id": 7,
           "type": "logs",
-          "title": "Application Logs",
+          "title": "Build Logs",
           "datasource": {"type": "victoriametrics-logs-datasource", "uid": "victorialogs"},
-          "gridPos": {"h": 10, "w": 24, "x": 0, "y": 30},
+          "gridPos": {"h": 15, "w": 24, "x": 0, "y": 15},
           "targets": [{
             "datasource": {"type": "victoriametrics-logs-datasource", "uid": "victorialogs"},
-            "editorMode": "builder",
-            "expr": "k8s.deployment.name: \"{{ .name }}\"",
+            "editorMode": "code",
+            "expr": "k8s.namespace.name:\"{{ include "project.namespace" $ }}\"\nAND k8s.container.name:\"main\"\nAND k8s.pod.name:~\"^{{ .name }}-ci-.*\"\nAND _msg:!~\"^missing _msg field\"",
             "queryType": "instant",
             "refId": "A"
           }],
@@ -281,7 +286,7 @@ spec:
           "type": "stat",
           "title": "Running Pods",
           "datasource": {"type": "prometheus", "uid": "victoriametrics"},
-          "gridPos": {"h": 4, "w": 12, "x": 0, "y": 0},
+          "gridPos": {"h": 4, "w": 12, "x": 0, "y": 15},
           "targets": [{
             "datasource": {"type": "prometheus", "uid": "victoriametrics"},
             "editorMode": "code",
@@ -304,14 +309,15 @@ spec:
             "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false},
             "textMode": "auto",
             "wideLayout": true
-          }
+          },
+          "transparent": true
         },
         {
           "id": 2,
           "type": "timeseries",
           "title": "CPU Usage (cores)",
           "datasource": {"type": "prometheus", "uid": "victoriametrics"},
-          "gridPos": {"h": 8, "w": 12, "x": 0, "y": 4},
+          "gridPos": {"h": 8, "w": 12, "x": 0, "y": 19},
           "targets": [{
             "datasource": {"type": "prometheus", "uid": "victoriametrics"},
             "editorMode": "code",
@@ -337,14 +343,15 @@ spec:
           "options": {
             "legend": {"displayMode": "hidden", "showLegend": false},
             "tooltip": {"mode": "single"}
-          }
+          },
+          "transparent": true
         },
         {
           "id": 3,
           "type": "timeseries",
           "title": "Memory Usage",
           "datasource": {"type": "prometheus", "uid": "victoriametrics"},
-          "gridPos": {"h": 8, "w": 12, "x": 12, "y": 4},
+          "gridPos": {"h": 8, "w": 12, "x": 12, "y": 19},
           "targets": [{
             "datasource": {"type": "prometheus", "uid": "victoriametrics"},
             "editorMode": "code",
@@ -370,14 +377,15 @@ spec:
           "options": {
             "legend": {"displayMode": "hidden", "showLegend": false},
             "tooltip": {"mode": "single"}
-          }
+          },
+          "transparent": true
         },
         {
           "id": 4,
           "type": "logs",
           "title": "Addon Logs",
           "datasource": {"type": "victoriametrics-logs-datasource", "uid": "victorialogs"},
-          "gridPos": {"h": 10, "w": 24, "x": 0, "y": 12},
+          "gridPos": {"h": 15, "w": 24, "x": 0, "y": 0},
           "targets": [{
             "datasource": {"type": "victoriametrics-logs-datasource", "uid": "victorialogs"},
             "editorMode": "code",
