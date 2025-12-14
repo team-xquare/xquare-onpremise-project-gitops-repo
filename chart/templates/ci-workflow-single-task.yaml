@@ -94,10 +94,10 @@ spec:
           ) &
 
           {{- if .build.docker }}
-          GIT_CONTEXT="https://github.com/${REPO_PATH}.git#${GIT_SHA}:{{ .build.docker.contextPath | default "." }}"
+          GIT_CONTEXT="https://x-access-token:${GITHUB_TOKEN}@ithub.com/${REPO_PATH}.git#${GIT_SHA}:{{ .build.docker.contextPath | default "." }}"
           DOCKERFILE_ARG="-f {{ .build.docker.dockerfilePath | default "Dockerfile" }}"
           {{- else }}
-          GIT_CONTEXT="https://github.com/${REPO_PATH}.git#${GIT_SHA}:."
+          GIT_CONTEXT="https://x-access-token:${GITHUB_TOKEN}@github.com/${REPO_PATH}.git#${GIT_SHA}:."
           DOCKERFILE_ARG="-f -"
           {{- end }}
 
