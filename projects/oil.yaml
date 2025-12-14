@@ -55,3 +55,8 @@ addons:
   - name: oil-redis
     type: redis
     storage: 1Gi
+  - name: oil-seaweedfs
+    type: seaweedfs
+    storage: 1Gi
+    buckets:
+      - name: oil-buckets
