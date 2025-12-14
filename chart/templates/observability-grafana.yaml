@@ -38,7 +38,7 @@ spec:
                 memory: 1Gi
   service:
     spec:
-      type: NodePort
+      type: ClusterIP
       ports:
       - name: grafana
         port: 3000
