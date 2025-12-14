@@ -35,7 +35,7 @@ applications:
         - gradle/**
         - gradlew
         - gradlew.bat
-      hash: 986b20f3735ac690b801ee158e0a433206cbedb0
+      hash: 6e3f1dd142beaf3ea74552dac0cecf2453dca6be
     build:
       gradle:
         javaVersion: "17"
