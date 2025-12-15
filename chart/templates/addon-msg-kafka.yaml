@@ -71,9 +71,9 @@ spec:
           resources:
             requests:
               cpu: 200m
-              memory: 1Gi
+              memory: 2Gi
             limits:
-              memory: 1Gi
+              memory: 4Gi
         - name: zookeeper
           image: confluentinc/cp-zookeeper:7.4.0
           ports:
