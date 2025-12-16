@@ -1,21 +1,38 @@
 applications:
-  - name: lotura-prod
+  - name: osj-be-prod
     github:
-      owner: team-osj
-      repo: Lotura_BackEnd_V2
+      owner: OSJ-v3
+      repo: OSJ_V3_BE
       branch: main
-      installationId: "64110126"
-      hash: 33b070ce61f8e18a06029de378211b897541917a
+      installationId: "99866813"
     build:
-      nodejs:
-        nodeVersion: 22.5.1
-        buildCommand: yarn install --frozen-lockfile && yarn build
-        startCommand: yarn start
+      gradle:
+        javaVersion: "17"
+        jarOutputPath: /build/libs/*.jar
+        buildCommand: "./gradlew bootJar -x test"
     endpoints:
-      - port: 3000
+      - port: 8080
         routes:
-          - lotura.dsmhs.kr
+          - osj.dsmhs.kr
+  - name: osj-be-stag
+    github:
+      owner: OSJ-v3
+      repo: OSJ_V3_BE
+      branch: develop
+      installationId: "99866813"
+    build:
+      gradle:
+        javaVersion: "17"
+        jarOutputPath: /build/libs/*.jar
+        buildCommand: "./gradlew bootJar -x test"
+    endpoints:
+      - port: 8080
+        routes:
+          - osj-stag.dsmhs.kr
 addons:
-  - name: nonamed-lotura-prod-mysql
+  - name: osj-prod-mysql
+    type: mysql
+    storage: 1Gi
+  - name: osj-stag-mysql
     type: mysql
     storage: 1Gi
