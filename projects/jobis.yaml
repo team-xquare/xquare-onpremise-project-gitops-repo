@@ -29,7 +29,7 @@ applications:
       repo: JOBIS-DSM-BE
       branch: develop
       installationId: "82814703"
-      hash: a1059c359b1a4e443e929f9cbc6c00f68e359e16
+      hash: b9935553d064c63377b6473eca0efde7c7a25389
       triggerPaths:
         - jobis-application/**
         - jobis-infrastructure/**
