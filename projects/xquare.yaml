@@ -10,10 +10,6 @@ applications:
       docker:
         dockerfilePath: "./Dockerfile"
         contextPath: "."
-    endpoints:
-      - port: 8080
-        routes:
-          - xquare-community-supporter.dsmhs.kr
   - name: infra-backend-prod
     github:
       owner: team-xquare
