@@ -1,11 +1,10 @@
 applications:
-  - name: s3-test-app
+  - name: xquare-supporter-prod
     github:
       owner: team-xquare
-      repo: s3-test-app
+      repo: xquare-community-manager
       branch: main
       installationId: "62433388"
-      hash: 3a33138a9ab168d033b607c3fcc0aa628093a8f0
     build:
       docker:
         dockerfilePath: "./Dockerfile"
@@ -13,7 +12,7 @@ applications:
     endpoints:
       - port: 8080
         routes:
-          - s3-test.dsmhs.kr
+          - xquare-community-supporter.dsmhs.kr
   - name: infra-backend-prod
     github:
       owner: team-xquare
