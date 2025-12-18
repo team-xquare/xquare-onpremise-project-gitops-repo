@@ -31,11 +31,9 @@ applications:
         routes:
           - infra-backend.dsmhs.kr
 addons:
-  - name: xquare-test
-    type: seaweedfs
+  - name: xquare-supporter-mongodb
+    type: mongodb
     storage: 1Gi
-    buckets:
-      - name: test-buckets
   - name: xquare-infra-mysql
     type: mysql
     storage: 1Gi
