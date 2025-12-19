@@ -89,6 +89,8 @@ spec:
       admin_user: admin
     plugins:
       plugin_admin_enabled: "true"
+    dashboards:
+      default_home_dashboard_path: "/dashboards/General/home-dashboard.json"
   deployment:
     spec:
       replicas: 1
