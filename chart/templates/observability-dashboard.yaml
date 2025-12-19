@@ -92,7 +92,7 @@ spec:
           "type": "table",
           "title": "Recent Traces",
           "datasource": {"type": "jaeger", "uid": "victoriatraces"},
-          "gridPos": {"h": 8, "w": 24, "x": 0, "y": 4},
+          "gridPos": {"h": 8, "w": 24, "x": 0, "y": 12},
           "targets": [{
             "datasource": {"type": "jaeger", "uid": "victoriatraces"},
             "queryType": "search",
@@ -119,7 +119,7 @@ spec:
           "type": "timeseries",
           "title": "CPU Usage (cores)",
           "datasource": {"type": "prometheus", "uid": "victoriametrics"},
-          "gridPos": {"h": 8, "w": 12, "x": 0, "y": 12},
+          "gridPos": {"h": 8, "w": 12, "x": 0, "y": 4},
           "targets": [{
             "datasource": {"type": "prometheus", "uid": "victoriametrics"},
             "editorMode": "builder",
@@ -162,7 +162,7 @@ spec:
           "type": "timeseries",
           "title": "Memory Usage",
           "datasource": {"type": "prometheus", "uid": "victoriametrics"},
-          "gridPos": {"h": 8, "w": 12, "x": 12, "y": 12},
+          "gridPos": {"h": 8, "w": 12, "x": 12, "y": 4},
           "targets": [{
             "datasource": {"type": "prometheus", "uid": "victoriametrics"},
             "editorMode": "builder",
