@@ -53,7 +53,7 @@ spec:
             "textMode": "auto",
             "wideLayout": true
           },
-          "transparent": true
+          "transparent": false
         },
         {
           "id": 2,
@@ -85,7 +85,7 @@ spec:
             "textMode": "auto",
             "wideLayout": true
           },
-          "transparent": true
+          "transparent": false
         },
         {
           "id": 3,
@@ -112,7 +112,7 @@ spec:
             "showHeader": true,
             "sortBy": []
           },
-          "transparent": true
+          "transparent": false
         },
         {
           "id": 4,
@@ -155,7 +155,7 @@ spec:
             "legend": {"calcs": [], "displayMode": "hidden", "placement": "right", "showLegend": false},
             "tooltip": {"mode": "single", "sort": "none"}
           },
-          "transparent": true
+          "transparent": false
         },
         {
           "id": 5,
@@ -198,7 +198,7 @@ spec:
             "legend": {"calcs": [], "displayMode": "hidden", "placement": "right", "showLegend": false},
             "tooltip": {"mode": "single", "sort": "none"}
           },
-          "transparent": true
+          "transparent": false
         },
         {
           "id": 6,
@@ -225,7 +225,7 @@ spec:
             "timestampResolution": "ms",
             "wrapLogMessage": false
           },
-          "transparent": true
+          "transparent": false
         },
         {
           "id": 7,
@@ -252,7 +252,7 @@ spec:
             "timestampResolution": "ms",
             "wrapLogMessage": false
           },
-          "transparent": true
+          "transparent": false
         }
       ]
     }
@@ -312,7 +312,7 @@ spec:
             "textMode": "auto",
             "wideLayout": true
           },
-          "transparent": true
+          "transparent": false
         },
         {
           "id": 2,
@@ -346,7 +346,7 @@ spec:
             "legend": {"displayMode": "hidden", "showLegend": false},
             "tooltip": {"mode": "single"}
           },
-          "transparent": true
+          "transparent": false
         },
         {
           "id": 3,
@@ -380,7 +380,7 @@ spec:
             "legend": {"displayMode": "hidden", "showLegend": false},
             "tooltip": {"mode": "single"}
           },
-          "transparent": true
+          "transparent": false
         },
         {
           "id": 4,
@@ -406,7 +406,7 @@ spec:
             "sortOrder": "Ascending",
             "wrapLogMessage": false
           },
-          "transparent": true
+          "transparent": false
         }
       ]
     }
