@@ -273,7 +273,7 @@ spec:
   folder: "General"
   json: |
     {
-      "title": "{{ .name }} - {{ .type | title }}",
+      "title": "{{ .name }} - Addon",
       "uid": "addon-{{ .name }}",
       "timezone": "browser",
       "schemaVersion": 42,
