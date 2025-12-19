@@ -130,7 +130,7 @@ spec:
 
           # Update build status
           BUILD_END_TIME=$(date +%s)000
-          DASHBOARD_URL="https://{{ $.Values.project }}-observability-dashboard.dsmhs.kr/d/app-{{ include "app.serviceName" . }}/{{ include "app.serviceName" . }}-application?viewPanel=panel-7&from=${BUILD_START_TIME}&to=${BUILD_END_TIME}&refresh=1d"
+          DASHBOARD_URL="https://{{ $.Values.project }}-observability-dashboard.dsmhs.kr/d/app-{{ include "app.serviceName" . }}/{{ include "app.serviceName" . }}-application?viewPanel=panel-7&from=${BUILD_START_TIME}&to=${BUILD_END_TIME}"
 
           if [ "$BUILD_SUCCESS" -eq 1 ]; then
             update_check_run "in_progress" "" "빌드 완료 - 배포 준비 중" "빌드가 성공적으로 완료되었습니다" "${DASHBOARD_URL}"
