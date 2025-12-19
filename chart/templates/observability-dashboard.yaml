@@ -148,7 +148,8 @@ spec:
                 "thresholdsStyle": {"mode": "off"}
               },
               "mappings": [],
-              "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": 0}, {"color": "red", "value": 80}]}
+              "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": 0}, {"color": "red", "value": 80}]},
+              "unit": "short"
             }
           },
           "options": {
@@ -191,7 +192,8 @@ spec:
                 "thresholdsStyle": {"mode": "off"}
               },
               "mappings": [],
-              "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": 0}, {"color": "red", "value": 80}]}
+              "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": 0}, {"color": "red", "value": 80}]},
+              "unit": "bytes"
             }
           },
           "options": {
@@ -339,7 +341,8 @@ spec:
                 "pointSize": 5,
                 "showPoints": "auto",
                 "spanNulls": false
-              }
+              },
+              "unit": "short"
             }
           },
           "options": {
@@ -373,7 +376,8 @@ spec:
                 "pointSize": 5,
                 "showPoints": "auto",
                 "spanNulls": false
-              }
+              },
+              "unit": "bytes"
             }
           },
           "options": {
