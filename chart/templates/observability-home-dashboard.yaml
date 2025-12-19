@@ -24,7 +24,7 @@ spec:
           "id": 1,
           "type": "dashlist",
           "title": "Applications",
-          "gridPos": {"h": 12, "w": 12, "x": 0, "y": 0},
+          "gridPos": {"h": 24, "w": 12, "x": 0, "y": 0},
           "options": {
             "query": "Application",
             "tags": [],
@@ -43,7 +43,7 @@ spec:
           "id": 2,
           "type": "dashlist",
           "title": "Addons",
-          "gridPos": {"h": 12, "w": 12, "x": 12, "y": 0},
+          "gridPos": {"h": 24, "w": 12, "x": 12, "y": 0},
           "options": {
             "query": "Addon",
             "tags": [],
