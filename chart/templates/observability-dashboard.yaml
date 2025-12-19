@@ -11,6 +11,7 @@ spec:
   instanceSelector:
     matchLabels:
       dashboards: "grafana"
+  folder: "General"
   json: |
     {
       "title": "{{ .name }} - Application",
@@ -269,6 +270,7 @@ spec:
   instanceSelector:
     matchLabels:
       dashboards: "grafana"
+  folder: "General"
   json: |
     {
       "title": "{{ .name }} - {{ .type | title }}",
