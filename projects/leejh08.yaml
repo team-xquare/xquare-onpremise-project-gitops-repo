@@ -1,11 +1,10 @@
 applications:
-  - name: leejh08
+  - name: gifty-prod
     github:
       owner: leejh08
       repo: Gifty_Server
       branch: main
       installationId: "99610854"
-      hash: edeff5a84e443ae76315e585f4bf9361374c6cf0
     build:
       docker:
         dockerfilePath: "./Dockerfile"
@@ -14,7 +13,24 @@ applications:
       - port: 8080
         routes:
           - leejh08-gifty-api.dsmhs.kr
+  - name: gifty-dev
+    github:
+      owner: leejh08
+      repo: Gifty_Server
+      branch: develop
+      installationId: "99610854"
+    build:
+      docker:
+        dockerfilePath: "./Dockerfile"
+        contextPath: "."
+    endpoints:
+      - port: 8080
+        routes:
+          - leejh08-gifty-api-dev.dsmhs.kr
 addons:
   - name: postgresql-prod
+    type: postgresql
+    storage: 1Gi
+  - name: postgresql-dev
     type: postgresql
     storage: 1Gi
