@@ -35,7 +35,7 @@ applications:
       repo: PiCK2024_FRONT_V2
       branch: main
       installationId: "64595989"
-      hash: 7a7234fd19977c3f32f954709562729131f862d6
+      hash: d7f00754d68865270048361408c824a299031b66
     build:
       vite:
         nodeVersion: "18"
