@@ -103,10 +103,17 @@ addons:
   - name: pick-pick-core-stag-mysql
     type: mysql
     storage: 1Gi
-  - name: pick-kafka
+  - name: pick-kafka-prod
     type: kafka
-    storage: 5Gi
-  - name: pick-debezium
+    storage: 2Gi
+  - name: pick-kafka-stag
+    type: kafka
+    storage: 2Gi
+  - name: pick-debezium-prod
     type: debezium
     storage: 5Gi
-    bootstrap: "pick-kafka:9092"
+    bootstrap: "pick-kafka-prod:9092"
+  - name: pick-debezium-stag
+    type: debezium
+    storage: 5Gi
+    bootstrap: "pick-kafka-stag:9092"
