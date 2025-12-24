@@ -5,7 +5,7 @@ applications:
       repo: Gifty_Server
       branch: main
       installationId: "99610854"
-      hash: e1323a5ab76e95817e7b16e30a3ea4b6130e5224
+      hash: 5a0117425547725bd6096348c0786a52161327b6
     build:
       docker:
         dockerfilePath: "./Dockerfile"
