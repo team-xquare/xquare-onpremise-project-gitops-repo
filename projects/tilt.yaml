@@ -1,0 +1,17 @@
+applications:
+  - name: tilt-dsm-prod
+    github:
+      owner: TILT-DSM
+      repo: TILT_SERVER
+      branch: main
+      installationId: "101188636"
+    build:
+      gradle:
+        javaVersion: "17"
+        jarOutputPath: "/build/libs/*.jar"
+        buildCommand: "./gradlew bootJar -x test --build-cache --no-daemon"
+    endpoints:
+      - port: 8080
+        routes:
+          - tilt-api.dsmhs.kr
+
