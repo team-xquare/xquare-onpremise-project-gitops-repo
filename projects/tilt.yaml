@@ -5,6 +5,7 @@ applications:
       repo: TILT_SERVER
       branch: main
       installationId: "101188636"
+      hash: a3d1a22ce629adb515d19293521c526c8404facb
     build:
       gradle:
         javaVersion: "17"
@@ -14,4 +15,3 @@ applications:
       - port: 8080
         routes:
           - tilt-api.dsmhs.kr
-
