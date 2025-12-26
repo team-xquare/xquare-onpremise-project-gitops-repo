@@ -13,7 +13,7 @@ applications:
     endpoints:
       - port: 8080
         routes:
-          - deuknetapi.dsmhs.kr
+          - deuknet-api.dsmhs.kr
   - name: deuknet-be-stag
     github:
       owner: DeukNet
@@ -28,7 +28,7 @@ applications:
     endpoints:
       - port: 8080
         routes:
-          - deuknetapi.dsmhs.kr
+          - deuknet-api-stag.dsmhs.kr
   - name: deuknet-fe-prod
     github:
       owner: DeukNet
