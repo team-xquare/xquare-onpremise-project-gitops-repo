@@ -1,0 +1,62 @@
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: home-dashboard
+  namespace: {{ include "project.namespace" . }}
+  labels:
+    {{- include "project.labels" . | nindent 4 }}
+spec:
+  instanceSelector:
+    matchLabels:
+      dashboards: "grafana"
+  folder: "General"
+  json: |
+    {
+      "title": "Home",
+      "uid": "home-dashboard",
+      "timezone": "browser",
+      "schemaVersion": 42,
+      "refresh": "",
+      "editable": true,
+      "panels": [
+        {
+          "id": 1,
+          "type": "dashlist",
+          "title": "Applications",
+          "gridPos": {"h": 24, "w": 12, "x": 0, "y": 0},
+          "options": {
+            "query": "Application",
+            "tags": [],
+            "recent": false,
+            "starred": false,
+            "headings": true,
+            "maxItems": 50,
+            "showSearch": true,
+            "showHeadings": true,
+            "showRecentlyViewed": false,
+            "showStarred": false
+          },
+          "transparent": true
+        },
+        {
+          "id": 2,
+          "type": "dashlist",
+          "title": "Addons",
+          "gridPos": {"h": 24, "w": 12, "x": 12, "y": 0},
+          "options": {
+            "query": "Addon",
+            "tags": [],
+            "recent": false,
+            "starred": false,
+            "headings": true,
+            "maxItems": 50,
+            "showSearch": true,
+            "showHeadings": true,
+            "showRecentlyViewed": false,
+            "showStarred": false
+          },
+          "transparent": true
+        }
+      ]
+    }

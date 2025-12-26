@@ -1,0 +1,102 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: grafana-home-dashboard-setup
+  namespace: {{ include "project.namespace" . }}
+  labels:
+    {{- include "project.labels" . | nindent 4 }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: grafana-home-dashboard-setup
+  namespace: {{ include "project.namespace" . }}
+  labels:
+    {{- include "project.labels" . | nindent 4 }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+rules:
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get"]
+- apiGroups: [""]
+  resources: ["services"]
+  verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: grafana-home-dashboard-setup
+  namespace: {{ include "project.namespace" . }}
+  labels:
+    {{- include "project.labels" . | nindent 4 }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: grafana-home-dashboard-setup
+subjects:
+- kind: ServiceAccount
+  name: grafana-home-dashboard-setup
+  namespace: {{ include "project.namespace" . }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: grafana-home-dashboard-setup
+  namespace: {{ include "project.namespace" . }}
+  labels:
+    {{- include "project.labels" . | nindent 4 }}
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+spec:
+  template:
+    spec:
+      containers:
+      - name: setup
+        image: curlimages/curl:latest
+        command:
+          - /bin/sh
+          - -c
+          - |
+            set -e
+
+            # Wait for Grafana to be ready
+            echo "Waiting for Grafana to be ready..."
+            until curl -f -s http://grafana-service:3000/api/health > /dev/null 2>&1; do
+              echo "Grafana not ready yet, waiting..."
+              sleep 5
+            done
+            echo "Grafana is ready!"
+
+            # Get admin password from secret
+            PASSWORD=$(cat /grafana-password/password)
+
+            # Wait a bit more to ensure dashboard is provisioned
+            sleep 10
+
+            # Set home dashboard using API
+            echo "Setting home dashboard..."
+            RESPONSE=$(curl -X PUT \
+              -H "Content-Type: application/json" \
+              -u "admin:${PASSWORD}" \
+              -d '{"homeDashboardUID":"home-dashboard"}' \
+              http://grafana-service:3000/api/org/preferences)
+
+            echo "Response: $RESPONSE"
+            echo "Home dashboard setup completed!"
+        volumeMounts:
+        - name: grafana-password
+          mountPath: /grafana-password
+          readOnly: true
+      volumes:
+      - name: grafana-password
+        secret:
+          secretName: grafana-admin-password
+      serviceAccountName: grafana-home-dashboard-setup
+      restartPolicy: OnFailure

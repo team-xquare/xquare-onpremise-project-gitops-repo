@@ -5,7 +5,7 @@ applications:
       repo: PICK_CORE_SERVER
       branch: main
       installationId: "64595989"
-      hash: 08f82f057781101f222debf07490d9f25b2057d4
+      hash: aa775bf7cc3eb6a5e24ff9b2a2065f05775b544d
     build:
       docker:
         dockerfilePath: ./Dockerfile
@@ -20,7 +20,7 @@ applications:
       repo: PICK_CORE_SERVER
       branch: develop
       installationId: "64595989"
-      hash: 0e5e514a034b267b974fbf9eb2c6e39c03b292cb
+      hash: 47ea6093f3ceab3bd094bb34b704919bab8f0bcf
     build:
       docker:
         dockerfilePath: ./Dockerfile
@@ -35,7 +35,7 @@ applications:
       repo: PiCK2024_FRONT_V2
       branch: main
       installationId: "64595989"
-      hash: 7a7234fd19977c3f32f954709562729131f862d6
+      hash: d7f00754d68865270048361408c824a299031b66
     build:
       vite:
         nodeVersion: "18"
@@ -51,7 +51,7 @@ applications:
       repo: PiCK2024_FRONT_V2
       branch: develop
       installationId: "64595989"
-      hash: 053e4a79242348e654a152eea0efcc202a869603
+      hash: 01d5c50fe9cb660c3254108abb5670f81b665445
     build:
       vite:
         nodeVersion: "18"
@@ -103,10 +103,17 @@ addons:
   - name: pick-pick-core-stag-mysql
     type: mysql
     storage: 1Gi
-  - name: pick-kafka
+  - name: pick-kafka-prod
     type: kafka
-    storage: 5Gi
-  - name: pick-debezium
+    storage: 2Gi
+  - name: pick-kafka-stag
+    type: kafka
+    storage: 2Gi
+  - name: pick-debezium-prod
     type: debezium
     storage: 5Gi
-    bootstrap: "pick-kafka:9092"
+    bootstrap: "pick-kafka-prod:9092"
+  - name: pick-debezium-stag
+    type: debezium
+    storage: 5Gi
+    bootstrap: "pick-kafka-stag:9092"

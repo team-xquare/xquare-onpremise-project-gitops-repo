@@ -61,13 +61,15 @@ spec:
           # Update GitHub check run status
           update_check_run() {
             local conclusion_json=""
+            local details_url_json=""
             [ -n "$2" ] && conclusion_json="\"conclusion\": \"$2\","
+            [ -n "$5" ] && details_url_json="\"details_url\": \"$5\","
 
             curl -s -X PATCH \
               -H "Authorization: Bearer ${GITHUB_TOKEN}" \
               -H "Accept: application/vnd.github+json" \
               -H "Content-Type: application/json" \
-              -d "{\"status\":\"$1\",${conclusion_json}\"output\":{\"title\":\"$3\",\"summary\":\"$4\"}}" \
+              -d "{\"status\":\"$1\",${conclusion_json}${details_url_json}\"output\":{\"title\":\"$3\",\"summary\":\"$4\"}}" \
               "${GITHUB_API}/repos/${REPO_PATH}/check-runs/${CHECK_RUN_ID}" > /dev/null
           }
 
@@ -84,11 +86,13 @@ spec:
           fi
 
           # Create check run (background) & build image (foreground)
+          BUILD_START_TIME=$(date +%s)000
+          INITIAL_DASHBOARD_URL="https://{{ $.Values.project }}-observability-dashboard.dsmhs.kr/d/app-{{ include "app.serviceName" . }}/{{ include "app.serviceName" . }}-application?viewPanel=panel-7&from=${BUILD_START_TIME}&to=now"
           (
             CHECK_RUN_ID=$(curl -s -X POST \
               -H "Authorization: Bearer ${GITHUB_TOKEN}" \
               -H "Accept: application/vnd.github+json" \
-              -d "{\"name\":\"{{ include "app.serviceName" . }}\",\"head_sha\":\"${GIT_SHA}\",\"status\":\"in_progress\",\"output\":{\"title\":\"빌드 진행 중\",\"summary\":\"애플리케이션 빌드를 시작합니다\"}}" \
+              -d "{\"name\":\"{{ include "app.serviceName" . }}\",\"head_sha\":\"${GIT_SHA}\",\"status\":\"in_progress\",\"details_url\":\"${INITIAL_DASHBOARD_URL}\",\"output\":{\"title\":\"빌드 진행 중\",\"summary\":\"애플리케이션 빌드를 시작합니다\"}}" \
               "${GITHUB_API}/repos/${REPO_PATH}/check-runs" | jq -r '.id')
             echo "$CHECK_RUN_ID" > /tmp/check_run_id.txt
           ) &
@@ -125,10 +129,13 @@ spec:
           CHECK_RUN_ID=$(cat /tmp/check_run_id.txt)
 
           # Update build status
+          BUILD_END_TIME=$(date +%s)000
+          DASHBOARD_URL="https://{{ $.Values.project }}-observability-dashboard.dsmhs.kr/d/app-{{ include "app.serviceName" . }}/{{ include "app.serviceName" . }}-application?viewPanel=panel-7&from=${BUILD_START_TIME}&to=${BUILD_END_TIME}"
+
           if [ "$BUILD_SUCCESS" -eq 1 ]; then
-            update_check_run "in_progress" "" "빌드 완료 - 배포 준비 중" "빌드가 성공적으로 완료되었습니다"
+            update_check_run "in_progress" "" "빌드 완료 - 배포 준비 중" "빌드가 성공적으로 완료되었습니다" "${DASHBOARD_URL}"
           else
-            update_check_run "completed" "failure" "빌드 실패" "빌드 과정에서 오류가 발생했습니다"
+            update_check_run "completed" "failure" "빌드 실패" "빌드 과정에서 오류가 발생했습니다" "${DASHBOARD_URL}"
             exit 1
           fi
 
@@ -138,9 +145,9 @@ spec:
             -H "Accept: application/vnd.github.v3+json" \
             -d "{\"event_type\":\"config-api\",\"client_payload\":{\"path\":\"projects/{{ $.Values.project }}/applications/{{ include "app.serviceName" . }}\",\"action\":\"apply\",\"spec\":{\"github\":{\"hash\":\"${GIT_SHA}\"}}}}" \
             "${GITHUB_API}/repos/{{ include "ci.gitopsRepo" $ }}/dispatches" > /dev/null; then
-            update_check_run "completed" "success" "배포 트리거 성공" "빌드 및 배포가 성공적으로 완료되었습니다"
+            update_check_run "completed" "success" "배포 트리거 성공" "빌드 및 배포가 성공적으로 완료되었습니다" "${DASHBOARD_URL}"
           else
-            update_check_run "completed" "failure" "배포 트리거 실패" "배포 트리거 과정에서 오류가 발생했습니다"
+            update_check_run "completed" "failure" "배포 트리거 실패" "배포 트리거 과정에서 오류가 발생했습니다" "${DASHBOARD_URL}"
             exit 1
           fi
         env:

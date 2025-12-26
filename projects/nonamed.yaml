@@ -5,6 +5,7 @@ applications:
       repo: OSJ_V3_BE
       branch: main
       installationId: "99866813"
+      hash: 724efa90f989a1a69770151701a37dc477f56bb0
     build:
       gradle:
         javaVersion: "17"
@@ -20,6 +21,7 @@ applications:
       repo: OSJ_V3_BE
       branch: develop
       installationId: "99866813"
+      hash: 2818ac71b5d437ff01acbef49de00e708591e407
     build:
       gradle:
         javaVersion: "17"

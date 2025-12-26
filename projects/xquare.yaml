@@ -5,22 +5,18 @@ applications:
       repo: xquare-community-manager
       branch: main
       installationId: "62433388"
-      hash: 784ed09ae45c2616a654f23bbf22cdd90846c789
+      hash: 23e0f998b5b607a222fe6b173e33f6a7bed4d0d5
     build:
       docker:
         dockerfilePath: "./Dockerfile"
         contextPath: "."
-    endpoints:
-      - port: 8080
-        routes:
-          - xquare-community-supporter.dsmhs.kr
   - name: infra-backend-prod
     github:
       owner: team-xquare
       repo: xquare-infra-backend-v3
       branch: main
       installationId: "62433388"
-      hash: 821a52252f57bb34a5f2fb3ce2bd7a5c9678cd7d
+      hash: bbb0fd500927b1317c25b127cde8f5dc54cf0c9d
     build:
       gradle:
         javaVersion: 17
