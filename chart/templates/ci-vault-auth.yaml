@@ -11,7 +11,7 @@ spec:
   method: kubernetes
   mount: kubernetes
   kubernetes:
-    role: xquare-infra
+    role: xquare-app
     serviceAccount: {{ .Values.project }}-infra-vault-service-account
     audiences:
       - vault
