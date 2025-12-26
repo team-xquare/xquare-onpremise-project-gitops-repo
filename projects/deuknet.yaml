@@ -1,0 +1,56 @@
+applications:
+  - name: deuknet-be-prod
+    github:
+      owner: DeukNet
+      repo: DeukNet-BE
+      branch: main
+      installationId: "101281047"
+    build:
+      gradle:
+        javaVersion: "17"
+        jarOutputPath: "/build/libs/*.jar"
+        buildCommand: "./gradlew bootJar -x test --build-cache --no-daemon"
+    endpoints:
+      - port: 8080
+        routes:
+          - deuknetapi.dsmhs.kr
+  - name: deuknet-be-stag
+    github:
+      owner: DeukNet
+      repo: DeukNet-BE
+      branch: develop
+      installationId: "101281047"
+    build:
+      gradle:
+        javaVersion: "17"
+        jarOutputPath: "/build/libs/*.jar"
+        buildCommand: "./gradlew bootJar -x test --build-cache --no-daemon"
+    endpoints:
+      - port: 8080
+        routes:
+          - deuknetapi.dsmhs.kr
+  - name: deuknet-fe-prod
+    github:
+      owner: DeukNet
+      repo: DeukNet-FE
+      branch: main
+      installationId: "101281047"
+    build:
+      react:
+        nodeVersion: "18"
+        buildCommand: "npm ci && npm run build"
+        distPath: "/dist"
+    endpoints:
+      - port: 8080
+        routes:
+          - deuknet.dsmhs.kr
+addons:
+  - name: deuknet-postgres
+    type: postgresql
+    version: "15"
+    storage: 2Gi
+  - name: deuknet-seaweedfs
+    type: seaweedfs
+    storage: 1Gi
+    buckets:
+      - name: deuknet-buckets
