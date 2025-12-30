@@ -8,7 +8,7 @@ applications:
     build:
       gradle:
         javaVersion: "17"
-        jarOutputPath: "./deuknet-infrastructure/build/libs/*-SNAPSHOT.jar"
+        jarOutputPath: "/deuknet-infrastructure/build/libs/*-SNAPSHOT.jar"
         buildCommand: "./gradlew clean build -x test"
     endpoints:
       - port: 8080
@@ -23,7 +23,7 @@ applications:
     build:
       gradle:
         javaVersion: "17"
-        jarOutputPath: "./deuknet-infrastructure/build/libs/*-SNAPSHOT.jar"
+        jarOutputPath: "/deuknet-infrastructure/build/libs/*-SNAPSHOT.jar"
         buildCommand: "./gradlew clean build -x test"
     endpoints:
       - port: 8080
