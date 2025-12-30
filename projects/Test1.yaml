@@ -17,5 +17,3 @@ applications:
       repo: DAEXI-fe
       triggerPaths:
         - /**
-        - ""
-        - ""
