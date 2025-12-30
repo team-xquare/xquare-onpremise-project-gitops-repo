@@ -9,7 +9,7 @@ applications:
       gradle:
         javaVersion: "17"
         jarOutputPath: "./deuknet-infrastructure/build/libs/*-SNAPSHOT.jar"
-        buildCommand: "./gradlew bootJar -x test --build-cache --no-daemon"
+        buildCommand: "./gradlew clean build -x test"
     endpoints:
       - port: 8080
         routes:
@@ -24,7 +24,7 @@ applications:
       gradle:
         javaVersion: "17"
         jarOutputPath: "./deuknet-infrastructure/build/libs/*-SNAPSHOT.jar"
-        buildCommand: "./gradlew bootJar -x test --build-cache --no-daemon"
+        buildCommand: "./gradlew clean build -x test"
     endpoints:
       - port: 8080
         routes:
