@@ -35,6 +35,7 @@ applications:
       repo: DeukNet-FE
       branch: main
       installationId: "101281047"
+      hash: 321a3fd83262940aed7348f3ea53a2e396ec1cab
     build:
       react:
         nodeVersion: "18"
@@ -57,4 +58,3 @@ addons:
   - name: deuknet-elasticsearch
     type: elasticsearch
     storage: 2Gi
-
