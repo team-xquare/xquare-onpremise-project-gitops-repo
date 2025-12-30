@@ -170,7 +170,7 @@ data:
         echo "$var=__ENV_NOT_SET__${var}__${uuid}__"; \
       done > /tmp/.env.mappings && \
       echo "Found env vars: $(cat /tmp/.env.mappings | cut -d'=' -f1 | tr '\n' ' ')"
-    RUN {{ template "ci.jsPackageManagerMountFlag" .build.next.buildCommand }} export $(cat /tmp/.env.mappings | xargs) && {{ .build.nextjs.buildCommand }}
+    RUN {{ template "ci.jsPackageManagerMountFlag" .build.nextjs.buildCommand }} export $(cat /tmp/.env.mappings | xargs) && {{ .build.nextjs.buildCommand }}
     FROM node:{{ .build.nextjs.nodeVersion }}-alpine
     RUN apk add --no-cache dumb-init tzdata && addgroup -g 1001 appgroup && adduser -u 1001 -G appgroup -s /bin/sh -D appuser
     WORKDIR /app
