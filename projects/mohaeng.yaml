@@ -1,0 +1,56 @@
+applications:
+  - name: be-prod
+    github:
+      owner: SERVICE-MOHAENG
+      repo: Mohaeng-BE
+      branch: main
+      installationId: "101846048"
+      triggerPaths:
+        - src/**
+        - package.json
+        - package-lock.json
+        - nest-cli.json
+        - tsconfig.json
+    build:
+      nodejs:
+        nodeVersion: "20"
+        buildCommand: "npm ci && npm run build"
+        startCommand: "npm run start:prod"
+    endpoints:
+      - port: 8080
+        routes:
+          - mohaeng-api.dsmhs.kr
+  - name: be-stag
+    github:
+      owner: SERVICE-MOHAENG
+      repo: Mohaeng-BE
+      branch: develop
+      installationId: "101846048"
+      triggerPaths:
+        - src/**
+        - package.json
+        - package-lock.json
+        - nest-cli.json
+        - tsconfig.json
+    build:
+      nodejs:
+        nodeVersion: "20"
+        buildCommand: "npm ci && npm run build"
+        startCommand: "npm run start:prod"
+    endpoints:
+      - port: 8080
+        routes:
+          - mohaeng-api-stag.dsmhs.kr
+addons:
+  - name: prod-mysql
+    type: mysql
+    storage: 1Gi
+  - name: stag-mysql
+    type: mysql
+    storage: 1Gi
+  - name: prod-redis
+    type: redis
+    storage: 1Gi
+  - name: stag-redis
+    type: redis
+    storage: 1Gi
