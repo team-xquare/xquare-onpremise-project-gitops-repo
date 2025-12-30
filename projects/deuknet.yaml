@@ -54,3 +54,7 @@ addons:
     storage: 1Gi
     buckets:
       - name: deuknet-buckets
+  - name: deuknet-elasticsearch
+    type: elasticsearch
+    storage: 2Gi
+
