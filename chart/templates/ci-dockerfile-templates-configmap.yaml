@@ -1,3 +1,18 @@
+{{- define "ci.jsPackageManagerMountFlag" -}}
+{{- $dir := "" -}}
+{{- if regexMatch "\\bnx\\b" . -}}
+  {{- $dir = "/app/.nx/cache" -}}
+{{- else if hasPrefix "npm" . -}}
+  {{- $dir = "/root/.npm" -}}
+{{- else if hasPrefix "yarn" . -}}
+  {{- $dir = "/root/.yarn/berry" -}}
+{{- end -}}
+
+{{- if $dir -}}
+  --mount=type=cache,target={{- $dir -}}
+{{- end -}}
+{{- end -}}
+
 {{- range .Values.applications }}
 ---
 apiVersion: v1
@@ -68,7 +83,7 @@ data:
         echo "$var=__ENV_NOT_SET__${var}__${uuid}__"; \
       done > /tmp/.env.mappings && \
       echo "Found env vars: $(cat /tmp/.env.mappings | cut -d'=' -f1 | tr '\n' ' ')"
-    RUN export $(cat /tmp/.env.mappings | xargs) && {{ .build.react.buildCommand }}
+    RUN {{ template "ci.jsPackageManagerMountFlag" .build.react.buildCommand }} export $(cat /tmp/.env.mappings | xargs) && {{ .build.react.buildCommand }}
     FROM nginx:alpine
     RUN apk add --no-cache tzdata wget && addgroup -g 101 nginx-group || true && adduser -u 101 -G nginx-group -s /bin/sh -D nginx-user || true
     COPY --from=build /app{{ .build.react.distPath | default "/build" }} /usr/share/nginx/html
@@ -97,7 +112,7 @@ data:
         echo "$var=__ENV_NOT_SET__${var}__${uuid}__"; \
       done > /tmp/.env.mappings && \
       echo "Found env vars: $(cat /tmp/.env.mappings | cut -d'=' -f1 | tr '\n' ' ')"
-    RUN export $(cat /tmp/.env.mappings | xargs) && {{ .build.vite.buildCommand }}
+    RUN {{ template "ci.jsPackageManagerMountFlag" .build.vite.buildCommand }} export $(cat /tmp/.env.mappings | xargs) && {{ .build.vite.buildCommand }}
     FROM nginx:alpine
     RUN apk add --no-cache tzdata wget && addgroup -g 101 nginx-group || true && adduser -u 101 -G nginx-group -s /bin/sh -D nginx-user || true
     COPY --from=build /app{{ .build.vite.distPath | default "/dist" }} /usr/share/nginx/html
@@ -126,7 +141,7 @@ data:
         echo "$var=__ENV_NOT_SET__${var}__${uuid}__"; \
       done > /tmp/.env.mappings && \
       echo "Found env vars: $(cat /tmp/.env.mappings | cut -d'=' -f1 | tr '\n' ' ')"
-    RUN export $(cat /tmp/.env.mappings | xargs) && {{ .build.vue.buildCommand }}
+    RUN {{ template "ci.jsPackageManagerMountFlag" .build.vue.buildCommand }} export $(cat /tmp/.env.mappings | xargs) && {{ .build.vue.buildCommand }}
     FROM nginx:alpine
     RUN apk add --no-cache tzdata wget && addgroup -g 101 nginx-group || true && adduser -u 101 -G nginx-group -s /bin/sh -D nginx-user || true
     COPY --from=build /app{{ .build.vue.distPath | default "/dist" }} /usr/share/nginx/html
@@ -155,7 +170,7 @@ data:
         echo "$var=__ENV_NOT_SET__${var}__${uuid}__"; \
       done > /tmp/.env.mappings && \
       echo "Found env vars: $(cat /tmp/.env.mappings | cut -d'=' -f1 | tr '\n' ' ')"
-    RUN export $(cat /tmp/.env.mappings | xargs) && {{ .build.nextjs.buildCommand }}
+    RUN {{ template "ci.jsPackageManagerMountFlag" .build.nextjs.buildCommand }} export $(cat /tmp/.env.mappings | xargs) && {{ .build.nextjs.buildCommand }}
     FROM node:{{ .build.nextjs.nodeVersion }}-alpine
     RUN apk add --no-cache dumb-init tzdata && addgroup -g 1001 appgroup && adduser -u 1001 -G appgroup -s /bin/sh -D appuser
     WORKDIR /app
@@ -188,7 +203,7 @@ data:
         echo "$var=__ENV_NOT_SET__${var}__${uuid}__"; \
       done > /tmp/.env.mappings && \
       echo "Found env vars: $(cat /tmp/.env.mappings | cut -d'=' -f1 | tr '\n' ' ')"
-    RUN export $(cat /tmp/.env.mappings | xargs) && {{ index .build "nextjs-export" "buildCommand" }}
+    RUN {{ template "ci.jsPackageManagerMountFlag" (index .build "nextjs-export" "buildCommand") }} export $(cat /tmp/.env.mappings | xargs) && {{ index .build "nextjs-export" "buildCommand" }}
     FROM nginx:alpine
     RUN apk add --no-cache tzdata wget && addgroup -g 101 nginx-group || true && adduser -u 101 -G nginx-group -s /bin/sh -D nginx-user || true
     COPY --from=build /app{{ index .build "nextjs-export" "distPath" | default "/out" }} /usr/share/nginx/html
