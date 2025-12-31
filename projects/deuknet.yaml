@@ -21,7 +21,7 @@ applications:
       repo: DeukNet-BE
       branch: develop
       installationId: "101281047"
-      hash: 6e94de7888658b7e6081967a6e7eaadaf1caaafc
+      hash: cdb6d58ac9e33c2d897f1472d08a2c6e0f72efd8
     build:
       gradle:
         javaVersion: "17"
