@@ -10,6 +10,21 @@ applications:
       docker:
         dockerfilePath: "./Dockerfile"
         contextPath: "."
+  - name: infra-backend-stag
+    github:
+      owner: team-xquare
+      repo: xquare-infra-backend-v3
+      branch: develop
+      installationId: "62433388"
+    build:
+      gradle:
+        javaVersion: 17
+        jarOutputPath: /build/libs/*.jar
+        buildCommand: ./gradlew bootJar -x test
+    endpoints:
+      - port: 8080
+        routes:
+          - infra-backend-stag.dsmhs.kr
   - name: infra-backend-prod
     github:
       owner: team-xquare
@@ -31,5 +46,8 @@ addons:
     type: mongodb
     storage: 1Gi
   - name: xquare-infra-mysql
+    type: mysql
+    storage: 1Gi
+  - name: xquare-infra-mysql-stag
     type: mysql
     storage: 1Gi
