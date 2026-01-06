@@ -9,9 +9,6 @@ applications:
       - port: 80
         routes:
           - www.daexi.dsmhs.kr
-      - port: 10
-        routes:
-          - www.test
     github:
       branch: main
       hash: 04b2801f38bb6d82ef7ca54ad63760803f757fb6
