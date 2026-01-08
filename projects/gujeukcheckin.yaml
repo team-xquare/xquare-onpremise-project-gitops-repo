@@ -21,7 +21,7 @@ applications:
       repo: GuJeuk-Check-in-FE
       branch: main
       installationId: "90332669"
-      hash: 1a9a27fdff91ec63652aa1e43799f796b2232ca0
+      hash: 5b06ad3d134c09a4c25b03615f3eaaaf65546bed
     build:
       vite:
         nodeVersion: "20"
