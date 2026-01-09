@@ -5,7 +5,7 @@ applications:
       repo: PICK_CORE_SERVER
       branch: main
       installationId: "64595989"
-      hash: 9e5d1e7044438f1b5a735789e5e1618e5666f222
+      hash: 796db2ac4cc0e2c108b6a035338673049008af32
     build:
       docker:
         dockerfilePath: ./Dockerfile
