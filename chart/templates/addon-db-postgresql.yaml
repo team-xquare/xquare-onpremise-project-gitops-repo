@@ -71,6 +71,8 @@ spec:
               value: trust
             - name: POSTGRES_DB
               value: {{ include "addon.databaseName" . | quote }}
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
           resources:
             requests:
               cpu: 200m
