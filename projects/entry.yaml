@@ -186,6 +186,16 @@ applications:
         routes:
           - casper-schedule.entrydsm.hs.kr
       - port: 9093
+  - name: entrydsm-community-manager
+    github:
+      owner: EntryDSM
+      repo: entrydsm-community-manager
+      branch: main
+      installationId: "77967720"
+    build:
+      docker:
+        dockerfilePath: "./Dockerfile"
+        contextPath: "."
 addons:
   - name: entry-redis
     type: redis
