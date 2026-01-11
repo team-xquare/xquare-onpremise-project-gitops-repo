@@ -192,6 +192,7 @@ applications:
       repo: entrydsm-community-manager
       branch: main
       installationId: "77967720"
+      hash: 6f937738387741a94bbab1c59b44abbb059b786d
     build:
       docker:
         dockerfilePath: "./Dockerfile"
