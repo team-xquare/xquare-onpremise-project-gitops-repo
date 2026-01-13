@@ -42,6 +42,36 @@ applications:
       - port: 8080
         routes:
           - infra-backend.dsmhs.kr
+  - name: infra-frontend-stag
+    github:
+      owner: team-xquare
+      repo: xquare-infra-frontend-v3
+      branch: develop
+      installationId: "62433388"
+    build:
+      vite:
+        nodeVersion: 20
+        buildCommand: npm install -g bun@1.3.5 && bun install --frozen-lockfile && bun x turbo build --filter=@xquare/user-application
+        distPath: /applications/xquare-user-application/dist
+    endpoints:
+      - port: 8080
+        routes:
+          - xquare-stag.dsmhs.kr
+  - name: infra-frontend-prod
+    github:
+      owner: team-xquare
+      repo: xquare-infra-frontend-v3
+      branch: main
+      installationId: "62433388"
+    build:
+      vite:
+        nodeVersion: 20
+        buildCommand: npm install -g bun@1.3.5 && bun install --frozen-lockfile && bun x turbo build --filter=@xquare/user-application
+        distPath: /applications/xquare-user-application/dist
+    endpoints:
+      - port: 8080
+        routes:
+          - xquare.dsmhs.kr
 addons:
   - name: xquare-supporter-mongodb
     type: mongodb
