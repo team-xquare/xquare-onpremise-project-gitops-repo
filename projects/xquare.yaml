@@ -11,6 +11,7 @@ applications:
         dockerfilePath: "./Dockerfile"
         contextPath: "."
   - name: infra-backend-stag
+    disableNetworkPolicy: true
     github:
       owner: team-xquare
       repo: xquare-infra-backend-v3
@@ -27,6 +28,7 @@ applications:
         routes:
           - infra-backend-stag.dsmhs.kr
   - name: infra-backend-prod
+    disableNetworkPolicy: true
     github:
       owner: team-xquare
       repo: xquare-infra-backend-v3
