@@ -197,7 +197,8 @@ applications:
         - public/**
         - package.json
         - yarn.lock
-        - next.config.js    build:
+        - next.config.js    
+    build:
       nextjs-export:
         nodeVersion: "18.17.1"
         distPath: /out
