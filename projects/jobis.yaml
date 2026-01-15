@@ -189,7 +189,7 @@ applications:
     github:
       owner: Team-return
       repo: JOBIS-DSM-STUDENT-FE
-      branch: main
+      branch: develop
       installationId: "82814703"
       triggerPaths:
         - src/**
@@ -197,9 +197,7 @@ applications:
         - public/**
         - package.json
         - yarn.lock
-        - next.config.js
-      hash: 1631cbda05fa0278c15b80a690d785e8a346df71
-    build:
+        - next.config.js    build:
       nextjs-export:
         nodeVersion: "18.17.1"
         distPath: /out
@@ -212,14 +210,13 @@ applications:
     github:
       owner: Team-return
       repo: JOBIS-DSM-ADMIN-FE
-      branch: main
+      branch: develop
       installationId: "82814703"
       triggerPaths:
         - src/**
         - public/**
         - package.json
         - package-lock.json
-      hash: 9b341aff6edfbbd1beb31af88ae27e82dbcda74c
     build:
       react:
         nodeVersion: "18.17.1"
@@ -233,7 +230,7 @@ applications:
     github:
       owner: Team-return
       repo: JOBIS-DSM-COMPANY-FE
-      branch: main
+      branch: develop
       installationId: "82814703"
       triggerPaths:
         - src/**
@@ -242,7 +239,6 @@ applications:
         - package.json
         - yarn.lock
         - next.config.js
-      hash: bd2ab9a9f30c4970014a470f4ba4b04bf23790f5
     build:
       nextjs-export:
         nodeVersion: "18.14.0"
@@ -252,13 +248,76 @@ applications:
       - port: 8080
         routes:
           - v1-jobis-company-stag.dsmhs.kr
+  - name: v1-fe-student-prod
+    github:
+      owner: Team-return
+      repo: JOBIS-DSM-STUDENT-FE
+      branch: main
+      installationId: "82814703"
+      triggerPaths:
+        - src/**
+        - app/**
+        - public/**
+        - package.json
+        - yarn.lock
+        - next.config.js
+    build:
+      nextjs-export:
+        nodeVersion: "18.17.1"
+        distPath: /out
+        buildCommand: "yarn install && yarn build"
+    endpoints:
+      - port: 8080
+        routes:
+          - v1-jobis.dsmhs.kr
+  - name: v1-fe-admin-prod
+    github:
+      owner: Team-return
+      repo: JOBIS-DSM-ADMIN-FE
+      branch: main
+      installationId: "82814703"
+      triggerPaths:
+        - src/**
+        - public/**
+        - package.json
+        - package-lock.json
+    build:
+      react:
+        nodeVersion: "18.17.1"
+        distPath: /build
+        buildCommand: "npm install && npm run build"
+    endpoints:
+      - port: 8080
+        routes:
+          - v1-jobis-admin.dsmhs.kr
+  - name: v1-fe-company-prod
+    github:
+      owner: Team-return
+      repo: JOBIS-DSM-COMPANY-FE
+      branch: main
+      installationId: "82814703"
+      triggerPaths:
+        - src/**
+        - app/**
+        - public/**
+        - package.json
+        - yarn.lock
+        - next.config.js
+    build:
+      nextjs-export:
+        nodeVersion: "18.14.0"
+        distPath: /out
+        buildCommand: "yarn install && yarn build"
+    endpoints:
+      - port: 8080
+        routes:
+          - v1-jobis-company.dsmhs.kr
   - name: fe-webview-prod
     github:
       owner: Team-return
       repo: JOBIS-WEBVIEW
       branch: main
       installationId: "82814703"
-      hash: f4d5fc6821469c0931864518f8b324b6acec8dc7
     build:
       vite:
         nodeVersion: "23.11.0"
