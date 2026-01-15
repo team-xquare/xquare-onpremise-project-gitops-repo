@@ -191,13 +191,6 @@ applications:
       repo: JOBIS-DSM-STUDENT-FE
       branch: develop
       installationId: "82814703"
-      triggerPaths:
-        - src/**
-        - app/**
-        - public/**
-        - package.json
-        - yarn.lock
-        - next.config.js
     build:
       nextjs-export:
         nodeVersion: "18.17.1"
@@ -213,11 +206,6 @@ applications:
       repo: JOBIS-DSM-ADMIN-FE
       branch: develop
       installationId: "82814703"
-      triggerPaths:
-        - src/**
-        - public/**
-        - package.json
-        - package-lock.json
       hash: c44f0519bad88e2192498989f37b6718c6ac3299
     build:
       react:
@@ -234,13 +222,6 @@ applications:
       repo: JOBIS-DSM-COMPANY-FE
       branch: develop
       installationId: "82814703"
-      triggerPaths:
-        - src/**
-        - app/**
-        - public/**
-        - package.json
-        - yarn.lock
-        - next.config.js
     build:
       nextjs-export:
         nodeVersion: "18.14.0"
@@ -256,13 +237,6 @@ applications:
       repo: JOBIS-DSM-STUDENT-FE
       branch: main
       installationId: "82814703"
-      triggerPaths:
-        - src/**
-        - app/**
-        - public/**
-        - package.json
-        - yarn.lock
-        - next.config.js
       hash: e74cbb7bef970bdba1df9dbee42aebe0d31944cf
     build:
       nextjs-export:
@@ -279,11 +253,6 @@ applications:
       repo: JOBIS-DSM-ADMIN-FE
       branch: main
       installationId: "82814703"
-      triggerPaths:
-        - src/**
-        - public/**
-        - package.json
-        - package-lock.json
       hash: 630d6895e88113288054be036d97d99f05105ac6
     build:
       react:
@@ -300,13 +269,6 @@ applications:
       repo: JOBIS-DSM-COMPANY-FE
       branch: main
       installationId: "82814703"
-      triggerPaths:
-        - src/**
-        - app/**
-        - public/**
-        - package.json
-        - yarn.lock
-        - next.config.js
     build:
       nextjs-export:
         nodeVersion: "18.14.0"
