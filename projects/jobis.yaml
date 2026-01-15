@@ -219,14 +219,14 @@ applications:
   - name: v1-fe-company-stag
     github:
       owner: Team-return
-      repo: JOBIS-DSM-COMPANY-FE
+      repo: JOBIS-FE
       branch: develop
       installationId: "82814703"
     build:
       nextjs-export:
         nodeVersion: "18.14.0"
         distPath: /out
-        buildCommand: "yarn install && yarn build"
+        buildCommand: "yarn install && yarn nx build company"
     endpoints:
       - port: 8080
         routes:
@@ -266,14 +266,14 @@ applications:
   - name: v1-fe-company-prod
     github:
       owner: Team-return
-      repo: JOBIS-DSM-COMPANY-FE
+      repo: JOBIS-FE
       branch: main
       installationId: "82814703"
     build:
       nextjs-export:
         nodeVersion: "18.14.0"
         distPath: /out
-        buildCommand: "yarn install && yarn build"
+        buildCommand: "yarn install && yarn nx build company"
     endpoints:
       - port: 8080
         routes:
