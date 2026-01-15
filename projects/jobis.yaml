@@ -197,7 +197,7 @@ applications:
         - public/**
         - package.json
         - yarn.lock
-        - next.config.js    
+        - next.config.js
     build:
       nextjs-export:
         nodeVersion: "18.17.1"
@@ -262,6 +262,7 @@ applications:
         - package.json
         - yarn.lock
         - next.config.js
+      hash: e74cbb7bef970bdba1df9dbee42aebe0d31944cf
     build:
       nextjs-export:
         nodeVersion: "18.17.1"
