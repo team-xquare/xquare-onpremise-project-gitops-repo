@@ -232,22 +232,22 @@ applications:
       - port: 8080
         routes:
           - v1-jobis-company-stag.dsmhs.kr
-  - name: v1-fe-student-prod
-    github:
-      owner: Team-return
-      repo: JOBIS-DSM-STUDENT-FE
-      branch: main
-      installationId: "82814703"
-      hash: e74cbb7bef970bdba1df9dbee42aebe0d31944cf
-    build:
-      nextjs-export:
-        nodeVersion: "18.17.1"
-        distPath: /out
-        buildCommand: "yarn install && yarn build"
-    endpoints:
-      - port: 8080
-        routes:
-          - v1-jobis.dsmhs.kr
+  # - name: v1-fe-student-prod
+  #   github:
+  #     owner: Team-return
+  #     repo: JOBIS-DSM-STUDENT-FE
+  #     branch: main
+  #     installationId: "82814703"
+  #     hash: e74cbb7bef970bdba1df9dbee42aebe0d31944cf
+  #   build:
+  #     nextjs-export:
+  #       nodeVersion: "18.17.1"
+  #       distPath: /out
+  #       buildCommand: "yarn install && yarn build"
+  #   endpoints:
+  #     - port: 8080
+  #       routes:
+  #         - v1-jobis.dsmhs.kr
   - name: v1-fe-admin-prod
     github:
       owner: Team-return
