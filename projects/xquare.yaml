@@ -5,7 +5,7 @@ applications:
       repo: xquare-community-manager
       branch: main
       installationId: "62433388"
-      hash: 94d99d01b83a87dd79daf49b4479c40e551db45d
+      hash: c646d14650fff54efe723a1f7484395132c12210
     build:
       docker:
         dockerfilePath: "./Dockerfile"
