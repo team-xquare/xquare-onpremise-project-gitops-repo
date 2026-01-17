@@ -1,0 +1,5 @@
+applications: []
+addons:
+  - name: echo
+    storage: 4Gi
+    type: mysql
