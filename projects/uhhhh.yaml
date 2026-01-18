@@ -1,0 +1,5 @@
+applications: []
+addons:
+  - name: market
+    storage: 100Gi
+    type: mysql
