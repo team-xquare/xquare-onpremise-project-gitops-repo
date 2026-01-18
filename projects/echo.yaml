@@ -1,4 +1,22 @@
-applications: []
+applications:
+  - name: ehco-be
+    build:
+      gradle:
+        buildCommand: ./gradlew build
+        jarOutputPath: /**
+        javaVersion: 9.2.1
+    endpoints:
+      - port: 8080
+        routes:
+          - echo.dsmhs.kr
+    github:
+      branch: main
+      hash: afb53f39353f659e9bbb6a78ce7a63f8e2436187
+      installationId: "104704325"
+      owner: Echo-dsm
+      repo: Echo-BE
+      triggerPaths:
+        - /**
 addons:
   - name: echo
     storage: 4Gi
