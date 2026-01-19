@@ -1,5 +1,0 @@
-applications: []
-addons:
-  - name: "1"
-    storage: 1Gi
-    type: mysql
