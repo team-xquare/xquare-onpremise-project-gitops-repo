@@ -60,7 +60,7 @@ spec:
           "type": "stat",
           "title": "Total Requests",
           "datasource": {"type": "prometheus", "uid": "victoriametrics"},
-          "gridPos": {"h": 3, "w": 4, "x": 4, "y": 0},
+          "gridPos": {"h": 3, "w": 6, "x": 4, "y": 0},
           "targets": [{
             "datasource": {"type": "prometheus", "uid": "victoriametrics"},
             "editorMode": "code",
@@ -71,7 +71,7 @@ spec:
           "fieldConfig": {
             "defaults": {
               "mappings": [],
-              "thresholds": {"mode": "absolute", "steps": [{"color": "blue", "value": 0}]},
+              "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": 0}]},
               "unit": "short"
             }
           },
@@ -91,7 +91,7 @@ spec:
           "type": "timeseries",
           "title": "Requests Over Time",
           "datasource": {"type": "prometheus", "uid": "victoriametrics"},
-          "gridPos": {"h": 3, "w": 16, "x": 8, "y": 0},
+          "gridPos": {"h": 3, "w": 14, "x": 10, "y": 0},
           "targets": [{
             "datasource": {"type": "prometheus", "uid": "victoriametrics"},
             "editorMode": "code",
