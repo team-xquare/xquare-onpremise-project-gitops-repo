@@ -12,7 +12,7 @@ applications:
     github:
       branch: main
       hash: afb53f39353f659e9bbb6a78ce7a63f8e2436187
-      installationId: "105177193"
+      installationId: "104704325"
       owner: Echo-dsm
       repo: Echo-BE
       triggerPaths:
