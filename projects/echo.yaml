@@ -11,7 +11,7 @@ applications:
           - echo.dsmhs.kr
     github:
       branch: main
-      hash: afb53f39353f659e9bbb6a78ce7a63f8e2436187
+      hash: da0e2b7a53855bb64ed7cdf0a652fa1699dd3bf8
       installationId: "104704325"
       owner: Echo-dsm
       repo: Echo-BE
