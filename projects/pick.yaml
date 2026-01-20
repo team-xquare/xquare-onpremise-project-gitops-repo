@@ -12,17 +12,10 @@ applications:
       docker:
         dockerfilePath: ./Dockerfile
         contextPath: .
-      gradle:
-        buildCommand: ./gradlew clean build
-        jarOutputPath: build/libs/PICK2024_SERVER-0.0.1-SNAPSHOT.jar
-        javaVersion: "17"
     endpoints:
       - port: 8080
         routes:
-          - pick-core.dsm.hs.kr/
-      - port: 0
-        routes:
-          - ""
+          - pick-core.dsmhs.kr/
   - name: pick-core-stag
     github:
       owner: DSM-PICK
