@@ -16,7 +16,7 @@ applications:
       owner: Echo-dsm
       repo: Echo-BE
       triggerPaths:
-        - /**
+        - ""
 addons:
   - name: echo
     storage: 4Gi
