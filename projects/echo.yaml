@@ -3,7 +3,7 @@ applications:
     build:
       gradle:
         buildCommand: ./gradlew build
-        jarOutputPath: /**
+        jarOutputPath: /build/libs/*.jar
         javaVersion: 9.2.1
     endpoints:
       - port: 8080
