@@ -20,7 +20,7 @@ applications:
       hash: 9bd1bc0fbf717fae5b31c3da4d615e63dd30a5b0
     build:
       gradle:
-        javaVersion: 17
+        javaVersion: "17"
         jarOutputPath: /build/libs/*.jar
         buildCommand: ./gradlew bootJar -x test
     endpoints:
