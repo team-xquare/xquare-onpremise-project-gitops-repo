@@ -37,7 +37,7 @@ applications:
       repo: DeukNet-FE
       branch: main
       installationId: "101281047"
-      hash: 73bb4414af4f37514ad8c3d9f6d2f3d1a2734650
+      hash: b15afe1cedb7c4108cc34ec30f1b9c5ae2cca997
     build:
       react:
         nodeVersion: "18"
