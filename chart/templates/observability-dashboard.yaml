@@ -140,6 +140,7 @@ spec:
             "datasource": {"type": "jaeger", "uid": "victoriatraces"},
             "queryType": "search",
             "service": "{{ .name }}",
+            "tags": {"span.kind": "server"},
             "refId": "A"
           }],
           "fieldConfig": {
