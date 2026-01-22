@@ -1,4 +1,22 @@
-applications: []
+applications:
+  - name: echo-be
+    build:
+      gradle:
+        buildCommand: ./gradlew bootJar -x test
+        jarOutputPath: /build/libs/*.jar
+        javaVersion: "17"
+    endpoints:
+      - port: 8080
+        routes:
+          - echo-be.dsmhs.kr
+    github:
+      branch: prod
+      hash: da0e2b7a53855bb64ed7cdf0a652fa1699dd3bf8
+      installationId: "105177193"
+      owner: Echo-dsm
+      repo: Echo-BE
+      triggerPaths:
+        - /**
 addons:
   - name: echo
     storage: 4Gi
