@@ -4,7 +4,7 @@ applications:
       gradle:
         buildCommand: ./gradlew build
         jarOutputPath: /build/libs/*.jar
-        javaVersion: "17"
+        javaVersion: "9.2.1"
     endpoints:
       - port: 8080
         routes:
