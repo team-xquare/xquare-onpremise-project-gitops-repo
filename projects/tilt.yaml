@@ -5,7 +5,7 @@ applications:
       repo: TILT_SERVER
       branch: main
       installationId: "101188636"
-      hash: 0897c4a28d93ab8177370c02fe61686669f70107
+      hash: 64e6e24fb453d0d5003b4c278f98792d4bada92a
     build:
       gradle:
         javaVersion: "17"
