@@ -4,7 +4,7 @@ applications:
       gradle:
         buildCommand: ./gradlew build
         jarOutputPath: /build/libs/*.jar
-        javaVersion: "9.2.1"
+        javaVersion: "17"
     endpoints:
       - port: 8080
         routes:
@@ -12,7 +12,7 @@ applications:
     github:
       branch: main
       hash: da0e2b7a53855bb64ed7cdf0a652fa1699dd3bf8
-      installationId: "104704325"
+      installationId: "105177193"
       owner: Echo-dsm
       repo: Echo-BE
       triggerPaths:
