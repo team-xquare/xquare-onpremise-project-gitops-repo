@@ -11,7 +11,6 @@ applications:
           - echo-be.dsmhs.kr
     github:
       branch: prod
-      hash: da0e2b7a53855bb64ed7cdf0a652fa1699dd3bf8
       installationId: "105177193"
       owner: Echo-dsm
       repo: Echo-BE
