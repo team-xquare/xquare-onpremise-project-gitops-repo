@@ -5,7 +5,7 @@ applications:
       repo: weero-server-v2
       branch: main
       installationId: "91905783"
-      hash: f4be78689b88dd3a9c05658fa9b4a0f67001bcfb
+      hash: cf3d9f6bd0d02582e6e19c08b26e2329460cd75b
     build:
       gradle:
         javaVersion: 17
