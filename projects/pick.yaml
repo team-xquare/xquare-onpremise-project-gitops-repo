@@ -22,7 +22,7 @@ applications:
       repo: PICK_CORE_SERVER
       branch: develop
       installationId: "64595989"
-      hash: 05b73f7c45fbae519d531b1252aea680fa91112e
+      hash: 32e93ed34693f3c5ad7a9baa75616741d98adb5a
     build:
       docker:
         dockerfilePath: ./Dockerfile
