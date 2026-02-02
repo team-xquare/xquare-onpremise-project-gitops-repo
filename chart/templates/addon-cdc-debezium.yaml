@@ -98,10 +98,11 @@ spec:
               value: "INFO"
           resources:
             requests:
-              cpu: 500m
-              memory: 2Gi
+              cpu: 200m
+              memory: 1Gi
             limits:
-              memory: 3Gi
+              cpu: 1
+              memory: 2Gi
           livenessProbe:
             httpGet:
               path: /
