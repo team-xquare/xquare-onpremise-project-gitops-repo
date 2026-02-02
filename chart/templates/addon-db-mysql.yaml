@@ -55,9 +55,7 @@ spec:
     spec:
       containers:
         - name: mysql
-          image: mysql:8.0.43
-          command: ["docker-entrypoint.sh"]
-          args: ["mysqld", "--upgrade=FORCE"]
+          image: mysql:8.0
           ports:
             - containerPort: 3306
               name: mysql
