@@ -32,7 +32,4 @@ applications:
       installationId: "105552738"
       owner: gh7035
       repo: Echo-BE-fork
-addons:
-  - name: echo
-    storage: 4Gi
-    type: mysql
+addons: []
