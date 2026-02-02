@@ -1,18 +1,2 @@
-applications:
-  - name: echo-be-stag
-    build:
-      gradle:
-        buildCommand: ./gradlew bootJar -x test
-        jarOutputPath: /build/libs/*.jar
-        javaVersion: "17"
-    endpoints:
-      - port: 8080
-        routes:
-          - echo-be-stag.dsmhs.kr
-    github:
-      branch: main
-      hash: 6ce1f046045ce591451447f1d9cb0d14d4b41996
-      installationId: "105552738"
-      owner: gh7035
-      repo: Echo-BE-fork
+applications: []
 addons: []
