@@ -3,3 +3,6 @@ addons:
   - name: bms
     storage: 5Gi
     type: mysql
+  - name: bms-redis
+    storage: 4Gi
+    type: redis
