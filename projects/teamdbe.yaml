@@ -1,0 +1,5 @@
+applications: []
+addons:
+  - name: bms
+    storage: 5Gi
+    type: mysql
