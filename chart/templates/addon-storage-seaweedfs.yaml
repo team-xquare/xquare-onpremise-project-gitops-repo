@@ -95,6 +95,7 @@ metadata:
     {{- include "addon.labels" . | nindent 4 }}
     app.kubernetes.io/component: storage
 spec:
+  storageClassName: longhorn
   accessModes:
     - ReadWriteOnce
   resources:
@@ -110,6 +111,7 @@ metadata:
     {{- include "addon.labels" . | nindent 4 }}
     app.kubernetes.io/component: storage
 spec:
+  storageClassName: longhorn
   accessModes:
     - ReadWriteOnce
   resources:
@@ -125,6 +127,7 @@ metadata:
     {{- include "addon.labels" . | nindent 4 }}
     app.kubernetes.io/component: storage
 spec:
+  storageClassName: longhorn
   accessModes:
     - ReadWriteOnce
   resources:

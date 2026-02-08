@@ -204,6 +204,7 @@ metadata:
   labels:
     {{- include "addon.labels" . | nindent 4 }}
 spec:
+  storageClassName: longhorn
   accessModes:
     - ReadWriteOnce
   resources:
