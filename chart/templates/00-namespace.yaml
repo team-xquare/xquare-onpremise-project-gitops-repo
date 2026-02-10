@@ -7,3 +7,4 @@ metadata:
     {{- include "project.labels" . | nindent 4 }}
     name: {{ include "project.namespace" . }}
     tenant-id: "{{ include "project.namespace" . | adler32sum }}"
+    goldilocks.fairwinds.com/enabled: "true"
