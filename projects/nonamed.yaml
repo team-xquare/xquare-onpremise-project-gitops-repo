@@ -21,7 +21,7 @@ applications:
       repo: OSJ_V3_BE
       branch: develop
       installationId: "99866813"
-      hash: 5df1db967a926b761cecc858da5dd62df4f5f550
+      hash: e208a1bf03f3a8979d26b4da836e560be9a1c70b
     build:
       gradle:
         javaVersion: "17"
