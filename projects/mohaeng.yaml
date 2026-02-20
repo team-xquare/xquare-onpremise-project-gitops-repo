@@ -33,7 +33,7 @@ applications:
         - package-lock.json
         - nest-cli.json
         - tsconfig.json
-      hash: b5cf31bbe0584d9ae0d79d24235b3de78cc0835f
+      hash: 6e37774c7a467c79ae5fa28f70b7bfd8fec72de4
     build:
       nodejs:
         nodeVersion: "20"
