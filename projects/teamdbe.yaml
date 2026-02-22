@@ -3,7 +3,7 @@ applications:
     build:
       gradle:
         buildCommand: ./gradlew build
-        jarOutputPath: BMS/build/libs/bms-0.0.1-SNAPSHOT.jar
+        jarOutputPath: /build/libs/bms-0.0.1-SNAPSHOT.jar
         javaVersion: "17"
     endpoints:
       - port: 80
