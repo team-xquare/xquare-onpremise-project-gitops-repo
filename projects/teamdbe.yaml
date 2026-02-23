@@ -16,7 +16,8 @@ applications:
       owner: Team-DBE
       repo: BMS-BE
       triggerPaths:
-        - ""
+        - BMS/src/main
+        - BMS/src/test
 addons:
   - name: bms
     storage: 5Gi
