@@ -3,12 +3,12 @@ applications:
     build:
       gradle:
         buildCommand: ./gradlew build
-        jarOutputPath: BMS/build/libs/bms-0.0.1-SNAPSHOT.jar
+        jarOutputPath: /build/libs/bms-0.0.1-SNAPSHOT.jar
         javaVersion: "17"
     endpoints:
       - port: 80
         routes:
-          - bms.dsmhs.kr
+          - bms-be.dsmhs.kr
     github:
       branch: main
       hash: b22f10c8f8b3d565dc80180e359d0dc1e6feacf2
@@ -16,8 +16,7 @@ applications:
       owner: Team-DBE
       repo: BMS-BE
       triggerPaths:
-        - BMS/src/main
-        - BMS/src/test
+        - ""
 addons:
   - name: bms
     storage: 5Gi
