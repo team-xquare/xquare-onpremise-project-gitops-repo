@@ -11,7 +11,7 @@ applications:
           - bms-be.dsmhs.kr
     github:
       branch: main
-      hash: b22f10c8f8b3d565dc80180e359d0dc1e6feacf2
+      hash: 2cdc52f03df65722afeba80d7760c3e64c7eac92
       installationId: "94795129"
       owner: Team-DBE
       repo: BMS-BE
