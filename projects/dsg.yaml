@@ -1,0 +1,5 @@
+applications: []
+addons:
+  - name: dsg-mysql
+    storage: 5Gi
+    type: mysql
