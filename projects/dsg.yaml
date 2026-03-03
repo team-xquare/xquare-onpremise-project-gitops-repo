@@ -3,3 +3,6 @@ addons:
   - name: dsg-mysql
     storage: 5Gi
     type: mysql
+  - name: dsg-redis
+    storage: 5Gi
+    type: redis
