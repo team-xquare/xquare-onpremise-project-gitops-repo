@@ -16,7 +16,7 @@ applications:
       owner: 2026DSG
       repo: DSG_Backend
       triggerPaths:
-        - src/main/**
+        - ""
 addons:
   - name: dsg-mysql
     storage: 5Gi
