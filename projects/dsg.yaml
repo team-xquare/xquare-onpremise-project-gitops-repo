@@ -1,4 +1,22 @@
-applications: []
+applications:
+  - name: dsg
+    build:
+      gradle:
+        buildCommand: ./gradlew build
+        jarOutputPath: build/libs
+        javaVersion: "17"
+    endpoints:
+      - port: 8080
+        routes:
+          - dsg.dsmhs.kr
+    github:
+      branch: main
+      hash: fdcd3022ac33adb3380a6fa816100c254d3e960c
+      installationId: "113636619"
+      owner: 2026DSG
+      repo: DSG_Backend
+      triggerPaths:
+        - src/main/**
 addons:
   - name: dsg-mysql
     storage: 5Gi
