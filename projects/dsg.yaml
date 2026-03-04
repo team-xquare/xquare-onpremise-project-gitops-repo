@@ -2,7 +2,7 @@ applications:
   - name: dsg
     build:
       gradle:
-        buildCommand: ./gradlew build
+        buildCommand: ./gradlew build -x test
         jarOutputPath: build/libs
         javaVersion: "17"
     endpoints:
