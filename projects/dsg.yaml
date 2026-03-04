@@ -8,7 +8,7 @@ applications:
     endpoints:
       - port: 8080
         routes:
-          - dsg.dsmhs.kr
+          - dsg-api.dsmhs.kr
     github:
       branch: main
       hash: fdcd3022ac33adb3380a6fa816100c254d3e960c
