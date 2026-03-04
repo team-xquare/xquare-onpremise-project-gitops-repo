@@ -17,6 +17,22 @@ applications:
       repo: DSG_Backend
       triggerPaths:
         - ""
+  - name: dsg-fe
+    build:
+      vite:
+        buildCommand: npm install --frozen-lockfile && npm run build
+        distPath: dist
+        nodeVersion: "7"
+    endpoints:
+      - port: 8080
+        routes:
+          - dsg.dsmhs.kr
+    github:
+      branch: main
+      hash: c4f29143b053c4f99f8fa0ff42c4eff88a5c45fe
+      installationId: "113636619"
+      owner: 2026DSG
+      repo: DSG_Frontend
 addons:
   - name: dsg-mysql
     storage: 5Gi
