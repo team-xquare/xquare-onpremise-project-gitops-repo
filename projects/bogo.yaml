@@ -1,0 +1,19 @@
+applications:
+  - name: bogo
+    build:
+      gradle:
+        buildCommand: ./gradlew build
+        jarOutputPath: build/libs/**
+        javaVersion: "21"
+    endpoints:
+      - port: 8080
+        routes:
+          - bodo.dsmhs.kr
+    github:
+      branch: develop
+      hash: 9cf1030ea5af1d56aac92e13de04092732363a5a
+      installationId: "114209558"
+      owner: Bogo-dsm
+      repo: bogo_server
+      triggerPaths:
+        - /src/main/**
