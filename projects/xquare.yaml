@@ -1,104 +1,104 @@
 applications:
-  - name: xquare-supporter-prod
-    github:
-      owner: team-xquare
-      repo: xquare-community-manager
-      branch: main
-      installationId: "62433388"
-      hash: e1405a7c9f9e81ae1b8c01dd9ace76c3856e838b
-    build:
-      docker:
-        dockerfilePath: ./Dockerfile
-        contextPath: .
-  - name: infra-backend-stag
-    disableNetworkPolicy: true
-    github:
-      owner: team-xquare
-      repo: xquare-infra-backend-v3
-      branch: develop
-      installationId: "62433388"
-      hash: ebdebd65e0142b97d5a95528b4d58dc777f59eeb
-    build:
-      gradle:
-        javaVersion: "17"
-        jarOutputPath: /build/libs/*.jar
-        buildCommand: ./gradlew bootJar -x test
-    endpoints:
-      - port: 8080
-        routes:
-          - infra-backend-stag.dsmhs.kr
-  - name: infra-backend-prod
-    disableNetworkPolicy: true
-    github:
-      owner: team-xquare
-      repo: xquare-infra-backend-v3
-      branch: main
-      installationId: "62433388"
-      hash: dd1827943321552a59d15d29a6ad245241ac7d23
-    build:
-      gradle:
-        javaVersion: "17"
-        jarOutputPath: /build/libs/*.jar
-        buildCommand: ./gradlew bootJar -x test
-    endpoints:
-      - port: 8080
-        routes:
-          - infra-backend.dsmhs.kr
-  - name: infra-frontend-stag
-    github:
-      owner: team-xquare
-      repo: xquare-infra-frontend-v3
-      branch: develop
-      installationId: "62433388"
-      hash: 3660f66ee703988d7f6c524b6b2b0433038a5640
-    build:
-      vite:
-        nodeVersion: "20"
-        buildCommand: npm install -g bun@1.3.5 && bun install --frozen-lockfile && bun x turbo build --filter=@xquare/user-application
-        distPath: /applications/xquare-user-application/dist
-    endpoints:
-      - port: 8080
-        routes:
-          - xquare-stag.dsmhs.kr
-  - name: infra-frontend-prod
-    github:
-      owner: team-xquare
-      repo: xquare-infra-frontend-v3
-      branch: main
-      installationId: "62433388"
-      hash: f78bef68560e97c843e891c5a399c4364b0a1d0d
-    build:
-      vite:
-        nodeVersion: "20"
-        buildCommand: npm install -g bun@1.3.5 && bun install --frozen-lockfile && bun x turbo build --filter=@xquare/user-application
-        distPath: /applications/xquare-user-application/dist
-    endpoints:
-      - port: 8080
-        routes:
-          - xquare.dsmhs.kr
-  - name: xquare-server
-    disableNetworkPolicy: true
-    github:
-      owner: team-xquare
-      repo: xquare-server
-      branch: main
-      installationId: "62433388"
-      hash: b31c787f6faf6ada0fd608cbdad3318af8fec40f
-    build:
-      docker:
-        dockerfilePath: ./Dockerfile
-        contextPath: .
-    endpoints:
-      - port: 8080
-        routes:
-          - xquare-server.dsmhs.kr
+    - name: xquare-supporter-prod
+      github:
+        owner: team-xquare
+        repo: xquare-community-manager
+        branch: main
+        installationId: "62433388"
+        hash: e1405a7c9f9e81ae1b8c01dd9ace76c3856e838b
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+    - name: infra-backend-stag
+      disableNetworkPolicy: true
+      github:
+        owner: team-xquare
+        repo: xquare-infra-backend-v3
+        branch: develop
+        installationId: "62433388"
+        hash: ebdebd65e0142b97d5a95528b4d58dc777f59eeb
+      build:
+        gradle:
+            javaVersion: "17"
+            jarOutputPath: /build/libs/*.jar
+            buildCommand: ./gradlew bootJar -x test
+      endpoints:
+        - port: 8080
+          routes:
+            - infra-backend-stag.dsmhs.kr
+    - name: infra-backend-prod
+      disableNetworkPolicy: true
+      github:
+        owner: team-xquare
+        repo: xquare-infra-backend-v3
+        branch: main
+        installationId: "62433388"
+        hash: dd1827943321552a59d15d29a6ad245241ac7d23
+      build:
+        gradle:
+            javaVersion: "17"
+            jarOutputPath: /build/libs/*.jar
+            buildCommand: ./gradlew bootJar -x test
+      endpoints:
+        - port: 8080
+          routes:
+            - infra-backend.dsmhs.kr
+    - name: infra-frontend-stag
+      github:
+        owner: team-xquare
+        repo: xquare-infra-frontend-v3
+        branch: develop
+        installationId: "62433388"
+        hash: 3660f66ee703988d7f6c524b6b2b0433038a5640
+      build:
+        vite:
+            nodeVersion: "20"
+            buildCommand: npm install -g bun@1.3.5 && bun install --frozen-lockfile && bun x turbo build --filter=@xquare/user-application
+            distPath: /applications/xquare-user-application/dist
+      endpoints:
+        - port: 8080
+          routes:
+            - xquare-stag.dsmhs.kr
+    - name: infra-frontend-prod
+      github:
+        owner: team-xquare
+        repo: xquare-infra-frontend-v3
+        branch: main
+        installationId: "62433388"
+        hash: f78bef68560e97c843e891c5a399c4364b0a1d0d
+      build:
+        vite:
+            nodeVersion: "20"
+            buildCommand: npm install -g bun@1.3.5 && bun install --frozen-lockfile && bun x turbo build --filter=@xquare/user-application
+            distPath: /applications/xquare-user-application/dist
+      endpoints:
+        - port: 8080
+          routes:
+            - xquare.dsmhs.kr
+    - name: xquare-server
+      disableNetworkPolicy: true
+      github:
+        owner: team-xquare
+        repo: xquare-server
+        branch: main
+        installationId: "62433388"
+        hash: 04ad0444339a505f316d809141d5426483704fdf
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 8080
+          routes:
+            - xquare-server.dsmhs.kr
 addons:
-  - name: xquare-supporter-mongodb
-    type: mongodb
-    storage: 1Gi
-  - name: xquare-infra-mysql
-    type: mysql
-    storage: 1Gi
-  - name: xquare-infra-mysql-stag
-    type: mysql
-    storage: 1Gi
+    - name: xquare-supporter-mongodb
+      type: mongodb
+      storage: 1Gi
+    - name: xquare-infra-mysql
+      type: mysql
+      storage: 1Gi
+    - name: xquare-infra-mysql-stag
+      type: mysql
+      storage: 1Gi
