@@ -15,7 +15,3 @@ applications:
         - port: 4000
           routes:
             - test-e2e.dsmhs.kr
-addons:
-    - name: mydb
-      type: mysql
-      storage: 10Gi
