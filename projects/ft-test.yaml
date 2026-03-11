@@ -1,17 +1,4 @@
 owners:
     - id: 115498126
       username: in-jun
-applications:
-    - name: test-app
-      github:
-        owner: team-xquare
-        repo: xquare-server
-        branch: develop
-        installationId: ""
-        hash: be567c8627db0bf9b0b0efadc3d360ea0cd431db
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 8080
+applications: []
