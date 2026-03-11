@@ -1,4 +1,16 @@
 owners:
     - id: 115498126
       username: in-jun
-applications: []
+applications:
+    - name: my-app
+      github:
+        owner: team-xquare
+        repo: xquare-server
+        branch: main
+        installationId: "62433388"
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 8080
