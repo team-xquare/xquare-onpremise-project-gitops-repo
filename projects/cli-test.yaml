@@ -6,7 +6,7 @@ applications:
       github:
         owner: team-xquare
         repo: xquare-server
-        branch: develop
+        branch: main
         installationId: "62433388"
       build:
         docker:
