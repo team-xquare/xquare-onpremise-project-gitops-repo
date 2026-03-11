@@ -34,3 +34,6 @@ addons:
     - name: mydb
       type: mysql
       storage: 10Gi
+    - name: myredis
+      type: redis
+      storage: 1Gi
