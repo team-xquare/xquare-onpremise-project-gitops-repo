@@ -1,15 +1,1 @@
-applications:
-    - name: my-test-app
-      github:
-        owner: team-xquare
-        repo: test-repo
-        branch: main
-        installationId: "62433388"
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 8080
-          routes:
-            - my-test-app.dsmhs.kr
+applications: []
