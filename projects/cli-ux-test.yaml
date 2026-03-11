@@ -1,17 +1,4 @@
 owners:
     - id: 115498126
       username: in-jun
-applications:
-    - name: test-app
-      github:
-        owner: team-xquare
-        repo: xquare-cli
-        branch: develop
-        installationId: "62433388"
-      build:
-        go:
-            goVersion: "1.21"
-            buildCommand: go build -o app .
-            binaryName: app
-      endpoints:
-        - port: 8080
+applications: []
