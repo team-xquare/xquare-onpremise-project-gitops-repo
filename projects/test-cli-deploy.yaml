@@ -12,5 +12,5 @@ applications:
       installationId: '62433388'
       owner: team-xquare
       repo: test-python-app
-      hash: cc8f75e5b2134a1f07d9ec6ec038d48f2eab2831
+      hash: 9e384faf6232f6c9c296b21e83c009f73faff89a
     name: test-python
