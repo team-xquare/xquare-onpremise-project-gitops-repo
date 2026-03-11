@@ -1,16 +1,16 @@
 applications:
-    - name: test-python
-      github:
-        owner: team-xquare
-        repo: test-python-app
-        branch: main
-        installationId: "62433388"
-        hash: 8829cda9484fcbb3e3d23de826219aa584f71874
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 8080
-          routes:
-            - test-python.dsmhs.kr
+  - name: test-python
+    github:
+      owner: team-xquare
+      repo: test-python-app
+      branch: main
+      installationId: "62433388"
+      hash: 8829cda9484fcbb3e3d23de826219aa584f71874
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 8080
+        routes:
+          - test-python.dsmhs.kr
