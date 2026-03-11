@@ -92,16 +92,6 @@ applications:
         - port: 8080
           routes:
             - xquare-server.dsmhs.kr
-    - name: test-app
-      github:
-        owner: team-xquare
-        repo: test-repo
-        branch: main
-        installationId: "62433388"
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
 addons:
     - name: xquare-supporter-mongodb
       type: mongodb
