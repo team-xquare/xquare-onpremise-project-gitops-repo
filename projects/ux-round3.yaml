@@ -37,3 +37,6 @@ addons:
     - name: myredis
       type: redis
       storage: 1Gi
+    - name: mytest
+      type: nosql
+      storage: 10Gi
