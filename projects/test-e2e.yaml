@@ -1,17 +1,3 @@
 owners:
     - test-user
-applications:
-    - name: test-app
-      github:
-        owner: team-xquare
-        repo: test-repo
-        branch: main
-        installationId: "62433388"
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 4000
-          routes:
-            - test-e2e.dsmhs.kr
+applications: []
