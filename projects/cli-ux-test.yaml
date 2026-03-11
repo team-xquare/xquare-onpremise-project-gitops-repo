@@ -15,7 +15,3 @@ applications:
             binaryName: app
       endpoints:
         - port: 8080
-addons:
-    - name: mydb
-      type: mysql
-      storage: 10Gi
