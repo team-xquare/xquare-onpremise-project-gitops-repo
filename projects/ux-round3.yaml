@@ -6,7 +6,7 @@ applications:
       github:
         owner: team-xquare
         repo: xquare-cli
-        branch: main
+        branch: develop
         installationId: "62433388"
       build:
         go:
