@@ -30,3 +30,7 @@ applications:
         - port: 3000
           routes:
             - frontend.dsmhs.kr
+addons:
+    - name: mydb
+      type: mysql
+      storage: 10Gi
