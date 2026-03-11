@@ -12,7 +12,7 @@ applications:
             dockerfilePath: ./Dockerfile
             contextPath: .
       endpoints:
-        - port: 3000
+        - port: 4000
           routes:
             - test-e2e.dsmhs.kr
 addons:
