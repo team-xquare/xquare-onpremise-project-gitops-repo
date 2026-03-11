@@ -1,4 +1,18 @@
 owners:
     - id: 12345678
       username: test-user
-applications: []
+applications:
+    - name: my-api
+      github:
+        owner: team-xquare
+        repo: my-api
+        branch: main
+        installationId: "62433388"
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 8080
+          routes:
+            - my-api.dsmhs.kr
