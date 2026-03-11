@@ -15,3 +15,18 @@ applications:
             binaryName: app
       endpoints:
         - port: 8080
+    - name: frontend
+      github:
+        owner: team-xquare
+        repo: xquare-cli
+        branch: main
+        installationId: "62433388"
+      build:
+        react:
+            nodeVersion: "20"
+            buildCommand: npm run build
+            distPath: dist
+      endpoints:
+        - port: 3000
+          routes:
+            - frontend.dsmhs.kr
