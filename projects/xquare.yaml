@@ -76,6 +76,21 @@ applications:
       - port: 8080
         routes:
           - xquare.dsmhs.kr
+  - name: xquare-server
+    disableNetworkPolicy: true
+    github:
+      owner: team-xquare
+      repo: xquare-server
+      branch: main
+      installationId: "62433388"
+    build:
+      docker:
+        dockerfilePath: "./Dockerfile"
+        contextPath: "."
+    endpoints:
+      - port: 8080
+        routes:
+          - xquare-server.dsmhs.kr
 addons:
   - name: xquare-supporter-mongodb
     type: mongodb
