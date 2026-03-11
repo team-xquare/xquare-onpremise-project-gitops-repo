@@ -16,7 +16,3 @@ applications:
         - port: 3000
           routes:
             - test-final.dsmhs.kr
-addons:
-    - name: mydb
-      type: mysql
-      storage: 10Gi
