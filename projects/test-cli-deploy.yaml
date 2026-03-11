@@ -14,7 +14,3 @@ applications:
         - port: 8080
           routes:
             - test-python.dsmhs.kr
-addons:
-    - name: test-db
-      type: mysql
-      storage: 5Gi
