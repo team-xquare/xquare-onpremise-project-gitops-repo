@@ -2,3 +2,7 @@ owners:
     - id: 115498126
       username: in-jun
 applications: []
+addons:
+    - name: tododb
+      type: postgresql
+      storage: 1Gi
