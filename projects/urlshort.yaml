@@ -8,6 +8,7 @@ applications:
       repo: url-server
       branch: main
       installationId: "115790141"
+      hash: 6f1f2c1f58f5f1a18d06bc8fe9a860b598db193e
     build:
       docker:
         dockerfilePath: ""
