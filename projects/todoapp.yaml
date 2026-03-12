@@ -1,7 +1,21 @@
 owners:
     - id: 115498126
       username: in-jun
-applications: []
+applications:
+    - name: todo-server
+      github:
+        owner: afjuiekafdjsf
+        repo: todo-server
+        branch: main
+        installationId: "115790141"
+      build:
+        docker:
+            dockerfilePath: ""
+            contextPath: ""
+      endpoints:
+        - port: 8080
+          routes:
+            - todo-api.dsmhs.kr
 addons:
     - name: tododb
       type: postgresql
