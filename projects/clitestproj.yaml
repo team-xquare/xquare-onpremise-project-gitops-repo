@@ -6,7 +6,7 @@ applications:
       github:
         owner: team-xquare
         repo: test-python-app
-        branch: main
+        branch: develop
         installationId: "62433388"
       build:
         flask:
