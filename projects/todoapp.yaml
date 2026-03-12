@@ -32,16 +32,6 @@ applications:
         - port: 80
           routes:
             - todo.dsmhs.kr
-    - name: sec-test-own
-      github:
-        owner: team-xquare
-        repo: xquare-server
-        branch: main
-        installationId: "62433388"
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
 addons:
     - name: tododb
       type: postgresql
