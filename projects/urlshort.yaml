@@ -1,36 +1,37 @@
 owners:
-    - id: 115498126
-      username: in-jun
+  - id: 115498126
+    username: in-jun
 applications:
-    - name: url-server
-      github:
-        owner: afjuiekafdjsf
-        repo: url-server
-        branch: main
-        installationId: "115790141"
-      build:
-        docker:
-            dockerfilePath: ""
-            contextPath: ""
-      endpoints:
-        - port: 8080
-          routes:
-            - url-api.dsmhs.kr
-    - name: url-client
-      github:
-        owner: afjuiekafdjsf
-        repo: url-client
-        branch: main
-        installationId: "115790141"
-      build:
-        docker:
-            dockerfilePath: ""
-            contextPath: ""
-      endpoints:
-        - port: 80
-          routes:
-            - s.dsmhs.kr
+  - name: url-server
+    github:
+      owner: afjuiekafdjsf
+      repo: url-server
+      branch: main
+      installationId: "115790141"
+    build:
+      docker:
+        dockerfilePath: ""
+        contextPath: ""
+    endpoints:
+      - port: 8080
+        routes:
+          - url-api.dsmhs.kr
+  - name: url-client
+    github:
+      owner: afjuiekafdjsf
+      repo: url-client
+      branch: main
+      installationId: "115790141"
+      hash: 105f4dffdbfe29548d432062d8f53b46cb4487b2
+    build:
+      docker:
+        dockerfilePath: ""
+        contextPath: ""
+    endpoints:
+      - port: 80
+        routes:
+          - s.dsmhs.kr
 addons:
-    - name: urldb
-      type: postgresql
-      storage: 1Gi
+  - name: urldb
+    type: postgresql
+    storage: 1Gi
