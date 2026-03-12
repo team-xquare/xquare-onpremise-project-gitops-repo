@@ -1,23 +1,37 @@
 owners:
-  - id: 115498126
-    username: in-jun
+    - id: 115498126
+      username: in-jun
 applications:
-  - name: todo-server
-    github:
-      owner: afjuiekafdjsf
-      repo: todo-server
-      branch: main
-      installationId: "115790141"
-      hash: b163909fd351f3ad58a848abd0bc7c3c55552d38
-    build:
-      docker:
-        dockerfilePath: ""
-        contextPath: ""
-    endpoints:
-      - port: 8080
-        routes:
-          - todo-api.dsmhs.kr
+    - name: todo-server
+      github:
+        owner: afjuiekafdjsf
+        repo: todo-server
+        branch: main
+        installationId: "115790141"
+        hash: b163909fd351f3ad58a848abd0bc7c3c55552d38
+      build:
+        docker:
+            dockerfilePath: ""
+            contextPath: ""
+      endpoints:
+        - port: 8080
+          routes:
+            - todo-api.dsmhs.kr
+    - name: todo-client
+      github:
+        owner: afjuiekafdjsf
+        repo: todo-client
+        branch: main
+        installationId: "115790141"
+      build:
+        docker:
+            dockerfilePath: ""
+            contextPath: ""
+      endpoints:
+        - port: 80
+          routes:
+            - todo.dsmhs.kr
 addons:
-  - name: tododb
-    type: postgresql
-    storage: 1Gi
+    - name: tododb
+      type: postgresql
+      storage: 1Gi
