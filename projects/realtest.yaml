@@ -8,7 +8,7 @@ applications:
       repo: test-python-app
       branch: main
       installationId: "62433388"
-      hash: 8829cda9484fcbb3e3d23de826219aa584f71874
+      hash: 06482a7e75ae85d8f66e2d6e38268a9f5e6c6bff
     build:
       flask:
         pythonVersion: "3.11"
