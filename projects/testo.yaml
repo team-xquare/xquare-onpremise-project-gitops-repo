@@ -17,3 +17,5 @@ applications:
             contextPath: .
       endpoints:
         - port: 8080
+          routes:
+            - test-python.dsmhs.kr
