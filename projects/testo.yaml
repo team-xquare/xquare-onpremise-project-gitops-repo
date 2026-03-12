@@ -15,7 +15,3 @@ applications:
             contextPath: .
       endpoints:
         - port: 8080
-addons:
-    - name: test-redis
-      type: redis
-      storage: 500Mi
