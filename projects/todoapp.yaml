@@ -1,38 +1,48 @@
 owners:
-  - id: 115498126
-    username: in-jun
+    - id: 115498126
+      username: in-jun
 applications:
-  - name: todo-server
-    github:
-      owner: afjuiekafdjsf
-      repo: todo-server
-      branch: main
-      installationId: "115790141"
-      hash: 04d5b5758fdb75d35ab6e58ba8b3872958103617
-    build:
-      docker:
-        dockerfilePath: ""
-        contextPath: ""
-    endpoints:
-      - port: 8080
-        routes:
-          - todo-api.dsmhs.kr
-  - name: todo-client
-    github:
-      owner: afjuiekafdjsf
-      repo: todo-client
-      branch: main
-      installationId: "115790141"
-      hash: 7cf85400c31507a3e4a5b26c00f3c783a30c6525
-    build:
-      docker:
-        dockerfilePath: ""
-        contextPath: ""
-    endpoints:
-      - port: 80
-        routes:
-          - todo.dsmhs.kr
+    - name: todo-server
+      github:
+        owner: afjuiekafdjsf
+        repo: todo-server
+        branch: main
+        installationId: "115790141"
+        hash: 04d5b5758fdb75d35ab6e58ba8b3872958103617
+      build:
+        docker:
+            dockerfilePath: ""
+            contextPath: ""
+      endpoints:
+        - port: 8080
+          routes:
+            - todo-api.dsmhs.kr
+    - name: todo-client
+      github:
+        owner: afjuiekafdjsf
+        repo: todo-client
+        branch: main
+        installationId: "115790141"
+        hash: 7cf85400c31507a3e4a5b26c00f3c783a30c6525
+      build:
+        docker:
+            dockerfilePath: ""
+            contextPath: ""
+      endpoints:
+        - port: 80
+          routes:
+            - todo.dsmhs.kr
+    - name: sec-test-own
+      github:
+        owner: team-xquare
+        repo: xquare-server
+        branch: main
+        installationId: "62433388"
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
 addons:
-  - name: tododb
-    type: postgresql
-    storage: 1Gi
+    - name: tododb
+      type: postgresql
+      storage: 1Gi
