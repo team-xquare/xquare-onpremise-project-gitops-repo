@@ -1,17 +1,18 @@
 owners:
-    - id: 115498126
-      username: in-jun
+  - id: 115498126
+    username: in-jun
 applications:
-    - name: my-api
-      github:
-        owner: team-xquare
-        repo: test-python-app
-        branch: main
-        installationId: "62433388"
-      build:
-        flask:
-            pythonVersion: "3.11"
-            buildCommand: ""
-            startCommand: gunicorn app:app
-      endpoints:
-        - port: 8080
+  - name: my-api
+    github:
+      owner: team-xquare
+      repo: test-python-app
+      branch: main
+      installationId: "62433388"
+      hash: 8829cda9484fcbb3e3d23de826219aa584f71874
+    build:
+      flask:
+        pythonVersion: "3.11"
+        buildCommand: ""
+        startCommand: gunicorn app:app
+    endpoints:
+      - port: 8080
