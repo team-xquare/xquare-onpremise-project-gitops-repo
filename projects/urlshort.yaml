@@ -16,6 +16,20 @@ applications:
         - port: 8080
           routes:
             - url-api.dsmhs.kr
+    - name: url-client
+      github:
+        owner: afjuiekafdjsf
+        repo: url-client
+        branch: main
+        installationId: "115790141"
+      build:
+        docker:
+            dockerfilePath: ""
+            contextPath: ""
+      endpoints:
+        - port: 80
+          routes:
+            - s.dsmhs.kr
 addons:
     - name: urldb
       type: postgresql
