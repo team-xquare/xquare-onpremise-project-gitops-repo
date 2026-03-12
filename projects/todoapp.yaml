@@ -8,7 +8,7 @@ applications:
       repo: todo-server
       branch: main
       installationId: "115790141"
-      hash: b163909fd351f3ad58a848abd0bc7c3c55552d38
+      hash: 04d5b5758fdb75d35ab6e58ba8b3872958103617
     build:
       docker:
         dockerfilePath: ""
