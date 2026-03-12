@@ -1,2 +1,3 @@
 users:
-  - 115498126 # in-jun
+    - id: 115498126
+      username: in-jun
