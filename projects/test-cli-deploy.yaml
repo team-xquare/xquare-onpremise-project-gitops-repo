@@ -12,3 +12,7 @@ applications:
             contextPath: .
       endpoints:
         - port: 8080
+addons:
+    - name: cli-test-redis
+      type: redis
+      storage: 500Mi
