@@ -22,7 +22,7 @@ applications:
       repo: nexus-user
       branch: main
       installationId: "115790141"
-      hash: a37ea52631e1576d12956d58a142ff3e7d56b531
+      hash: f792503bf0b05cadfea02215bc7687fb7e282067
     build:
       docker:
         dockerfilePath: ./Dockerfile
