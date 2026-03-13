@@ -1,3 +1,16 @@
 owners:
     - 160982914
-applications: []
+applications:
+    - name: todo-list
+      github:
+        owner: k-siwoo
+        repo: todo-list
+        branch: main
+        installationId: "116125604"
+      build:
+        nodejs:
+            nodeVersion: "20"
+            buildCommand: npm install
+            startCommand: npm start
+      endpoints:
+        - port: 3000
