@@ -1,80 +1,81 @@
 owners:
-    - 115498126
+  - 115498126
 applications:
-    - name: nexus-gateway
-      github:
-        owner: afjuiekafdjsf
-        repo: nexus-gateway
-        branch: main
-        installationId: "115790141"
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 8080
-          routes:
-            - nexus-api.dsmhs.kr
-    - name: nexus-user
-      github:
-        owner: afjuiekafdjsf
-        repo: nexus-user
-        branch: main
-        installationId: "115790141"
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 8080
-    - name: nexus-post
-      github:
-        owner: afjuiekafdjsf
-        repo: nexus-post
-        branch: main
-        installationId: "115790141"
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 8080
-    - name: nexus-search
-      github:
-        owner: afjuiekafdjsf
-        repo: nexus-search
-        branch: main
-        installationId: "115790141"
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 8080
-    - name: nexus-web
-      github:
-        owner: afjuiekafdjsf
-        repo: nexus-web
-        branch: main
-        installationId: "115790141"
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 80
-          routes:
-            - nexus.dsmhs.kr
+  - name: nexus-gateway
+    github:
+      owner: afjuiekafdjsf
+      repo: nexus-gateway
+      branch: main
+      installationId: "115790141"
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 8080
+        routes:
+          - nexus-api.dsmhs.kr
+  - name: nexus-user
+    github:
+      owner: afjuiekafdjsf
+      repo: nexus-user
+      branch: main
+      installationId: "115790141"
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 8080
+  - name: nexus-post
+    github:
+      owner: afjuiekafdjsf
+      repo: nexus-post
+      branch: main
+      installationId: "115790141"
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 8080
+  - name: nexus-search
+    github:
+      owner: afjuiekafdjsf
+      repo: nexus-search
+      branch: main
+      installationId: "115790141"
+      hash: ea763a3c94ef7aefd356f4e4e5096c76c6ab142b
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 8080
+  - name: nexus-web
+    github:
+      owner: afjuiekafdjsf
+      repo: nexus-web
+      branch: main
+      installationId: "115790141"
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 80
+        routes:
+          - nexus.dsmhs.kr
 addons:
-    - name: nexuskafka
-      type: kafka
-      storage: 2Gi
-    - name: nexusredis
-      type: redis
-      storage: 1Gi
-    - name: nexussearch
-      type: opensearch
-      storage: 2Gi
-    - name: nexusdb
-      type: postgresql
-      storage: 2Gi
+  - name: nexuskafka
+    type: kafka
+    storage: 2Gi
+  - name: nexusredis
+    type: redis
+    storage: 1Gi
+  - name: nexussearch
+    type: opensearch
+    storage: 2Gi
+  - name: nexusdb
+    type: postgresql
+    storage: 2Gi
