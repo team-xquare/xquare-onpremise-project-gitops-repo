@@ -2,7 +2,21 @@ creator_id: 115498126
 owners:
     - id: 115498126
       username: in-jun
-applications: []
+applications:
+    - name: chat-server
+      github:
+        owner: afjuiekafdjsf
+        repo: chat-server
+        branch: main
+        installationId: "115790141"
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 8080
+          routes:
+            - chat-api.dsmhs.kr
 addons:
     - name: chatdb
       type: postgresql
