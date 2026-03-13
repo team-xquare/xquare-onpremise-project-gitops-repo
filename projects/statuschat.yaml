@@ -1,3 +1,16 @@
 owners:
     - id: 162826027
-applications: []
+applications:
+    - name: statuschat
+      github:
+        owner: 1408bg
+        repo: status-chat
+        branch: main
+        installationId: "115998018"
+      build:
+        nodejs:
+            nodeVersion: "20"
+            buildCommand: npm install
+            startCommand: node index.js
+      endpoints:
+        - port: 3000
