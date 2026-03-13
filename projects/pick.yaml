@@ -1,5 +1,6 @@
 owners:
     - id: 162826027
+    - id: 162133680
 applications:
     - name: pick-core-prod
       github:
