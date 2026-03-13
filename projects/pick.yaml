@@ -1,125 +1,125 @@
 owners:
-    - id: 162826027
-    - id: 162133680
-    - id: 164149491
+  - id: 162826027
+  - id: 162133680
+  - id: 164149491
 applications:
-    - name: pick-core-prod
-      github:
-        owner: DSM-PICK
-        repo: PiCK_CORE_SERVER
-        branch: main
-        installationId: "64595989"
-        hash: 8d3b5b7bac94aebbdc23f69b9d07981ab165b01f
-        triggerPaths:
-            - src/main/**
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 8080
-          routes:
-            - pick-core.dsmhs.kr/
-    - name: pick-core-stag
-      github:
-        owner: DSM-PICK
-        repo: PICK_CORE_SERVER
-        branch: develop
-        installationId: "64595989"
-        hash: 91e6a53bad0bdb1af54830518c5fdeecefc1e5c1
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 8080
-          routes:
-            - pick-core-stag.dsmhs.kr
-    - name: pick-admin-prod
-      github:
-        owner: DSM-PICK
-        repo: PiCK2024_FRONT_V2
-        branch: main
-        installationId: "64595989"
-        hash: 2b4fb24459787d9fe31023d401916d2c6cc28ea3
-      build:
-        vite:
-            nodeVersion: "18"
-            buildCommand: yarn install && yarn install --frozen-lockfile && yarn build
-            distPath: /dist
-      endpoints:
-        - port: 8080
-          routes:
-            - pick-admin.dsmhs.kr
-    - name: pick-admin-stag
-      github:
-        owner: DSM-PICK
-        repo: PiCK2024_FRONT_V2
-        branch: develop
-        installationId: "64595989"
-        hash: 2ebf78f8869269066351bf0625d9edbd017ed1f8
-      build:
-        vite:
-            nodeVersion: "18"
-            buildCommand: yarn install && yarn install --frozen-lockfile && yarn build
-            distPath: /dist
-      endpoints:
-        - port: 8080
-          routes:
-            - pick-admin-stag.dsmhs.kr
-    - name: pick-teacher-prod
-      github:
-        owner: DSM-PICK
-        repo: PiCK2024_FRONT_TEACHER_V2
-        branch: main
-        installationId: "64595989"
-        hash: 1eb1d23b948a501975137ee59c1c86bac208450c
-      build:
-        vite:
-            nodeVersion: "18"
-            buildCommand: yarn install && yarn install --frozen-lockfile && yarn build
-            distPath: /dist
-      endpoints:
-        - port: 8080
-          routes:
-            - pick-teacher.dsmhs.kr
-    - name: pick-teacher-stag
-      github:
-        owner: DSM-PICK
-        repo: PiCK2024_FRONT_TEACHER_V2
-        branch: develop
-        installationId: "64595989"
-        hash: c8ff2d0e97fa0fdc46f49de0d4758652fb28b814
-      build:
-        vite:
-            nodeVersion: "18"
-            buildCommand: yarn install && yarn install --frozen-lockfile && yarn build
-            distPath: /dist
-      endpoints:
-        - port: 8080
-          routes:
-            - pick-teacher-stag.dsmhs.kr
+  - name: pick-core-prod
+    github:
+      owner: DSM-PICK
+      repo: PiCK_CORE_SERVER
+      branch: main
+      installationId: "64595989"
+      hash: 8d3b5b7bac94aebbdc23f69b9d07981ab165b01f
+      triggerPaths:
+        - src/main/**
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 8080
+        routes:
+          - pick-core.dsmhs.kr/
+  - name: pick-core-stag
+    github:
+      owner: DSM-PICK
+      repo: PICK_CORE_SERVER
+      branch: develop
+      installationId: "64595989"
+      hash: c6293631c86683c12f93c30e8e0f263da7000c8f
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 8080
+        routes:
+          - pick-core-stag.dsmhs.kr
+  - name: pick-admin-prod
+    github:
+      owner: DSM-PICK
+      repo: PiCK2024_FRONT_V2
+      branch: main
+      installationId: "64595989"
+      hash: 2b4fb24459787d9fe31023d401916d2c6cc28ea3
+    build:
+      vite:
+        nodeVersion: "18"
+        buildCommand: yarn install && yarn install --frozen-lockfile && yarn build
+        distPath: /dist
+    endpoints:
+      - port: 8080
+        routes:
+          - pick-admin.dsmhs.kr
+  - name: pick-admin-stag
+    github:
+      owner: DSM-PICK
+      repo: PiCK2024_FRONT_V2
+      branch: develop
+      installationId: "64595989"
+      hash: 2ebf78f8869269066351bf0625d9edbd017ed1f8
+    build:
+      vite:
+        nodeVersion: "18"
+        buildCommand: yarn install && yarn install --frozen-lockfile && yarn build
+        distPath: /dist
+    endpoints:
+      - port: 8080
+        routes:
+          - pick-admin-stag.dsmhs.kr
+  - name: pick-teacher-prod
+    github:
+      owner: DSM-PICK
+      repo: PiCK2024_FRONT_TEACHER_V2
+      branch: main
+      installationId: "64595989"
+      hash: 1eb1d23b948a501975137ee59c1c86bac208450c
+    build:
+      vite:
+        nodeVersion: "18"
+        buildCommand: yarn install && yarn install --frozen-lockfile && yarn build
+        distPath: /dist
+    endpoints:
+      - port: 8080
+        routes:
+          - pick-teacher.dsmhs.kr
+  - name: pick-teacher-stag
+    github:
+      owner: DSM-PICK
+      repo: PiCK2024_FRONT_TEACHER_V2
+      branch: develop
+      installationId: "64595989"
+      hash: c8ff2d0e97fa0fdc46f49de0d4758652fb28b814
+    build:
+      vite:
+        nodeVersion: "18"
+        buildCommand: yarn install && yarn install --frozen-lockfile && yarn build
+        distPath: /dist
+    endpoints:
+      - port: 8080
+        routes:
+          - pick-teacher-stag.dsmhs.kr
 addons:
-    - name: pick-redis
-      type: redis
-      storage: 1Gi
-    - name: pick-pick-core-prod-mysql
-      type: mysql
-      storage: 1Gi
-    - name: pick-pick-core-stag-mysql
-      type: mysql
-      storage: 1Gi
-    - name: pick-kafka-prod
-      type: kafka
-      storage: 2Gi
-    - name: pick-kafka-stag
-      type: kafka
-      storage: 2Gi
-    - name: pick-debezium-prod
-      type: debezium
-      storage: 5Gi
-      bootstrap: pick-kafka-prod:9092
-    - name: pick-debezium-stag
-      type: debezium
-      storage: 5Gi
-      bootstrap: pick-kafka-stag:9092
+  - name: pick-redis
+    type: redis
+    storage: 1Gi
+  - name: pick-pick-core-prod-mysql
+    type: mysql
+    storage: 1Gi
+  - name: pick-pick-core-stag-mysql
+    type: mysql
+    storage: 1Gi
+  - name: pick-kafka-prod
+    type: kafka
+    storage: 2Gi
+  - name: pick-kafka-stag
+    type: kafka
+    storage: 2Gi
+  - name: pick-debezium-prod
+    type: debezium
+    storage: 5Gi
+    bootstrap: pick-kafka-prod:9092
+  - name: pick-debezium-stag
+    type: debezium
+    storage: 5Gi
+    bootstrap: pick-kafka-stag:9092
