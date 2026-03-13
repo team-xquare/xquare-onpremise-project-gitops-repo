@@ -1,15 +1,16 @@
 owners:
-    - 163271977
+  - 163271977
 applications:
-    - name: backend
-      github:
-        owner: GupSikBulk
-        repo: GupSikBulk_BE
-        branch: develop
-        installationId: "116079958"
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 8000
+  - name: backend
+    github:
+      owner: GupSikBulk
+      repo: GupSikBulk_BE
+      branch: develop
+      installationId: "116079958"
+      hash: e88057c0e1d30ebc1658cc9bb9a485e25f1769e2
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 8000
