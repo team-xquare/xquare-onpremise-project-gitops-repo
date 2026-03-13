@@ -5,3 +5,6 @@ addons:
     - name: nexuskafka
       type: kafka
       storage: 2Gi
+    - name: nexusredis
+      type: redis
+      storage: 1Gi
