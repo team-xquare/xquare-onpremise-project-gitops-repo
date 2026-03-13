@@ -29,3 +29,7 @@ applications:
             distPath: build
       endpoints:
         - port: 8080
+addons:
+    - name: redis-cache
+      type: redis
+      storage: 1Gi
