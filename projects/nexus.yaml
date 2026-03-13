@@ -7,7 +7,7 @@ applications:
       repo: nexus-gateway
       branch: main
       installationId: "115790141"
-      hash: a1ebd288a87fada4a9cbddbcac1e6dbbc30fe4ad
+      hash: 6b5558b6c0fc404cbb2754b4c8669d64fd877508
     build:
       docker:
         dockerfilePath: ./Dockerfile
