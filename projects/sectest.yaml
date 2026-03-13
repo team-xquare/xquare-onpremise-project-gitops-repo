@@ -2,17 +2,4 @@ creator_id: 115498126
 owners:
     - id: 115498126
       username: in-jun
-applications:
-    - name: todo-web
-      github:
-        owner: afjuiekafdjsf
-        repo: todo-client
-        branch: main
-        installationId: "115790141"
-      build:
-        react:
-            nodeVersion: "20"
-            buildCommand: npm ci && npm run build
-            distPath: build
-      endpoints:
-        - port: 8080
+applications: []
