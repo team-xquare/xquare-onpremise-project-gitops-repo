@@ -1,40 +1,41 @@
 creator_id: 115498126
 owners:
-    - id: 115498126
-      username: in-jun
+  - id: 115498126
+    username: in-jun
 applications:
-    - name: chat-server
-      github:
-        owner: afjuiekafdjsf
-        repo: chat-server
-        branch: main
-        installationId: "115790141"
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 8080
-          routes:
-            - chat-api.dsmhs.kr
-    - name: chat-client
-      github:
-        owner: afjuiekafdjsf
-        repo: chat-client
-        branch: main
-        installationId: "115790141"
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 80
-          routes:
-            - chat.dsmhs.kr
+  - name: chat-server
+    github:
+      owner: afjuiekafdjsf
+      repo: chat-server
+      branch: main
+      installationId: "115790141"
+      hash: 7818849068456c86cda2e6a31f077d3dfb1d4349
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 8080
+        routes:
+          - chat-api.dsmhs.kr
+  - name: chat-client
+    github:
+      owner: afjuiekafdjsf
+      repo: chat-client
+      branch: main
+      installationId: "115790141"
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 80
+        routes:
+          - chat.dsmhs.kr
 addons:
-    - name: chatdb
-      type: postgresql
-      storage: 1Gi
-    - name: chatredis
-      type: redis
-      storage: 500Mi
+  - name: chatdb
+    type: postgresql
+    storage: 1Gi
+  - name: chatredis
+    type: redis
+    storage: 500Mi
