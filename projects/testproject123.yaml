@@ -1,3 +1,13 @@
 owners:
     - 115498126
-applications: []
+applications:
+    - name: testapp
+      github:
+        owner: afjuiekafdjsf
+        repo: todo-server
+        branch: main
+        installationId: "115790141"
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
