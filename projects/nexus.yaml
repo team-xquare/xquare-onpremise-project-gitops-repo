@@ -1,6 +1,20 @@
 owners:
-- 115498126
-applications: []
+    - 115498126
+applications:
+    - name: nexus-gateway
+      github:
+        owner: afjuiekafdjsf
+        repo: nexus-gateway
+        branch: main
+        installationId: "115790141"
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 8080
+          routes:
+            - nexus-api.dsmhs.kr
 addons:
     - name: nexuskafka
       type: kafka
