@@ -16,3 +16,16 @@ applications:
             buildCommand: ./gradlew bootJar -x test
       endpoints:
         - port: 8080
+    - name: todo-web
+      github:
+        owner: afjuiekafdjsf
+        repo: todo-client
+        branch: main
+        installationId: "115790141"
+      build:
+        react:
+            nodeVersion: "20"
+            buildCommand: npm ci && npm run build
+            distPath: build
+      endpoints:
+        - port: 8080
