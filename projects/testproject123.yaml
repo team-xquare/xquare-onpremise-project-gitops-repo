@@ -5,7 +5,7 @@ applications:
       github:
         owner: afjuiekafdjsf
         repo: todo-server
-        branch: main
+        branch: develop
         installationId: "115790141"
       build:
         docker:
