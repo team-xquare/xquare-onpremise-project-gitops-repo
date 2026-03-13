@@ -15,3 +15,5 @@ applications:
             startCommand: node index.js
       endpoints:
         - port: 3000
+          routes:
+            - statuschat.dsmhs.kr
