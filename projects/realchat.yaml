@@ -1,7 +1,5 @@
-creator_id: 115498126
 owners:
 - 115498126
-    username: in-jun
 applications:
   - name: chat-server
     github:
