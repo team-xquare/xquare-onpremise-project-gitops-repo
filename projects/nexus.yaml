@@ -11,3 +11,6 @@ addons:
     - name: nexussearch
       type: opensearch
       storage: 2Gi
+    - name: nexusdb
+      type: postgresql
+      storage: 2Gi
