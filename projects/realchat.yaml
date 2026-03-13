@@ -24,6 +24,7 @@ applications:
       repo: chat-client
       branch: main
       installationId: "115790141"
+      hash: 455a91990e1b41862d6f1663576c717954614294
     build:
       docker:
         dockerfilePath: ./Dockerfile
