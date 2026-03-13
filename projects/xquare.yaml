@@ -1,5 +1,5 @@
 owners:
-- 115498126
+  - 115498126
 applications:
   - name: xquare-supporter-prod
     github:
@@ -85,7 +85,7 @@ applications:
       repo: xquare-server
       branch: main
       installationId: "62433388"
-      hash: eb60f7ec2eb35beaaaf1ad01434bb45c2317e8de
+      hash: 94de812a5988cb03d3cb0f1c30bfabf35a64a568
     build:
       docker:
         dockerfilePath: ./Dockerfile
