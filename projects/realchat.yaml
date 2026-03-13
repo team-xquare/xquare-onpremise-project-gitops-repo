@@ -3,3 +3,7 @@ owners:
     - id: 115498126
       username: in-jun
 applications: []
+addons:
+    - name: chatdb
+      type: postgresql
+      storage: 1Gi
