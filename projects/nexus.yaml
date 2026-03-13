@@ -48,7 +48,7 @@ applications:
       repo: nexus-search
       branch: main
       installationId: "115790141"
-      hash: ea763a3c94ef7aefd356f4e4e5096c76c6ab142b
+      hash: 1f3e4f1c3a5e52bf38e77f0ee82be1072891b6d3
     build:
       docker:
         dockerfilePath: ./Dockerfile
