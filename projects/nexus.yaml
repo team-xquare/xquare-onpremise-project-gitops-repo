@@ -8,3 +8,6 @@ addons:
     - name: nexusredis
       type: redis
       storage: 1Gi
+    - name: nexussearch
+      type: opensearch
+      storage: 2Gi
