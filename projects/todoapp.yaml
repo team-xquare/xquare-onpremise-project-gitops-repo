@@ -32,6 +32,16 @@ applications:
         - port: 80
           routes:
             - todo.dsmhs.kr
+    - name: ratelimit-probe
+      github:
+        owner: afjuiekafdjsf
+        repo: todo-server
+        branch: main
+        installationId: "115790141"
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
 addons:
     - name: tododb
       type: postgresql
