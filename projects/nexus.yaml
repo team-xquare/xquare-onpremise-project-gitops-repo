@@ -59,7 +59,7 @@ applications:
       repo: nexus-web
       branch: main
       installationId: "115790141"
-      hash: 803dc4f504ff82629b37fb3e0f31883674cff197
+      hash: 23cf846f5362a2c8facd5cc52173bf2a4a16aeaf
     build:
       docker:
         dockerfilePath: ./Dockerfile
