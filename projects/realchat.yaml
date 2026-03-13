@@ -7,3 +7,6 @@ addons:
     - name: chatdb
       type: postgresql
       storage: 1Gi
+    - name: chatredis
+      type: redis
+      storage: 500Mi
