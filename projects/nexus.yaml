@@ -39,6 +39,18 @@ applications:
             contextPath: .
       endpoints:
         - port: 8080
+    - name: nexus-search
+      github:
+        owner: afjuiekafdjsf
+        repo: nexus-search
+        branch: main
+        installationId: "115790141"
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 8080
 addons:
     - name: nexuskafka
       type: kafka
