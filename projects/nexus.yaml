@@ -68,6 +68,18 @@ applications:
         - port: 80
           routes:
             - nexus.dsmhs.kr
+    - name: nexus-notification
+      github:
+        owner: afjuiekafdjsf
+        repo: nexus-notification
+        branch: master
+        installationId: "115790141"
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 8080
 addons:
     - name: nexuskafka
       type: kafka
