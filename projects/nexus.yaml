@@ -35,7 +35,7 @@ applications:
       repo: nexus-post
       branch: main
       installationId: "115790141"
-      hash: 44234c2267104d7bd8666ea9c5117c0904bd3b83
+      hash: 28ce78c12ff0e24f274267489a7e54473e64d5be
     build:
       docker:
         dockerfilePath: ./Dockerfile
