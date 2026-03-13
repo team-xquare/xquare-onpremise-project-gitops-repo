@@ -1,5 +1,6 @@
 owners:
     - id: 115498126
+    - id: 267585965
 applications:
     - name: todo-server
       github:
