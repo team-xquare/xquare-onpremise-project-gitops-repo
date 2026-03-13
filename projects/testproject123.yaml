@@ -11,7 +11,3 @@ applications:
         docker:
             dockerfilePath: ./Dockerfile
             contextPath: .
-addons:
-    - name: test-redis
-      type: redis
-      storage: 500Mi
