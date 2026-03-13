@@ -9,7 +9,7 @@ applications:
       repo: chat-server
       branch: main
       installationId: "115790141"
-      hash: bc2ab8a332e67b663ebcceea622ce69012f47632
+      hash: be2b18241fd12abc55c15e491750345e2f310771
     build:
       docker:
         dockerfilePath: ./Dockerfile
