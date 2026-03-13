@@ -51,6 +51,20 @@ applications:
             contextPath: .
       endpoints:
         - port: 8080
+    - name: nexus-web
+      github:
+        owner: afjuiekafdjsf
+        repo: nexus-web
+        branch: main
+        installationId: "115790141"
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 80
+          routes:
+            - nexus.dsmhs.kr
 addons:
     - name: nexuskafka
       type: kafka
