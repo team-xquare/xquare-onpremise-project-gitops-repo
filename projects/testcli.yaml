@@ -16,3 +16,7 @@ applications:
           routes:
             - testapp.dsmhs.kr
         - port: 9090
+addons:
+    - name: testdb
+      type: postgresql
+      storage: 1Gi
