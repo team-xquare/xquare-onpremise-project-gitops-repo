@@ -87,6 +87,7 @@ applications:
       repo: nexus-dm
       branch: master
       installationId: "115790141"
+      hash: 5603be44826099b5fdf682b3e1c8f011cd7a394f
     build:
       docker:
         dockerfilePath: ./Dockerfile
