@@ -70,7 +70,7 @@ applications:
             - nexus.dsmhs.kr
     - name: nexus-notification
       github:
-        owner: afjuiekafdjsf
+        owner: nxs-hub
         repo: nexus-notification
         branch: master
         installationId: "115790141"
