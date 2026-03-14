@@ -42,7 +42,7 @@ applications:
         - port: 8080
     - name: nexus-search
       github:
-        owner: afjuiekafdjsf
+        owner: nxs-hub
         repo: nexus-search
         branch: main
         installationId: "115790141"
