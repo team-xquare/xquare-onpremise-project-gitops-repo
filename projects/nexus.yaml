@@ -74,7 +74,7 @@ applications:
       repo: nexus-notification
       branch: master
       installationId: "115790141"
-      hash: f366ddd2f635e3a8f5b2dce50aa08bd625e6b6de
+      hash: 04b6be4242e977a27afda40eb00312cb71dfea48
     build:
       docker:
         dockerfilePath: ./Dockerfile
