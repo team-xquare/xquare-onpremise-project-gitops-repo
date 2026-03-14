@@ -16,7 +16,7 @@ applications:
         - port: 8080
     - name: nexus-user
       github:
-        owner: afjuiekafdjsf
+        owner: nxs-hub
         repo: nexus-user
         branch: main
         installationId: "115790141"
