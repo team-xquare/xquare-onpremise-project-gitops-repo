@@ -1,3 +1,16 @@
 owners:
     - 115498126
-applications: []
+applications:
+    - name: whisk-backend
+      github:
+        owner: synthframe
+        repo: whisk-backend
+        branch: main
+        installationId: "116665370"
+      build:
+        go:
+            goVersion: "1.22"
+            buildCommand: ""
+            binaryName: app
+      endpoints:
+        - port: 8080
