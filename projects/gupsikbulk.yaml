@@ -16,6 +16,20 @@ applications:
         - port: 8000
           routes:
             - gupsikbulk-api.dsmhs.kr
+    - name: frontend
+      github:
+        owner: GupSikBulk
+        repo: GupSikBulk_FE
+        branch: main
+        installationId: "116079958"
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 3000
+          routes:
+            - gupsikbulk.dsmhs.kr
 addons:
     - name: db
       type: postgresql
