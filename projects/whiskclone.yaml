@@ -6,7 +6,7 @@ applications:
         owner: synthframe
         repo: whisk-backend
         branch: main
-        installationId: "116665370"
+        installationId: "116666711"
       build:
         go:
             goVersion: "1.22"
@@ -14,6 +14,8 @@ applications:
             binaryName: app
       endpoints:
         - port: 8080
+          routes:
+            - whisk-backend.dsmhs.kr
     - name: whisk-frontend
       github:
         owner: synthframe
