@@ -1,55 +1,58 @@
 owners:
-  - 163271977
+    - 163271977
 applications:
-  - name: backend
-    github:
-      owner: GupSikBulk
-      repo: GupSikBulk_BE
-      branch: main
-      installationId: "116079958"
-      hash: e88057c0e1d30ebc1658cc9bb9a485e25f1769e2
-    build:
-      docker:
-        dockerfilePath: ./Dockerfile
-        contextPath: .
-    endpoints:
-      - port: 8000
-        routes:
-          - gupsikbulk-api.dsmhs.kr
-  - name: frontend
-    github:
-      owner: GupSikBulk
-      repo: GupSikBulk_FE
-      branch: main
-      installationId: "116079958"
-      hash: e652d10cfa9f24a374022130b1199fe9b502600e
-    build:
-      docker:
-        dockerfilePath: ./Dockerfile
-        contextPath: .
-    endpoints:
-      - port: 3000
-        routes:
-          - gupsikbulk.dsmhs.kr
-  - name: backend-dev
-    github:
-      owner: GupSikBulk
-      repo: GupSikBulk_BE
-      branch: develop
-      installationId: "116079958"
-      hash: e88057c0e1d30ebc1658cc9bb9a485e25f1769e2
-    build:
-      docker:
-        dockerfilePath: ./Dockerfile
-        contextPath: .
-    endpoints:
-      - port: 8000
-        routes:
-          - gupsikbulk-dev-api.dsmhs.kr
+    - name: backend
+      github:
+        owner: GupSikBulk
+        repo: GupSikBulk_BE
+        branch: main
+        installationId: "116079958"
+        hash: e88057c0e1d30ebc1658cc9bb9a485e25f1769e2
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 8000
+          routes:
+            - gupsikbulk-api.dsmhs.kr
+    - name: frontend
+      github:
+        owner: GupSikBulk
+        repo: GupSikBulk_FE
+        branch: main
+        installationId: "116079958"
+        hash: e652d10cfa9f24a374022130b1199fe9b502600e
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 3000
+          routes:
+            - gupsikbulk.dsmhs.kr
+    - name: backend-dev
+      github:
+        owner: GupSikBulk
+        repo: GupSikBulk_BE
+        branch: develop
+        installationId: "116079958"
+        hash: e88057c0e1d30ebc1658cc9bb9a485e25f1769e2
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 8000
+          routes:
+            - gupsikbulk-dev-api.dsmhs.kr
 addons:
-  - name: db
-    type: postgresql
-    storage: 2Gi
-  - name: cache
-    type: redis
-    storage: 2Gi
+    - name: db
+      type: postgresql
+      storage: 2Gi
+    - name: cache
+      type: redis
+      storage: 2Gi
+    - name: db-dev
+      type: postgresql
+      storage: 1Gi
