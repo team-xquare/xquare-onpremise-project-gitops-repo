@@ -29,3 +29,5 @@ applications:
             distPath: ""
       endpoints:
         - port: 8080
+          routes:
+            - whisk-frontend.dsmhs.kr
