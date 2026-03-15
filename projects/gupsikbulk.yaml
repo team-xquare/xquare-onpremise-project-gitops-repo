@@ -46,6 +46,20 @@ applications:
         - port: 8000
           routes:
             - gupsikbulk-dev-api.dsmhs.kr
+    - name: frontend-stag
+      github:
+        owner: GupSikBulk
+        repo: GupSikBulk_FE
+        branch: develop
+        installationId: "116079958"
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile.stag
+            contextPath: .
+      endpoints:
+        - port: 3000
+          routes:
+            - gupsikbulk-stag.dsmhs.kr
 addons:
     - name: db
       type: postgresql
