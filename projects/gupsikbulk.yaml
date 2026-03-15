@@ -56,3 +56,6 @@ addons:
     - name: db-dev
       type: postgresql
       storage: 1Gi
+    - name: cache-dev
+      type: redis
+      storage: 500Mi
