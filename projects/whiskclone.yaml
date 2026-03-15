@@ -14,3 +14,16 @@ applications:
             binaryName: app
       endpoints:
         - port: 8080
+    - name: whisk-frontend
+      github:
+        owner: synthframe
+        repo: whisk-frontend
+        branch: main
+        installationId: "116666711"
+      build:
+        vite:
+            nodeVersion: "22"
+            buildCommand: ""
+            distPath: ""
+      endpoints:
+        - port: 8080
