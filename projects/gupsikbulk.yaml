@@ -52,7 +52,7 @@ applications:
       repo: GupSikBulk_FE
       branch: develop
       installationId: "116079958"
-      hash: ceda0c51e8bbe4f6779e01ac3ac29e7653cdf820
+      hash: b2d037fb1f2f6c303a8405be3995940431b7020c
     build:
       docker:
         dockerfilePath: ./Dockerfile.stag
