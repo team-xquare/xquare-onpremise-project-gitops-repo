@@ -7,7 +7,7 @@ applications:
       repo: GupSikBulk_BE
       branch: main
       installationId: "116079958"
-      hash: 2bbc3bdb6c7de3a61a7d24f6d71d3b26e0d112cf
+      hash: 7d20f611888c1518a076ac7e65293ec9c488980d
     build:
       docker:
         dockerfilePath: ./Dockerfile
