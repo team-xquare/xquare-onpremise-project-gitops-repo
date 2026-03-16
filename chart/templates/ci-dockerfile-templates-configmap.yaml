@@ -51,12 +51,12 @@ data:
     USER appuser
     ENTRYPOINT ["sh","-c","java $JAVA_OPTS -jar app.jar"]
 {{- else if .build.nodejs }}
-    FROM node:{{ .build.nodejs.nodeVersion }}-alpine AS build
+    FROM node:{{ .build.nodejs.nodeVersion | default "20" }}-alpine AS build
     RUN corepack enable
     WORKDIR /app
     COPY ./ .
     RUN {{ .build.nodejs.buildCommand }}
-    FROM node:{{ .build.nodejs.nodeVersion }}-alpine
+    FROM node:{{ .build.nodejs.nodeVersion | default "20" }}-alpine
     RUN apk add --no-cache dumb-init && addgroup -g 1001 appgroup && adduser -u 1001 -G appgroup -s /bin/sh -D appuser
     WORKDIR /app
     COPY --from=build --chown=appuser:appgroup /app .
@@ -65,7 +65,7 @@ data:
     {{- $startCmd := (splitList " " (.build.nodejs.startCommand | default "npm start")) }}
     CMD [{{- range $i, $cmd := $startCmd }}{{if $i}}, {{end}}"{{ $cmd }}"{{- end }}]
 {{- else if .build.react }}
-    FROM node:{{ .build.react.nodeVersion }}-alpine AS build
+    FROM node:{{ .build.react.nodeVersion | default "20" }}-alpine AS build
     RUN corepack enable
     RUN apk add --no-cache coreutils
     WORKDIR /app
@@ -94,7 +94,7 @@ data:
     RUN chmod +x /docker-entrypoint.d/40-inject-env.sh
     CMD ["nginx", "-g", "daemon off;"]
 {{- else if .build.vite }}
-    FROM node:{{ .build.vite.nodeVersion }}-alpine AS build
+    FROM node:{{ .build.vite.nodeVersion | default "20" }}-alpine AS build
     RUN corepack enable
     RUN apk add --no-cache coreutils
     WORKDIR /app
@@ -123,7 +123,7 @@ data:
     RUN chmod +x /docker-entrypoint.d/40-inject-env.sh
     CMD ["nginx", "-g", "daemon off;"]
 {{- else if .build.vue }}
-    FROM node:{{ .build.vue.nodeVersion }}-alpine AS build
+    FROM node:{{ .build.vue.nodeVersion | default "20" }}-alpine AS build
     RUN corepack enable
     RUN apk add --no-cache coreutils
     WORKDIR /app
@@ -152,7 +152,7 @@ data:
     RUN chmod +x /docker-entrypoint.d/40-inject-env.sh
     CMD ["nginx", "-g", "daemon off;"]
 {{- else if .build.nextjs }}
-    FROM node:{{ .build.nextjs.nodeVersion }}-alpine AS build
+    FROM node:{{ .build.nextjs.nodeVersion | default "20" }}-alpine AS build
     RUN corepack enable
     RUN apk add --no-cache coreutils
     WORKDIR /app
@@ -171,7 +171,7 @@ data:
       done > /tmp/.env.mappings && \
       echo "Found env vars: $(cat /tmp/.env.mappings | cut -d'=' -f1 | tr '\n' ' ')"
     RUN {{ template "ci.jsPackageManagerMountFlag" .build.nextjs.buildCommand }} export $(cat /tmp/.env.mappings | xargs) && {{ .build.nextjs.buildCommand }}
-    FROM node:{{ .build.nextjs.nodeVersion }}-alpine
+    FROM node:{{ .build.nextjs.nodeVersion | default "20" }}-alpine
     RUN apk add --no-cache dumb-init tzdata && addgroup -g 1001 appgroup && adduser -u 1001 -G appgroup -s /bin/sh -D appuser
     WORKDIR /app
     COPY --from=build --chown=appuser:appgroup /tmp/.env.mappings /.env.mappings
@@ -185,7 +185,7 @@ data:
     {{- $startCmd := (splitList " " (.build.nextjs.startCommand | default "npm start")) }}
     CMD [{{- range $i, $cmd := $startCmd }}{{if $i}}, {{end}}"{{ $cmd }}"{{- end }}]
 {{- else if index .build "nextjs-export" }}
-    FROM node:{{ index .build "nextjs-export" "nodeVersion" }}-alpine AS build
+    FROM node:{{ index .build "nextjs-export" "nodeVersion" | default "20" }}-alpine AS build
     RUN corepack enable
     RUN apk add --no-cache coreutils
     WORKDIR /app
