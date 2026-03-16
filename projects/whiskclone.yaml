@@ -16,3 +16,18 @@ applications:
         - port: 8080
           routes:
             - whisk-backend.dsmhs.kr
+    - name: whisk-frontend
+      github:
+        owner: synthframe
+        repo: whisk-frontend
+        branch: main
+        installationId: "116666711"
+      build:
+        nodejs:
+            nodeVersion: "22"
+            buildCommand: npm ci && npm run build
+            startCommand: npx serve -s dist -p 8080
+      endpoints:
+        - port: 8080
+          routes:
+            - whisk-frontend.dsmhs.kr
