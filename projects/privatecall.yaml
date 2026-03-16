@@ -5,3 +5,6 @@ addons:
     - name: db
       type: postgresql
       storage: 2Gi
+    - name: cache
+      type: redis
+      storage: 500Mi
