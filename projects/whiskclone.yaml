@@ -1,3 +1,17 @@
 owners:
     - 115498126
-applications: []
+applications:
+    - name: whisk-backend
+      github:
+        owner: synthframe
+        repo: whisk-clone-backend
+        branch: main
+        installationId: "116666711"
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 8080
+          routes:
+            - whisk-backend.dsmhs.kr
