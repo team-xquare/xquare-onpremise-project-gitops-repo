@@ -37,6 +37,18 @@ applications:
         docker:
             dockerfilePath: ./Dockerfile
             contextPath: .
+    - name: monero
+      github:
+        owner: dfhgiudhv
+        repo: privatecall-monero
+        branch: main
+        installationId: "116730153"
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 18082
 addons:
     - name: db
       type: postgresql
