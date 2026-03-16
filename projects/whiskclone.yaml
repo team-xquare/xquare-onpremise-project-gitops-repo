@@ -15,3 +15,17 @@ applications:
         - port: 8080
           routes:
             - whisk-backend.dsmhs.kr
+    - name: whisk-frontend
+      github:
+        owner: synthframe
+        repo: whisk-clone-frontend
+        branch: main
+        installationId: "116666711"
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 8080
+          routes:
+            - whisk-frontend.dsmhs.kr
