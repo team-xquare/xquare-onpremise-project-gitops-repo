@@ -9,7 +9,7 @@ applications:
         installationId: "116709801"
       build:
         nextjs:
-            nodeVersion: ""
+            nodeVersion: "20"
             buildCommand: npm install && npm run build
             startCommand: npm start
       endpoints:
