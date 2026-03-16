@@ -15,6 +15,18 @@ applications:
         - port: 8080
           routes:
             - api.dsmhs.kr
+    - name: freeswitch
+      github:
+        owner: dfhgiudhv
+        repo: privatecall-freeswitch
+        branch: main
+        installationId: "116730153"
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 8081
 addons:
     - name: db
       type: postgresql
