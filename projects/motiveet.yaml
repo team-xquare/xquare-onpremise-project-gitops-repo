@@ -1,3 +1,16 @@
 owners:
     - 163987011
-applications: []
+applications:
+    - name: fe
+      github:
+        owner: team-gozip
+        repo: motiveet_FE
+        branch: main
+        installationId: "116709801"
+      build:
+        nextjs:
+            nodeVersion: ""
+            buildCommand: ""
+            startCommand: ""
+      endpoints:
+        - port: 3000
