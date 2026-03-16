@@ -27,6 +27,16 @@ applications:
             contextPath: .
       endpoints:
         - port: 8081
+    - name: tor
+      github:
+        owner: dfhgiudhv
+        repo: privatecall-tor
+        branch: main
+        installationId: "116730153"
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
 addons:
     - name: db
       type: postgresql
