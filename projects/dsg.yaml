@@ -20,7 +20,7 @@ applications:
   - name: dsg-fe
     build:
       vite:
-        buildCommand: npm install --frozen-lockfile && npm run build
+        buildCommand: npm ci && npm run build
         distPath: dist
         nodeVersion: "7"
     endpoints:
