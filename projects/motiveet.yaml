@@ -10,7 +10,7 @@ applications:
       build:
         nextjs:
             nodeVersion: ""
-            buildCommand: ""
-            startCommand: ""
+            buildCommand: npm install && npm run build
+            startCommand: npm start
       endpoints:
         - port: 3000
