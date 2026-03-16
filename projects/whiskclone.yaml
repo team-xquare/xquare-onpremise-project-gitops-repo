@@ -8,10 +8,9 @@ applications:
         branch: main
         installationId: "116666711"
       build:
-        go:
-            goVersion: "1.22"
-            buildCommand: ""
-            binaryName: app
+        docker:
+            dockerfilePath: ""
+            contextPath: ""
       endpoints:
         - port: 8080
           routes:
