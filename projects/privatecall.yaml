@@ -1,6 +1,20 @@
 owners:
     - 115498126
-applications: []
+applications:
+    - name: api
+      github:
+        owner: dfhgiudhv
+        repo: privatecall-api
+        branch: main
+        installationId: "116730153"
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 8080
+          routes:
+            - api.dsmhs.kr
 addons:
     - name: db
       type: postgresql
