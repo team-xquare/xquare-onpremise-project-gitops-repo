@@ -1,76 +1,77 @@
 owners:
-    - 115498126
+  - 115498126
 applications:
-    - name: api
-      github:
-        owner: dfhgiudhv
-        repo: privatecall-api
-        branch: main
-        installationId: "116730153"
-        hash: c889e559bdb665e88455a09826bc2c85f2141544
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 8080
-          routes:
-            - api.dsmhs.kr
-    - name: freeswitch
-      github:
-        owner: dfhgiudhv
-        repo: privatecall-freeswitch
-        branch: main
-        installationId: "116730153"
-        hash: b8adc9ba8beeab87497c11275caa844ecac95d1c
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 8081
-    - name: tor
-      github:
-        owner: dfhgiudhv
-        repo: privatecall-tor
-        branch: main
-        installationId: "116730153"
-        hash: a4fc29fb99ba7f741d7fcf7823399b0099a709e3
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-    - name: monero
-      github:
-        owner: dfhgiudhv
-        repo: privatecall-monero
-        branch: main
-        installationId: "116730153"
-        hash: bcd7b950520935f772ebef3e40c48ad7b5de5059
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 18082
-    - name: web
-      github:
-        owner: dfhgiudhv
-        repo: privatecall-web
-        branch: main
-        installationId: "116730153"
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 3000
-          routes:
-            - privatecall.dsmhs.kr
+  - name: api
+    github:
+      owner: dfhgiudhv
+      repo: privatecall-api
+      branch: main
+      installationId: "116730153"
+      hash: c889e559bdb665e88455a09826bc2c85f2141544
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 8080
+        routes:
+          - api.dsmhs.kr
+  - name: freeswitch
+    github:
+      owner: dfhgiudhv
+      repo: privatecall-freeswitch
+      branch: main
+      installationId: "116730153"
+      hash: b8adc9ba8beeab87497c11275caa844ecac95d1c
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 8081
+  - name: tor
+    github:
+      owner: dfhgiudhv
+      repo: privatecall-tor
+      branch: main
+      installationId: "116730153"
+      hash: a4fc29fb99ba7f741d7fcf7823399b0099a709e3
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+  - name: monero
+    github:
+      owner: dfhgiudhv
+      repo: privatecall-monero
+      branch: main
+      installationId: "116730153"
+      hash: bcd7b950520935f772ebef3e40c48ad7b5de5059
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 18082
+  - name: web
+    github:
+      owner: dfhgiudhv
+      repo: privatecall-web
+      branch: main
+      installationId: "116730153"
+      hash: 40c9029a4ba5912e504fcc8eb7fabc44a68d9cb9
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 3000
+        routes:
+          - privatecall.dsmhs.kr
 addons:
-    - name: db
-      type: postgresql
-      storage: 2Gi
-    - name: cache
-      type: redis
-      storage: 500Mi
+  - name: db
+    type: postgresql
+    storage: 2Gi
+  - name: cache
+    type: redis
+    storage: 500Mi
