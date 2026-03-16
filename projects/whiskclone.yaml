@@ -1,33 +1,18 @@
 owners:
-  - 115498126
+    - 115498126
 applications:
-  - name: whisk-backend
-    github:
-      owner: synthframe
-      repo: whisk-backend
-      branch: main
-      installationId: "116666711"
-      hash: a6e5e1d2bedaee0a3429dbe0d2338d649260eace
-    build:
-      docker:
-        dockerfilePath: ""
-        contextPath: ""
-    endpoints:
-      - port: 8080
-        routes:
-          - whisk-backend.dsmhs.kr
-  - name: whisk-frontend
-    github:
-      owner: synthframe
-      repo: whisk-frontend
-      branch: main
-      installationId: "116666711"
-    build:
-      vite:
-        nodeVersion: "22"
-        buildCommand: ""
-        distPath: ""
-    endpoints:
-      - port: 8080
-        routes:
-          - whisk-frontend.dsmhs.kr
+    - name: whisk-backend
+      github:
+        owner: synthframe
+        repo: whisk-backend
+        branch: main
+        installationId: "116666711"
+        hash: a6e5e1d2bedaee0a3429dbe0d2338d649260eace
+      build:
+        docker:
+            dockerfilePath: ""
+            contextPath: ""
+      endpoints:
+        - port: 8080
+          routes:
+            - whisk-backend.dsmhs.kr
