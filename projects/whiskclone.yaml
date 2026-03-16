@@ -22,9 +22,10 @@ applications:
         branch: main
         installationId: "116666711"
       build:
-        docker:
-            dockerfilePath: ""
-            contextPath: ""
+        vite:
+            nodeVersion: ""
+            buildCommand: ""
+            distPath: ""
       endpoints:
         - port: 8080
           routes:
