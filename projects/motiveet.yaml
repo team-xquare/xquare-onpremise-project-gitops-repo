@@ -8,9 +8,8 @@ applications:
         branch: main
         installationId: "116709801"
       build:
-        nextjs:
-            nodeVersion: "20"
-            buildCommand: npm install && npm run build
-            startCommand: npm start
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
       endpoints:
         - port: 3000
