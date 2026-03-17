@@ -41,7 +41,7 @@ applications:
       endpoints:
         - port: 8080
           routes:
-            - voniqapi.dsmhs.kr
+            - voniq-api.dsmhs.kr
     - name: freeswitch
       github:
         owner: voniq
