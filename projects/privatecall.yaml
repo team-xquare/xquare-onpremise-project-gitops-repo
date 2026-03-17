@@ -18,8 +18,8 @@ applications:
             - api.dsmhs.kr
     - name: freeswitch
       github:
-        owner: dfhgiudhv
-        repo: privatecall-freeswitch
+        owner: veilcall
+        repo: freeswitch
         branch: main
         installationId: "116730153"
         hash: e1541a623f0dd9c239d4386fd1efafb84c3ce767
