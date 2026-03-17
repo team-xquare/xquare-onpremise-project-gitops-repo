@@ -1,67 +1,68 @@
 owners:
-    - 115498126
+  - 115498126
 applications:
-    - name: web
-      github:
-        owner: voniq
-        repo: web
-        branch: main
-        installationId: "116999868"
-        triggerPaths:
-            - app/**
-            - components/**
-            - lib/**
-            - public/**
-            - Dockerfile
-            - package.json
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 3000
-          routes:
-            - voniq.dsmhs.kr
-    - name: api
-      github:
-        owner: voniq
-        repo: api
-        branch: main
-        installationId: "116999868"
-        hash: ff66dd1c6521e92372bf2c9aeb5487ad428671ac
-        triggerPaths:
-            - cmd/**
-            - internal/**
-            - Dockerfile
-            - go.mod
-            - go.sum
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 8080
-          routes:
-            - voniq-api.dsmhs.kr
-    - name: freeswitch
-      github:
-        owner: voniq
-        repo: freeswitch
-        branch: main
-        installationId: "116999868"
-        triggerPaths:
-            - Dockerfile
-            - conf/**
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 8081
+  - name: web
+    github:
+      owner: voniq
+      repo: web
+      branch: main
+      installationId: "116999868"
+      triggerPaths:
+        - app/**
+        - components/**
+        - lib/**
+        - public/**
+        - Dockerfile
+        - package.json
+      hash: 2597a16fb654e48e396ca2963e0f445e07a33a33
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 3000
+        routes:
+          - voniq.dsmhs.kr
+  - name: api
+    github:
+      owner: voniq
+      repo: api
+      branch: main
+      installationId: "116999868"
+      hash: ff66dd1c6521e92372bf2c9aeb5487ad428671ac
+      triggerPaths:
+        - cmd/**
+        - internal/**
+        - Dockerfile
+        - go.mod
+        - go.sum
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 8080
+        routes:
+          - voniq-api.dsmhs.kr
+  - name: freeswitch
+    github:
+      owner: voniq
+      repo: freeswitch
+      branch: main
+      installationId: "116999868"
+      triggerPaths:
+        - Dockerfile
+        - conf/**
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 8081
 addons:
-    - name: db
-      type: postgresql
-      storage: 2Gi
-    - name: cache
-      type: redis
-      storage: 500Mi
+  - name: db
+    type: postgresql
+    storage: 2Gi
+  - name: cache
+    type: redis
+    storage: 500Mi
