@@ -55,8 +55,8 @@ applications:
         - port: 18082
     - name: web
       github:
-        owner: dfhgiudhv
-        repo: privatecall-web
+        owner: veilcall
+        repo: web
         branch: main
         installationId: "116730153"
         hash: fd19071b25f504adb184dca82e1c3a3e6f1f4e46
