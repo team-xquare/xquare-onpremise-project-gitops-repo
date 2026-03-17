@@ -46,7 +46,7 @@ applications:
       repo: privatecall-monero
       branch: main
       installationId: "116730153"
-      hash: 5dca4622c8ff4f6866981f0e1872232b4a268d5d
+      hash: 37f9f8be62063ca2469f088941481d6bf22f86ac
     build:
       docker:
         dockerfilePath: ./Dockerfile
