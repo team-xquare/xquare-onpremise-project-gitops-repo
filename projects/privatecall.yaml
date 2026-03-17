@@ -42,8 +42,8 @@ applications:
             contextPath: .
     - name: monero
       github:
-        owner: dfhgiudhv
-        repo: privatecall-monero
+        owner: veilcall
+        repo: monero
         branch: main
         installationId: "116730153"
         hash: 37f9f8be62063ca2469f088941481d6bf22f86ac
