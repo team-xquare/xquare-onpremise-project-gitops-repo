@@ -59,7 +59,7 @@ applications:
       repo: privatecall-web
       branch: main
       installationId: "116730153"
-      hash: 482cd1304fa180e0dace9bfffc066e3a299a2317
+      hash: c604c52492f6ae414d6c2ef65ed3833065c7e963
     build:
       docker:
         dockerfilePath: ./Dockerfile
