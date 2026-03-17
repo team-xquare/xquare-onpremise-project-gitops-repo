@@ -22,7 +22,7 @@ applications:
       repo: privatecall-freeswitch
       branch: main
       installationId: "116730153"
-      hash: b8adc9ba8beeab87497c11275caa844ecac95d1c
+      hash: 5759b5a782389cfa45fe63c7e152cb30cf0f8bdc
     build:
       docker:
         dockerfilePath: ./Dockerfile
