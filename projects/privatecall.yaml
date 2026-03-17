@@ -31,8 +31,8 @@ applications:
         - port: 8081
     - name: tor
       github:
-        owner: dfhgiudhv
-        repo: privatecall-tor
+        owner: veilcall
+        repo: tor
         branch: main
         installationId: "116730153"
         hash: 3adc73d3ec212947289de4ba0095621eeb109580
