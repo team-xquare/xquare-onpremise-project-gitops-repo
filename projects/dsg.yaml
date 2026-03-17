@@ -22,7 +22,7 @@ applications:
       vite:
         buildCommand: npm ci && npm run build
         distPath: dist
-        nodeVersion: "7"
+        nodeVersion: "24"
     endpoints:
       - port: 8080
         routes:
