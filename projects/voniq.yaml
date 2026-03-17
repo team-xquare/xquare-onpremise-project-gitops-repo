@@ -45,11 +45,12 @@ applications:
     - name: freeswitch
       github:
         owner: voniq
-        repo: api
+        repo: freeswitch
         branch: main
         installationId: "116999868"
         triggerPaths:
-            - freeswitch/**
+            - Dockerfile
+            - conf/**
       build:
         docker:
             dockerfilePath: ./freeswitch/Dockerfile
