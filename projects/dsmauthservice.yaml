@@ -1,21 +1,23 @@
+owners:
+    - 163130634
 applications:
-  - name: dsm-login-prod
-    github:
-      owner: DAS-DsmAuthService
-      repo: Dsm-login-server
-      branch: main
-      installationId: "80380806"
-      hash: 9017ff37bf2421f0c8dfbf95ab45ce6a5d38bfcb
-    build:
-      gradle:
-        javaVersion: 17
-        jarOutputPath: /build/libs/*.jar
-        buildCommand: ./gradlew bootJar -x test
-    endpoints:
-      - port: 8080
-        routes:
-          - dsm-login.dsmhs.kr
+    - name: dsm-login-prod
+      github:
+        owner: DAS-DsmAuthService
+        repo: Dsm-login-server
+        branch: main
+        installationId: "80380806"
+        hash: 9017ff37bf2421f0c8dfbf95ab45ce6a5d38bfcb
+      build:
+        gradle:
+            javaVersion: "17"
+            jarOutputPath: /build/libs/*.jar
+            buildCommand: ./gradlew bootJar -x test
+      endpoints:
+        - port: 8080
+          routes:
+            - dsm-login.dsmhs.kr
 addons:
-  - name: dsmauthservice-dsm-login-prod-mysql
-    type: mysql
-    storage: 1Gi
+    - name: dsmauthservice-dsm-login-prod-mysql
+      type: mysql
+      storage: 1Gi
