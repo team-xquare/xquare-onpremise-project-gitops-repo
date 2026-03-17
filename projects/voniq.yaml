@@ -37,6 +37,7 @@ applications:
       repo: freeswitch
       branch: main
       installationId: "116999868"
+      hash: eadf4ed6eb1ab67b7df64fc937d0879f35ae8262
     build:
       docker:
         dockerfilePath: ./Dockerfile
