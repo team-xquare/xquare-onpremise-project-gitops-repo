@@ -21,6 +21,26 @@ applications:
         - port: 3000
           routes:
             - voniq.dsmhs.kr
+    - name: api
+      github:
+        owner: voniq
+        repo: api
+        branch: main
+        installationId: "116999868"
+        triggerPaths:
+            - cmd/**
+            - internal/**
+            - Dockerfile
+            - go.mod
+            - go.sum
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 8080
+          routes:
+            - voniqapi.dsmhs.kr
 addons:
     - name: db
       type: postgresql
