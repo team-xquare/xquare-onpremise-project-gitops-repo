@@ -27,7 +27,7 @@ applications:
       repo: api
       branch: main
       installationId: "116999868"
-      hash: 6d5676876df86a6158efde13f58cc21ec7d4c336
+      hash: 0502daa1a4e369ca69d9f71d98dedc1c8f8cb789
       triggerPaths:
         - cmd/**
         - internal/**
