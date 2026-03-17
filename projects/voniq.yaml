@@ -1,50 +1,51 @@
 owners:
-    - 115498126
+  - 115498126
 applications:
-    - name: web
-      github:
-        owner: voniq
-        repo: web
-        branch: main
-        installationId: "116999868"
-        triggerPaths:
-            - app/**
-            - components/**
-            - lib/**
-            - Dockerfile
-            - package.json
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 3000
-          routes:
-            - voniq.dsmhs.kr
-    - name: api
-      github:
-        owner: voniq
-        repo: api
-        branch: main
-        installationId: "116999868"
-        triggerPaths:
-            - cmd/**
-            - internal/**
-            - Dockerfile
-            - go.mod
-            - go.sum
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 8080
-          routes:
-            - voniqapi.dsmhs.kr
+  - name: web
+    github:
+      owner: voniq
+      repo: web
+      branch: main
+      installationId: "116999868"
+      triggerPaths:
+        - app/**
+        - components/**
+        - lib/**
+        - Dockerfile
+        - package.json
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 3000
+        routes:
+          - voniq.dsmhs.kr
+  - name: api
+    github:
+      owner: voniq
+      repo: api
+      branch: main
+      installationId: "116999868"
+      triggerPaths:
+        - cmd/**
+        - internal/**
+        - Dockerfile
+        - go.mod
+        - go.sum
+      hash: 3180dde340cab730a3b8244fd95b5fb15f0a370f
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 8080
+        routes:
+          - voniqapi.dsmhs.kr
 addons:
-    - name: db
-      type: postgresql
-      storage: 2Gi
-    - name: cache
-      type: redis
-      storage: 500Mi
+  - name: db
+    type: postgresql
+    storage: 2Gi
+  - name: cache
+    type: redis
+    storage: 500Mi
