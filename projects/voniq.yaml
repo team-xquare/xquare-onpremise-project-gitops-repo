@@ -1,6 +1,26 @@
 owners:
     - 115498126
-applications: []
+applications:
+    - name: web
+      github:
+        owner: voniq
+        repo: web
+        branch: main
+        installationId: "116999868"
+        triggerPaths:
+            - app/**
+            - components/**
+            - lib/**
+            - Dockerfile
+            - package.json
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 3000
+          routes:
+            - voniq.dsmhs.kr
 addons:
     - name: db
       type: postgresql
