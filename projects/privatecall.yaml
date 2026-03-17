@@ -35,7 +35,7 @@ applications:
       repo: privatecall-tor
       branch: main
       installationId: "116730153"
-      hash: a4fc29fb99ba7f741d7fcf7823399b0099a709e3
+      hash: 95002f7418eccadf5d3539d099f5941320115601
     build:
       docker:
         dockerfilePath: ./Dockerfile
