@@ -67,7 +67,7 @@ applications:
       endpoints:
         - port: 3000
           routes:
-            - privatecall.dsmhs.kr
+            - veilcall.dsmhs.kr
 addons:
     - name: db
       type: postgresql
