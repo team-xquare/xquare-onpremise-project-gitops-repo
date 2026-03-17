@@ -7,7 +7,7 @@ applications:
       repo: privatecall-api
       branch: main
       installationId: "116730153"
-      hash: c6593780a833ed5f81e70dd166149413cdce527f
+      hash: 947e1820670d249aa0ab46ae3721393233a0e22b
     build:
       docker:
         dockerfilePath: ./Dockerfile
