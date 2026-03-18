@@ -38,3 +38,6 @@ addons:
       buckets:
         - name: uploads
         - name: thumbnails
+    - name: whisk-db
+      type: postgresql
+      storage: 2Gi
