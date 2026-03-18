@@ -35,3 +35,6 @@ addons:
     - name: whisk-storage
       type: seaweedfs
       storage: 2Gi
+      buckets:
+        - name: uploads
+        - name: thumbnails
