@@ -314,3 +314,15 @@ addons: []
 #     type: debezium
 #     storage: 20Gi
 #     bootstrap: "example-kafka:9092"
+
+#   # SeaweedFS (S3-compatible object storage)
+#   # S3 API endpoint (in-cluster): http://{name}.{project}-dsm-project.svc.cluster.local:8333
+#   # Each bucket gets its own access/secret key pair (stored in Secret: {name}-s3-credentials)
+#   #   accessKey: {namespace}-{addonName}-{bucketName}
+#   #   secretKey: {namespace}-{addonName}-{bucketName}-secret
+#   - name: example-seaweedfs
+#     type: seaweedfs
+#     storage: 50Gi   # volume node storage (master+filer each get 10Gi fixed)
+#     buckets:
+#       - name: uploads      # creates bucket + IAM credentials
+#       - name: thumbnails   # each bucket is independently credentialed
