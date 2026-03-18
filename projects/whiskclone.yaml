@@ -7,7 +7,7 @@ applications:
       repo: whisk-clone-backend
       branch: main
       installationId: "116666711"
-      hash: 68e373290b3a86a4ca745d0d99db0be176613634
+      hash: 72b57ba8b8dc3eb758f263d206c5eb3e8653d057
     build:
       docker:
         dockerfilePath: ./Dockerfile
