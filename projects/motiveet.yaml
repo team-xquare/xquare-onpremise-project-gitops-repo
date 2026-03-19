@@ -28,3 +28,5 @@ applications:
             contextPath: .
       endpoints:
         - port: 8000
+          routes:
+            - motiveet-api.dsmhs.kr
