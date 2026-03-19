@@ -67,151 +67,77 @@ data:
 {{- else if .build.react }}
     FROM node:{{ .build.react.nodeVersion | default "20" }}-alpine AS build
     RUN corepack enable
-    RUN apk add --no-cache coreutils
     WORKDIR /app
     COPY ./ .
-    RUN (find . -maxdepth 2 -name ".env*" -type f -exec grep -oE '^[A-Z_][A-Z0-9_]*=' {} + 2>/dev/null | sed 's/=$//' && \
-      find . -type f \( -name "*.js" -o -name "*.jsx" -o -name "*.ts" -o -name "*.tsx" \) \
-      ! -path "*/node_modules/*" ! -path "*/.git/*" ! -path "*/build/*" ! -path "*/dist/*" \
-      ! -path "*/.yarn/*" ! -path "*/.next/*" ! -path "*/.cache/*" ! -path "*/.turbo/*" \
-      ! -path "*/coverage/*" ! -path "*/out/*" \
-      -exec grep -ohE 'process\.env\.[A-Z_][A-Z0-9_]*|import\.meta\.env\.[A-Z_][A-Z0-9_]*' {} + 2>/dev/null | \
-      sed -e 's/process\.env\.//' -e 's/import\.meta\.env\.//') | sort -u | \
-      grep -vE '^(NODE_ENV|PUBLIC_URL|PATH|HOME|USER|SHELL|TERM|LANG|LC_ALL|PWD|OLDPWD|TMPDIR|MODE|DEV|PROD|SSR|BASE_URL)$' | \
-      while read var; do \
-        uuid=$(echo -n "$var" | md5sum | cut -d' ' -f1); \
-        echo "$var=__ENV_NOT_SET__${var}__${uuid}__"; \
-      done > /tmp/.env.mappings && \
-      echo "Found env vars: $(cat /tmp/.env.mappings | cut -d'=' -f1 | tr '\n' ' ')"
-    RUN {{ template "ci.jsPackageManagerMountFlag" .build.react.buildCommand }} export $(cat /tmp/.env.mappings | xargs) && {{ .build.react.buildCommand }}
+    RUN --mount=type=secret,id=vault_env {{ template "ci.jsPackageManagerMountFlag" .build.react.buildCommand }} \
+      if [ -f /run/secrets/vault_env ]; then set -a; . /run/secrets/vault_env; set +a; fi && \
+      {{ .build.react.buildCommand }}
     FROM nginx:alpine
     RUN apk add --no-cache tzdata wget && addgroup -g 101 nginx-group || true && adduser -u 101 -G nginx-group -s /bin/sh -D nginx-user || true
     COPY --from=build /app{{ .build.react.distPath | default "/build" }} /usr/share/nginx/html
-    COPY --from=build /tmp/.env.mappings /.env.mappings
     RUN echo 'server { listen 8080; server_name _; root /usr/share/nginx/html; index index.html; add_header X-Frame-Options "SAMEORIGIN" always; add_header X-Content-Type-Options "nosniff" always; add_header X-XSS-Protection "1; mode=block" always; gzip on; gzip_vary on; gzip_types text/plain text/css application/json application/javascript text/xml application/xml text/javascript; location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ { expires 1y; add_header Cache-Control "public, immutable"; } location / { try_files $uri $uri/ /index.html; } location /health { access_log off; return 200 "healthy\\n"; add_header Content-Type text/plain; } }' > /etc/nginx/conf.d/default.conf
     RUN rm -f /etc/nginx/conf.d/default.conf.default
-    RUN printf '#!/bin/sh\nset -e\nif [ ! -f /.env.mappings ] || [ ! -s /.env.mappings ]; then\n  exit 0\nfi\nsed_script="/tmp/replace.sed"\n> "$sed_script"\nwhile IFS='\''='\'' read -r key placeholder; do\n  value=$(printenv "$key" || echo "")\n  if [ -n "$value" ]; then\n    escaped=$(printf '\''%%s\\n'\'' "$value" | sed '\''s/[&/\\]/\\\\&/g'\'')\n    echo "s|$placeholder|$escaped|g" >> "$sed_script"\n  fi\ndone < /.env.mappings\nif [ -s "$sed_script" ]; then\n  find /usr/share/nginx/html -type f -name "*.js" -exec sed -i -f "$sed_script" {} +\nfi\nrm -f "$sed_script"\n' > /docker-entrypoint.d/40-inject-env.sh
-    RUN chmod +x /docker-entrypoint.d/40-inject-env.sh
     CMD ["nginx", "-g", "daemon off;"]
 {{- else if .build.vite }}
     FROM node:{{ .build.vite.nodeVersion | default "20" }}-alpine AS build
     RUN corepack enable
-    RUN apk add --no-cache coreutils
     WORKDIR /app
     COPY ./ .
-    RUN (find . -maxdepth 2 -name ".env*" -type f -exec grep -oE '^[A-Z_][A-Z0-9_]*=' {} + 2>/dev/null | sed 's/=$//' && \
-      find . -type f \( -name "*.js" -o -name "*.jsx" -o -name "*.ts" -o -name "*.tsx" \) \
-      ! -path "*/node_modules/*" ! -path "*/.git/*" ! -path "*/build/*" ! -path "*/dist/*" \
-      ! -path "*/.yarn/*" ! -path "*/.next/*" ! -path "*/.cache/*" ! -path "*/.turbo/*" \
-      ! -path "*/coverage/*" ! -path "*/out/*" \
-      -exec grep -ohE 'process\.env\.[A-Z_][A-Z0-9_]*|import\.meta\.env\.[A-Z_][A-Z0-9_]*' {} + 2>/dev/null | \
-      sed -e 's/process\.env\.//' -e 's/import\.meta\.env\.//') | sort -u | \
-      grep -vE '^(NODE_ENV|PUBLIC_URL|PATH|HOME|USER|SHELL|TERM|LANG|LC_ALL|PWD|OLDPWD|TMPDIR|MODE|DEV|PROD|SSR|BASE_URL)$' | \
-      while read var; do \
-        uuid=$(echo -n "$var" | md5sum | cut -d' ' -f1); \
-        echo "$var=__ENV_NOT_SET__${var}__${uuid}__"; \
-      done > /tmp/.env.mappings && \
-      echo "Found env vars: $(cat /tmp/.env.mappings | cut -d'=' -f1 | tr '\n' ' ')"
-    RUN {{ template "ci.jsPackageManagerMountFlag" .build.vite.buildCommand }} export $(cat /tmp/.env.mappings | xargs) && {{ .build.vite.buildCommand }}
+    RUN --mount=type=secret,id=vault_env {{ template "ci.jsPackageManagerMountFlag" .build.vite.buildCommand }} \
+      if [ -f /run/secrets/vault_env ]; then set -a; . /run/secrets/vault_env; set +a; fi && \
+      {{ .build.vite.buildCommand }}
     FROM nginx:alpine
     RUN apk add --no-cache tzdata wget && addgroup -g 101 nginx-group || true && adduser -u 101 -G nginx-group -s /bin/sh -D nginx-user || true
     COPY --from=build /app{{ .build.vite.distPath | default "/dist" }} /usr/share/nginx/html
-    COPY --from=build /tmp/.env.mappings /.env.mappings
     RUN echo 'server { listen 8080; server_name _; root /usr/share/nginx/html; index index.html; add_header X-Frame-Options "SAMEORIGIN" always; add_header X-Content-Type-Options "nosniff" always; add_header X-XSS-Protection "1; mode=block" always; gzip on; gzip_vary on; gzip_types text/plain text/css application/json application/javascript text/xml application/xml text/javascript; location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ { expires 1y; add_header Cache-Control "public, immutable"; } location / { try_files $uri $uri/ /index.html; } location /health { access_log off; return 200 "healthy\\n"; add_header Content-Type text/plain; } }' > /etc/nginx/conf.d/default.conf
     RUN rm -f /etc/nginx/conf.d/default.conf.default
-    RUN printf '#!/bin/sh\nset -e\nif [ ! -f /.env.mappings ] || [ ! -s /.env.mappings ]; then\n  exit 0\nfi\nsed_script="/tmp/replace.sed"\n> "$sed_script"\nwhile IFS='\''='\'' read -r key placeholder; do\n  value=$(printenv "$key" || echo "")\n  if [ -n "$value" ]; then\n    escaped=$(printf '\''%%s\\n'\'' "$value" | sed '\''s/[&/\\]/\\\\&/g'\'')\n    echo "s|$placeholder|$escaped|g" >> "$sed_script"\n  fi\ndone < /.env.mappings\nif [ -s "$sed_script" ]; then\n  find /usr/share/nginx/html -type f -name "*.js" -exec sed -i -f "$sed_script" {} +\nfi\nrm -f "$sed_script"\n' > /docker-entrypoint.d/40-inject-env.sh
-    RUN chmod +x /docker-entrypoint.d/40-inject-env.sh
     CMD ["nginx", "-g", "daemon off;"]
 {{- else if .build.vue }}
     FROM node:{{ .build.vue.nodeVersion | default "20" }}-alpine AS build
     RUN corepack enable
-    RUN apk add --no-cache coreutils
     WORKDIR /app
     COPY ./ .
-    RUN (find . -maxdepth 2 -name ".env*" -type f -exec grep -oE '^[A-Z_][A-Z0-9_]*=' {} + 2>/dev/null | sed 's/=$//' && \
-      find . -type f \( -name "*.js" -o -name "*.jsx" -o -name "*.ts" -o -name "*.tsx" \) \
-      ! -path "*/node_modules/*" ! -path "*/.git/*" ! -path "*/build/*" ! -path "*/dist/*" \
-      ! -path "*/.yarn/*" ! -path "*/.next/*" ! -path "*/.cache/*" ! -path "*/.turbo/*" \
-      ! -path "*/coverage/*" ! -path "*/out/*" \
-      -exec grep -ohE 'process\.env\.[A-Z_][A-Z0-9_]*|import\.meta\.env\.[A-Z_][A-Z0-9_]*' {} + 2>/dev/null | \
-      sed -e 's/process\.env\.//' -e 's/import\.meta\.env\.//') | sort -u | \
-      grep -vE '^(NODE_ENV|PUBLIC_URL|PATH|HOME|USER|SHELL|TERM|LANG|LC_ALL|PWD|OLDPWD|TMPDIR|MODE|DEV|PROD|SSR|BASE_URL)$' | \
-      while read var; do \
-        uuid=$(echo -n "$var" | md5sum | cut -d' ' -f1); \
-        echo "$var=__ENV_NOT_SET__${var}__${uuid}__"; \
-      done > /tmp/.env.mappings && \
-      echo "Found env vars: $(cat /tmp/.env.mappings | cut -d'=' -f1 | tr '\n' ' ')"
-    RUN {{ template "ci.jsPackageManagerMountFlag" .build.vue.buildCommand }} export $(cat /tmp/.env.mappings | xargs) && {{ .build.vue.buildCommand }}
+    RUN --mount=type=secret,id=vault_env {{ template "ci.jsPackageManagerMountFlag" .build.vue.buildCommand }} \
+      if [ -f /run/secrets/vault_env ]; then set -a; . /run/secrets/vault_env; set +a; fi && \
+      {{ .build.vue.buildCommand }}
     FROM nginx:alpine
     RUN apk add --no-cache tzdata wget && addgroup -g 101 nginx-group || true && adduser -u 101 -G nginx-group -s /bin/sh -D nginx-user || true
     COPY --from=build /app{{ .build.vue.distPath | default "/dist" }} /usr/share/nginx/html
-    COPY --from=build /tmp/.env.mappings /.env.mappings
     RUN echo 'server { listen 8080; server_name _; root /usr/share/nginx/html; index index.html; add_header X-Frame-Options "SAMEORIGIN" always; add_header X-Content-Type-Options "nosniff" always; add_header X-XSS-Protection "1; mode=block" always; gzip on; gzip_vary on; gzip_types text/plain text/css application/json application/javascript text/xml application/xml text/javascript; location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ { expires 1y; add_header Cache-Control "public, immutable"; } location / { try_files $uri $uri/ /index.html; } location /health { access_log off; return 200 "healthy\\n"; add_header Content-Type text/plain; } }' > /etc/nginx/conf.d/default.conf
     RUN rm -f /etc/nginx/conf.d/default.conf.default
-    RUN printf '#!/bin/sh\nset -e\nif [ ! -f /.env.mappings ] || [ ! -s /.env.mappings ]; then\n  exit 0\nfi\nsed_script="/tmp/replace.sed"\n> "$sed_script"\nwhile IFS='\''='\'' read -r key placeholder; do\n  value=$(printenv "$key" || echo "")\n  if [ -n "$value" ]; then\n    escaped=$(printf '\''%%s\\n'\'' "$value" | sed '\''s/[&/\\]/\\\\&/g'\'')\n    echo "s|$placeholder|$escaped|g" >> "$sed_script"\n  fi\ndone < /.env.mappings\nif [ -s "$sed_script" ]; then\n  find /usr/share/nginx/html -type f -name "*.js" -exec sed -i -f "$sed_script" {} +\nfi\nrm -f "$sed_script"\n' > /docker-entrypoint.d/40-inject-env.sh
-    RUN chmod +x /docker-entrypoint.d/40-inject-env.sh
     CMD ["nginx", "-g", "daemon off;"]
 {{- else if .build.nextjs }}
     FROM node:{{ .build.nextjs.nodeVersion | default "20" }}-alpine AS build
     RUN corepack enable
-    RUN apk add --no-cache coreutils
     WORKDIR /app
     COPY ./ .
-    RUN (find . -maxdepth 2 -name ".env*" -type f -exec grep -oE '^[A-Z_][A-Z0-9_]*=' {} + 2>/dev/null | sed 's/=$//' && \
-      find . -type f \( -name "*.js" -o -name "*.jsx" -o -name "*.ts" -o -name "*.tsx" \) \
-      ! -path "*/node_modules/*" ! -path "*/.git/*" ! -path "*/build/*" ! -path "*/dist/*" \
-      ! -path "*/.yarn/*" ! -path "*/.next/*" ! -path "*/.cache/*" ! -path "*/.turbo/*" \
-      ! -path "*/coverage/*" ! -path "*/out/*" \
-      -exec grep -ohE 'process\.env\.[A-Z_][A-Z0-9_]*|import\.meta\.env\.[A-Z_][A-Z0-9_]*' {} + 2>/dev/null | \
-      sed -e 's/process\.env\.//' -e 's/import\.meta\.env\.//') | sort -u | \
-      grep -vE '^(NODE_ENV|PUBLIC_URL|PATH|HOME|USER|SHELL|TERM|LANG|LC_ALL|PWD|OLDPWD|TMPDIR|MODE|DEV|PROD|SSR|BASE_URL|NEXT_PUBLIC_)' | \
-      while read var; do \
-        uuid=$(echo -n "$var" | md5sum | cut -d' ' -f1); \
-        echo "$var=__ENV_NOT_SET__${var}__${uuid}__"; \
-      done > /tmp/.env.mappings && \
-      echo "Found env vars: $(cat /tmp/.env.mappings | cut -d'=' -f1 | tr '\n' ' ')"
-    RUN {{ template "ci.jsPackageManagerMountFlag" .build.nextjs.buildCommand }} export $(cat /tmp/.env.mappings | xargs) && {{ .build.nextjs.buildCommand }}
+    RUN --mount=type=secret,id=vault_env {{ template "ci.jsPackageManagerMountFlag" .build.nextjs.buildCommand }} \
+      if [ -f /run/secrets/vault_env ]; then set -a; . /run/secrets/vault_env; set +a; fi && \
+      {{ .build.nextjs.buildCommand }}
     FROM node:{{ .build.nextjs.nodeVersion | default "20" }}-alpine
     RUN apk add --no-cache dumb-init tzdata && addgroup -g 1001 appgroup && adduser -u 1001 -G appgroup -s /bin/sh -D appuser
     WORKDIR /app
-    COPY --from=build --chown=appuser:appgroup /tmp/.env.mappings /.env.mappings
     COPY --from=build --chown=appuser:appgroup /app/.next ./.next
     COPY --from=build --chown=appuser:appgroup /app/public ./public 2>/dev/null || true
     COPY --from=build --chown=appuser:appgroup /app/package.json ./package.json
     COPY --from=build --chown=appuser:appgroup /app/node_modules ./node_modules 2>/dev/null || true
-    RUN printf '#!/bin/sh\nset -e\nif [ ! -f /.env.mappings ] || [ ! -s /.env.mappings ]; then\n  exec "$@"\nfi\nsed_script="/tmp/replace.sed"\n> "$sed_script"\nwhile IFS='\''='\'' read -r key placeholder; do\n  value=$(printenv "$key" || echo "")\n  if [ -n "$value" ]; then\n    escaped=$(printf '\''%%s\\n'\'' "$value" | sed '\''s/[&/\\]/\\\\&/g'\'')\n    echo "s|$placeholder|$escaped|g" >> "$sed_script"\n  fi\ndone < /.env.mappings\nif [ -s "$sed_script" ]; then\n  find /app/.next -type f -name "*.js" -exec sed -i -f "$sed_script" {} +\nfi\nrm -f "$sed_script"\nexec "$@"\n' > /entrypoint.sh && chmod +x /entrypoint.sh
     USER appuser
-    ENTRYPOINT ["/entrypoint.sh", "dumb-init", "--"]
+    ENTRYPOINT ["dumb-init", "--"]
     {{- $startCmd := (splitList " " (.build.nextjs.startCommand | default "npm start")) }}
     CMD [{{- range $i, $cmd := $startCmd }}{{if $i}}, {{end}}"{{ $cmd }}"{{- end }}]
 {{- else if index .build "nextjs-export" }}
     FROM node:{{ index .build "nextjs-export" "nodeVersion" | default "20" }}-alpine AS build
     RUN corepack enable
-    RUN apk add --no-cache coreutils
     WORKDIR /app
     COPY ./ .
-    RUN (find . -maxdepth 2 -name ".env*" -type f -exec grep -oE '^[A-Z_][A-Z0-9_]*=' {} + 2>/dev/null | sed 's/=$//' && \
-      find . -type f \( -name "*.js" -o -name "*.jsx" -o -name "*.ts" -o -name "*.tsx" \) \
-      ! -path "*/node_modules/*" ! -path "*/.git/*" ! -path "*/build/*" ! -path "*/dist/*" \
-      ! -path "*/.yarn/*" ! -path "*/.next/*" ! -path "*/.cache/*" ! -path "*/.turbo/*" \
-      ! -path "*/coverage/*" ! -path "*/out/*" \
-      -exec grep -ohE 'process\.env\.[A-Z_][A-Z0-9_]*|import\.meta\.env\.[A-Z_][A-Z0-9_]*' {} + 2>/dev/null | \
-      sed -e 's/process\.env\.//' -e 's/import\.meta\.env\.//') | sort -u | \
-      grep -vE '^(NODE_ENV|PUBLIC_URL|PATH|HOME|USER|SHELL|TERM|LANG|LC_ALL|PWD|OLDPWD|TMPDIR|MODE|DEV|PROD|SSR|BASE_URL|NEXT_PUBLIC_)' | \
-      while read var; do \
-        uuid=$(echo -n "$var" | md5sum | cut -d' ' -f1); \
-        echo "$var=__ENV_NOT_SET__${var}__${uuid}__"; \
-      done > /tmp/.env.mappings && \
-      echo "Found env vars: $(cat /tmp/.env.mappings | cut -d'=' -f1 | tr '\n' ' ')"
-    RUN {{ template "ci.jsPackageManagerMountFlag" (index .build "nextjs-export" "buildCommand") }} export $(cat /tmp/.env.mappings | xargs) && {{ index .build "nextjs-export" "buildCommand" }}
+    RUN --mount=type=secret,id=vault_env {{ template "ci.jsPackageManagerMountFlag" (index .build "nextjs-export" "buildCommand") }} \
+      if [ -f /run/secrets/vault_env ]; then set -a; . /run/secrets/vault_env; set +a; fi && \
+      {{ index .build "nextjs-export" "buildCommand" }}
     FROM nginx:alpine
     RUN apk add --no-cache tzdata wget && addgroup -g 101 nginx-group || true && adduser -u 101 -G nginx-group -s /bin/sh -D nginx-user || true
     COPY --from=build /app{{ index .build "nextjs-export" "distPath" | default "/out" }} /usr/share/nginx/html
-    COPY --from=build /tmp/.env.mappings /.env.mappings
     RUN echo 'server { listen 8080; server_name _; root /usr/share/nginx/html; index index.html; add_header X-Frame-Options "SAMEORIGIN" always; add_header X-Content-Type-Options "nosniff" always; add_header X-XSS-Protection "1; mode=block" always; gzip on; gzip_vary on; gzip_types text/plain text/css application/json application/javascript text/xml application/xml text/javascript; location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ { expires 1y; add_header Cache-Control "public, immutable"; } location / { try_files $uri $uri/ /index.html; } location /health { access_log off; return 200 "healthy\\n"; add_header Content-Type text/plain; } }' > /etc/nginx/conf.d/default.conf
     RUN rm -f /etc/nginx/conf.d/default.conf.default
-    RUN printf '#!/bin/sh\nset -e\nif [ ! -f /.env.mappings ] || [ ! -s /.env.mappings ]; then\n  exit 0\nfi\nsed_script="/tmp/replace.sed"\n> "$sed_script"\nwhile IFS='\''='\'' read -r key placeholder; do\n  value=$(printenv "$key" || echo "")\n  if [ -n "$value" ]; then\n    escaped=$(printf '\''%%s\\n'\'' "$value" | sed '\''s/[&/\\]/\\\\&/g'\'')\n    echo "s|$placeholder|$escaped|g" >> "$sed_script"\n  fi\ndone < /.env.mappings\nif [ -s "$sed_script" ]; then\n  find /usr/share/nginx/html -type f -name "*.js" -exec sed -i -f "$sed_script" {} +\nfi\nrm -f "$sed_script"\n' > /docker-entrypoint.d/40-inject-env.sh
-    RUN chmod +x /docker-entrypoint.d/40-inject-env.sh
     CMD ["nginx", "-g", "daemon off;"]
 {{- else if .build.go }}
     FROM golang:{{ .build.go.goVersion }}-alpine AS build
@@ -285,6 +211,17 @@ data:
     # Custom Dockerfile build
     # Using Dockerfile: {{ .build.docker.dockerfilePath | default "./Dockerfile" }}
     # Build context: {{ .build.docker.contextPath | default "." }}
+    #
+    # [Env injection] CI automatically passes Vault KV secrets as --secret id=vault_env.
+    # Only needed if your build process requires env vars at build time (e.g. frontend frameworks).
+    # Runtime env vars are injected separately via Vault — no action needed for server-side apps.
+    # To use them at build time, add to your Dockerfile:
+    #
+    #   RUN --mount=type=secret,id=vault_env \
+    #     if [ -f /run/secrets/vault_env ]; then set -a; . /run/secrets/vault_env; set +a; fi && \
+    #     <your build command>
+    #
+    # /run/secrets/vault_env contains KEY=VALUE pairs and leaves no trace in image history.
 {{- else }}
     FROM alpine:latest
     RUN apk add --no-cache ca-certificates tzdata && addgroup -g 1001 appgroup && adduser -u 1001 -G appgroup -s /bin/sh -D appuser
