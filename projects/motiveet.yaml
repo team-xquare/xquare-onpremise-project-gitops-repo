@@ -1,32 +1,33 @@
 owners:
-    - 163987011
+  - 163987011
 applications:
-    - name: fe
-      github:
-        owner: team-gozip
-        repo: motiveet_FE
-        branch: main
-        installationId: "116709801"
-        hash: dd86364cd0c4898bae53244bad312976ae0d60c1
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 3000
-          routes:
-            - motiveet.dsmhs.kr
-    - name: be
-      github:
-        owner: team-gozip
-        repo: motiveet-be
-        branch: main
-        installationId: "116709801"
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 8000
-          routes:
-            - motiveet-api.dsmhs.kr
+  - name: fe
+    github:
+      owner: team-gozip
+      repo: motiveet_FE
+      branch: main
+      installationId: "116709801"
+      hash: dd86364cd0c4898bae53244bad312976ae0d60c1
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 3000
+        routes:
+          - motiveet.dsmhs.kr
+  - name: be
+    github:
+      owner: team-gozip
+      repo: motiveet-be
+      branch: main
+      installationId: "116709801"
+      hash: ed3e55801c8fdd0fe01b7a763e33331072c12592
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 8000
+        routes:
+          - motiveet-api.dsmhs.kr
