@@ -11,7 +11,7 @@ applications:
           - dsg-api.dsmhs.kr
     github:
       branch: main
-      hash: 8f69134437b69617615b7e12154ce9084948a79d
+      hash: eb2a13bad9ac12e0323ec43d219e0810dc9ee613
       installationId: "113636619"
       owner: 2026DSG
       repo: DSG_Backend
