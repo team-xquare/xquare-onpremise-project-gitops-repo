@@ -16,3 +16,15 @@ applications:
         - port: 3000
           routes:
             - motiveet.dsmhs.kr
+    - name: be
+      github:
+        owner: team-gozip
+        repo: motiveet-be
+        branch: main
+        installationId: "116709801"
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 8000
