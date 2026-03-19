@@ -213,6 +213,8 @@ data:
     # Build context: {{ .build.docker.contextPath | default "." }}
     #
     # [Env injection] CI automatically passes Vault KV secrets as --secret id=vault_env.
+    # Only needed if your build process requires env vars at build time (e.g. frontend frameworks).
+    # Runtime env vars are injected separately via Vault — no action needed for server-side apps.
     # To use them at build time, add to your Dockerfile:
     #
     #   RUN --mount=type=secret,id=vault_env \
