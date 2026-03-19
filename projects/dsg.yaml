@@ -33,6 +33,8 @@ applications:
       installationId: "113636619"
       owner: 2026DSG
       repo: DSG_Frontend
+      triggerPaths:
+        - ""
 addons:
   - name: dsg-mysql
     storage: 5Gi
