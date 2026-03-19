@@ -105,12 +105,21 @@ spec:
           DOCKERFILE_ARG="-f -"
           {{- end }}
 
+          # Fetch Vault env vars from K8s Secret (synced by VaultStaticSecret operator)
+          SA_TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
+          curl -sk \
+            -H "Authorization: Bearer ${SA_TOKEN}" \
+            "https://kubernetes.default.svc/api/v1/namespaces/{{ include "project.namespace" $ }}/secrets/{{ $.Values.project }}-{{ include "app.serviceName" . }}" \
+            | jq -r '.data // {} | to_entries[] | select(.key | test("^(_raw|_init)$") | not) | "\(.key)=\(.value | @base64d)"' \
+            > /tmp/vault.env 2>/dev/null || touch /tmp/vault.env
+
           docker buildx create --name builder --driver remote tcp://buildkit.buildkit.svc.cluster.local:1234 --use
 
           BUILD_SUCCESS=0
           {{- if .build.docker }}
           GIT_AUTH_TOKEN="${GITHUB_TOKEN}" docker buildx build ${DOCKERFILE_ARG} \
             --secret id=GIT_AUTH_TOKEN \
+            --secret id=vault_env,src=/tmp/vault.env \
             -t "${IMAGE}:latest" -t "${IMAGE}:${GIT_SHA}" \
             --platform linux/amd64 --progress plain --provenance false --sbom false \
             --output type=image,compression=zstd,compression-level=3,oci-mediatypes=true,push=true \
@@ -118,6 +127,7 @@ spec:
           {{- else }}
           GIT_AUTH_TOKEN="${GITHUB_TOKEN}" docker buildx build ${DOCKERFILE_ARG} \
             --secret id=GIT_AUTH_TOKEN \
+            --secret id=vault_env,src=/tmp/vault.env \
             -t "${IMAGE}:latest" -t "${IMAGE}:${GIT_SHA}" \
             --platform linux/amd64 --progress plain --provenance false --sbom false \
             --output type=image,compression=zstd,compression-level=3,oci-mediatypes=true,push=true \
