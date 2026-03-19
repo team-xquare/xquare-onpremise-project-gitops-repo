@@ -212,14 +212,14 @@ data:
     # Using Dockerfile: {{ .build.docker.dockerfilePath | default "./Dockerfile" }}
     # Build context: {{ .build.docker.contextPath | default "." }}
     #
-    # [환경변수 주입] CI가 Vault KV를 --secret id=vault_env 로 자동 전달합니다.
-    # Dockerfile에서 다음과 같이 사용하세요:
+    # [Env injection] CI automatically passes Vault KV secrets as --secret id=vault_env.
+    # To use them at build time, add to your Dockerfile:
     #
     #   RUN --mount=type=secret,id=vault_env \
     #     if [ -f /run/secrets/vault_env ]; then set -a; . /run/secrets/vault_env; set +a; fi && \
     #     <your build command>
     #
-    # /run/secrets/vault_env 내용: KEY=VALUE 형식, 이미지 히스토리에 남지 않음
+    # /run/secrets/vault_env contains KEY=VALUE pairs and leaves no trace in image history.
 {{- else }}
     FROM alpine:latest
     RUN apk add --no-cache ca-certificates tzdata && addgroup -g 1001 appgroup && adduser -u 1001 -G appgroup -s /bin/sh -D appuser
