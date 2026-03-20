@@ -22,7 +22,7 @@ applications:
       repo: web
       branch: main
       installationId: "116999868"
-      hash: 7e9e49362cc130802db8706b3efc889a32cdc90e
+      hash: e14decfa46177a5496b85231cba0d82e3e6b158a
     build:
       docker:
         dockerfilePath: ./Dockerfile
