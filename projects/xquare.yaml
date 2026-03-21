@@ -85,7 +85,7 @@ applications:
       repo: xquare-server
       branch: main
       installationId: "62433388"
-      hash: 6089d74ae0da58c59eda599dccef74da696dea42
+      hash: 330cb7d32a9350d71f0f54ae2be7f07edbc302c3
     build:
       docker:
         dockerfilePath: ./Dockerfile
