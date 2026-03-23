@@ -104,8 +104,3 @@ addons:
     - name: xquare-infra-mysql-stag
       type: mysql
       storage: 1Gi
-    - name: test-s3-nonexistent
-      type: seaweedfs
-      storage: 1Gi
-      buckets:
-        - name: uploads
