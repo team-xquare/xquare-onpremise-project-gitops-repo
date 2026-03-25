@@ -1,0 +1,5 @@
+applications: []
+addons:
+  - name: sqlserver
+    storage: 20Gi
+    type: postgresql
