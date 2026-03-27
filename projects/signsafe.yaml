@@ -8,3 +8,6 @@ addons:
     - name: signsafe-cache
       type: redis
       storage: 500Mi
+    - name: signsafe-queue
+      type: rabbitmq
+      storage: 1Gi
