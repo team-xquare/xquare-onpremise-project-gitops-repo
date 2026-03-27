@@ -1,62 +1,63 @@
 owners:
-    - 115498126
-    - 163987011
-    - 98837006
+  - 115498126
+  - 163987011
+  - 98837006
 applications:
-    - name: signsafe-api
-      github:
-        owner: signsafe-io
-        repo: signsafe-api
-        branch: main
-        installationId: "119373383"
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 8080
-          routes:
-            - api.signsafe.io
-    - name: signsafe-ai
-      github:
-        owner: signsafe-io
-        repo: signsafe-ai
-        branch: main
-        installationId: "119373383"
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-    - name: signsafe-web
-      github:
-        owner: signsafe-io
-        repo: signsafe-web
-        branch: main
-        installationId: "119373383"
-      build:
-        nextjs:
-            nodeVersion: ""
-            buildCommand: ""
-            startCommand: ""
-      endpoints:
-        - port: 3000
-          routes:
-            - app.signsafe.io
+  - name: signsafe-api
+    github:
+      owner: signsafe-io
+      repo: signsafe-api
+      branch: main
+      installationId: "119373383"
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 8080
+        routes:
+          - api.signsafe.io
+  - name: signsafe-ai
+    github:
+      owner: signsafe-io
+      repo: signsafe-ai
+      branch: main
+      installationId: "119373383"
+      hash: a3a316973bef22b43712cdd1aa30b691eda0ffe5
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+  - name: signsafe-web
+    github:
+      owner: signsafe-io
+      repo: signsafe-web
+      branch: main
+      installationId: "119373383"
+    build:
+      nextjs:
+        nodeVersion: ""
+        buildCommand: ""
+        startCommand: ""
+    endpoints:
+      - port: 3000
+        routes:
+          - app.signsafe.io
 addons:
-    - name: signsafe-db
-      type: postgresql
-      storage: 2Gi
-    - name: signsafe-cache
-      type: redis
-      storage: 500Mi
-    - name: signsafe-queue
-      type: rabbitmq
-      storage: 1Gi
-    - name: signsafe-vector
-      type: qdrant
-      storage: 2Gi
-    - name: signsafe-store
-      type: seaweedfs
-      storage: 3Gi
-      buckets:
-        - name: contracts
+  - name: signsafe-db
+    type: postgresql
+    storage: 2Gi
+  - name: signsafe-cache
+    type: redis
+    storage: 500Mi
+  - name: signsafe-queue
+    type: rabbitmq
+    storage: 1Gi
+  - name: signsafe-vector
+    type: qdrant
+    storage: 2Gi
+  - name: signsafe-store
+    type: seaweedfs
+    storage: 3Gi
+    buckets:
+      - name: contracts
