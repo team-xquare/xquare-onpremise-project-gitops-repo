@@ -1,6 +1,21 @@
 owners:
     - 115498126
-applications: []
+applications:
+    - name: signsafe-api
+      github:
+        owner: signsafe-io
+        repo: signsafe-api
+        branch: main
+        installationId: "119373383"
+      build:
+        go:
+            goVersion: "1.23"
+            buildCommand: go build -o app ./cmd/server
+            binaryName: app
+      endpoints:
+        - port: 8080
+          routes:
+            - api.signsafe.io
 addons:
     - name: signsafe-db
       type: postgresql
