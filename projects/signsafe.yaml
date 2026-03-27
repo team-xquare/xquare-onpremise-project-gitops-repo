@@ -43,7 +43,7 @@ applications:
       endpoints:
         - port: 3000
           routes:
-            - app.signsafe.io
+            - signsafe-web.dsmhs.kr
 addons:
     - name: signsafe-db
       type: postgresql
