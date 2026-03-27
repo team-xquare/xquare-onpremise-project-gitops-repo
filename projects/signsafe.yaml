@@ -24,7 +24,7 @@ applications:
       repo: signsafe-ai
       branch: main
       installationId: "119373383"
-      hash: 6295f2f33edc0813ab4adbddb164d4b9fb412433
+      hash: 764071d5f9e897b176e6d9a6b8e38650fa60d729
     build:
       docker:
         dockerfilePath: ./Dockerfile
