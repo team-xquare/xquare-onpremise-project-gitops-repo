@@ -1,6 +1,7 @@
 owners:
     - 115498126
     - 163987011
+    - 98837006
 applications:
     - name: signsafe-api
       github:
