@@ -9,7 +9,7 @@ applications:
       repo: signsafe-api
       branch: main
       installationId: "119373383"
-      hash: 2cab5b4e9b6fe543696404711b2cd97cfb808feb
+      hash: 970065ac49f8f2e79de7d5d1f51ee7e9761aa913
     build:
       docker:
         dockerfilePath: ./Dockerfile
