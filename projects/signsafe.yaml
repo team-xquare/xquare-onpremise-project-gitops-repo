@@ -5,3 +5,6 @@ addons:
     - name: signsafe-db
       type: postgresql
       storage: 2Gi
+    - name: signsafe-cache
+      type: redis
+      storage: 500Mi
