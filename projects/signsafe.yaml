@@ -18,6 +18,16 @@ applications:
         - port: 8080
           routes:
             - api.signsafe.io
+    - name: signsafe-ai
+      github:
+        owner: signsafe-io
+        repo: signsafe-ai
+        branch: main
+        installationId: "119373383"
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
 addons:
     - name: signsafe-db
       type: postgresql
