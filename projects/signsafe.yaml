@@ -11,3 +11,6 @@ addons:
     - name: signsafe-queue
       type: rabbitmq
       storage: 1Gi
+    - name: signsafe-vector
+      type: qdrant
+      storage: 2Gi
