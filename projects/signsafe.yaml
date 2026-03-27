@@ -1,3 +1,7 @@
 owners:
     - 115498126
 applications: []
+addons:
+    - name: signsafe-db
+      type: postgresql
+      storage: 2Gi
