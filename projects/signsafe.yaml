@@ -28,6 +28,21 @@ applications:
         docker:
             dockerfilePath: ./Dockerfile
             contextPath: .
+    - name: signsafe-web
+      github:
+        owner: signsafe-io
+        repo: signsafe-web
+        branch: main
+        installationId: "119373383"
+      build:
+        nextjs:
+            nodeVersion: ""
+            buildCommand: ""
+            startCommand: ""
+      endpoints:
+        - port: 3000
+          routes:
+            - app.signsafe.io
 addons:
     - name: signsafe-db
       type: postgresql
