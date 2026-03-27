@@ -11,7 +11,7 @@ applications:
         installationId: "119373383"
       build:
         go:
-            goVersion: "1.24"
+            goVersion: "1.23"
             buildCommand: go build -o app ./cmd/server
             binaryName: app
       endpoints:
