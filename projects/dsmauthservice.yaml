@@ -222,6 +222,21 @@ applications:
             buildCommand: ./gradlew bootJar -x test
       endpoints:
         - port: 8080
+    - name: daedong-api-stag
+      github:
+        owner: Team-jeong-ho-kim
+        repo: Daedongyeojido_BE_v4.0
+        branch: main
+        installationId: "63841363"
+      build:
+        gradle:
+            javaVersion: "17"
+            jarOutputPath: /build/libs/*.jar
+            buildCommand: ./gradlew bootJar -x test
+      endpoints:
+        - port: 8080
+          routes:
+            - daedong-api-stag.dsmhs.kr
 addons:
     - name: dsmauthservice-dsm-login-prod-mysql
       type: mysql
