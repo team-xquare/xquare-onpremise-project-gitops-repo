@@ -69,10 +69,9 @@ applications:
             - package.json
             - turbo.json
       build:
-        nodejs:
-            nodeVersion: "20"
-            buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter admin build
-            startCommand: node apps/admin/node_modules/next/dist/bin/next start apps/admin -p 3002
+        docker:
+            dockerfilePath: apps/admin/Dockerfile
+            contextPath: .
       endpoints:
         - port: 3002
     - name: daedong-student-stag
