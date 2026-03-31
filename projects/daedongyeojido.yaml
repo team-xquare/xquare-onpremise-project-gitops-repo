@@ -111,7 +111,7 @@ applications:
       endpoints:
         - port: 3002
           routes:
-            - daedong-admin-prod-mig.dsmhs.kr
+            - daedong-admin-prod.dsmhs.kr
     - name: daedong-admin-stag
       github:
         owner: Team-jeong-ho-kim
