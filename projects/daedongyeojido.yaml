@@ -44,6 +44,8 @@ applications:
             contextPath: .
       endpoints:
         - port: 3000
+          routes:
+            - daedong-web-stag.dsmhs.kr
     - name: daedong-student-stag
       github:
         owner: Team-jeong-ho-kim
