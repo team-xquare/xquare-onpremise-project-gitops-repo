@@ -184,6 +184,8 @@ applications:
             startCommand: node apps/web/node_modules/next/dist/bin/next start -p 3000
       endpoints:
         - port: 3000
+          routes:
+            - daedong-web-prod.dsmhs.kr
     - name: daedong-student-prod
       github:
         owner: Team-jeong-ho-kim
