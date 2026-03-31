@@ -5,3 +5,6 @@ addons:
     - name: daedongyeojido-mysql
       type: mysql
       storage: 1Gi
+    - name: daedongyeojido-redis
+      type: redis
+      storage: 500Mi
