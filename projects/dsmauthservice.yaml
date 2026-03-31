@@ -205,6 +205,8 @@ applications:
             startCommand: node apps/student/node_modules/next/dist/bin/next start -p 3001
       endpoints:
         - port: 3001
+          routes:
+            - daedong-student-prod.dsmhs.kr
 addons:
     - name: dsmauthservice-dsm-login-prod-mysql
       type: mysql
