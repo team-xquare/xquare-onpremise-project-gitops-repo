@@ -119,8 +119,6 @@ applications:
             contextPath: .
       endpoints:
         - port: 3000
-          routes:
-            - daedong-web-stag.dsmhs.kr
     - name: daedong-admin-prod
       github:
         owner: Team-jeong-ho-kim
