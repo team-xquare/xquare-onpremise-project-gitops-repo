@@ -222,8 +222,6 @@ applications:
             buildCommand: ./gradlew bootJar -x test
       endpoints:
         - port: 8080
-          routes:
-            - daedong-api-stag.dsmhs.kr
 addons:
     - name: daedongyeojido-mysql
       type: mysql
