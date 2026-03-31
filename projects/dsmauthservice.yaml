@@ -108,7 +108,7 @@ applications:
         nodejs:
             nodeVersion: "20"
             buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter web build
-            startCommand: pnpm --filter web start
+            startCommand: node apps/web/node_modules/next/dist/bin/next start -p 3000
       endpoints:
         - port: 3000
     - name: daedong-admin-prod
