@@ -58,6 +58,25 @@ applications:
             contextPath: .
       endpoints:
         - port: 3001
+    - name: daedong-student-prod
+      github:
+        owner: Team-jeong-ho-kim
+        repo: Daedongyeojido_FE_v4.0
+        branch: main
+        installationId: "63841363"
+        triggerPaths:
+            - apps/student/**
+            - packages/**
+            - pnpm-lock.yaml
+            - pnpm-workspace.yaml
+            - package.json
+            - turbo.json
+      build:
+        docker:
+            dockerfilePath: apps/student/Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 3001
 addons:
     - name: daedongyeojido-mysql
       type: mysql
