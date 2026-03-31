@@ -1,3 +1,7 @@
 owners:
     - 163130634
 applications: []
+addons:
+    - name: daedongyeojido-mysql
+      type: mysql
+      storage: 1Gi
