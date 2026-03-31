@@ -62,6 +62,8 @@ applications:
             contextPath: .
       endpoints:
         - port: 3001
+          routes:
+            - daedong-student-stag-mig.dsmhs.kr
     - name: daedong-student-prod
       github:
         owner: Team-jeong-ho-kim
