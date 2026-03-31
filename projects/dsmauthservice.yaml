@@ -90,10 +90,9 @@ applications:
             - package.json
             - turbo.json
       build:
-        nodejs:
-            nodeVersion: "20"
-            buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter student build
-            startCommand: node apps/student/node_modules/next/dist/bin/next start apps/student -p 3001
+        docker:
+            dockerfilePath: apps/student/Dockerfile
+            contextPath: .
       endpoints:
         - port: 3001
     - name: daedong-web-stag
