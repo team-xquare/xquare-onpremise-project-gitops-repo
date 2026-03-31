@@ -93,7 +93,7 @@ applications:
         nodejs:
             nodeVersion: "20"
             buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter student build
-            startCommand: node apps/student/node_modules/next/dist/bin/next start -p 3001
+            startCommand: node apps/student/node_modules/next/dist/bin/next start apps/student -p 3001
       endpoints:
         - port: 3001
     - name: daedong-web-stag
