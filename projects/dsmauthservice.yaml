@@ -158,7 +158,7 @@ applications:
         nodejs:
             nodeVersion: "20"
             buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter teacher build
-            startCommand: node apps/teacher/node_modules/next/dist/bin/next start -p 3003
+            startCommand: node apps/teacher/node_modules/next/dist/bin/next start apps/teacher -p 3003
       endpoints:
         - port: 3003
           routes:
