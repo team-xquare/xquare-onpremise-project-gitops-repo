@@ -72,7 +72,7 @@ applications:
         nodejs:
             nodeVersion: "20"
             buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter admin build
-            startCommand: node apps/admin/node_modules/next/dist/bin/next start -p 3002
+            startCommand: node apps/admin/node_modules/next/dist/bin/next start apps/admin -p 3002
       endpoints:
         - port: 3002
     - name: daedong-student-stag
