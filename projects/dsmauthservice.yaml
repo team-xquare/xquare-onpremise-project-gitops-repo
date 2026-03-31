@@ -91,6 +91,26 @@ applications:
             startCommand: pnpm --filter student start
       endpoints:
         - port: 3001
+    - name: daedong-web-stag
+      github:
+        owner: Team-jeong-ho-kim
+        repo: Daedongyeojido_FE_v4.0
+        branch: main
+        installationId: "63841363"
+        triggerPaths:
+            - apps/web/**
+            - packages/**
+            - pnpm-lock.yaml
+            - pnpm-workspace.yaml
+            - package.json
+            - turbo.json
+      build:
+        nodejs:
+            nodeVersion: "20"
+            buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter web build
+            startCommand: pnpm --filter web start
+      endpoints:
+        - port: 3000
 addons:
     - name: dsmauthservice-dsm-login-prod-mysql
       type: mysql
