@@ -75,6 +75,7 @@ applications:
         - pnpm-workspace.yaml
         - package.json
         - turbo.json
+      hash: 5a8a98d05d0200806dbc9e9ea57c6ca5989cc8b4
     build:
       docker:
         dockerfilePath: apps/student/Dockerfile
