@@ -199,6 +199,8 @@ applications:
             buildCommand: ./gradlew bootJar -x test
       endpoints:
         - port: 8080
+          routes:
+            - daedong-api-prod.dsmhs.kr
     - name: daedong-api-stag
       github:
         owner: Team-jeong-ho-kim
