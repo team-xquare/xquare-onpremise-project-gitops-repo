@@ -1,6 +1,25 @@
 owners:
     - 163130634
-applications: []
+applications:
+    - name: daedong-web-prod
+      github:
+        owner: Team-jeong-ho-kim
+        repo: Daedongyeojido_FE_v4.0
+        branch: main
+        installationId: "63841363"
+        triggerPaths:
+            - apps/web/**
+            - packages/**
+            - pnpm-lock.yaml
+            - pnpm-workspace.yaml
+            - package.json
+            - turbo.json
+      build:
+        docker:
+            dockerfilePath: apps/web/Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 3000
 addons:
     - name: daedongyeojido-mysql
       type: mysql
