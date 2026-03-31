@@ -161,6 +161,8 @@ applications:
             startCommand: node apps/teacher/node_modules/next/dist/bin/next start -p 3003
       endpoints:
         - port: 3003
+          routes:
+            - daedong-teacher-prod.dsmhs.kr
     - name: daedong-web-prod
       github:
         owner: Team-jeong-ho-kim
