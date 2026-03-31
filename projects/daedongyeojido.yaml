@@ -89,7 +89,7 @@ applications:
       endpoints:
         - port: 3001
           routes:
-            - daedong-student-prod-mig.dsmhs.kr
+            - daedong-student-prod.dsmhs.kr
     - name: daedong-admin-prod
       github:
         owner: Team-jeong-ho-kim
