@@ -150,6 +150,8 @@ applications:
             contextPath: .
       endpoints:
         - port: 3003
+          routes:
+            - daedong-teacher-stag-mig.dsmhs.kr
     - name: daedong-teacher-prod
       github:
         owner: Team-jeong-ho-kim
