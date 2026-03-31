@@ -1,37 +1,40 @@
 owners:
-  - 163130634
+    - 163130634
 applications:
-  - name: dsm-login-prod
-    github:
-      owner: DAS-DsmAuthService
-      repo: Dsm-login-server
-      branch: main
-      installationId: "80380806"
-      hash: 9017ff37bf2421f0c8dfbf95ab45ce6a5d38bfcb
-    build:
-      gradle:
-        javaVersion: "17"
-        jarOutputPath: /build/libs/*.jar
-        buildCommand: ./gradlew bootJar -x test
-    endpoints:
-      - port: 8080
-        routes:
-          - dsm-login.dsmhs.kr
-  - name: daedongyeojido-be
-    github:
-      owner: Team-jeong-ho-kim
-      repo: Daedongyeojido_BE_v4.0
-      branch: main
-      installationId: "63841363"
-      hash: 5af9e4429e9536f23e34551541fa9f1f3fb9044a
-    build:
-      gradle:
-        javaVersion: "17"
-        jarOutputPath: /build/libs/*.jar
-        buildCommand: ./gradlew bootJar -x test
-    endpoints:
-      - port: 8080
+    - name: dsm-login-prod
+      github:
+        owner: DAS-DsmAuthService
+        repo: Dsm-login-server
+        branch: main
+        installationId: "80380806"
+        hash: 9017ff37bf2421f0c8dfbf95ab45ce6a5d38bfcb
+      build:
+        gradle:
+            javaVersion: "17"
+            jarOutputPath: /build/libs/*.jar
+            buildCommand: ./gradlew bootJar -x test
+      endpoints:
+        - port: 8080
+          routes:
+            - dsm-login.dsmhs.kr
+    - name: daedongyeojido-be
+      github:
+        owner: Team-jeong-ho-kim
+        repo: Daedongyeojido_BE_v4.0
+        branch: main
+        installationId: "63841363"
+        hash: 5af9e4429e9536f23e34551541fa9f1f3fb9044a
+      build:
+        gradle:
+            javaVersion: "17"
+            jarOutputPath: /build/libs/*.jar
+            buildCommand: ./gradlew bootJar -x test
+      endpoints:
+        - port: 8080
 addons:
-  - name: dsmauthservice-dsm-login-prod-mysql
-    type: mysql
-    storage: 1Gi
+    - name: dsmauthservice-dsm-login-prod-mysql
+      type: mysql
+      storage: 1Gi
+    - name: daedongyeojido-redis
+      type: redis
+      storage: 500Mi
