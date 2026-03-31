@@ -153,6 +153,26 @@ applications:
             contextPath: .
       endpoints:
         - port: 3003
+    - name: daedong-api-prod
+      github:
+        owner: Team-jeong-ho-kim
+        repo: Daedongyeojido_BE_v4.0
+        branch: main
+        installationId: "63841363"
+        triggerPaths:
+            - src/**
+            - build.gradle
+            - settings.gradle
+            - gradle/**
+            - gradlew
+            - gradlew.bat
+      build:
+        gradle:
+            javaVersion: "17"
+            jarOutputPath: /build/libs/*.jar
+            buildCommand: ./gradlew bootJar -x test
+      endpoints:
+        - port: 8080
 addons:
     - name: daedongyeojido-mysql
       type: mysql
