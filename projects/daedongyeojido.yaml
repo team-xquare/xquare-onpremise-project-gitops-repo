@@ -96,6 +96,25 @@ applications:
             contextPath: .
       endpoints:
         - port: 3002
+    - name: daedong-admin-stag
+      github:
+        owner: Team-jeong-ho-kim
+        repo: Daedongyeojido_FE_v4.0
+        branch: main
+        installationId: "63841363"
+        triggerPaths:
+            - apps/admin/**
+            - packages/**
+            - pnpm-lock.yaml
+            - pnpm-workspace.yaml
+            - package.json
+            - turbo.json
+      build:
+        docker:
+            dockerfilePath: apps/admin/Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 3002
 addons:
     - name: daedongyeojido-mysql
       type: mysql
