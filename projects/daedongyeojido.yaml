@@ -133,7 +133,7 @@ applications:
       endpoints:
         - port: 3002
           routes:
-            - daedong-admin-stag-mig.dsmhs.kr
+            - daedong-admin-stag.dsmhs.kr
     - name: daedong-teacher-stag
       github:
         owner: Team-jeong-ho-kim
