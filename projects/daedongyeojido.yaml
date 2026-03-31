@@ -170,6 +170,8 @@ applications:
             contextPath: .
       endpoints:
         - port: 3003
+          routes:
+            - daedong-teacher-prod-mig.dsmhs.kr
     - name: daedong-api-prod
       github:
         owner: Team-jeong-ho-kim
