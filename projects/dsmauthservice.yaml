@@ -1,221 +1,221 @@
 owners:
-    - 163130634
+  - 163130634
 applications:
-    - name: dsm-login-prod
-      github:
-        owner: DAS-DsmAuthService
-        repo: Dsm-login-server
-        branch: main
-        installationId: "80380806"
-        hash: 9017ff37bf2421f0c8dfbf95ab45ce6a5d38bfcb
-      build:
-        gradle:
-            javaVersion: "17"
-            jarOutputPath: /build/libs/*.jar
-            buildCommand: ./gradlew bootJar -x test
-      endpoints:
-        - port: 8080
-          routes:
-            - dsm-login.dsmhs.kr
-    - name: daedongyeojido-be
-      github:
-        owner: Team-jeong-ho-kim
-        repo: Daedongyeojido_BE_v4.0
-        branch: main
-        installationId: "63841363"
-        hash: 5af9e4429e9536f23e34551541fa9f1f3fb9044a
-      build:
-        gradle:
-            javaVersion: "17"
-            jarOutputPath: /build/libs/*.jar
-            buildCommand: ./gradlew bootJar -x test
-      endpoints:
-        - port: 8080
-          routes:
-            - daedong-api-prod.dsmhs.kr
-    - name: daedong-teacher-stag
-      github:
-        owner: Team-jeong-ho-kim
-        repo: Daedongyeojido_FE_v4.0
-        branch: main
-        installationId: "63841363"
-        hash: 88221b52fa84f48fc46f384156dd586fa6ccabfa
-        triggerPaths:
-            - apps/teacher/**
-            - packages/**
-            - pnpm-lock.yaml
-            - pnpm-workspace.yaml
-            - package.json
-            - turbo.json
-      build:
-        nodejs:
-            nodeVersion: "20"
-            buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter teacher build
-            startCommand: node apps/teacher/node_modules/next/dist/bin/next start apps/teacher -p 3003
-      endpoints:
-        - port: 3003
-    - name: daedong-admin-stag
-      github:
-        owner: Team-jeong-ho-kim
-        repo: Daedongyeojido_FE_v4.0
-        branch: main
-        installationId: "63841363"
-        hash: 88221b52fa84f48fc46f384156dd586fa6ccabfa
-        triggerPaths:
-            - apps/admin/**
-            - packages/**
-            - pnpm-lock.yaml
-            - pnpm-workspace.yaml
-            - package.json
-            - turbo.json
-      build:
-        nodejs:
-            nodeVersion: "20"
-            buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter admin build
-            startCommand: node apps/admin/node_modules/next/dist/bin/next start apps/admin -p 3002
-      endpoints:
-        - port: 3002
-    - name: daedong-student-stag
-      github:
-        owner: Team-jeong-ho-kim
-        repo: Daedongyeojido_FE_v4.0
-        branch: main
-        installationId: "63841363"
-        hash: 88221b52fa84f48fc46f384156dd586fa6ccabfa
-        triggerPaths:
-            - apps/student/**
-            - packages/**
-            - pnpm-lock.yaml
-            - pnpm-workspace.yaml
-            - package.json
-            - turbo.json
-      build:
-        nodejs:
-            nodeVersion: "20"
-            buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter student build
-            startCommand: node apps/student/node_modules/next/dist/bin/next start apps/student -p 3001
-      endpoints:
-        - port: 3001
-    - name: daedong-web-stag
-      github:
-        owner: Team-jeong-ho-kim
-        repo: Daedongyeojido_FE_v4.0
-        branch: main
-        installationId: "63841363"
-        hash: 88221b52fa84f48fc46f384156dd586fa6ccabfa
-        triggerPaths:
-            - apps/web/**
-            - packages/**
-            - pnpm-lock.yaml
-            - pnpm-workspace.yaml
-            - package.json
-            - turbo.json
-      build:
-        nodejs:
-            nodeVersion: "20"
-            buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter web build
-            startCommand: node apps/web/node_modules/next/dist/bin/next start apps/web -p 3000
-      endpoints:
-        - port: 3000
-    - name: daedong-admin-prod
-      github:
-        owner: Team-jeong-ho-kim
-        repo: Daedongyeojido_FE_v4.0
-        branch: main
-        installationId: "63841363"
-        hash: 88221b52fa84f48fc46f384156dd586fa6ccabfa
-        triggerPaths:
-            - apps/admin/**
-            - packages/**
-            - pnpm-lock.yaml
-            - pnpm-workspace.yaml
-            - package.json
-            - turbo.json
-      build:
-        nodejs:
-            nodeVersion: "20"
-            buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter admin build
-            startCommand: node apps/admin/node_modules/next/dist/bin/next start apps/admin -p 3002
-      endpoints:
-        - port: 3002
-          routes:
-            - daedong-admin-prod.dsmhs.kr
-    - name: daedong-teacher-prod
-      github:
-        owner: Team-jeong-ho-kim
-        repo: Daedongyeojido_FE_v4.0
-        branch: main
-        installationId: "63841363"
-        hash: 88221b52fa84f48fc46f384156dd586fa6ccabfa
-        triggerPaths:
-            - apps/teacher/**
-            - packages/**
-            - pnpm-lock.yaml
-            - pnpm-workspace.yaml
-            - package.json
-            - turbo.json
-      build:
-        nodejs:
-            nodeVersion: "20"
-            buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter teacher build
-            startCommand: node apps/teacher/node_modules/next/dist/bin/next start apps/teacher -p 3003
-      endpoints:
-        - port: 3003
-          routes:
-            - daedong-teacher-prod.dsmhs.kr
-    - name: daedong-web-prod
-      github:
-        owner: Team-jeong-ho-kim
-        repo: Daedongyeojido_FE_v4.0
-        branch: main
-        installationId: "63841363"
-        hash: 88221b52fa84f48fc46f384156dd586fa6ccabfa
-        triggerPaths:
-            - apps/web/**
-            - packages/**
-            - pnpm-lock.yaml
-            - pnpm-workspace.yaml
-            - package.json
-            - turbo.json
-      build:
-        nodejs:
-            nodeVersion: "20"
-            buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter web build
-            startCommand: node apps/web/node_modules/next/dist/bin/next start apps/web -p 3000
-      endpoints:
-        - port: 3000
-          routes:
-            - daedong-web-prod.dsmhs.kr
-    - name: daedong-student-prod
-      github:
-        owner: Team-jeong-ho-kim
-        repo: Daedongyeojido_FE_v4.0
-        branch: main
-        installationId: "63841363"
-        hash: 88221b52fa84f48fc46f384156dd586fa6ccabfa
-        triggerPaths:
-            - apps/student/**
-            - packages/**
-            - pnpm-lock.yaml
-            - pnpm-workspace.yaml
-            - package.json
-            - turbo.json
-      build:
-        nodejs:
-            nodeVersion: "20"
-            buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter student build
-            startCommand: node apps/student/node_modules/next/dist/bin/next start apps/student -p 3001
-      endpoints:
-        - port: 3001
-          routes:
-            - daedong-student-prod.dsmhs.kr
+  - name: dsm-login-prod
+    github:
+      owner: DAS-DsmAuthService
+      repo: Dsm-login-server
+      branch: main
+      installationId: "80380806"
+      hash: 9017ff37bf2421f0c8dfbf95ab45ce6a5d38bfcb
+    build:
+      gradle:
+        javaVersion: "17"
+        jarOutputPath: /build/libs/*.jar
+        buildCommand: ./gradlew bootJar -x test
+    endpoints:
+      - port: 8080
+        routes:
+          - dsm-login.dsmhs.kr
+  - name: daedongyeojido-be
+    github:
+      owner: Team-jeong-ho-kim
+      repo: Daedongyeojido_BE_v4.0
+      branch: main
+      installationId: "63841363"
+      hash: 5af9e4429e9536f23e34551541fa9f1f3fb9044a
+    build:
+      gradle:
+        javaVersion: "17"
+        jarOutputPath: /build/libs/*.jar
+        buildCommand: ./gradlew bootJar -x test
+    endpoints:
+      - port: 8080
+        routes:
+          - daedong-api-prod.dsmhs.kr
+  - name: daedong-teacher-stag
+    github:
+      owner: Team-jeong-ho-kim
+      repo: Daedongyeojido_FE_v4.0
+      branch: main
+      installationId: "63841363"
+      hash: 88221b52fa84f48fc46f384156dd586fa6ccabfa
+      triggerPaths:
+        - apps/teacher/**
+        - packages/**
+        - pnpm-lock.yaml
+        - pnpm-workspace.yaml
+        - package.json
+        - turbo.json
+    build:
+      nodejs:
+        nodeVersion: "20"
+        buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter teacher build
+        startCommand: node apps/teacher/node_modules/next/dist/bin/next start apps/teacher -p 3003
+    endpoints:
+      - port: 3003
+  - name: daedong-admin-stag
+    github:
+      owner: Team-jeong-ho-kim
+      repo: Daedongyeojido_FE_v4.0
+      branch: main
+      installationId: "63841363"
+      hash: 88221b52fa84f48fc46f384156dd586fa6ccabfa
+      triggerPaths:
+        - apps/admin/**
+        - packages/**
+        - pnpm-lock.yaml
+        - pnpm-workspace.yaml
+        - package.json
+        - turbo.json
+    build:
+      nodejs:
+        nodeVersion: "20"
+        buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter admin build
+        startCommand: node apps/admin/node_modules/next/dist/bin/next start apps/admin -p 3002
+    endpoints:
+      - port: 3002
+  - name: daedong-student-stag
+    github:
+      owner: Team-jeong-ho-kim
+      repo: Daedongyeojido_FE_v4.0
+      branch: main
+      installationId: "63841363"
+      hash: 88221b52fa84f48fc46f384156dd586fa6ccabfa
+      triggerPaths:
+        - apps/student/**
+        - packages/**
+        - pnpm-lock.yaml
+        - pnpm-workspace.yaml
+        - package.json
+        - turbo.json
+    build:
+      nodejs:
+        nodeVersion: "20"
+        buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter student build
+        startCommand: node apps/student/node_modules/next/dist/bin/next start apps/student -p 3001
+    endpoints:
+      - port: 3001
+  - name: daedong-web-stag
+    github:
+      owner: Team-jeong-ho-kim
+      repo: Daedongyeojido_FE_v4.0
+      branch: main
+      installationId: "63841363"
+      hash: 88221b52fa84f48fc46f384156dd586fa6ccabfa
+      triggerPaths:
+        - apps/web/**
+        - packages/**
+        - pnpm-lock.yaml
+        - pnpm-workspace.yaml
+        - package.json
+        - turbo.json
+    build:
+      nodejs:
+        nodeVersion: "20"
+        buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter web build
+        startCommand: node apps/web/node_modules/next/dist/bin/next start apps/web -p 3000
+    endpoints:
+      - port: 3000
+  - name: daedong-admin-prod
+    github:
+      owner: Team-jeong-ho-kim
+      repo: Daedongyeojido_FE_v4.0
+      branch: main
+      installationId: "63841363"
+      hash: 88221b52fa84f48fc46f384156dd586fa6ccabfa
+      triggerPaths:
+        - apps/admin/**
+        - packages/**
+        - pnpm-lock.yaml
+        - pnpm-workspace.yaml
+        - package.json
+        - turbo.json
+    build:
+      nodejs:
+        nodeVersion: "20"
+        buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter admin build
+        startCommand: node apps/admin/node_modules/next/dist/bin/next start apps/admin -p 3002
+    endpoints:
+      - port: 3002
+        routes:
+          - daedong-admin-prod.dsmhs.kr
+  - name: daedong-teacher-prod
+    github:
+      owner: Team-jeong-ho-kim
+      repo: Daedongyeojido_FE_v4.0
+      branch: main
+      installationId: "63841363"
+      hash: 88221b52fa84f48fc46f384156dd586fa6ccabfa
+      triggerPaths:
+        - apps/teacher/**
+        - packages/**
+        - pnpm-lock.yaml
+        - pnpm-workspace.yaml
+        - package.json
+        - turbo.json
+    build:
+      nodejs:
+        nodeVersion: "20"
+        buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter teacher build
+        startCommand: node apps/teacher/node_modules/next/dist/bin/next start apps/teacher -p 3003
+    endpoints:
+      - port: 3003
+        routes:
+          - daedong-teacher-prod.dsmhs.kr
+  - name: daedong-web-prod
+    github:
+      owner: Team-jeong-ho-kim
+      repo: Daedongyeojido_FE_v4.0
+      branch: main
+      installationId: "63841363"
+      hash: 88221b52fa84f48fc46f384156dd586fa6ccabfa
+      triggerPaths:
+        - apps/web/**
+        - packages/**
+        - pnpm-lock.yaml
+        - pnpm-workspace.yaml
+        - package.json
+        - turbo.json
+    build:
+      nodejs:
+        nodeVersion: "20"
+        buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter web build
+        startCommand: node apps/web/node_modules/next/dist/bin/next start apps/web -p 3000
+    endpoints:
+      - port: 3000
+        routes:
+          - daedong-web-prod.dsmhs.kr
+  - name: daedong-student-prod
+    github:
+      owner: Team-jeong-ho-kim
+      repo: Daedongyeojido_FE_v4.0
+      branch: main
+      installationId: "63841363"
+      hash: 88221b52fa84f48fc46f384156dd586fa6ccabfa
+      triggerPaths:
+        - apps/student/**
+        - packages/**
+        - pnpm-lock.yaml
+        - pnpm-workspace.yaml
+        - package.json
+        - turbo.json
+    build:
+      nodejs:
+        nodeVersion: "20"
+        buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter student build
+        startCommand: node apps/student/node_modules/next/dist/bin/next start apps/student -p 3001
+    endpoints:
+      - port: 3001
+        routes:
+          - daedong-student-prod.dsmhs.kr
 addons:
-    - name: dsmauthservice-dsm-login-prod-mysql
-      type: mysql
-      storage: 1Gi
-    - name: daedongyeojido-redis
-      type: redis
-      storage: 500Mi
-    - name: daedongyeojido-mysql
-      type: mysql
-      storage: 1Gi
+  - name: dsmauthservice-dsm-login-prod-mysql
+    type: mysql
+    storage: 1Gi
+  - name: daedongyeojido-redis
+    type: redis
+    storage: 500Mi
+  - name: daedongyeojido-mysql
+    type: mysql
+    storage: 1Gi
