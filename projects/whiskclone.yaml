@@ -30,7 +30,7 @@ applications:
       endpoints:
         - port: 8080
           routes:
-            - whisk-frontend.dsmhs.kr
+            - synthframe.dsmhs.kr
 addons:
     - name: whisk-storage
       type: seaweedfs
