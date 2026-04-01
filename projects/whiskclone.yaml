@@ -53,6 +53,8 @@ applications:
             contextPath: .
       endpoints:
         - port: 8080
+          routes:
+            - synthframeapi.dsmhs.kr
 addons:
     - name: whisk-storage
       type: seaweedfs
