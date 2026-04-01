@@ -15,7 +15,7 @@ applications:
       endpoints:
         - port: 8080
           routes:
-            - whisk-backend.dsmhs.kr
+            - synthframeapi.dsmhs.kr
     - name: whisk-frontend
       github:
         owner: synthframe
