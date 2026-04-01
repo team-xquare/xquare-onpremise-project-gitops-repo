@@ -1,69 +1,69 @@
 owners:
-    - 115498126
+  - 115498126
 applications:
-    - name: whisk-backend
-      github:
-        owner: synthframe
-        repo: synthframe-api
-        branch: main
-        installationId: "116666711"
-        hash: df484b22ef8b11993b7ff19f7cc25dd2ec79abad
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 8080
-    - name: whisk-frontend
-      github:
-        owner: synthframe
-        repo: synthframe-web
-        branch: main
-        installationId: "116666711"
-        hash: 3545c83aaa46d3f99b134f7394d6ba16624bcdab
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 8080
-    - name: synthframe-web
-      github:
-        owner: synthframe
-        repo: synthframe-web
-        branch: main
-        installationId: "116666711"
-        hash: 3545c83aaa46d3f99b134f7394d6ba16624bcdab
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 8080
-          routes:
-            - synthframe.dsmhs.kr
-    - name: synthframe-api
-      github:
-        owner: synthframe
-        repo: synthframe-api
-        branch: main
-        installationId: "116666711"
-        hash: df484b22ef8b11993b7ff19f7cc25dd2ec79abad
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 8080
-          routes:
-            - synthframeapi.dsmhs.kr
+  - name: whisk-backend
+    github:
+      owner: synthframe
+      repo: synthframe-api
+      branch: main
+      installationId: "116666711"
+      hash: df484b22ef8b11993b7ff19f7cc25dd2ec79abad
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 8080
+  - name: whisk-frontend
+    github:
+      owner: synthframe
+      repo: synthframe-web
+      branch: main
+      installationId: "116666711"
+      hash: 3545c83aaa46d3f99b134f7394d6ba16624bcdab
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 8080
+  - name: synthframe-web
+    github:
+      owner: synthframe
+      repo: synthframe-web
+      branch: main
+      installationId: "116666711"
+      hash: 3545c83aaa46d3f99b134f7394d6ba16624bcdab
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 8080
+        routes:
+          - synthframe.dsmhs.kr
+  - name: synthframe-api
+    github:
+      owner: synthframe
+      repo: synthframe-api
+      branch: main
+      installationId: "116666711"
+      hash: df484b22ef8b11993b7ff19f7cc25dd2ec79abad
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 8080
+        routes:
+          - synthframeapi.dsmhs.kr
 addons:
-    - name: whisk-storage
-      type: seaweedfs
-      storage: 2Gi
-      buckets:
-        - name: uploads
-        - name: thumbnails
-    - name: whisk-db
-      type: postgresql
-      storage: 2Gi
+  - name: whisk-storage
+    type: seaweedfs
+    storage: 2Gi
+    buckets:
+      - name: uploads
+      - name: thumbnails
+  - name: whisk-db
+    type: postgresql
+    storage: 2Gi
