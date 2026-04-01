@@ -4,7 +4,7 @@ applications:
     - name: whisk-backend
       github:
         owner: synthframe
-        repo: whisk-clone-backend
+        repo: synthframe-api
         branch: main
         installationId: "116666711"
         hash: 2506bd9b09c7a2a19fb50cb22988e38ef33d7888
