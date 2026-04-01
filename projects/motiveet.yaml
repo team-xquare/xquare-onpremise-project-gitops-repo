@@ -16,3 +16,17 @@ applications:
         - port: 8000
           routes:
             - motiveet-api.dsmhs.kr
+    - name: fe
+      github:
+        owner: team-gozip
+        repo: motiveet_FE_offline
+        branch: main
+        installationId: "116709801"
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 3000
+          routes:
+            - motiveet.dsmhs.kr
