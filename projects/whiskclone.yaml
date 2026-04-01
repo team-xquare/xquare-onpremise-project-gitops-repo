@@ -7,7 +7,7 @@ applications:
       repo: synthframe-api
       branch: main
       installationId: "116666711"
-      hash: 7862dc147226785c8d6b7b301041c283d7904ac2
+      hash: df484b22ef8b11993b7ff19f7cc25dd2ec79abad
     build:
       docker:
         dockerfilePath: ./Dockerfile
