@@ -43,6 +43,18 @@ applications:
             contextPath: .
       endpoints:
         - port: 8080
+    - name: synthframe-api
+      github:
+        owner: synthframe
+        repo: synthframe-api
+        branch: main
+        installationId: "116666711"
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 8080
 addons:
     - name: whisk-storage
       type: seaweedfs
