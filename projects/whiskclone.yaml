@@ -31,6 +31,18 @@ applications:
         - port: 8080
           routes:
             - synthframe.dsmhs.kr
+    - name: synthframe-web
+      github:
+        owner: synthframe
+        repo: synthframe-web
+        branch: main
+        installationId: "116666711"
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 8080
 addons:
     - name: whisk-storage
       type: seaweedfs
