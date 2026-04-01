@@ -7,7 +7,7 @@ applications:
       repo: motiveet_FE
       branch: main
       installationId: "116709801"
-      hash: 2c5ade5322ed129459a7f226547ce7b66d074204
+      hash: 5047ee9a590f7567e93d98e85601e44cdc1a9072
     build:
       docker:
         dockerfilePath: ./Dockerfile
