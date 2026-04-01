@@ -20,7 +20,7 @@ applications:
       repo: synthframe-web
       branch: main
       installationId: "116666711"
-      hash: 08f000f726c57919fe5261729c094b867ee3f88f
+      hash: b1520068e2ccc03674aeb925c5c5c6f11e7a3294
     build:
       docker:
         dockerfilePath: ./Dockerfile
