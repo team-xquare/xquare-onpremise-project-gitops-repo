@@ -23,10 +23,9 @@ applications:
         branch: main
         installationId: "116709801"
       build:
-        nextjs:
-            nodeVersion: ""
-            buildCommand: ""
-            startCommand: ""
+        docker:
+            dockerfilePath: ""
+            contextPath: ""
       endpoints:
         - port: 3000
           routes:
