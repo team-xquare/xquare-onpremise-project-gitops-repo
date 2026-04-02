@@ -1,3 +1,16 @@
 owners:
     - 164149491
-applications: []
+applications:
+    - name: gunyoil-be
+      github:
+        owner: GUNYOIL
+        repo: gunyoil-be
+        branch: main
+        installationId: "120863818"
+      build:
+        django:
+            pythonVersion: "3.11"
+            buildCommand: pip install -r requirements.txt
+            startCommand: gunicorn config.wsgi:application --bind 0.0.0.0:8000
+      endpoints:
+        - port: 8000
