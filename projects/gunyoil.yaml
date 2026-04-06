@@ -11,7 +11,7 @@ applications:
       build:
         django:
             pythonVersion: "3.11"
-            buildCommand: ""
+            buildCommand: pip install -r requirements.txt
             startCommand: python manage.py migrate && gunicorn config.wsgi:application --bind 0.0.0.0:8000
       endpoints:
         - port: 8000
