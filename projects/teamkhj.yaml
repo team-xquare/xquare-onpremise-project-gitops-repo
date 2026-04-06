@@ -3,7 +3,7 @@ applications:
     build:
       vite:
         buildCommand: npm install -g bun@1.3.9 && bun install --frozen-lockfile && bun x turbo build --filter=@khj/teacher-application
-        distPath: /applications/khj-user-application/dist
+        distPath: /applications/khj-teacher-application/dist
         nodeVersion: "20"
     endpoints:
       - port: 8080
