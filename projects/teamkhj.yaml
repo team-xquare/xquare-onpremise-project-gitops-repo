@@ -15,3 +15,19 @@ applications:
       installationId: "111082707"
       owner: pjKHJ
       repo: prKHJ_Frontend_V2
+  - name: khj-frontend-student-prod
+    build:
+      vite:
+        buildCommand: npm install -g bun@1.3.9 && bun install --frozen-lockfile && bun x turbo build --filter=@khj/student-application
+        distPath: /applications/khj-student-application/dist
+        nodeVersion: "20"
+    endpoints:
+      - port: 8080
+        routes:
+          - khj-studnet.dsmhs.kr
+    github:
+      branch: main
+      hash: 32caa64b408b68e54813ff8bf506bf7ced3f34e7
+      installationId: "111082707"
+      owner: pjKHJ
+      repo: prKHJ_Frontend_V2
