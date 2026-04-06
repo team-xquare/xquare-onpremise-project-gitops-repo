@@ -1,23 +1,23 @@
 owners:
-  - 164149491
+    - 164149491
 applications:
-  - name: gunyoil-be
-    github:
-      owner: GUNYOIL
-      repo: gunyoil-be
-      branch: main
-      installationId: "120863818"
-      hash: e23759e6dd7a70a9f549045f412e0bdc7fa5f59f
-    build:
-      django:
-        pythonVersion: "3.11"
-        buildCommand: pip install -r requirements.txt
-        startCommand: gunicorn config.wsgi:application --bind 0.0.0.0:8000
-    endpoints:
-      - port: 8000
-        routes:
-          - gunyoil.dsmhs.kr
+    - name: gunyoil-be
+      github:
+        owner: GUNYOIL
+        repo: gunyoil-be
+        branch: main
+        installationId: "120863818"
+        hash: e23759e6dd7a70a9f549045f412e0bdc7fa5f59f
+      build:
+        django:
+            pythonVersion: "3.11"
+            buildCommand: pip install -r requirements.txt
+            startCommand: sh -c 'python manage.py migrate && gunicorn config.wsgi:application --bind 0.0.0.0:8000'
+      endpoints:
+        - port: 8000
+          routes:
+            - gunyoil.dsmhs.kr
 addons:
-  - name: gunyoil-db
-    type: postgresql
-    storage: 2Gi
+    - name: gunyoil-db
+      type: postgresql
+      storage: 2Gi
