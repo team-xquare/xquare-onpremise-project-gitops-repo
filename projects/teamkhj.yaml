@@ -3,7 +3,7 @@ applications:
     build:
       vite:
         buildCommand: npm install -g bun@1.3.9 && bun install --frozen-lockfile && bun x turbo build --filter=@khj/teacher-application
-        distPath: /applications/khj-teacher-application/dist
+        distPath: /applications/khj-user-application/dist
         nodeVersion: "20"
     endpoints:
       - port: 8080
@@ -11,7 +11,7 @@ applications:
           - khj-teacher.dsmhs.kr
     github:
       branch: main
-      hash: 77ab3fd10590cfb4a0c29ca0d35df038a2fdce38
+      hash: 32caa64b408b68e54813ff8bf506bf7ced3f34e7
       installationId: "111082707"
       owner: pjKHJ
       repo: prKHJ_Frontend_V2
