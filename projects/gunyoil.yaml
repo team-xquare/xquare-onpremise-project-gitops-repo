@@ -7,7 +7,7 @@ applications:
       repo: gunyoil-be
       branch: main
       installationId: "120863818"
-      hash: e679d44e8ff08166e5455a5772112fe0ce9920cc
+      hash: ad5019a0714ebf7ab0448adb7c006c9124bbb329
     build:
       django:
         pythonVersion: "3.11"
