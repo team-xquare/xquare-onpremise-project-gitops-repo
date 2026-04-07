@@ -234,3 +234,6 @@ addons:
     - name: daedongyeojido-stag-mysql
       type: mysql
       storage: 1Gi
+    - name: daedongyeojido-stag-redis
+      type: redis
+      storage: 500Mi
