@@ -7,7 +7,7 @@ applications:
       repo: dongshop
       branch: main
       installationId: "122283924"
-      hash: f1844ec4acb53845ac4d1f4558b14689433dd195
+      hash: d785f918dc6bc2442de192a08880b1e4367d32de
     build:
       nodejs:
         nodeVersion: "20"
