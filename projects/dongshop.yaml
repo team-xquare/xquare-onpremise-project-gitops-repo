@@ -1,6 +1,19 @@
 owners:
     - 269616962
-applications: []
+applications:
+    - name: dongshop
+      github:
+        owner: dsm-hs-kr
+        repo: dongshop
+        branch: main
+        installationId: "122283924"
+      build:
+        nodejs:
+            nodeVersion: "20"
+            buildCommand: npm install
+            startCommand: node dist/server.js
+      endpoints:
+        - port: 3000
 addons:
     - name: dongshopdb
       type: mysql
