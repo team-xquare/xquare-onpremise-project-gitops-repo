@@ -207,7 +207,7 @@ applications:
       repo: JOBIS-DSM-ADMIN-FE
       branch: develop
       installationId: "82814703"
-      hash: 69317566c9ec1f77106b5eb486403b3741dcc212
+      hash: d2d9e3f2d3e3ad410ca6425f0ab3c16434c2231b
     build:
       react:
         nodeVersion: "18.17.1"
