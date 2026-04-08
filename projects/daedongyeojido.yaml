@@ -205,7 +205,7 @@ applications:
       github:
         owner: Team-jeong-ho-kim
         repo: Daedongyeojido_BE_v4.0
-        branch: main
+        branch: develop
         installationId: "63841363"
         hash: 8ea5a8054338f0669a02ee87464b2afb1466c22b
         triggerPaths:
