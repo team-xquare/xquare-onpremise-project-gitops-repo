@@ -7,7 +7,7 @@ applications:
       repo: dongshop
       branch: main
       installationId: "122283924"
-      hash: 3b3d08d5d999ba80dbee420d6fbf985bc51be5d0
+      hash: b4dfb608efcf8576da798a7fc86e37c9052807a5
     build:
       docker:
         dockerfilePath: ./Dockerfile
