@@ -14,8 +14,8 @@ applications:
       owner: plain-bookshelf
       repo: BookMaru-BE
       triggerPaths:
-        - BookMaru\bookmaru-infrastructure\src
-        - BookMaru\bookmaru-application\src
+        - bookmaru-infrastructure/src/**
+        - bookmaru-application/src/**
       hash: ""
 addons:
   - name: bookmaru-db
