@@ -178,10 +178,10 @@ applications:
 addons:
   - name: main-prod-mysql
     type: mysql
-    storage: 3Gi
+    storage: 10Gi
   - name: main-stag-mysql
     type: mysql
-    storage: 3Gi
+    storage: 10Gi
   - name: notification-prod-mysql
     type: mysql
     storage: 1Gi
