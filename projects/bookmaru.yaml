@@ -2,10 +2,10 @@ applications:
   - name: bookmaru
     build:
       docker:
-        contextPath: BookMaru/Dockerfile
+        contextPath: BookMaru
         dockerfilePath: BookMaru\docker-compose.yml
     endpoints:
-      - port: 8080
+      - port: 8086
         routes:
           - bookmaru.dsmhs.kr
     github:
