@@ -2,7 +2,7 @@ applications:
   - name: bookmaru
     build:
       docker:
-        contextPath: BookMaru
+        contextPath: ./
         dockerfilePath: Dockerfile
     endpoints:
       - port: 8080
