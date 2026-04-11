@@ -10,7 +10,7 @@ applications:
           - bookmaru.dsmhs.kr
     github:
       branch: develop
-      hash: 20a92a7da65a7a43e8f0b43c3f7a0ee8f2447070
+      hash: ""
       installationId: "123057250"
       owner: plain-bookshelf
       repo: BookMaru-BE
