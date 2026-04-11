@@ -3,3 +3,6 @@ addons:
   - name: bookmaru-db
     storage: 5Gi
     type: postgresql
+  - name: bookmaru-redis
+    storage: 2Gi
+    type: redis
