@@ -6,3 +6,6 @@ addons:
   - name: bookmaru-redis
     storage: 2Gi
     type: redis
+  - name: bookmaru-elasticsearch
+    storage: 5Gi
+    type: elk
