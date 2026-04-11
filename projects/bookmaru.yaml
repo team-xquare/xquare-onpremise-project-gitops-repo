@@ -5,7 +5,7 @@ applications:
         contextPath: BookMaru
         dockerfilePath: BookMaru\docker-compose.yml
     endpoints:
-      - port: 8079
+      - port: 8077
         routes:
           - bookmaru.dsmhs.kr
     github:
