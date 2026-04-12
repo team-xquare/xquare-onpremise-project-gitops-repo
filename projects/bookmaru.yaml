@@ -2,7 +2,7 @@ applications:
   - name: bookmaru
     build:
       docker:
-        contextPath: ./
+        contextPath: BookMaru
         dockerfilePath: Dockerfile
     endpoints:
       - port: 8080
@@ -14,8 +14,7 @@ applications:
       owner: plain-bookshelf
       repo: BookMaru-BE
       triggerPaths:
-        - bookmaru-infrastructure/src/**
-        - bookmaru-application/src/**
+        - ""
       hash: ""
 addons:
   - name: bookmaru-db
