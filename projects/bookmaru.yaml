@@ -5,7 +5,7 @@ applications:
         contextPath: ./
         dockerfilePath: Dockerfile
     endpoints:
-      - port: 8080
+      - port: 80
         routes:
           - bookmaru.dsmhs.kr
     github:
@@ -15,7 +15,7 @@ applications:
       repo: BookMaru-BE
       triggerPaths:
         - ""
-      hash: "a3f4947098fd3b48e20fda689f4f604654e48474"
+      hash: ""
 addons:
   - name: bookmaru-db
     storage: 5Gi
