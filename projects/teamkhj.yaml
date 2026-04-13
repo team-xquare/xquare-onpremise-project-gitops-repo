@@ -11,7 +11,7 @@ applications:
           - khj-teacher.dsmhs.kr
     github:
       branch: main
-      hash: 77ab3fd10590cfb4a0c29ca0d35df038a2fdce38
+      hash: da4d5656bf28b329b7b2f845deff38515e06ad38
       installationId: "111082707"
       owner: pjKHJ
       repo: prKHJ_Frontend_V2
