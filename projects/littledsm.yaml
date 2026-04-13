@@ -27,3 +27,6 @@ addons:
     - name: littledsm-redis
       type: redis
       storage: 500Mi
+    - name: littledsm-mysql2
+      type: mysql
+      storage: 500Mi
