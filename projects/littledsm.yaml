@@ -1,3 +1,22 @@
 owners:
     - 163130634
-applications: []
+applications:
+    - name: little-be-prod
+      github:
+        owner: Little-DSM
+        repo: Little-BE
+        branch: main
+        installationId: "123528664"
+        triggerPaths:
+            - app/**
+            - pyproject.toml
+            - Dockerfile
+            - README.md
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 8001
+          routes:
+            - littledsm-api.dsmhs.kr
