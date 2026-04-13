@@ -235,7 +235,7 @@ applications:
         - pyproject.toml
         - Dockerfile
         - README.md
-      hash: 22931dd86c30740cf7ae6e155032003e70ad11d2
+      hash: 3aab4d19b21a7d9002d545289aa715d2a91760cd
     build:
       docker:
         dockerfilePath: ./Dockerfile
