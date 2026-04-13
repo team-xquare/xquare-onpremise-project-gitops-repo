@@ -224,6 +224,25 @@ applications:
         - port: 8080
           routes:
             - daedong-api-stag.dsmhs.kr
+    - name: little-be-temp
+      github:
+        owner: Little-DSM
+        repo: Little-BE
+        branch: main
+        installationId: "123528664"
+        triggerPaths:
+            - app/**
+            - pyproject.toml
+            - Dockerfile
+            - README.md
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 8001
+          routes:
+            - little-be-temp.dsmhs.kr
 addons:
     - name: daedongyeojido-mysql
       type: mysql
