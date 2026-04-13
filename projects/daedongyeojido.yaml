@@ -240,3 +240,6 @@ addons:
     - name: littlebe-temp-mysql
       type: mysql
       storage: 1Gi
+    - name: littlebe-temp-redis
+      type: redis
+      storage: 500Mi
