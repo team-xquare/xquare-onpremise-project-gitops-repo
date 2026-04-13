@@ -20,3 +20,7 @@ applications:
         - port: 8001
           routes:
             - littledsm-api.dsmhs.kr
+addons:
+    - name: littledsm-mysql
+      type: mysql
+      storage: 1Gi
