@@ -8,7 +8,7 @@ applications:
     endpoints:
       - port: 8080
         routes:
-          - khj-studnet.dsmhs.kr
+          - khj-student.dsmhs.kr
     github:
       branch: main
       hash: ba9979f45bfed560eafa161ea0ddfc38885b5ac0
