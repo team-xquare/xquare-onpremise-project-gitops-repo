@@ -15,6 +15,3 @@ applications:
       installationId: "111082707"
       owner: pjKHJ
       repo: prKHJ_Frontend_V2
-  - name: khj-frontend-teacher-prod
-    github:
-      hash: ba9979f45bfed560eafa161ea0ddfc38885b5ac0
