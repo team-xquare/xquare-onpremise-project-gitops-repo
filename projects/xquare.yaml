@@ -68,7 +68,7 @@ applications:
       repo: xquare-infra-frontend-v3
       branch: main
       installationId: "62433388"
-      hash: f78bef68560e97c843e891c5a399c4364b0a1d0d
+      hash: f8e797dad483f72f92354e21c60b2ffe813d253e
     build:
       vite:
         nodeVersion: "20"
