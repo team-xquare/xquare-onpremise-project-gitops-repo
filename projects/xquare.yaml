@@ -56,7 +56,7 @@ applications:
     build:
       vite:
         nodeVersion: "20"
-        buildCommand: npm install -g bun@1.3.5 && bun install --frozen-lockfile && bun x turbo build --filter=@xquare/user-application
+        buildCommand: TYPE=stag npm install -g bun@1.3.5 && bun install --frozen-lockfile && bun x turbo build --filter=@xquare/user-application
         distPath: /applications/xquare-user-application/dist
     endpoints:
       - port: 8080
@@ -72,7 +72,7 @@ applications:
     build:
       vite:
         nodeVersion: "20"
-        buildCommand: npm install -g bun@1.3.5 && bun install --frozen-lockfile && bun x turbo build --filter=@xquare/user-application
+        buildCommand: TYPE=prod npm install -g bun@1.3.5 && bun install --frozen-lockfile && bun x turbo build --filter=@xquare/user-application
         distPath: /applications/xquare-user-application/dist
     endpoints:
       - port: 8080
