@@ -27,7 +27,7 @@ applications:
           - khj-studnet.dsmhs.kr
     github:
       branch: main
-      hash: da4d5656bf28b329b7b2f845deff38515e06ad38
+      hash: 1117812e470b2c2a6e71b8d917ee230ac21a3b2f
       installationId: "111082707"
       owner: pjKHJ
       repo: prKHJ_Frontend_V2
