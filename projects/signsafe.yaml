@@ -35,7 +35,7 @@ applications:
       repo: signsafe-web
       branch: main
       installationId: "119373383"
-      hash: 3c5360ee334286e61f7d20ec3b1c454402419419
+      hash: 17627277f637ce7b82930089843e2445cc600ed2
     build:
       docker:
         dockerfilePath: ./Dockerfile
