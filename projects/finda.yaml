@@ -3,3 +3,6 @@ addons:
   - name: finda-redis-dev
     storage: 1Gi
     type: redis
+  - name: finda-mysql-dev
+    storage: 5Gi
+    type: mysql
