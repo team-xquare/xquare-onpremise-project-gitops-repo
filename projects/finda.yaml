@@ -6,3 +6,6 @@ addons:
   - name: finda-mysql-dev
     storage: 5Gi
     type: mysql
+  - name: finda-kafka-dev
+    storage: 5Gi
+    type: kafka
