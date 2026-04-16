@@ -5,7 +5,7 @@ applications:
         contextPath: ./
         dockerfilePath: Dockerfile
     endpoints:
-      - port: 80
+      - port: 8080
         routes:
           - bookmaru.dsmhs.kr
     github:
