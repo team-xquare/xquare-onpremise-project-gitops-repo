@@ -9,3 +9,7 @@ addons:
   - name: finda-kafka-dev
     storage: 5Gi
     type: kafka
+  - name: finda-debezium-dev
+    bootstrap: finda-kafka-dev:9092
+    storage: 1Gi
+    type: debezium
