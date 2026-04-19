@@ -67,6 +67,23 @@ applications:
       repo: Finda-Backend
       triggerPaths:
         - finda-notification/**
+  - name: finda-batch-dev
+    build:
+      docker:
+        contextPath: finda-batch
+        dockerfilePath: finda-batch/Dockerfile
+    endpoints:
+      - port: 8084
+        routes:
+          - finda-batch-dev.dsmhs.kr
+    github:
+      branch: develop
+      hash: 152bcfbcc60917956e06b9df10b162bcbd12b4e6
+      installationId: "114211563"
+      owner: team-FINDA
+      repo: Finda-Backend
+      triggerPaths:
+        - finda-batch/**
 addons:
   - name: finda-redis-dev
     storage: 1Gi
