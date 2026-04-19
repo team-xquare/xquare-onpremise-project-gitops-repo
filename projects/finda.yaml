@@ -1,4 +1,21 @@
-applications: []
+applications:
+  - name: finda-gateway-dev
+    build:
+      docker:
+        contextPath: finda-gateway
+        dockerfilePath: finda-gateway/Dockerfile
+    endpoints:
+      - port: 8080
+        routes:
+          - finda-gateway-dev.dsmhs.kr
+    github:
+      branch: develop
+      hash: 152bcfbcc60917956e06b9df10b162bcbd12b4e6
+      installationId: "114211563"
+      owner: team-FINDA
+      repo: Finda-Backend
+      triggerPaths:
+        - finda-gateway/**
 addons:
   - name: finda-redis-dev
     storage: 1Gi
