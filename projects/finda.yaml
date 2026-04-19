@@ -7,7 +7,7 @@ applications:
     endpoints:
       - port: 8080
         routes:
-          - finda-gateway-dev.dsmhs.kr
+          - finda-dev.dsmhs.kr
     github:
       branch: develop
       hash: 152bcfbcc60917956e06b9df10b162bcbd12b4e6
