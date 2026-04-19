@@ -16,6 +16,23 @@ applications:
       repo: Finda-Backend
       triggerPaths:
         - finda-gateway/**
+  - name: finda-auth-dev
+    build:
+      docker:
+        contextPath: finda-auth
+        dockerfilePath: finda-auth/Dockerfile
+    endpoints:
+      - port: 8081
+        routes:
+          - finda-auth-dev.dsmhs.kr
+    github:
+      branch: develop
+      hash: 152bcfbcc60917956e06b9df10b162bcbd12b4e6
+      installationId: "114211563"
+      owner: team-FINDA
+      repo: Finda-Backend
+      triggerPaths:
+        - finda-auth/**
 addons:
   - name: finda-redis-dev
     storage: 1Gi
