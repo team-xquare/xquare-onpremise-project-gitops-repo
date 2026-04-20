@@ -63,7 +63,7 @@ applications:
         - finda-notification/**
     build:
       docker:
-        dockerfilePath: finda-notification/Dockerfile
+        dockerfilePath: Dockerfile
         contextPath: finda-notification
     endpoints:
       - port: 8083
