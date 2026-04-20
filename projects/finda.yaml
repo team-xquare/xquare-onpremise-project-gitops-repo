@@ -46,7 +46,7 @@ applications:
         - finda-volunteer/**
     build:
       docker:
-        dockerfilePath: finda-volunteer/Dockerfile
+        dockerfilePath: Dockerfile
         contextPath: finda-volunteer
     endpoints:
       - port: 8082
