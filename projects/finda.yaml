@@ -80,7 +80,7 @@ applications:
         - finda-batch/**
     build:
       docker:
-        dockerfilePath: finda-batch/Dockerfile
+        dockerfilePath: Dockerfile
         contextPath: finda-batch
     endpoints:
       - port: 8084
