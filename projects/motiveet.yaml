@@ -37,7 +37,7 @@ applications:
       repo: motiveet-BE-online
       branch: main
       installationId: "116709801"
-      hash: 01362021ae6a402b83ee929ff8a5611dc8d231ff
+      hash: 9c355ae126bf33e5e7ae350cb6be2bb8ad4767db
     build:
       docker:
         dockerfilePath: ""
