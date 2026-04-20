@@ -191,7 +191,7 @@ applications:
       repo: JOBIS-DSM-STUDENT-FE
       branch: develop
       installationId: "82814703"
-      hash: caaaa6821f37330e65d6e43d0399b0627e897f72
+      hash: e78cdf1f8a50292344e4f230a8fbb9a4754453b9
     build:
       nextjs-export:
         nodeVersion: "18.17.1"
