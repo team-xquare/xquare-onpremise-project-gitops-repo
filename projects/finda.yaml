@@ -107,3 +107,6 @@ addons:
   - name: finda-batch-dev
     storage: 5Gi
     type: mysql
+  - name: ffinda-notification-dev
+    storage: 5Gi
+    type: mysql
