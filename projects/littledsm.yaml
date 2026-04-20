@@ -1,35 +1,36 @@
 owners:
-    - 163130634
+  - 163130634
 applications:
-    - name: little-be-prod
-      github:
-        owner: Little-DSM
-        repo: Little-BE
-        branch: main
-        installationId: "123528664"
-        triggerPaths:
-            - app/**
-            - pyproject.toml
-            - Dockerfile
-            - README.md
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 8001
-          routes:
-            - littledsm-api.dsmhs.kr
+  - name: little-be-prod
+    github:
+      owner: Little-DSM
+      repo: Little-BE
+      branch: main
+      installationId: "123528664"
+      triggerPaths:
+        - app/**
+        - pyproject.toml
+        - Dockerfile
+        - README.md
+      hash: 52e1fc1e2f7b6aea4c1b27945ea4ff73b264a6c9
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 8001
+        routes:
+          - littledsm-api.dsmhs.kr
 addons:
-    - name: littledsm-mysql
-      type: mysql
-      storage: 1Gi
-    - name: littledsm-redis
-      type: redis
-      storage: 500Mi
-    - name: littledsm-mysql2
-      type: mysql
-      storage: 500Mi
-    - name: littledsm-redis2
-      type: redis
-      storage: 500Mi
+  - name: littledsm-mysql
+    type: mysql
+    storage: 1Gi
+  - name: littledsm-redis
+    type: redis
+    storage: 500Mi
+  - name: littledsm-mysql2
+    type: mysql
+    storage: 500Mi
+  - name: littledsm-redis2
+    type: redis
+    storage: 500Mi
