@@ -98,3 +98,6 @@ addons:
     bootstrap: finda-kafka-dev:9092
     storage: 1Gi
     type: debezium
+  - name: finda-auth-dev
+    storage: 5Gi
+    type: mysql
