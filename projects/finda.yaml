@@ -1,114 +1,114 @@
 owners:
-    - 162944522
+  - 162944522
 applications:
-    - name: finda-gateway-dev
-      github:
-        owner: team-FINDA
-        repo: Finda-Backend
-        branch: develop
-        installationId: "114211563"
-        hash: 152bcfbcc60917956e06b9df10b162bcbd12b4e6
-        triggerPaths:
-            - finda-gateway/**
-      build:
-        docker:
-            dockerfilePath: finda-gateway/Dockerfile
-            contextPath: finda-gateway
-      endpoints:
-        - port: 8080
-          routes:
-            - finda-dev.dsmhs.kr
-    - name: finda-auth-dev
-      github:
-        owner: team-FINDA
-        repo: Finda-Backend
-        branch: develop
-        installationId: "114211563"
-        hash: 152bcfbcc60917956e06b9df10b162bcbd12b4e6
-        triggerPaths:
-            - finda-auth/**
-      build:
-        docker:
-            dockerfilePath: finda-auth/Dockerfile
-            contextPath: finda-auth
-      endpoints:
-        - port: 8081
-          routes:
-            - finda-auth-dev.dsmhs.kr
-    - name: finda-volunteer-dev
-      github:
-        owner: team-FINDA
-        repo: Finda-Backend
-        branch: develop
-        installationId: "114211563"
-        hash: 152bcfbcc60917956e06b9df10b162bcbd12b4e6
-        triggerPaths:
-            - finda-volunteer/**
-      build:
-        docker:
-            dockerfilePath: finda-volunteer/Dockerfile
-            contextPath: finda-volunteer
-      endpoints:
-        - port: 8082
-          routes:
-            - finda-volunteer-dev.dsmhs.kr
-    - name: finda-notification-dev
-      github:
-        owner: team-FINDA
-        repo: Finda-Backend
-        branch: develop
-        installationId: "114211563"
-        hash: 152bcfbcc60917956e06b9df10b162bcbd12b4e6
-        triggerPaths:
-            - finda-notification/**
-      build:
-        docker:
-            dockerfilePath: finda-notification/Dockerfile
-            contextPath: finda-notification
-      endpoints:
-        - port: 8083
-          routes:
-            - finda-notification-dev.dsmhs.kr
-    - name: finda-batch-dev
-      github:
-        owner: team-FINDA
-        repo: Finda-Backend
-        branch: develop
-        installationId: "114211563"
-        hash: 152bcfbcc60917956e06b9df10b162bcbd12b4e6
-        triggerPaths:
-            - finda-batch/**
-      build:
-        docker:
-            dockerfilePath: finda-batch/Dockerfile
-            contextPath: finda-batch
-      endpoints:
-        - port: 8084
-          routes:
-            - finda-batch-dev.dsmhs.kr
+  - name: finda-gateway-dev
+    github:
+      owner: team-FINDA
+      repo: Finda-Backend
+      branch: develop
+      installationId: "114211563"
+      hash: 152bcfbcc60917956e06b9df10b162bcbd12b4e6
+      triggerPaths:
+        - finda-gateway/**
+    build:
+      docker:
+        dockerfilePath: Dockerfile
+        contextPath: finda-gateway
+    endpoints:
+      - port: 8080
+        routes:
+          - finda-dev.dsmhs.kr
+  - name: finda-auth-dev
+    github:
+      owner: team-FINDA
+      repo: Finda-Backend
+      branch: develop
+      installationId: "114211563"
+      hash: 152bcfbcc60917956e06b9df10b162bcbd12b4e6
+      triggerPaths:
+        - finda-auth/**
+    build:
+      docker:
+        dockerfilePath: finda-auth/Dockerfile
+        contextPath: finda-auth
+    endpoints:
+      - port: 8081
+        routes:
+          - finda-auth-dev.dsmhs.kr
+  - name: finda-volunteer-dev
+    github:
+      owner: team-FINDA
+      repo: Finda-Backend
+      branch: develop
+      installationId: "114211563"
+      hash: 152bcfbcc60917956e06b9df10b162bcbd12b4e6
+      triggerPaths:
+        - finda-volunteer/**
+    build:
+      docker:
+        dockerfilePath: finda-volunteer/Dockerfile
+        contextPath: finda-volunteer
+    endpoints:
+      - port: 8082
+        routes:
+          - finda-volunteer-dev.dsmhs.kr
+  - name: finda-notification-dev
+    github:
+      owner: team-FINDA
+      repo: Finda-Backend
+      branch: develop
+      installationId: "114211563"
+      hash: 152bcfbcc60917956e06b9df10b162bcbd12b4e6
+      triggerPaths:
+        - finda-notification/**
+    build:
+      docker:
+        dockerfilePath: finda-notification/Dockerfile
+        contextPath: finda-notification
+    endpoints:
+      - port: 8083
+        routes:
+          - finda-notification-dev.dsmhs.kr
+  - name: finda-batch-dev
+    github:
+      owner: team-FINDA
+      repo: Finda-Backend
+      branch: develop
+      installationId: "114211563"
+      hash: 152bcfbcc60917956e06b9df10b162bcbd12b4e6
+      triggerPaths:
+        - finda-batch/**
+    build:
+      docker:
+        dockerfilePath: finda-batch/Dockerfile
+        contextPath: finda-batch
+    endpoints:
+      - port: 8084
+        routes:
+          - finda-batch-dev.dsmhs.kr
 addons:
-    - name: finda-redis-dev
-      type: redis
-      storage: 1Gi
-    - name: finda-mysql-dev
-      type: mysql
-      storage: 5Gi
-    - name: finda-kafka-dev
-      type: kafka
-      storage: 5Gi
-    - name: finda-debezium-dev
-      type: debezium
-      storage: 1Gi
-      bootstrap: finda-kafka-dev:9092
-    - name: finda-auth-dev
-      type: mysql
-      storage: 5Gi
-    - name: finda-volunteer-dev
-      type: mysql
-      storage: 5Gi
-    - name: finda-batch-dev
-      type: mysql
-      storage: 5Gi
-    - name: ffinda-notification-dev
-      type: mysql
-      storage: 5Gi
+  - name: finda-redis-dev
+    type: redis
+    storage: 1Gi
+  - name: finda-mysql-dev
+    type: mysql
+    storage: 5Gi
+  - name: finda-kafka-dev
+    type: kafka
+    storage: 5Gi
+  - name: finda-debezium-dev
+    type: debezium
+    storage: 1Gi
+    bootstrap: finda-kafka-dev:9092
+  - name: finda-auth-dev
+    type: mysql
+    storage: 5Gi
+  - name: finda-volunteer-dev
+    type: mysql
+    storage: 5Gi
+  - name: finda-batch-dev
+    type: mysql
+    storage: 5Gi
+  - name: ffinda-notification-dev
+    type: mysql
+    storage: 5Gi
