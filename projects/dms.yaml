@@ -1,203 +1,203 @@
 owners:
-    - 115498126
-    - 162944522
+  - 115498126
+  - 162944522
 applications:
-    - name: frontend-prod
-      github:
-        owner: team-aliens
-        repo: DMS-Frontend
-        branch: main
-        installationId: "64597732"
-        hash: 40c91b55204f9b8432414617e39f19c00f5db5c1
-      build:
-        vite:
-            nodeVersion: "22"
-            buildCommand: yarn install && yarn workspace @service/admin build
-            distPath: /services/admin/dist
-      endpoints:
-        - port: 8080
-          routes:
-            - admin-dms.dsmhs.kr
-    - name: frontend-stag
-      github:
-        owner: team-aliens
-        repo: DMS-Frontend
-        branch: dev
-        installationId: "64597732"
-        hash: e6cf2accd9a0bb7baa69aaedffbd5d82edb3ac8c
-      build:
-        vite:
-            nodeVersion: "22"
-            buildCommand: yarn install && yarn workspace @service/admin build
-            distPath: /services/admin/dist
-      endpoints:
-        - port: 8080
-          routes:
-            - admin-dev-dms.dsmhs.kr
-    - name: webview-prod
-      github:
-        owner: team-aliens
-        repo: dms-webview
-        branch: main
-        installationId: "64597732"
-        hash: 584ae9547682bf7804a8cfffba61b884c0673672
-      build:
-        react:
-            nodeVersion: "22"
-            buildCommand: yarn install && yarn build
-            distPath: /build
-      endpoints:
-        - port: 8080
-          routes:
-            - webview-dms.dsmhs.kr
-    - name: gateway-prod
-      github:
-        owner: team-aliens
-        repo: DMS-Backend
-        branch: main
-        installationId: "64597732"
-        hash: e49ccff1eefd4bc1670b4a55fc7e592fb018a477
-        triggerPaths:
-            - dms-gateway/**
-            - contracts/**
-            - build.gradle.kts
-            - settings.gradle.kts
-            - gradle.properties
-            - buildSrc/**
-      build:
-        docker:
-            dockerfilePath: ./dms-gateway/Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 8080
-          routes:
-            - api-dms.dsmhs.kr
-    - name: gateway-stag
-      github:
-        owner: team-aliens
-        repo: DMS-Backend
-        branch: develop
-        installationId: "64597732"
-        hash: 99d21f81c0f7169ae8359ba96bdc4ebc14dd128a
-        triggerPaths:
-            - dms-gateway/**
-            - contracts/**
-            - build.gradle.kts
-            - settings.gradle.kts
-            - gradle.properties
-            - buildSrc/**
-      build:
-        docker:
-            dockerfilePath: ./dms-gateway/Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 8080
-          routes:
-            - dev-api-dms.dsmhs.kr
-    - name: main-prod
-      github:
-        owner: team-aliens
-        repo: DMS-Backend
-        branch: main
-        installationId: "64597732"
-        hash: 5d01dda3488e4c4d03c595ea2b38c45c70fcc9e0
-        triggerPaths:
-            - dms-main/**
-            - contracts/**
-            - build.gradle.kts
-            - settings.gradle.kts
-            - gradle.properties
-            - buildSrc/**
-      build:
-        docker:
-            dockerfilePath: ./dms-main/Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 8081
-    - name: main-stag
-      github:
-        owner: team-aliens
-        repo: DMS-Backend
-        branch: develop
-        installationId: "64597732"
-        hash: 99d21f81c0f7169ae8359ba96bdc4ebc14dd128a
-        triggerPaths:
-            - dms-main/**
-            - contracts/**
-            - build.gradle.kts
-            - settings.gradle.kts
-            - gradle.properties
-            - buildSrc/**
-      build:
-        docker:
-            dockerfilePath: ./dms-main/Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 8081
-    - name: notification-prod
-      github:
-        owner: team-aliens
-        repo: DMS-Backend
-        branch: main
-        installationId: "64597732"
-        hash: e0266a41a4b3c05ff0e54720e789de70bd76e4bf
-        triggerPaths:
-            - dms-notification/**
-            - contracts/**
-            - build.gradle.kts
-            - settings.gradle.kts
-            - gradle.properties
-            - buildSrc/**
-      build:
-        docker:
-            dockerfilePath: ./dms-notification/Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 8082
-        - port: 9090
-    - name: notification-stag
-      github:
-        owner: team-aliens
-        repo: DMS-Backend
-        branch: develop
-        installationId: "64597732"
-        hash: dec72b8798ab2a645a46c8961d4f4a59f56582bf
-        triggerPaths:
-            - dms-notification/**
-            - contracts/**
-            - build.gradle.kts
-            - settings.gradle.kts
-            - gradle.properties
-            - buildSrc/**
-      build:
-        docker:
-            dockerfilePath: ./dms-notification/Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 8082
-        - port: 9090
+  - name: frontend-prod
+    github:
+      owner: team-aliens
+      repo: DMS-Frontend
+      branch: main
+      installationId: "64597732"
+      hash: 40c91b55204f9b8432414617e39f19c00f5db5c1
+    build:
+      vite:
+        nodeVersion: "22"
+        buildCommand: yarn install && yarn workspace @service/admin build
+        distPath: /services/admin/dist
+    endpoints:
+      - port: 8080
+        routes:
+          - admin-dms.dsmhs.kr
+  - name: frontend-stag
+    github:
+      owner: team-aliens
+      repo: DMS-Frontend
+      branch: dev
+      installationId: "64597732"
+      hash: 70f70de68797511d8ffbf06fdbea252d27f5a654
+    build:
+      vite:
+        nodeVersion: "22"
+        buildCommand: yarn install && yarn workspace @service/admin build
+        distPath: /services/admin/dist
+    endpoints:
+      - port: 8080
+        routes:
+          - admin-dev-dms.dsmhs.kr
+  - name: webview-prod
+    github:
+      owner: team-aliens
+      repo: dms-webview
+      branch: main
+      installationId: "64597732"
+      hash: 584ae9547682bf7804a8cfffba61b884c0673672
+    build:
+      react:
+        nodeVersion: "22"
+        buildCommand: yarn install && yarn build
+        distPath: /build
+    endpoints:
+      - port: 8080
+        routes:
+          - webview-dms.dsmhs.kr
+  - name: gateway-prod
+    github:
+      owner: team-aliens
+      repo: DMS-Backend
+      branch: main
+      installationId: "64597732"
+      hash: e49ccff1eefd4bc1670b4a55fc7e592fb018a477
+      triggerPaths:
+        - dms-gateway/**
+        - contracts/**
+        - build.gradle.kts
+        - settings.gradle.kts
+        - gradle.properties
+        - buildSrc/**
+    build:
+      docker:
+        dockerfilePath: ./dms-gateway/Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 8080
+        routes:
+          - api-dms.dsmhs.kr
+  - name: gateway-stag
+    github:
+      owner: team-aliens
+      repo: DMS-Backend
+      branch: develop
+      installationId: "64597732"
+      hash: 99d21f81c0f7169ae8359ba96bdc4ebc14dd128a
+      triggerPaths:
+        - dms-gateway/**
+        - contracts/**
+        - build.gradle.kts
+        - settings.gradle.kts
+        - gradle.properties
+        - buildSrc/**
+    build:
+      docker:
+        dockerfilePath: ./dms-gateway/Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 8080
+        routes:
+          - dev-api-dms.dsmhs.kr
+  - name: main-prod
+    github:
+      owner: team-aliens
+      repo: DMS-Backend
+      branch: main
+      installationId: "64597732"
+      hash: 5d01dda3488e4c4d03c595ea2b38c45c70fcc9e0
+      triggerPaths:
+        - dms-main/**
+        - contracts/**
+        - build.gradle.kts
+        - settings.gradle.kts
+        - gradle.properties
+        - buildSrc/**
+    build:
+      docker:
+        dockerfilePath: ./dms-main/Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 8081
+  - name: main-stag
+    github:
+      owner: team-aliens
+      repo: DMS-Backend
+      branch: develop
+      installationId: "64597732"
+      hash: 99d21f81c0f7169ae8359ba96bdc4ebc14dd128a
+      triggerPaths:
+        - dms-main/**
+        - contracts/**
+        - build.gradle.kts
+        - settings.gradle.kts
+        - gradle.properties
+        - buildSrc/**
+    build:
+      docker:
+        dockerfilePath: ./dms-main/Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 8081
+  - name: notification-prod
+    github:
+      owner: team-aliens
+      repo: DMS-Backend
+      branch: main
+      installationId: "64597732"
+      hash: e0266a41a4b3c05ff0e54720e789de70bd76e4bf
+      triggerPaths:
+        - dms-notification/**
+        - contracts/**
+        - build.gradle.kts
+        - settings.gradle.kts
+        - gradle.properties
+        - buildSrc/**
+    build:
+      docker:
+        dockerfilePath: ./dms-notification/Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 8082
+      - port: 9090
+  - name: notification-stag
+    github:
+      owner: team-aliens
+      repo: DMS-Backend
+      branch: develop
+      installationId: "64597732"
+      hash: dec72b8798ab2a645a46c8961d4f4a59f56582bf
+      triggerPaths:
+        - dms-notification/**
+        - contracts/**
+        - build.gradle.kts
+        - settings.gradle.kts
+        - gradle.properties
+        - buildSrc/**
+    build:
+      docker:
+        dockerfilePath: ./dms-notification/Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 8082
+      - port: 9090
 addons:
-    - name: main-prod-mysql
-      type: mysql
-      storage: 10Gi
-    - name: main-stag-mysql
-      type: mysql
-      storage: 10Gi
-    - name: notification-prod-mysql
-      type: mysql
-      storage: 1Gi
-    - name: notification-stag-mysql
-      type: mysql
-      storage: 1Gi
-    - name: prod-rabbitmq
-      type: rabbitmq
-      storage: 1Gi
-    - name: stag-rabbitmq
-      type: rabbitmq
-      storage: 1Gi
-    - name: prod-redis
-      type: redis
-      storage: 1Gi
-    - name: stag-redis
-      type: redis
-      storage: 1Gi
+  - name: main-prod-mysql
+    type: mysql
+    storage: 10Gi
+  - name: main-stag-mysql
+    type: mysql
+    storage: 10Gi
+  - name: notification-prod-mysql
+    type: mysql
+    storage: 1Gi
+  - name: notification-stag-mysql
+    type: mysql
+    storage: 1Gi
+  - name: prod-rabbitmq
+    type: rabbitmq
+    storage: 1Gi
+  - name: stag-rabbitmq
+    type: rabbitmq
+    storage: 1Gi
+  - name: prod-redis
+    type: redis
+    storage: 1Gi
+  - name: stag-redis
+    type: redis
+    storage: 1Gi
