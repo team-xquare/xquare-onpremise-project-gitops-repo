@@ -29,7 +29,7 @@ applications:
         - finda-auth/**
     build:
       docker:
-        dockerfilePath: finda-auth/Dockerfile
+        dockerfilePath: Dockerfile
         contextPath: .
     endpoints:
       - port: 8081
