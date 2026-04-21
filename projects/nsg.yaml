@@ -8,9 +8,10 @@ applications:
         branch: main
         installationId: "125695172"
       build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
+        django:
+            pythonVersion: "3.13"
+            buildCommand: pip install -r requirements.txt
+            startCommand: cd config && python manage.py migrate && python manage.py runserver 0.0.0.0:8000
       endpoints:
         - port: 8000
 addons:
