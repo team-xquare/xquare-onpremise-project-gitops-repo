@@ -7,6 +7,15 @@ applications:
         repo: NSG-BE
         branch: main
         installationId: "125695172"
+        triggerPaths:
+            - requirements.txt
+            - config/**
+            - users/**
+            - posts/**
+            - places/**
+            - images/**
+            - Dockerfile
+            - .gitignore
       build:
         django:
             pythonVersion: "3.13"
