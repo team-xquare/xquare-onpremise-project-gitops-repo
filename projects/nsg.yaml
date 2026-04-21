@@ -1,6 +1,18 @@
 owners:
     - 162133680
-applications: []
+applications:
+    - name: nsg-be
+      github:
+        owner: DSM-NSG
+        repo: NSG-BE
+        branch: main
+        installationId: "125695172"
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 8000
 addons:
     - name: db
       type: postgresql
