@@ -1,76 +1,95 @@
 owners:
-  - 163271977
+    - 163271977
 applications:
-  - name: backend
-    github:
-      owner: GupSikBulk
-      repo: GupSikBulk_BE
-      branch: main
-      installationId: "116079958"
-      hash: e5addeab202e8aae0d2dba14e08141b516e0f0d7
-    build:
-      docker:
-        dockerfilePath: ./Dockerfile
-        contextPath: .
-    endpoints:
-      - port: 8000
-        routes:
-          - gupsikbulk-api.dsmhs.kr
-  - name: frontend
-    github:
-      owner: GupSikBulk
-      repo: GupSikBulk_FE
-      branch: main
-      installationId: "116079958"
-      hash: e652d10cfa9f24a374022130b1199fe9b502600e
-    build:
-      docker:
-        dockerfilePath: ./Dockerfile
-        contextPath: .
-    endpoints:
-      - port: 3000
-        routes:
-          - gupsikbulk.dsmhs.kr
-  - name: backend-dev
-    github:
-      owner: GupSikBulk
-      repo: GupSikBulk_BE
-      branch: develop
-      installationId: "116079958"
-      hash: 36cebaec4c31eff93d2624c657aaf5e264ca7785
-    build:
-      docker:
-        dockerfilePath: ./Dockerfile
-        contextPath: .
-    endpoints:
-      - port: 8000
-        routes:
-          - gupsikbulk-dev-api.dsmhs.kr
-  - name: frontend-stag
-    github:
-      owner: GupSikBulk
-      repo: GupSikBulk_FE
-      branch: develop
-      installationId: "116079958"
-      hash: 0c055cd746c6bbdee718c2e89f20b769166bbeb9
-    build:
-      docker:
-        dockerfilePath: ./Dockerfile.stag
-        contextPath: .
-    endpoints:
-      - port: 3000
-        routes:
-          - gupsikbulk-stag.dsmhs.kr
+    - name: backend
+      github:
+        owner: GupSikBulk
+        repo: GupSikBulk_BE
+        branch: main
+        installationId: "116079958"
+        hash: e5addeab202e8aae0d2dba14e08141b516e0f0d7
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 8000
+          routes:
+            - gupsikbulk-api.dsmhs.kr
+    - name: frontend
+      github:
+        owner: GupSikBulk
+        repo: GupSikBulk_FE
+        branch: main
+        installationId: "116079958"
+        hash: e652d10cfa9f24a374022130b1199fe9b502600e
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 3000
+          routes:
+            - gupsikbulk.dsmhs.kr
+    - name: backend-dev
+      github:
+        owner: GupSikBulk
+        repo: GupSikBulk_BE
+        branch: develop
+        installationId: "116079958"
+        hash: 36cebaec4c31eff93d2624c657aaf5e264ca7785
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 8000
+          routes:
+            - gupsikbulk-dev-api.dsmhs.kr
+    - name: frontend-stag
+      github:
+        owner: GupSikBulk
+        repo: GupSikBulk_FE
+        branch: develop
+        installationId: "116079958"
+        hash: 0c055cd746c6bbdee718c2e89f20b769166bbeb9
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile.stag
+            contextPath: .
+      endpoints:
+        - port: 3000
+          routes:
+            - gupsikbulk-stag.dsmhs.kr
+    - name: airleg-docs
+      github:
+        owner: leejh08
+        repo: AirLeg
+        branch: main
+        installationId: "99610854"
+        triggerPaths:
+            - site/**
+            - Docs/**
+            - README.md
+            - CHANGELOG.md
+            - backlog.md
+            - deploy/xquare/docs/**
+      build:
+        docker:
+            dockerfilePath: ./deploy/xquare/docs/Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 8080
 addons:
-  - name: db
-    type: postgresql
-    storage: 2Gi
-  - name: cache
-    type: redis
-    storage: 2Gi
-  - name: db-dev
-    type: postgresql
-    storage: 1Gi
-  - name: cache-dev
-    type: redis
-    storage: 500Mi
+    - name: db
+      type: postgresql
+      storage: 2Gi
+    - name: cache
+      type: redis
+      storage: 2Gi
+    - name: db-dev
+      type: postgresql
+      storage: 1Gi
+    - name: cache-dev
+      type: redis
+      storage: 500Mi
