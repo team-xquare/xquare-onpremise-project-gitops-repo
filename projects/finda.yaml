@@ -14,8 +14,8 @@ applications:
             - finda-gateway/**
       build:
         docker:
-            dockerfilePath: Dockerfile
-            contextPath: finda-gateway
+            dockerfilePath: finda-gateway/Dockerfile
+            contextPath: .
       endpoints:
         - port: 8080
           routes:
