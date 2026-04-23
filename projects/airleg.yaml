@@ -1,22 +1,23 @@
 owners:
-    - 163271977
+  - 163271977
 applications:
-    - name: airleg-docs
-      github:
-        owner: leejh08
-        repo: AirLeg
-        branch: main
-        installationId: "99610854"
-        triggerPaths:
-            - site/**
-            - Docs/**
-            - README.md
-            - CHANGELOG.md
-            - backlog.md
-            - deploy/xquare/docs/**
-      build:
-        docker:
-            dockerfilePath: ./deploy/xquare/docs/Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 8080
+  - name: airleg-docs
+    github:
+      owner: leejh08
+      repo: AirLeg
+      branch: main
+      installationId: "99610854"
+      triggerPaths:
+        - site/**
+        - Docs/**
+        - README.md
+        - CHANGELOG.md
+        - backlog.md
+        - deploy/xquare/docs/**
+      hash: 7c46c504256e883dcd9fe84785e2598119843a12
+    build:
+      docker:
+        dockerfilePath: ./deploy/xquare/docs/Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 8080
