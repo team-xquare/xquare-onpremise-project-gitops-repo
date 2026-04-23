@@ -61,25 +61,6 @@ applications:
         - port: 3000
           routes:
             - gupsikbulk-stag.dsmhs.kr
-    - name: airleg-docs
-      github:
-        owner: leejh08
-        repo: AirLeg
-        branch: main
-        installationId: "99610854"
-        triggerPaths:
-            - site/**
-            - Docs/**
-            - README.md
-            - CHANGELOG.md
-            - backlog.md
-            - deploy/xquare/docs/**
-      build:
-        docker:
-            dockerfilePath: ./deploy/xquare/docs/Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 8080
 addons:
     - name: db
       type: postgresql
