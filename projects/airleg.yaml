@@ -7,7 +7,7 @@ applications:
       repo: AirLeg
       branch: main
       installationId: "99610854"
-      hash: 48053dff7931f993e4d612fd1a24c50a7578f361
+      hash: 4902ff673f77561de81232e8f1e3e1747a66ff6a
       triggerPaths:
         - site/**
         - Docs/**
