@@ -48,8 +48,8 @@ applications:
             - finda-volunteer/**
       build:
         docker:
-            dockerfilePath: Dockerfile
-            contextPath: finda-volunteer
+            dockerfilePath: finda-volunteer/Dockerfile
+            contextPath: .
       endpoints:
         - port: 8082
           routes:
