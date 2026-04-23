@@ -65,8 +65,8 @@ applications:
             - finda-notification/**
       build:
         docker:
-            dockerfilePath: Dockerfile
-            contextPath: finda-notification
+            dockerfilePath: finda-notification/Dockerfile
+            contextPath: .
       endpoints:
         - port: 8083
           routes:
