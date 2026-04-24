@@ -92,9 +92,6 @@ addons:
     - name: finda-redis-dev
       type: redis
       storage: 1Gi
-    - name: finda-mysql-dev
-      type: mysql
-      storage: 5Gi
     - name: finda-kafka-dev
       type: kafka
       storage: 5Gi
