@@ -111,3 +111,6 @@ addons:
     - name: finda-batch-mysql-dev
       type: mysql
       storage: 2Gi
+    - name: finda-notification-mysql-dev
+      type: mysql
+      storage: 2Gi
