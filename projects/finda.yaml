@@ -62,7 +62,7 @@ applications:
       installationId: "114211563"
       hash: 152bcfbcc60917956e06b9df10b162bcbd12b4e6
       triggerPaths:
-        - finda-notification/**
+        - .
     build:
       docker:
         dockerfilePath: finda-notification/Dockerfile
