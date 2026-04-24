@@ -28,12 +28,7 @@ applications:
       installationId: "114211563"
       hash: 152bcfbcc60917956e06b9df10b162bcbd12b4e6
       triggerPaths:
-        - finda-auth/**
-        - .gradle/**
-        - buildSrc/**
-        - settings.gradle.kts
-        - build.gradle.kts
-        - gradle/**
+        - .
     build:
       docker:
         dockerfilePath: finda-auth/Dockerfile
