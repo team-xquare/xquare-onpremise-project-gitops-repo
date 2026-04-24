@@ -102,9 +102,6 @@ addons:
       type: debezium
       storage: 1Gi
       bootstrap: finda-kafka-dev:9092
-    - name: finda-batch-dev
-      type: mysql
-      storage: 5Gi
     - name: ffinda-notification-dev
       type: mysql
       storage: 5Gi
