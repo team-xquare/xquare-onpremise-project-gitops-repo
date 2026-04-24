@@ -108,3 +108,6 @@ addons:
     - name: finda-volunteer-mysql-dev
       type: mysql
       storage: 2Gi
+    - name: finda-batch-mysql-dev
+      type: mysql
+      storage: 2Gi
