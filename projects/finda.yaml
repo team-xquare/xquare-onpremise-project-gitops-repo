@@ -111,3 +111,6 @@ addons:
     - name: ffinda-notification-dev
       type: mysql
       storage: 5Gi
+    - name: finda-auth-mysql-dev
+      type: mysql
+      storage: 2Gi
