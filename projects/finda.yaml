@@ -105,3 +105,6 @@ addons:
     - name: finda-auth-mysql-dev
       type: mysql
       storage: 2Gi
+    - name: finda-volunteer-mysql-dev
+      type: mysql
+      storage: 2Gi
