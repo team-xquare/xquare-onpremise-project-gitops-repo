@@ -63,7 +63,7 @@ applications:
           - gupsikbulk-stag.dsmhs.kr
   - name: airleg-docs
     github:
-      hash: 2c4999bf3334a09ee148a63ffa36af9726e986d6
+      hash: 39fe559342bcb9fb91a9c8ffc4ff748b124d8fc9
 addons:
   - name: db
     type: postgresql
