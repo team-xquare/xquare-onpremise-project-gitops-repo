@@ -1,25 +1,39 @@
 owners:
-  - 115498126
+    - 115498126
 applications:
-  - name: proxy
-    github:
-      owner: aiminted
-      repo: openai-proxy
-      branch: main
-      installationId: "127405213"
-      hash: 042f5c1282d41725b6747ad64a2298f3e4279297
-    build:
-      docker:
-        dockerfilePath: ""
-        contextPath: ""
-    endpoints:
-      - port: 8080
-        routes:
-          - openai-proxy.dsmhs.kr
+    - name: proxy
+      github:
+        owner: aiminted
+        repo: openai-proxy
+        branch: main
+        installationId: "127405213"
+        hash: 042f5c1282d41725b6747ad64a2298f3e4279297
+      build:
+        docker:
+            dockerfilePath: ""
+            contextPath: ""
+      endpoints:
+        - port: 8080
+          routes:
+            - openai-proxy.dsmhs.kr
+    - name: admin
+      github:
+        owner: aiminted
+        repo: openai-proxy-admin
+        branch: main
+        installationId: "127405213"
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 8080
+          routes:
+            - openai-proxy-admin.dsmhs.kr
 addons:
-  - name: postgres
-    type: postgresql
-    storage: 2Gi
-  - name: redis
-    type: redis
-    storage: 500Mi
+    - name: postgres
+      type: postgresql
+      storage: 2Gi
+    - name: redis
+      type: redis
+      storage: 500Mi
