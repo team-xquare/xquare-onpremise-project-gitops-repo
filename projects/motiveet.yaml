@@ -1,67 +1,67 @@
 owners:
-  - 163987011
+    - 163987011
 applications:
-  - name: be
-    github:
-      owner: team-gozip
-      repo: motiveet-be
-      branch: main
-      installationId: "116709801"
-      hash: 8b0cedc8209e8a90abcedbf8beaaa05830317c22
-    build:
-      docker:
-        dockerfilePath: ./Dockerfile
-        contextPath: .
-    endpoints:
-      - port: 8000
-        routes:
-          - motiveet-api.dsmhs.kr
-  - name: fe
-    github:
-      owner: team-gozip
-      repo: motiveet_FE_offline
-      branch: main
-      installationId: "116709801"
-      hash: 05e3a96db7d4b64d40040f4fe3e7d95fb12344e6
-    build:
-      docker:
-        dockerfilePath: ./Dockerfile
-        contextPath: .
-    endpoints:
-      - port: 3000
-        routes:
-          - motiveet.dsmhs.kr
-  - name: be-online
-    github:
-      owner: team-gozip
-      repo: motiveet-BE-online
-      branch: main
-      installationId: "116709801"
-      hash: ed8d6d39d9ba0f79af5cb5ad4f12369a8a1ec22a
-    build:
-      docker:
-        dockerfilePath: ""
-        contextPath: ""
-    endpoints:
-      - port: 8000
-        routes:
-          - motiveet-online-api.dsmhs.kr
-  - name: fe-online
-    github:
-      owner: team-gozip
-      repo: motiveet_FE_online
-      branch: main
-      installationId: "116709801"
-      hash: 05e3a96db7d4b64d40040f4fe3e7d95fb12344e6
-    build:
-      docker:
-        dockerfilePath: ""
-        contextPath: ""
-    endpoints:
-      - port: 3000
-        routes:
-          - motiveet-online.dsmhs.kr
+    - name: be
+      github:
+        owner: team-gozip
+        repo: motiveet-be
+        branch: main
+        installationId: "116709801"
+        hash: 8b0cedc8209e8a90abcedbf8beaaa05830317c22
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 8000
+          routes:
+            - motiveet-api.dsmhs.kr
+    - name: fe
+      github:
+        owner: team-gozip
+        repo: motiveet_FE_offline
+        branch: main
+        installationId: "116709801"
+        hash: 05e3a96db7d4b64d40040f4fe3e7d95fb12344e6
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 3000
+          routes:
+            - motiveet.dsmhs.kr
+    - name: be-online
+      github:
+        owner: team-gozip
+        repo: motiveet-BE-online
+        branch: main
+        installationId: "116709801"
+        hash: ed8d6d39d9ba0f79af5cb5ad4f12369a8a1ec22a
+      build:
+        docker:
+            dockerfilePath: ""
+            contextPath: ""
+      endpoints:
+        - port: 8000
+          routes:
+            - motiveet-online-api.dsmhs.kr
+    - name: fe-online
+      github:
+        owner: team-gozip
+        repo: motiveet_FE_online
+        branch: main
+        installationId: "116709801"
+        hash: 05e3a96db7d4b64d40040f4fe3e7d95fb12344e6
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 3000
+          routes:
+            - motiveet-online.dsmhs.kr
 addons:
-  - name: motiveet-db
-    type: postgresql
-    storage: 2Gi
+    - name: motiveet-db
+      type: postgresql
+      storage: 2Gi
