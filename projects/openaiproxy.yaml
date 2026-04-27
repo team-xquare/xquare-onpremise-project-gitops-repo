@@ -7,7 +7,7 @@ applications:
       repo: openai-proxy
       branch: main
       installationId: "127405213"
-      hash: d687e0d1db7de081d25bfa7f1c7adc002a42ab14
+      hash: 3de3767c0553ed0026592ea181b99cb90ae60204
     build:
       docker:
         dockerfilePath: ""
