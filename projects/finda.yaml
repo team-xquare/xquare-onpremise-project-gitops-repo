@@ -60,7 +60,7 @@ applications:
       repo: Finda-Backend
       branch: develop
       installationId: "114211563"
-      hash: 9e7d12ec3ee6654b6e5292c523f4ae145fc66c95
+      hash: ebf143d47a0767f9ac26bf16db35489a95ced827
       triggerPaths:
         - .
     build:
