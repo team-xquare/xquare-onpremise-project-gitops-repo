@@ -1,6 +1,20 @@
 owners:
     - 115498126
-applications: []
+applications:
+    - name: proxy
+      github:
+        owner: aiminted
+        repo: openai-proxy
+        branch: main
+        installationId: "127405213"
+      build:
+        docker:
+            dockerfilePath: ""
+            contextPath: ""
+      endpoints:
+        - port: 8080
+          routes:
+            - openai-proxy.dsmhs.kr
 addons:
     - name: postgres
       type: postgresql
