@@ -52,7 +52,7 @@ applications:
       repo: motiveet_FE_online
       branch: main
       installationId: "116709801"
-      hash: 05e3a96db7d4b64d40040f4fe3e7d95fb12344e6
+      hash: 5097a2cf4e626ed5d5a40b63953135621764a41d
     build:
       docker:
         dockerfilePath: ./Dockerfile
