@@ -1,40 +1,40 @@
 owners:
-    - 115498126
+  - 115498126
 applications:
-    - name: proxy
-      github:
-        owner: aiminted
-        repo: openai-proxy
-        branch: main
-        installationId: "127405213"
-        hash: 042f5c1282d41725b6747ad64a2298f3e4279297
-      build:
-        docker:
-            dockerfilePath: ""
-            contextPath: ""
-      endpoints:
-        - port: 8080
-          routes:
-            - openai-proxy.dsmhs.kr
-    - name: admin
-      github:
-        owner: aiminted
-        repo: openai-proxy-admin
-        branch: main
-        installationId: "127405213"
-        hash: eeca69f2acad134b4fc59d625fb52bac8cfb6a72
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 8080
-          routes:
-            - openai-proxy-admin.dsmhs.kr
+  - name: proxy
+    github:
+      owner: aiminted
+      repo: openai-proxy
+      branch: main
+      installationId: "127405213"
+      hash: 042f5c1282d41725b6747ad64a2298f3e4279297
+    build:
+      docker:
+        dockerfilePath: ""
+        contextPath: ""
+    endpoints:
+      - port: 8080
+        routes:
+          - openai-proxy.dsmhs.kr
+  - name: admin
+    github:
+      owner: aiminted
+      repo: openai-proxy-admin
+      branch: main
+      installationId: "127405213"
+      hash: 101e0691df4037259547da0a0a59f039e42b57d2
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 8080
+        routes:
+          - openai-proxy-admin.dsmhs.kr
 addons:
-    - name: postgres
-      type: postgresql
-      storage: 2Gi
-    - name: redis
-      type: redis
-      storage: 500Mi
+  - name: postgres
+    type: postgresql
+    storage: 2Gi
+  - name: redis
+    type: redis
+    storage: 500Mi
