@@ -231,7 +231,7 @@ applications:
       repo: Little-BE
       branch: main
       installationId: "123528664"
-      hash: af31762a752df4e11e329da4b04bbc82a5fdd4d6
+      hash: dd802090ebc23cc2414835c84835be24ca3fa738
       triggerPaths:
         - app/**
         - pyproject.toml
