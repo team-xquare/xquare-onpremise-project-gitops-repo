@@ -163,7 +163,7 @@ applications:
       repo: Daedongyeojido_FE_v4.0
       branch: main
       installationId: "63841363"
-      hash: 15723b857e70bc3d9c93fdacc96e2c54a6b57f74
+      hash: aa8cd87181a1df5baf2af181a47dea6712cc9a4f
       triggerPaths:
         - apps/teacher/**
         - packages/**
