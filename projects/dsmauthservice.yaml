@@ -1,6 +1,7 @@
 owners:
     - 163130634
     - 163826678
+    - 198728833
 applications:
     - name: dsm-login-prod
       github:
