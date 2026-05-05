@@ -15,7 +15,7 @@ applications:
       repo: BookMaru-BE
       triggerPaths:
         - ""
-      hash: "b0a385c98aa8ed9602b8c7c99cf1ef2df2fda404"
+      hash: "d5f58efcc579362f6fc5e7accee399f798ec5549"
 addons:
   - name: bookmaru-db
     storage: 5Gi
