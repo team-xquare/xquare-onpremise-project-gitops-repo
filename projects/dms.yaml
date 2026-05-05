@@ -192,6 +192,22 @@ applications:
       installationId: "64597732"
       owner: team-aliens
       repo: DMS-Frontend
+  - name: general-frontend-prod
+    build:
+      vite:
+        buildCommand: yarn install && yarn workspace @service/general-teacher build
+        distPath: /services/generalTeacher/dist
+        nodeVersion: "22"
+    endpoints:
+      - port: 8080
+        routes:
+          - general-teacher-dms.dsmhs.kr
+    github:
+      branch: main
+      hash: 40c91b55204f9b8432414617e39f19c00f5db5c1
+      installationId: "64597732"
+      owner: team-aliens
+      repo: DMS-Frontend
 addons:
   - name: main-prod-mysql
     type: mysql
