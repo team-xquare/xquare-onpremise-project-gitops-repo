@@ -14,3 +14,5 @@ applications:
             binaryName: app
       endpoints:
         - port: 8080
+          routes:
+            - hi.dsmhs.kr
