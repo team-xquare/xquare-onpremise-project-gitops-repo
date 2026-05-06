@@ -1,3 +1,7 @@
 owners:
     - 163130634
 applications: []
+addons:
+    - name: mysql
+      type: mysql
+      storage: 2Gi
