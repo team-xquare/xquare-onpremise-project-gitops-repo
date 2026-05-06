@@ -10,8 +10,8 @@ applications:
       build:
         gradle:
             javaVersion: "17"
-            jarOutputPath: /build/libs/*.jar
-            buildCommand: ./gradlew clean bootJar -x test --no-daemon
+            jarOutputPath: build/libs/*.jar
+            buildCommand: ./gradlew bootJar
       endpoints:
         - port: 8080
 addons:
