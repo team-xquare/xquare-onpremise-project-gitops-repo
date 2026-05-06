@@ -1,6 +1,19 @@
 owners:
     - 163130634
-applications: []
+applications:
+    - name: gujeuk-check-in-server
+      github:
+        owner: GuJeuk-Check-in
+        repo: GuJeuk-Check-In_server
+        branch: main
+        installationId: "90332669"
+      build:
+        gradle:
+            javaVersion: "17"
+            jarOutputPath: ""
+            buildCommand: ""
+      endpoints:
+        - port: 8080
 addons:
     - name: mysql
       type: mysql
