@@ -1,3 +1,16 @@
 owners:
     - 115498126
-applications: []
+applications:
+    - name: hi
+      github:
+        owner: team-xquare
+        repo: hitest
+        branch: main
+        installationId: "62433388"
+      build:
+        go:
+            goVersion: "1.23"
+            buildCommand: go build -o app .
+            binaryName: app
+      endpoints:
+        - port: 8080
