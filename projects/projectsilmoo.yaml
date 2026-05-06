@@ -5,3 +5,6 @@ addons:
     - name: mysql
       type: mysql
       storage: 2Gi
+    - name: redis
+      type: redis
+      storage: 2Gi
