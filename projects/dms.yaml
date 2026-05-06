@@ -188,7 +188,7 @@ applications:
           - head-teacher-dms.dsmhs.kr
     github:
       branch: main
-      hash: 4854dee419c2dca08d91d2dc63bc8ad2de3205f0
+      hash: 0f0bd8c8fca1e16e511c518a57d788845e49bec5
       installationId: "64597732"
       owner: team-aliens
       repo: DMS-Frontend
