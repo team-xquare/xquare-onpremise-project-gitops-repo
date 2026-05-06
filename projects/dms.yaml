@@ -24,7 +24,7 @@ applications:
       repo: DMS-Frontend
       branch: dev
       installationId: "64597732"
-      hash: 37ca814e5379b199cc83153da6e46ecd5ee2ebd0
+      hash: 08300f66fa97d370c7854ffa6dfc1402ce5a2ef3
     build:
       vite:
         nodeVersion: "22"
