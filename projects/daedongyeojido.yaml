@@ -1,265 +1,265 @@
 owners:
-    - 163130634
-    - 198728833
+  - 163130634
+  - 198728833
 applications:
-    - name: daedong-web-prod
-      github:
-        owner: Team-jeong-ho-kim
-        repo: Daedongyeojido_FE_v4.0
-        branch: main
-        installationId: "63841363"
-        hash: 15723b857e70bc3d9c93fdacc96e2c54a6b57f74
-        triggerPaths:
-            - apps/web/**
-            - packages/**
-            - pnpm-lock.yaml
-            - pnpm-workspace.yaml
-            - package.json
-            - turbo.json
-      build:
-        docker:
-            dockerfilePath: apps/web/Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 3000
-          routes:
-            - daedong-web-prod.dsmhs.kr
-    - name: daedong-web-stag
-      github:
-        owner: Team-jeong-ho-kim
-        repo: Daedongyeojido_FE_v4.0
-        branch: develop
-        installationId: "63841363"
-        hash: 15723b857e70bc3d9c93fdacc96e2c54a6b57f74
-        triggerPaths:
-            - apps/web/**
-            - packages/**
-            - pnpm-lock.yaml
-            - pnpm-workspace.yaml
-            - package.json
-            - turbo.json
-      build:
-        docker:
-            dockerfilePath: apps/web/Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 3000
-          routes:
-            - daedong-web-stag.dsmhs.kr
-    - name: daedong-student-stag
-      github:
-        owner: Team-jeong-ho-kim
-        repo: Daedongyeojido_FE_v4.0
-        branch: develop
-        installationId: "63841363"
-        hash: 67d4ee580bc933c44af0903c417d9275f9b03992
-        triggerPaths:
-            - apps/student/**
-            - packages/**
-            - pnpm-lock.yaml
-            - pnpm-workspace.yaml
-            - package.json
-            - turbo.json
-      build:
-        docker:
-            dockerfilePath: apps/student/Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 3001
-          routes:
-            - daedong-student-stag.dsmhs.kr
-    - name: daedong-student-prod
-      github:
-        owner: Team-jeong-ho-kim
-        repo: Daedongyeojido_FE_v4.0
-        branch: main
-        installationId: "63841363"
-        hash: 047858b9b6f10681aed3327726464e0861f86cee
-        triggerPaths:
-            - apps/student/**
-            - packages/**
-            - pnpm-lock.yaml
-            - pnpm-workspace.yaml
-            - package.json
-            - turbo.json
-      build:
-        docker:
-            dockerfilePath: apps/student/Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 3001
-          routes:
-            - daedong-student-prod.dsmhs.kr
-    - name: daedong-admin-prod
-      github:
-        owner: Team-jeong-ho-kim
-        repo: Daedongyeojido_FE_v4.0
-        branch: main
-        installationId: "63841363"
-        hash: 15723b857e70bc3d9c93fdacc96e2c54a6b57f74
-        triggerPaths:
-            - apps/admin/**
-            - packages/**
-            - pnpm-lock.yaml
-            - pnpm-workspace.yaml
-            - package.json
-            - turbo.json
-      build:
-        docker:
-            dockerfilePath: apps/admin/Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 3002
-          routes:
-            - daedong-admin-prod.dsmhs.kr
-    - name: daedong-admin-stag
-      github:
-        owner: Team-jeong-ho-kim
-        repo: Daedongyeojido_FE_v4.0
-        branch: develop
-        installationId: "63841363"
-        hash: 15723b857e70bc3d9c93fdacc96e2c54a6b57f74
-        triggerPaths:
-            - apps/admin/**
-            - packages/**
-            - pnpm-lock.yaml
-            - pnpm-workspace.yaml
-            - package.json
-            - turbo.json
-      build:
-        docker:
-            dockerfilePath: apps/admin/Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 3002
-          routes:
-            - daedong-admin-stag.dsmhs.kr
-    - name: daedong-teacher-stag
-      github:
-        owner: Team-jeong-ho-kim
-        repo: Daedongyeojido_FE_v4.0
-        branch: develop
-        installationId: "63841363"
-        hash: 15723b857e70bc3d9c93fdacc96e2c54a6b57f74
-        triggerPaths:
-            - apps/teacher/**
-            - packages/**
-            - pnpm-lock.yaml
-            - pnpm-workspace.yaml
-            - package.json
-            - turbo.json
-      build:
-        docker:
-            dockerfilePath: apps/teacher/Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 3003
-          routes:
-            - daedong-teacher-stag.dsmhs.kr
-    - name: daedong-teacher-prod
-      github:
-        owner: Team-jeong-ho-kim
-        repo: Daedongyeojido_FE_v4.0
-        branch: main
-        installationId: "63841363"
-        hash: aa8cd87181a1df5baf2af181a47dea6712cc9a4f
-        triggerPaths:
-            - apps/teacher/**
-            - packages/**
-            - pnpm-lock.yaml
-            - pnpm-workspace.yaml
-            - package.json
-            - turbo.json
-      build:
-        docker:
-            dockerfilePath: apps/teacher/Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 3003
-          routes:
-            - daedong-teacher-prod.dsmhs.kr
-    - name: daedong-api-prod
-      github:
-        owner: Team-jeong-ho-kim
-        repo: Daedongyeojido_BE_v4.0
-        branch: main
-        installationId: "63841363"
-        hash: 34ab721b8f62c81401daff11eb29c4fadfdf184d
-        triggerPaths:
-            - src/**
-            - build.gradle
-            - settings.gradle
-            - gradle/**
-            - gradlew
-            - gradlew.bat
-      build:
-        gradle:
-            javaVersion: "17"
-            jarOutputPath: /build/libs/*.jar
-            buildCommand: ./gradlew bootJar -x test
-      endpoints:
-        - port: 8080
-          routes:
-            - daedong-api-prod.dsmhs.kr
-    - name: daedong-api-stag
-      github:
-        owner: Team-jeong-ho-kim
-        repo: Daedongyeojido_BE_v4.0
-        branch: develop
-        installationId: "63841363"
-        hash: 5825f8e9c86519d8f01fc34aee479317bc16a7b5
-        triggerPaths:
-            - src/**
-            - build.gradle
-            - settings.gradle
-            - gradle/**
-            - gradlew
-            - gradlew.bat
-      build:
-        gradle:
-            javaVersion: "17"
-            jarOutputPath: /build/libs/*.jar
-            buildCommand: ./gradlew bootJar -x test
-      endpoints:
-        - port: 8080
-          routes:
-            - daedong-api-stag.dsmhs.kr
-    - name: little-be-temp
-      github:
-        owner: Little-DSM
-        repo: Little-BE
-        branch: main
-        installationId: "123528664"
-        hash: 05821be5d4570a5615f5ad0d81fd7204aa796f67
-        triggerPaths:
-            - app/**
-            - pyproject.toml
-            - Dockerfile
-            - README.md
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 8001
-          routes:
-            - little-be-temp.dsmhs.kr
+  - name: daedong-web-prod
+    github:
+      owner: Team-jeong-ho-kim
+      repo: Daedongyeojido_FE_v4.0
+      branch: main
+      installationId: "63841363"
+      hash: 15723b857e70bc3d9c93fdacc96e2c54a6b57f74
+      triggerPaths:
+        - apps/web/**
+        - packages/**
+        - pnpm-lock.yaml
+        - pnpm-workspace.yaml
+        - package.json
+        - turbo.json
+    build:
+      docker:
+        dockerfilePath: apps/web/Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 3000
+        routes:
+          - daedong-web-prod.dsmhs.kr
+  - name: daedong-web-stag
+    github:
+      owner: Team-jeong-ho-kim
+      repo: Daedongyeojido_FE_v4.0
+      branch: develop
+      installationId: "63841363"
+      hash: 15723b857e70bc3d9c93fdacc96e2c54a6b57f74
+      triggerPaths:
+        - apps/web/**
+        - packages/**
+        - pnpm-lock.yaml
+        - pnpm-workspace.yaml
+        - package.json
+        - turbo.json
+    build:
+      docker:
+        dockerfilePath: apps/web/Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 3000
+        routes:
+          - daedong-web-stag.dsmhs.kr
+  - name: daedong-student-stag
+    github:
+      owner: Team-jeong-ho-kim
+      repo: Daedongyeojido_FE_v4.0
+      branch: develop
+      installationId: "63841363"
+      hash: 67d4ee580bc933c44af0903c417d9275f9b03992
+      triggerPaths:
+        - apps/student/**
+        - packages/**
+        - pnpm-lock.yaml
+        - pnpm-workspace.yaml
+        - package.json
+        - turbo.json
+    build:
+      docker:
+        dockerfilePath: apps/student/Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 3001
+        routes:
+          - daedong-student-stag.dsmhs.kr
+  - name: daedong-student-prod
+    github:
+      owner: Team-jeong-ho-kim
+      repo: Daedongyeojido_FE_v4.0
+      branch: main
+      installationId: "63841363"
+      hash: 047858b9b6f10681aed3327726464e0861f86cee
+      triggerPaths:
+        - apps/student/**
+        - packages/**
+        - pnpm-lock.yaml
+        - pnpm-workspace.yaml
+        - package.json
+        - turbo.json
+    build:
+      docker:
+        dockerfilePath: apps/student/Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 3001
+        routes:
+          - daedong-student-prod.dsmhs.kr
+  - name: daedong-admin-prod
+    github:
+      owner: Team-jeong-ho-kim
+      repo: Daedongyeojido_FE_v4.0
+      branch: main
+      installationId: "63841363"
+      hash: 15723b857e70bc3d9c93fdacc96e2c54a6b57f74
+      triggerPaths:
+        - apps/admin/**
+        - packages/**
+        - pnpm-lock.yaml
+        - pnpm-workspace.yaml
+        - package.json
+        - turbo.json
+    build:
+      docker:
+        dockerfilePath: apps/admin/Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 3002
+        routes:
+          - daedong-admin-prod.dsmhs.kr
+  - name: daedong-admin-stag
+    github:
+      owner: Team-jeong-ho-kim
+      repo: Daedongyeojido_FE_v4.0
+      branch: develop
+      installationId: "63841363"
+      hash: 15723b857e70bc3d9c93fdacc96e2c54a6b57f74
+      triggerPaths:
+        - apps/admin/**
+        - packages/**
+        - pnpm-lock.yaml
+        - pnpm-workspace.yaml
+        - package.json
+        - turbo.json
+    build:
+      docker:
+        dockerfilePath: apps/admin/Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 3002
+        routes:
+          - daedong-admin-stag.dsmhs.kr
+  - name: daedong-teacher-stag
+    github:
+      owner: Team-jeong-ho-kim
+      repo: Daedongyeojido_FE_v4.0
+      branch: develop
+      installationId: "63841363"
+      hash: 15723b857e70bc3d9c93fdacc96e2c54a6b57f74
+      triggerPaths:
+        - apps/teacher/**
+        - packages/**
+        - pnpm-lock.yaml
+        - pnpm-workspace.yaml
+        - package.json
+        - turbo.json
+    build:
+      docker:
+        dockerfilePath: apps/teacher/Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 3003
+        routes:
+          - daedong-teacher-stag.dsmhs.kr
+  - name: daedong-teacher-prod
+    github:
+      owner: Team-jeong-ho-kim
+      repo: Daedongyeojido_FE_v4.0
+      branch: main
+      installationId: "63841363"
+      hash: 604002247dbdd623ed34a9130eae4e0d81a436a3
+      triggerPaths:
+        - apps/teacher/**
+        - packages/**
+        - pnpm-lock.yaml
+        - pnpm-workspace.yaml
+        - package.json
+        - turbo.json
+    build:
+      docker:
+        dockerfilePath: apps/teacher/Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 3003
+        routes:
+          - daedong-teacher-prod.dsmhs.kr
+  - name: daedong-api-prod
+    github:
+      owner: Team-jeong-ho-kim
+      repo: Daedongyeojido_BE_v4.0
+      branch: main
+      installationId: "63841363"
+      hash: 34ab721b8f62c81401daff11eb29c4fadfdf184d
+      triggerPaths:
+        - src/**
+        - build.gradle
+        - settings.gradle
+        - gradle/**
+        - gradlew
+        - gradlew.bat
+    build:
+      gradle:
+        javaVersion: "17"
+        jarOutputPath: /build/libs/*.jar
+        buildCommand: ./gradlew bootJar -x test
+    endpoints:
+      - port: 8080
+        routes:
+          - daedong-api-prod.dsmhs.kr
+  - name: daedong-api-stag
+    github:
+      owner: Team-jeong-ho-kim
+      repo: Daedongyeojido_BE_v4.0
+      branch: develop
+      installationId: "63841363"
+      hash: 5825f8e9c86519d8f01fc34aee479317bc16a7b5
+      triggerPaths:
+        - src/**
+        - build.gradle
+        - settings.gradle
+        - gradle/**
+        - gradlew
+        - gradlew.bat
+    build:
+      gradle:
+        javaVersion: "17"
+        jarOutputPath: /build/libs/*.jar
+        buildCommand: ./gradlew bootJar -x test
+    endpoints:
+      - port: 8080
+        routes:
+          - daedong-api-stag.dsmhs.kr
+  - name: little-be-temp
+    github:
+      owner: Little-DSM
+      repo: Little-BE
+      branch: main
+      installationId: "123528664"
+      hash: 05821be5d4570a5615f5ad0d81fd7204aa796f67
+      triggerPaths:
+        - app/**
+        - pyproject.toml
+        - Dockerfile
+        - README.md
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 8001
+        routes:
+          - little-be-temp.dsmhs.kr
 addons:
-    - name: daedongyeojido-mysql
-      type: mysql
-      storage: 1Gi
-    - name: daedongyeojido-redis
-      type: redis
-      storage: 500Mi
-    - name: daedongyeojido-stag-mysql
-      type: mysql
-      storage: 1Gi
-    - name: daedongyeojido-stag-redis
-      type: redis
-      storage: 500Mi
-    - name: littlebe-temp-mysql
-      type: mysql
-      storage: 1Gi
-    - name: littlebe-temp-redis
-      type: redis
-      storage: 500Mi
+  - name: daedongyeojido-mysql
+    type: mysql
+    storage: 1Gi
+  - name: daedongyeojido-redis
+    type: redis
+    storage: 500Mi
+  - name: daedongyeojido-stag-mysql
+    type: mysql
+    storage: 1Gi
+  - name: daedongyeojido-stag-redis
+    type: redis
+    storage: 500Mi
+  - name: littlebe-temp-mysql
+    type: mysql
+    storage: 1Gi
+  - name: littlebe-temp-redis
+    type: redis
+    storage: 500Mi
