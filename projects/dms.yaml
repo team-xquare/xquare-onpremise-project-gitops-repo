@@ -12,7 +12,7 @@ applications:
     build:
       vite:
         nodeVersion: "22"
-        buildCommand: yarn install && yarn workspace @service/admin build
+        buildCommand: TEMP_TYPE=prod yarn install && yarn workspace @service/admin build
         distPath: /services/admin/dist
     endpoints:
       - port: 8080
