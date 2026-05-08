@@ -1,36 +1,37 @@
 owners:
-  - 163130634
+    - 163130634
+    - 198728833
 applications:
-  - name: gujeuk-check-in-server
-    github:
-      owner: GuJeuk-Check-in
-      repo: GuJeuk-Check-In_server
-      branch: main
-      installationId: "90332669"
-    build:
-      gradle:
-        javaVersion: "17"
-        jarOutputPath: build/libs/*.jar
-        buildCommand: ./gradlew bootJar
-    endpoints:
-      - port: 8080
-  - name: gujeuk-check-in-server-docker
-    github:
-      owner: GuJeuk-Check-in
-      repo: GuJeuk-Check-In_server
-      branch: main
-      installationId: "90332669"
-      hash: 7ee44aa84dc346c657715280574979b43ab4f8ff
-    build:
-      docker:
-        dockerfilePath: ./Dockerfile
-        contextPath: .
-    endpoints:
-      - port: 8080
+    - name: gujeuk-check-in-server
+      github:
+        owner: GuJeuk-Check-in
+        repo: GuJeuk-Check-In_server
+        branch: main
+        installationId: "90332669"
+      build:
+        gradle:
+            javaVersion: "17"
+            jarOutputPath: build/libs/*.jar
+            buildCommand: ./gradlew bootJar
+      endpoints:
+        - port: 8080
+    - name: gujeuk-check-in-server-docker
+      github:
+        owner: GuJeuk-Check-in
+        repo: GuJeuk-Check-In_server
+        branch: main
+        installationId: "90332669"
+        hash: 7ee44aa84dc346c657715280574979b43ab4f8ff
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 8080
 addons:
-  - name: mysql
-    type: mysql
-    storage: 2Gi
-  - name: redis
-    type: redis
-    storage: 2Gi
+    - name: mysql
+      type: mysql
+      storage: 2Gi
+    - name: redis
+      type: redis
+      storage: 2Gi
