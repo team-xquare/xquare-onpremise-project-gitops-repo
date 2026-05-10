@@ -260,3 +260,6 @@ addons:
     - name: littlebe-temp-redis
       type: redis
       storage: 500Mi
+    - name: daedongyeojido-stag-mysql
+      type: mysql
+      storage: 1Gi
