@@ -207,7 +207,7 @@ applications:
       repo: Daedongyeojido_BE_v4.0
       branch: develop
       installationId: "63841363"
-      hash: 7d56bdb026cd83266fbc8e94ee54a52828f019e8
+      hash: 0d4613129f61c682b4c6448eac2ffc71e926f173
       triggerPaths:
         - src/**
         - build.gradle
