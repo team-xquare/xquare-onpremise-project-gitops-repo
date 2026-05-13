@@ -53,26 +53,6 @@ applications:
             contextPath: .
       endpoints:
         - port: 3003
-    - name: daedong-student-stag
-      github:
-        owner: Team-jeong-ho-kim
-        repo: Daedongyeojido_FE_v4.0
-        branch: main
-        installationId: "63841363"
-        hash: 604002247dbdd623ed34a9130eae4e0d81a436a3
-        triggerPaths:
-            - apps/student/**
-            - packages/**
-            - pnpm-lock.yaml
-            - pnpm-workspace.yaml
-            - package.json
-            - turbo.json
-      build:
-        docker:
-            dockerfilePath: apps/student/Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 3001
     - name: daedong-web-stag
       github:
         owner: Team-jeong-ho-kim
