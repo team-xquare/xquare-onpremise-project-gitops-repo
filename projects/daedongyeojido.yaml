@@ -46,28 +46,6 @@ applications:
         - port: 3000
           routes:
             - daedong-web-stag.dsmhs.kr
-    - name: daedong-student-stag
-      github:
-        owner: Team-jeong-ho-kim
-        repo: Daedongyeojido_FE_v4.0
-        branch: develop
-        installationId: "63841363"
-        hash: 67d4ee580bc933c44af0903c417d9275f9b03992
-        triggerPaths:
-            - apps/student/**
-            - packages/**
-            - pnpm-lock.yaml
-            - pnpm-workspace.yaml
-            - package.json
-            - turbo.json
-      build:
-        docker:
-            dockerfilePath: apps/student/Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 3001
-          routes:
-            - daedong-student-stag.dsmhs.kr
     - name: daedong-teacher-stag
       github:
         owner: Team-jeong-ho-kim
