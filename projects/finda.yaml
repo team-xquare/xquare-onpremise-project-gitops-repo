@@ -108,3 +108,6 @@ addons:
     - name: finda-notification-mysql-dev
       type: mysql
       storage: 2Gi
+    - name: finda-redis-dev
+      type: redis
+      storage: 1Gi
