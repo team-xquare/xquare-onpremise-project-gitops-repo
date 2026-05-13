@@ -2,28 +2,6 @@ owners:
     - 163130634
     - 198728833
 applications:
-    - name: daedong-web-stag
-      github:
-        owner: Team-jeong-ho-kim
-        repo: Daedongyeojido_FE_v4.0
-        branch: develop
-        installationId: "63841363"
-        hash: 15723b857e70bc3d9c93fdacc96e2c54a6b57f74
-        triggerPaths:
-            - apps/web/**
-            - packages/**
-            - pnpm-lock.yaml
-            - pnpm-workspace.yaml
-            - package.json
-            - turbo.json
-      build:
-        docker:
-            dockerfilePath: apps/web/Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 3000
-          routes:
-            - daedong-web-stag.dsmhs.kr
     - name: daedong-api-prod
       github:
         owner: Team-jeong-ho-kim
