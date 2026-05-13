@@ -23,6 +23,3 @@ addons:
     - name: dsmauthservice-dsm-login-prod-mysql
       type: mysql
       storage: 1Gi
-    - name: daedongyeojido-redis
-      type: redis
-      storage: 500Mi
