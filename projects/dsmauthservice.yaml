@@ -73,26 +73,6 @@ applications:
             contextPath: .
       endpoints:
         - port: 3000
-    - name: daedong-teacher-prod
-      github:
-        owner: Team-jeong-ho-kim
-        repo: Daedongyeojido_FE_v4.0
-        branch: main
-        installationId: "63841363"
-        hash: aa8cd87181a1df5baf2af181a47dea6712cc9a4f
-        triggerPaths:
-            - apps/teacher/**
-            - packages/**
-            - pnpm-lock.yaml
-            - pnpm-workspace.yaml
-            - package.json
-            - turbo.json
-      build:
-        docker:
-            dockerfilePath: apps/teacher/Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 3003
     - name: daedong-web-prod
       github:
         owner: Team-jeong-ho-kim
