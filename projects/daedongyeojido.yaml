@@ -1,89 +1,89 @@
 owners:
-    - 163130634
-    - 198728833
+  - 163130634
+  - 198728833
 applications:
-    - name: daedong-api-prod
-      github:
-        owner: Team-jeong-ho-kim
-        repo: Daedongyeojido_BE_v4.0
-        branch: main
-        installationId: "63841363"
-        hash: 34ab721b8f62c81401daff11eb29c4fadfdf184d
-        triggerPaths:
-            - src/**
-            - build.gradle
-            - settings.gradle
-            - gradle/**
-            - gradlew
-            - gradlew.bat
-      build:
-        gradle:
-            javaVersion: "17"
-            jarOutputPath: /build/libs/*.jar
-            buildCommand: ./gradlew bootJar -x test
-      endpoints:
-        - port: 8080
-          routes:
-            - daedong-api-prod.dsmhs.kr
-    - name: daedong-api-stag
-      github:
-        owner: Team-jeong-ho-kim
-        repo: Daedongyeojido_BE_v4.0
-        branch: develop
-        installationId: "63841363"
-        hash: 81a04cd3a1af5e6b6a5f16b2242ad04a5102e6c3
-        triggerPaths:
-            - src/**
-            - build.gradle
-            - settings.gradle
-            - gradle/**
-            - gradlew
-            - gradlew.bat
-      build:
-        gradle:
-            javaVersion: "17"
-            jarOutputPath: /build/libs/*.jar
-            buildCommand: ./gradlew bootJar -x test
-      endpoints:
-        - port: 8080
-          routes:
-            - daedong-api-stag.dsmhs.kr
-    - name: little-be-temp
-      github:
-        owner: Little-DSM
-        repo: Little-BE
-        branch: main
-        installationId: "123528664"
-        hash: cef773f649147f9cd8ca5c3e1f95be1d8c68e5ff
-        triggerPaths:
-            - app/**
-            - pyproject.toml
-            - Dockerfile
-            - README.md
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 8001
-          routes:
-            - little-be-temp.dsmhs.kr
+  - name: daedong-api-prod
+    github:
+      owner: Team-jeong-ho-kim
+      repo: Daedongyeojido_BE_v4.0
+      branch: main
+      installationId: "63841363"
+      hash: 34ab721b8f62c81401daff11eb29c4fadfdf184d
+      triggerPaths:
+        - src/**
+        - build.gradle
+        - settings.gradle
+        - gradle/**
+        - gradlew
+        - gradlew.bat
+    build:
+      gradle:
+        javaVersion: "17"
+        jarOutputPath: /build/libs/*.jar
+        buildCommand: ./gradlew bootJar -x test
+    endpoints:
+      - port: 8080
+        routes:
+          - daedong-api-prod.dsmhs.kr
+  - name: daedong-api-stag
+    github:
+      owner: Team-jeong-ho-kim
+      repo: Daedongyeojido_BE_v4.0
+      branch: develop
+      installationId: "63841363"
+      hash: 81a04cd3a1af5e6b6a5f16b2242ad04a5102e6c3
+      triggerPaths:
+        - src/**
+        - build.gradle
+        - settings.gradle
+        - gradle/**
+        - gradlew
+        - gradlew.bat
+    build:
+      gradle:
+        javaVersion: "17"
+        jarOutputPath: /build/libs/*.jar
+        buildCommand: ./gradlew bootJar -x test
+    endpoints:
+      - port: 8080
+        routes:
+          - daedong-api-stag.dsmhs.kr
+  - name: little-be-temp
+    github:
+      owner: Little-DSM
+      repo: Little-BE
+      branch: main
+      installationId: "123528664"
+      hash: 210b7321c73fb17f961b9177497b0e04d12f3113
+      triggerPaths:
+        - app/**
+        - pyproject.toml
+        - Dockerfile
+        - README.md
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 8001
+        routes:
+          - little-be-temp.dsmhs.kr
 addons:
-    - name: daedongyeojido-mysql
-      type: mysql
-      storage: 1Gi
-    - name: daedongyeojido-redis
-      type: redis
-      storage: 500Mi
-    - name: daedongyeojido-stag-redis
-      type: redis
-      storage: 500Mi
-    - name: littlebe-temp-mysql
-      type: mysql
-      storage: 1Gi
-    - name: littlebe-temp-redis
-      type: redis
-      storage: 500Mi
-    - name: daedongyeojido-stag-mysql
-      type: mysql
-      storage: 1Gi
+  - name: daedongyeojido-mysql
+    type: mysql
+    storage: 1Gi
+  - name: daedongyeojido-redis
+    type: redis
+    storage: 500Mi
+  - name: daedongyeojido-stag-redis
+    type: redis
+    storage: 500Mi
+  - name: littlebe-temp-mysql
+    type: mysql
+    storage: 1Gi
+  - name: littlebe-temp-redis
+    type: redis
+    storage: 500Mi
+  - name: daedongyeojido-stag-mysql
+    type: mysql
+    storage: 1Gi
