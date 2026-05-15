@@ -11,6 +11,6 @@ applications:
         nodejs:
             nodeVersion: "20"
             buildCommand: npm install
-            startCommand: npm start
+            startCommand: sh -c 'export BRAWL_API_TOKEN="${BRAWL_API_TOKEN_P1}${BRAWL_API_TOKEN_P2}"; npm start'
       endpoints:
         - port: 3000
