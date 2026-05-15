@@ -1,31 +1,31 @@
 owners:
-    - 163130634
+  - 163130634
 applications:
-    - name: brawlgg-server
-      github:
-        owner: Team-selfton
-        repo: BrawlGG
-        branch: main
-        installationId: "98579662"
-        hash: bdd08d59751ff2c3b3c452548ac24c75a18cbe52
-      build:
-        nodejs:
-            nodeVersion: "20"
-            buildCommand: npm install
-            startCommand: /bin/sh -lc 'export BRAWL_API_TOKEN="${BRAWL_API_TOKEN_P1}${BRAWL_API_TOKEN_P2}"; exec node apps/server/src/index.js'
-      endpoints:
-        - port: 3000
-    - name: brawlgg-server-v2
-      github:
-        owner: Team-selfton
-        repo: BrawlGG
-        branch: main
-        installationId: "98579662"
-        hash: bdd08d59751ff2c3b3c452548ac24c75a18cbe52
-      build:
-        nodejs:
-            nodeVersion: "20"
-            buildCommand: npm install
-            startCommand: npm start
-      endpoints:
-        - port: 3000
+  - name: brawlgg-server
+    github:
+      owner: Team-selfton
+      repo: BrawlGG
+      branch: main
+      installationId: "98579662"
+      hash: bdd08d59751ff2c3b3c452548ac24c75a18cbe52
+    build:
+      nodejs:
+        nodeVersion: "20"
+        buildCommand: npm install
+        startCommand: /bin/sh -lc 'export BRAWL_API_TOKEN="${BRAWL_API_TOKEN_P1}${BRAWL_API_TOKEN_P2}"; exec node apps/server/src/index.js'
+    endpoints:
+      - port: 3000
+  - name: brawlgg-server-v2
+    github:
+      owner: Team-selfton
+      repo: BrawlGG
+      branch: main
+      installationId: "98579662"
+      hash: bdd08d59751ff2c3b3c452548ac24c75a18cbe52
+    build:
+      nodejs:
+        nodeVersion: "20"
+        buildCommand: npm install
+        startCommand: npm start
+    endpoints:
+      - port: 3000
