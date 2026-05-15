@@ -1,3 +1,16 @@
 owners:
     - 163130634
-applications: []
+applications:
+    - name: brawlgg-server
+      github:
+        owner: Team-selfton
+        repo: BrawlGG
+        branch: main
+        installationId: "98579662"
+      build:
+        nodejs:
+            nodeVersion: "20"
+            buildCommand: npm install
+            startCommand: npm start
+      endpoints:
+        - port: 3000
