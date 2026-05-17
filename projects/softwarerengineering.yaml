@@ -15,3 +15,5 @@ applications:
             startCommand: npm start
       endpoints:
         - port: 3000
+          routes:
+            - brawlgg-server.dsmhs.kr
