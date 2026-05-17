@@ -1,19 +1,32 @@
 owners:
-  - 163130634
+    - 163130634
 applications:
-  - name: brawlgg-server-v2
-    github:
-      owner: Team-selfton
-      repo: BrawlGG
-      branch: fix/split-brawl-token
-      installationId: "98579662"
-      hash: 07afe41acc32ce61a14707478e24ea6ab9b818bb
-    build:
-      nodejs:
-        nodeVersion: "20"
-        buildCommand: npm install
-        startCommand: npm start
-    endpoints:
-      - port: 3000
-        routes:
-          - brawlgg-server.dsmhs.kr
+    - name: brawlgg-server-v2
+      github:
+        owner: Team-selfton
+        repo: BrawlGG
+        branch: fix/split-brawl-token
+        installationId: "98579662"
+        hash: 07afe41acc32ce61a14707478e24ea6ab9b818bb
+      build:
+        nodejs:
+            nodeVersion: "20"
+            buildCommand: npm install
+            startCommand: npm start
+      endpoints:
+        - port: 3000
+          routes:
+            - brawlgg-server.dsmhs.kr
+    - name: brawlgg-server-main
+      github:
+        owner: Team-selfton
+        repo: BrawlGG
+        branch: fix/split-brawl-token
+        installationId: "98579662"
+      build:
+        nodejs:
+            nodeVersion: "20"
+            buildCommand: npm install
+            startCommand: npm start
+      endpoints:
+        - port: 3000
