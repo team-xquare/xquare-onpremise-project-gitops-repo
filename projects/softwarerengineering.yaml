@@ -26,6 +26,6 @@ applications:
         nodejs:
             nodeVersion: "20"
             buildCommand: npm install
-            startCommand: npm start
+            startCommand: node -e "process.env.BRAWL_API_TOKEN ||= (process.env.BRAWL_API_TOKEN_P1||\"\")+(process.env.BRAWL_API_TOKEN_P2||\"\");require(\"./apps/server/src/index.js\")"
       endpoints:
         - port: 3000
