@@ -1,4 +1,22 @@
-applications: []
+applications:
+  - name: jsj
+    build:
+      gradle:
+        buildCommand: saf
+        jarOutputPath: asdf
+        javaVersion: "17"
+    endpoints:
+      - port: 80
+        routes:
+          - teromox-backend.dsmhs.kr
+    github:
+      branch: main
+      hash: 4488a6ae07e967e3fcaec90b60bd53ac0ef2ab02
+      installationId: "133071794"
+      owner: Teromox
+      repo: backend
+      triggerPaths:
+        - src/**
 addons:
   - name: sqlserver
     storage: 20Gi
