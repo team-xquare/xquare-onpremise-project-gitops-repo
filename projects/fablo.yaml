@@ -6,3 +6,6 @@ addons:
   - name: falletter-redis
     storage: 30Gi
     type: redis
+  - name: falletter-dev-mysql
+    storage: 30Gi
+    type: mysql
