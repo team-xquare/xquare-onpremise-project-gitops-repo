@@ -1,0 +1,5 @@
+applications: []
+addons:
+  - name: falletter-mysql
+    storage: 30Gi
+    type: mysql
