@@ -17,6 +17,24 @@ applications:
       repo: Falletter-Backend
       triggerPaths:
         - src/**
+  - name: falletter-server-dev
+    build:
+      gradle:
+        buildCommand: ./gradlew build
+        jarOutputPath: /build/libs/*.jar
+        javaVersion: "17"
+    endpoints:
+      - port: 8080
+        routes:
+          - falletter-dev-api.dsmhs.kr
+    github:
+      branch: dev
+      hash: 203a592fc938f802b0a257cd7843374d66553354
+      installationId: "131283039"
+      owner: FABLOFABLO
+      repo: Falletter-Backend
+      triggerPaths:
+        - src/**
 addons:
   - name: falletter-mysql
     storage: 30Gi
