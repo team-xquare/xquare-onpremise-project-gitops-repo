@@ -40,5 +40,5 @@ addons:
     storage: 20Gi
     type: mysql
   - name: dsg-redis
-    storage: 5Gi
+    storage: 20Gi
     type: redis
