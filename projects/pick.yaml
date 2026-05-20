@@ -11,7 +11,7 @@ applications:
       repo: PiCK_CORE_SERVER
       branch: main
       installationId: "64595989"
-      hash: cd604eaec4ac3f6f87c927a812d3d5c398fcaf10
+      hash: 4a4622ca82c8ae48960a44ea15fe3128a8b5e1fe
       triggerPaths:
         - src/main/**
     build:
