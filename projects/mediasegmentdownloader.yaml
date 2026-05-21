@@ -1,17 +1,19 @@
 owners:
-  - 280956040
+    - 280956040
 applications:
-  - name: msd
-    github:
-      owner: nerhwida
-      repo: MSD
-      branch: main
-      installationId: "134309012"
-      hash: 833ee7f82dd343a14e88b8ae87b9ce652430f3ce
-    build:
-      flask:
-        pythonVersion: "3.11"
-        buildCommand: ""
-        startCommand: gunicorn app:app
-    endpoints:
-      - port: 5000
+    - name: msd
+      github:
+        owner: nerhwida
+        repo: MSD
+        branch: main
+        installationId: "134309012"
+        hash: 833ee7f82dd343a14e88b8ae87b9ce652430f3ce
+      build:
+        flask:
+            pythonVersion: "3.11"
+            buildCommand: ""
+            startCommand: gunicorn app:app
+      endpoints:
+        - port: 5000
+          routes:
+            - msd.dsmhs.kr
