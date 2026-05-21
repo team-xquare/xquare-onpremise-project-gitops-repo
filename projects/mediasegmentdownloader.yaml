@@ -1,3 +1,16 @@
 owners:
     - 280956040
-applications: []
+applications:
+    - name: msd
+      github:
+        owner: nerhwida
+        repo: MSD
+        branch: main
+        installationId: "134309012"
+      build:
+        flask:
+            pythonVersion: "3.11"
+            buildCommand: ""
+            startCommand: gunicorn app:app
+      endpoints:
+        - port: 5000
