@@ -1,6 +1,16 @@
 owners:
     - 103255050
-applications: []
+applications:
+    - name: iamout
+      github:
+        owner: team-xquare
+        repo: xquare-onpremise-project-gitops-repo
+        branch: main
+        installationId: "62433388"
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
 addons:
     - name: iamout-database
       type: mongodb
