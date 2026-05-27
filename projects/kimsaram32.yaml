@@ -3,10 +3,10 @@ owners:
 applications:
     - name: iamout
       github:
-        owner: team-xquare
-        repo: xquare-onpremise-project-gitops-repo
+        owner: kimsaram32
+        repo: iamout-slop
         branch: main
-        installationId: "62433388"
+        installationId: "99860000"
       build:
         docker:
             dockerfilePath: ./Dockerfile
