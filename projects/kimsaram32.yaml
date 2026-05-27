@@ -1,17 +1,18 @@
 owners:
-    - 103255050
+  - 103255050
 applications:
-    - name: iamout
-      github:
-        owner: kimsaram32
-        repo: iamout-slop
-        branch: main
-        installationId: "99860000"
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
+  - name: iamout
+    github:
+      owner: kimsaram32
+      repo: iamout-slop
+      branch: main
+      installationId: "99860000"
+      hash: 6aa212f53fcf45af6d29ea4c3f08cbcd34b9e67d
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
 addons:
-    - name: iamout-database
-      type: mongodb
-      storage: 2Gi
+  - name: iamout-database
+    type: mongodb
+    storage: 2Gi
