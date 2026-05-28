@@ -1,5 +1,6 @@
 owners:
   - 115498126
+  - 103255050
 applications:
   - name: xquare-supporter-prod
     github:
