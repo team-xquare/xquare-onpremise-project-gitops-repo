@@ -208,6 +208,24 @@ applications:
       installationId: "64597732"
       owner: team-aliens
       repo: DMS-Frontend
+  - name: student-frontend-prod
+    build:
+      vite:
+        buildCommand: npm run build
+        distPath: dist
+        nodeVersion: 5.4.8
+    endpoints:
+      - port: 3000
+        routes:
+          - https://student-dms.dsmhs.kr
+    github:
+      branch: main
+      hash: 7859768dab5fcc54fb5455495f23ed295493a595
+      installationId: "136187211"
+      owner: yellowstarr0323
+      repo: DMS-FE-Student
+      triggerPaths:
+        - src/**
 addons:
   - name: main-prod-mysql
     type: mysql
