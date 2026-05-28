@@ -211,7 +211,7 @@ applications:
   - name: student-frontend-prod
     build:
       docker:
-        contextPath: ./Dockerfile
+        contextPath: .
         dockerfilePath: ./Dockerfile
     endpoints:
       - port: 80
