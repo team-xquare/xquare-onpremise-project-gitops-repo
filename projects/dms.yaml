@@ -220,7 +220,7 @@ applications:
           - https://student-dms.dsmhs.kr
     github:
       branch: main
-      hash: 7859768dab5fcc54fb5455495f23ed295493a595
+      hash: ae068119c700a2ae85aabdc5aa2d52fef8e6d962
       installationId: "136187211"
       owner: yellowstarr0323
       repo: DMS-FE-Student
