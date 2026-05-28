@@ -7,7 +7,7 @@ applications:
       repo: iamout-slop
       branch: main
       installationId: "99860000"
-      hash: 8625d2aeb7b8c388b4872c56f1cbf2d8ae10c7b5
+      hash: 203092a561b2726a1195f09c6e812e8afcf70c4b
     build:
       docker:
         dockerfilePath: ./Dockerfile
