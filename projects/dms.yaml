@@ -210,10 +210,6 @@ applications:
       repo: DMS-Frontend
   - name: student-frontend-prod
     build:
-      vite:
-        buildCommand: npm run build
-        distPath: dist
-        nodeVersion: 5.4.8
       docker:
         contextPath: ./
         dockerfilePath: .
