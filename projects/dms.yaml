@@ -214,6 +214,9 @@ applications:
         buildCommand: npm run build
         distPath: dist
         nodeVersion: 5.4.8
+      docker:
+        contextPath: ./
+        dockerfilePath: .
     endpoints:
       - port: 3000
         routes:
