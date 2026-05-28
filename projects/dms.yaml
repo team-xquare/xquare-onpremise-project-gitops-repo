@@ -1,6 +1,7 @@
 owners:
   - 115498126
   - 162944522
+  - 176565538
 applications:
   - name: frontend-prod
     github:
