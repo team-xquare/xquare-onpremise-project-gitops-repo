@@ -16,3 +16,7 @@ applications:
         - port: 4000
           routes:
             - epm.dsmhs.kr
+addons:
+    - name: mongodb
+      type: mongodb
+      storage: 2Gi
