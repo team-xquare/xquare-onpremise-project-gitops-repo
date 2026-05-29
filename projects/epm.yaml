@@ -1,3 +1,18 @@
 owners:
     - 280956040
-applications: []
+applications:
+    - name: epm
+      github:
+        owner: nerhwida
+        repo: epm
+        branch: main
+        installationId: "134309012"
+      build:
+        nodejs:
+            nodeVersion: "20"
+            buildCommand: npm run build
+            startCommand: node server/index.js
+      endpoints:
+        - port: 4000
+          routes:
+            - epm.dsmhs.kr
