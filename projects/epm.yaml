@@ -1,21 +1,22 @@
 owners:
-    - 280956040
+  - 280956040
 applications:
-    - name: epm
-      github:
-        owner: nerhwida
-        repo: epm
-        branch: main
-        installationId: "134309012"
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 4000
-          routes:
-            - epm.dsmhs.kr
+  - name: epm
+    github:
+      owner: nerhwida
+      repo: epm
+      branch: main
+      installationId: "134309012"
+      hash: 1f654ebbc64738fb0fe0049fccce7fa789d94756
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 4000
+        routes:
+          - epm.dsmhs.kr
 addons:
-    - name: mongodb
-      type: mongodb
-      storage: 2Gi
+  - name: mongodb
+    type: mongodb
+    storage: 2Gi
