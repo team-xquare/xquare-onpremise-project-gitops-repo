@@ -8,10 +8,9 @@ applications:
         branch: main
         installationId: "134309012"
       build:
-        nodejs:
-            nodeVersion: "20"
-            buildCommand: npm run build
-            startCommand: node server/index.js
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
       endpoints:
         - port: 4000
           routes:
