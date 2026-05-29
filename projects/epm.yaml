@@ -7,7 +7,7 @@ applications:
       repo: epm
       branch: main
       installationId: "134309012"
-      hash: e4d5ce9f02c7824d956356e770933099319cdcdd
+      hash: 0a0522a5e2150d9c3c165438e1ddf9255e6c1771
     build:
       docker:
         dockerfilePath: ./Dockerfile
