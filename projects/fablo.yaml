@@ -1,52 +1,49 @@
 owners:
-  - 201966203
+    - 201966203
 applications:
-  - name: falletter-server-prod
-    github:
-      owner: FABLOFABLO
-      repo: Falletter-Backend
-      branch: main
-      installationId: "131283039"
-      hash: ed03bfc2f770c3ad2a8d16a68684436b57a3d5dc
-      triggerPaths:
-        - src/**
-    build:
-      gradle:
-        javaVersion: "17"
-        jarOutputPath: /build/libs/*.jar
-        buildCommand: ./gradlew build
-    endpoints:
-      - port: 8080
-        routes:
-          - falletter-api.dsmhs.kr
-  - name: falletter-server-dev
-    github:
-      owner: FABLOFABLO
-      repo: Falletter-Backend
-      branch: dev
-      installationId: "131283039"
-      hash: 51fc510344cfcf49ea64345f460f68e0eabe643e
-      triggerPaths:
-        - src/**
-    build:
-      gradle:
-        javaVersion: "17"
-        jarOutputPath: /build/libs/*.jar
-        buildCommand: ./gradlew build
-    endpoints:
-      - port: 8080
-        routes:
-          - falletter-dev-api.dsmhs.kr
+    - name: falletter-server-prod
+      github:
+        owner: FABLOFABLO
+        repo: Falletter-Backend
+        branch: main
+        installationId: "131283039"
+        hash: ed03bfc2f770c3ad2a8d16a68684436b57a3d5dc
+        triggerPaths:
+            - src/**
+      build:
+        gradle:
+            javaVersion: "17"
+            jarOutputPath: /build/libs/*.jar
+            buildCommand: ./gradlew build
+      endpoints:
+        - port: 8080
+          routes:
+            - falletter-api.dsmhs.kr
+    - name: falletter-server-dev
+      github:
+        owner: FABLOFABLO
+        repo: Falletter-Backend
+        branch: dev
+        installationId: "131283039"
+        hash: 51fc510344cfcf49ea64345f460f68e0eabe643e
+        triggerPaths:
+            - src/**
+      build:
+        gradle:
+            javaVersion: "17"
+            jarOutputPath: /build/libs/*.jar
+            buildCommand: ./gradlew build
+      endpoints:
+        - port: 8080
+          routes:
+            - falletter-dev-api.dsmhs.kr
 addons:
-  - name: falletter-mysql
-    type: mysql
-    storage: 30Gi
-  - name: falletter-redis
-    type: redis
-    storage: 30Gi
-  - name: falletter-dev-mysql
-    type: mysql
-    storage: 30Gi
-  - name: falletter-dev-redis
-    type: redis
-    storage: 30Gi
+    - name: falletter-mysql
+      type: mysql
+      storage: 30Gi
+    - name: falletter-dev-mysql
+      type: mysql
+      storage: 30Gi
+    - name: falletter-dev-redis
+      type: redis
+      storage: 30Gi
