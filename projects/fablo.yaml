@@ -47,3 +47,6 @@ addons:
     - name: falletter-dev-redis
       type: redis
       storage: 30Gi
+    - name: falletter-redis
+      type: redis
+      storage: 2Gi
