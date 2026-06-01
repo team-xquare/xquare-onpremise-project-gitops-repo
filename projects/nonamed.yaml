@@ -35,6 +35,3 @@ addons:
   - name: osj-prod-mysql
     type: mysql
     storage: 1Gi
-  - name: osj-stag-mysql
-    type: mysql
-    storage: 1Gi
