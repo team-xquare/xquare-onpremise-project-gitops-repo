@@ -21,7 +21,7 @@ applications:
       repo: GuJeuk-Check-In_server
       branch: main
       installationId: "90332669"
-      hash: 86b90d9cb7f66af41cd7ad933f41cc10276ec105
+      hash: 48f36c4e6ec883c73224106fafbbfbd45e7dc2d3
     build:
       docker:
         dockerfilePath: ./Dockerfile
