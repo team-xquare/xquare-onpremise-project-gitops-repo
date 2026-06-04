@@ -1,27 +1,4 @@
 applications:
-  - name: fe-admin-prod
-    github:
-      owner: Team-return
-      repo: JOBIS-FE-V2
-      branch: main
-      installationId: "82814703"
-      hash: a9d7cef7e2cbb78783e58eaa6b00b5096103c8de
-      triggerPaths:
-        - apps/admin/**
-        - packages/**
-        - package.json
-        - yarn.lock
-        - nx.json
-        - tsconfig.base.json
-    build:
-      vite:
-        nodeVersion: "23.11.0"
-        distPath: /apps/admin/dist
-        buildCommand: "yarn install && yarn nx build admin"
-    endpoints:
-      - port: 8080
-        routes:
-          - jobis-admin.dsmhs.kr
   - name: fe-admin-stag
     github:
       owner: Team-return
