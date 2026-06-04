@@ -1,27 +1,4 @@
 applications:
-  - name: fe-company-stag
-    github:
-      owner: Team-return
-      repo: JOBIS-FE-V2
-      branch: develop
-      installationId: "82814703"
-      hash: f5228fb6709fe82e0ae55251ba16b37fd09499f1
-      triggerPaths:
-        - apps/company/**
-        - packages/**
-        - package.json
-        - yarn.lock
-        - nx.json
-        - tsconfig.base.json
-    build:
-      vite:
-        nodeVersion: "23.11.0"
-        distPath: /apps/company/dist
-        buildCommand: "yarn install && yarn nx build company"
-    endpoints:
-      - port: 8080
-        routes:
-          - jobis-company-stag.dsmhs.kr
   - name: fe-student-prod
     github:
       owner: Team-return
