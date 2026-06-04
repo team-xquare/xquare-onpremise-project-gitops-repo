@@ -22,22 +22,6 @@ applications:
       - port: 8080
         routes:
           - jobis.dsmhs.kr
-  - name: v1-fe-admin-stag
-    github:
-      owner: Team-return
-      repo: JOBIS-DSM-ADMIN-FE
-      branch: develop
-      installationId: "82814703"
-      hash: d2d9e3f2d3e3ad410ca6425f0ab3c16434c2231b
-    build:
-      react:
-        nodeVersion: "18.17.1"
-        distPath: /build
-        buildCommand: "npm install && npm run build"
-    endpoints:
-      - port: 8080
-        routes:
-          - v1-jobis-admin-stag.dsmhs.kr
   - name: v1-fe-company-stag
     github:
       owner: Team-return
