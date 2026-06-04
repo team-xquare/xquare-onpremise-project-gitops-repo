@@ -22,29 +22,6 @@ applications:
       - port: 8080
         routes:
           - jobis.dsmhs.kr
-  - name: fe-student-stag
-    github:
-      owner: Team-return
-      repo: JOBIS-FE-V2
-      branch: develop
-      installationId: "82814703"
-      hash: f5228fb6709fe82e0ae55251ba16b37fd09499f1
-      triggerPaths:
-        - apps/student/**
-        - packages/**
-        - package.json
-        - yarn.lock
-        - nx.json
-        - tsconfig.base.json
-    build:
-      vite:
-        nodeVersion: "23.11.0"
-        distPath: /apps/student/dist
-        buildCommand: "yarn install && yarn nx build student"
-    endpoints:
-      - port: 8080
-        routes:
-          - jobis-stag.dsmhs.kr
   - name: v1-fe-student-stag
     github:
       owner: Team-return
