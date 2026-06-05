@@ -105,3 +105,6 @@ addons:
   - name: xquare-infra-mysql-stag
     type: mysql
     storage: 1Gi
+  - name: xquare-infra-redis-stag
+    storage: 1Gi
+    type: redis
