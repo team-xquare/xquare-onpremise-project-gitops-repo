@@ -1,38 +1,6 @@
 owners:
   - 158432938
 applications:
-  - name: mozu-server-prod
-    github:
-      owner: team-mozu
-      repo: mozu-BE
-      branch: main
-      installationId: "64125603"
-      hash: 1323ae94537f2aea3d10191705398a2b16ab7e0d
-    build:
-      nodejs:
-        nodeVersion: "20.16"
-        buildCommand: npm ci && npm run build
-        startCommand: npm run start
-    endpoints:
-      - port: 3000
-        routes:
-          - mozu.dsmhs.kr
-  - name: mozu-server-stag
-    github:
-      owner: team-mozu
-      repo: mozu-BE
-      branch: develop
-      installationId: "64125603"
-      hash: 4e2eaa2ebf8538e82ee70a1776a9400e59679bb5
-    build:
-      nodejs:
-        nodeVersion: "20.16"
-        buildCommand: npm ci && npm run build
-        startCommand: npm run start
-    endpoints:
-      - port: 3000
-        routes:
-          - mozu-stag.dsmhs.kr
   - name: mozu-server-v2-prod
     github:
       owner: team-mozu
@@ -66,12 +34,6 @@ applications:
         routes:
           - mozu-v2-stag.dsmhs.kr
 addons:
-  - name: mozu-mozu-server-prod-mysql
-    type: mysql
-    storage: 1Gi
-  - name: mozu-mozu-server-stag-mysql
-    type: mysql
-    storage: 1Gi
   - name: mozu-mozu-server-v2-prod-mysql
     type: mysql
     storage: 1Gi
