@@ -1,17 +1,18 @@
 owners:
-    - 115498126
+  - 115498126
 applications:
-    - name: todo-backend
-      github:
-        owner: team-xquare
-        repo: in-jun-todo-backend
-        branch: main
-        installationId: "62433388"
-      build:
-        docker:
-            dockerfilePath: ""
-            contextPath: ""
-      endpoints:
-        - port: 8080
-          routes:
-            - todo-backend.dsmhs.kr
+  - name: todo-backend
+    github:
+      owner: team-xquare
+      repo: in-jun-todo-backend
+      branch: main
+      installationId: "62433388"
+      hash: 72786150514aa0a36a77c0b345f8cd15ecb4f6f5
+    build:
+      docker:
+        dockerfilePath: ""
+        contextPath: ""
+    endpoints:
+      - port: 8080
+        routes:
+          - todo-backend.dsmhs.kr
