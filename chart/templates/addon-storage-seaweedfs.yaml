@@ -217,7 +217,7 @@ spec:
         runAsNonRoot: false
       containers:
         - name: master
-          image: chrislusf/seaweedfs:latest
+          image: chrislusf/seaweedfs:4.32
           command: [ "weed" ]
           args:
             - "master"
@@ -277,7 +277,7 @@ spec:
         runAsNonRoot: false
       containers:
         - name: volume
-          image: chrislusf/seaweedfs:latest
+          image: chrislusf/seaweedfs:4.32
           command: [ "weed" ]
           args:
             - "volume"
@@ -337,7 +337,7 @@ spec:
         runAsNonRoot: false
       containers:
         - name: filer
-          image: chrislusf/seaweedfs:latest
+          image: chrislusf/seaweedfs:4.32
           command: [ "weed" ]
           args:
             - "filer"
@@ -424,7 +424,7 @@ spec:
       restartPolicy: OnFailure
       initContainers:
         - name: wait-for-services
-          image: chrislusf/seaweedfs:latest
+          image: chrislusf/seaweedfs:4.32
           command:
             - sh
             - -c
@@ -446,7 +446,7 @@ spec:
               done
       containers:
         - name: setup-buckets
-          image: chrislusf/seaweedfs:latest
+          image: chrislusf/seaweedfs:4.32
           command:
             - sh
             - -c
