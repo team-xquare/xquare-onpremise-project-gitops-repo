@@ -186,7 +186,7 @@ applications:
     endpoints:
       - port: 8080
         routes:
-          - head-dms.dsmhs.kr
+          - head-teacher-dms.dsmhs.kr
     github:
       branch: main
       hash: 1f845c141e846668f00ef080c0a6974d03ea5ac7
