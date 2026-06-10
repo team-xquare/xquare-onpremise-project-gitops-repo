@@ -1,3 +1,15 @@
 owners:
     - 163987011
-applications: []
+applications:
+    - name: backend
+      github:
+        owner: team-gozip
+        repo: motiveet-BE-online
+        branch: main
+        installationId: "116709801"
+      build:
+        docker:
+            dockerfilePath: ""
+            contextPath: ""
+      endpoints:
+        - port: 8000
