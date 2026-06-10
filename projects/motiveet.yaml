@@ -1,30 +1,31 @@
 owners:
-    - 163987011
+  - 163987011
 applications:
-    - name: backend
-      github:
-        owner: team-gozip
-        repo: motiveet-BE-online
-        branch: main
-        installationId: "116709801"
-        hash: 0b08a57b5eb20b912cb16b804777ba82e51a392b
-      build:
-        docker:
-            dockerfilePath: ""
-            contextPath: ""
-      endpoints:
-        - port: 8000
-    - name: frontend
-      github:
-        owner: team-gozip
-        repo: motiveet_FE_online
-        branch: main
-        installationId: "116709801"
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 3000
-          routes:
-            - motiveet-web.dsmhs.kr
+  - name: backend
+    github:
+      owner: team-gozip
+      repo: motiveet-BE-online
+      branch: main
+      installationId: "116709801"
+      hash: 0b08a57b5eb20b912cb16b804777ba82e51a392b
+    build:
+      docker:
+        dockerfilePath: ""
+        contextPath: ""
+    endpoints:
+      - port: 8000
+  - name: frontend
+    github:
+      owner: team-gozip
+      repo: motiveet_FE_online
+      branch: main
+      installationId: "116709801"
+      hash: 762b5e9c2119b7b913025d1bd1b602ed8360e79b
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 3000
+        routes:
+          - motiveet-web.dsmhs.kr
