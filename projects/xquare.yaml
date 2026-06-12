@@ -20,7 +20,7 @@ applications:
       repo: xquare-infra-backend-v3
       branch: develop
       installationId: "62433388"
-      hash: e0b8e4cc73439c74dc020dedbbdff35eb0c25889
+      hash: 6580b770c7d80c88e156e5625fc92bad630c3782
     build:
       gradle:
         javaVersion: "17"
