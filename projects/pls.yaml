@@ -3,7 +3,7 @@ applications:
     build:
       flask:
         buildCommand: pip install -r requirements.txt
-        pythonVersion: "3"
+        pythonVersion: "3.13.7"
         startCommand: uvicorn web:app --host 0.0.0.0 --port 8080  --workers 4
     endpoints:
       - port: 8080
