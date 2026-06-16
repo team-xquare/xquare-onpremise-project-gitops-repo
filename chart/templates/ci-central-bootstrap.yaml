@@ -1,0 +1,45 @@
+{{- /*
+Auto first-build on central CI onboarding — the infra equivalent of the legacy webhook
+"ping" first build. In legacy, creating an app auto-created a repo webhook whose ping fired
+the sensor → first build. Central uses one shared App webhook (no per-app webhook, no ping),
+so onboarding produced no first build.
+
+This creates one fixed-name Workflow per app when the app opts into central eventing. It
+references the same <app>-ci-pipeline-template with event-type=manual + empty sha, so the
+template resolves the branch HEAD itself and builds it — exactly what ping did. Fixed name +
+IgnoreExtraneous means ArgoCD creates it once and never re-applies it (the Workflow persists
+Completed), so it runs only at onboarding; all later builds come from pushes via the central
+sensor.
+*/ -}}
+{{- if .Values.centralEventing }}
+{{- range .Values.applications }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  name: {{ include "app.serviceName" . }}-ci-bootstrap
+  namespace: {{ include "project.namespace" $ }}
+  labels:
+    {{- include "app.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: ci-workflow
+    ci.xquare/bootstrap: "true"
+  annotations:
+    # apply after the WorkflowTemplate (default wave 0) exists
+    argocd.argoproj.io/sync-wave: "3"
+    # created once; don't let ArgoCD diff/re-apply the immutable, controller-mutated object
+    argocd.argoproj.io/compare-options: IgnoreExtraneous
+spec:
+  workflowTemplateRef:
+    name: {{ include "app.serviceName" . }}-ci-pipeline-template
+  arguments:
+    parameters:
+      - name: github-event-type
+        value: manual          # → template resolves branch HEAD (same path as a manual trigger)
+      - name: github-sha
+        value: ""
+  podGC:
+    strategy: OnPodCompletion
+    deleteDelayDuration: 72h
+  serviceAccountName: ci-workflow-sa
+{{- end }}
+{{- end }}
