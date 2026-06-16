@@ -1,3 +1,6 @@
+{{- /* Per-app sensor (legacy). Disabled when the project opts into central eventing
+       (centralEventing=true) — then ci-central-sensor.yaml takes over. */ -}}
+{{- if not .Values.centralEventing }}
 {{- range .Values.applications }}
 ---
 apiVersion: argoproj.io/v1alpha1
@@ -139,4 +142,5 @@ spec:
                   deleteDelayDuration: 72h
                 serviceAccountName: ci-workflow-sa
         name: {{ include "app.serviceName" . }}-workflow-trigger
+{{- end }}
 {{- end }}

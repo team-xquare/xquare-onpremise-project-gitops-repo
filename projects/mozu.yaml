@@ -1,3 +1,7 @@
+# Opt into centralized CI eventing (ci-system). Legacy per-app EventSource/Sensor/EventBus
+# are disabled for this project; the central sensor (in ci-system) dispatches builds into
+# this project's namespace. Requires the GitHub App's Push subscription accepted for team-mozu.
+centralEventing: true
 owners:
   - 158432938
 applications:

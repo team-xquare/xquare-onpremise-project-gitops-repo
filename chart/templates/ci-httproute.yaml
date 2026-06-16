@@ -1,3 +1,5 @@
+{{- /* Per-app webhook route (legacy). Disabled when the project opts into central eventing. */ -}}
+{{- if not .Values.centralEventing }}
 {{- range .Values.applications }}
 ---
 apiVersion: gateway.networking.k8s.io/v1
@@ -28,4 +30,5 @@ spec:
       backendRefs:
         - name: {{ include "ci.eventSourceServiceName" . }}
           port: {{ include "ci.webhookPort" $ }}
+{{- end }}
 {{- end }}
