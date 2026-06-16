@@ -13,6 +13,10 @@ sensor.
 */ -}}
 {{- if .Values.centralEventing }}
 {{- range .Values.applications }}
+{{- /* Only NEVER-built apps (no real hash) bootstrap. Migrating an already-deployed app
+       (hash set) builds nothing; once the first build sets the hash, this stops rendering and
+       ArgoCD prunes it — so it fires exactly once per never-built app, with no mass rebuild. */ -}}
+{{- if or (not .github.hash) (eq (.github.hash | toString) "latest") }}
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
@@ -41,5 +45,6 @@ spec:
     strategy: OnPodCompletion
     deleteDelayDuration: 72h
   serviceAccountName: ci-workflow-sa
+{{- end }}
 {{- end }}
 {{- end }}
