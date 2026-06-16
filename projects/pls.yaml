@@ -25,3 +25,6 @@ addons:
   - name: mysql
     storage: 1Gi
     type: mysql
+  - name: awefe
+    storage: 1Gi
+    type: redis
