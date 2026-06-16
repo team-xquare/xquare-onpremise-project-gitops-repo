@@ -1,3 +1,15 @@
 owners:
     - 115498126
-applications: []
+applications:
+    - name: test-backend
+      github:
+        owner: team-xquare
+        repo: test-backend
+        branch: main
+        installationId: "62433388"
+      build:
+        docker:
+            dockerfilePath: ""
+            contextPath: ""
+      endpoints:
+        - port: 8080
