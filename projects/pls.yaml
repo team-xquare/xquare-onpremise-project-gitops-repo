@@ -1,3 +1,4 @@
+centralEventing: true
 applications:
   - name: backend-stag
     build:
