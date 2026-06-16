@@ -1,6 +1,6 @@
 {{- /* Per-app EventSource (legacy, auto-creates a repo webhook). Disabled when the project
        opts into central eventing (centralEventing=true) — the central EventSource takes over. */ -}}
-{{- if not .Values.centralEventing }}
+{{- if .Values.notCentralEventing }}
 {{- range .Values.applications }}
 ---
 apiVersion: argoproj.io/v1alpha1

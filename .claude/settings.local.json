@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(helm template:*)",
+      "Bash(/dev/null)",
+      "Bash(tree:*)",
+      "Read(//home/injun/lV9yRZxT/github/kkm06100/stupid-elk-helm/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

@@ -1,6 +1,6 @@
 {{- /* Per-app sensor (legacy). Disabled when the project opts into central eventing
        (centralEventing=true) — then ci-central-sensor.yaml takes over. */ -}}
-{{- if not .Values.centralEventing }}
+{{- if .Values.notCentralEventing }}
 {{- range .Values.applications }}
 ---
 apiVersion: argoproj.io/v1alpha1

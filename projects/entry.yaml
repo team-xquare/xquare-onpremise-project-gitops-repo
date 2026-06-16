@@ -1,4 +1,3 @@
-centralEventing: true
 applications:
   - name: entry-admission
     github:

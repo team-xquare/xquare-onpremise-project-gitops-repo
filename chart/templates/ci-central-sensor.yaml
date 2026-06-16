@@ -12,7 +12,7 @@ pods (vs 86 if per-app).
 ⚠️ Enabling this for a project while its old per-app sensors are still active = DOUBLE build.
 Disable the project's per-app sensors as you migrate.
 */ -}}
-{{- if .Values.centralEventing }}
+{{- if not .Values.notCentralEventing }}
 apiVersion: argoproj.io/v1alpha1
 kind: Sensor
 metadata:

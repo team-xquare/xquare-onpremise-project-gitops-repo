@@ -1,6 +1,6 @@
 {{- /* Per-project EventBus (legacy STAN, 3 pods). Removed when the project opts into central
        eventing — the central ci-central-eventbus (ci-system) is used instead. */ -}}
-{{- if not .Values.centralEventing }}
+{{- if .Values.notCentralEventing }}
 apiVersion: argoproj.io/v1alpha1
 kind: EventBus
 metadata:

@@ -4,7 +4,7 @@ k8s-resource ci-system chart) create Workflows in THIS project namespace. Bound 
 so the central SA's reach is exactly the namespaces that opted in. The Workflows still run as
 this project's ci-workflow-sa, so build isolation is unchanged.
 */ -}}
-{{- if $.Values.centralEventing }}
+{{- if not $.Values.notCentralEventing }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
