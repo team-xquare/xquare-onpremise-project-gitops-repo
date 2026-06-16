@@ -1,16 +1,17 @@
 centralEventing: true
 owners:
-    - 115498126
+  - 115498126
 applications:
-    - name: test-backend
-      github:
-        owner: team-xquare
-        repo: test-backend
-        branch: main
-        installationId: "62433388"
-      build:
-        docker:
-            dockerfilePath: ""
-            contextPath: ""
-      endpoints:
-        - port: 8080
+  - name: test-backend
+    github:
+      owner: team-xquare
+      repo: test-backend
+      branch: main
+      installationId: "62433388"
+      hash: b79c8c5444ed2ee117f5105fbe6b250d23556321
+    build:
+      docker:
+        dockerfilePath: ""
+        contextPath: ""
+    endpoints:
+      - port: 8080
