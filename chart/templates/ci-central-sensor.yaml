@@ -1,30 +1,27 @@
 {{- /*
-PHASE 2 — central CI sensor (opt-in, additive, parallel).
+Central CI sensor — ONE Sensor per PROJECT (not per app). Opt-in via `.Values.centralEventing`
+(default off): existing per-app EventSource/Sensor stay untouched until a project flips it.
 
-Gated by `.Values.centralEventing` (default unset = off) so existing per-app
-EventSource/Sensor are UNTOUCHED until a project opts in. When enabled for a project, one
-Sensor per app is created in the central `ci-system` namespace (where the shared EventBus +
-receive-only EventSource live), filters this app's repo+branch+triggerPaths off the single
-central stream, and dispatches the SAME `<app>-ci-pipeline-template` INTO the project
-namespace (cross-ns) running as the project's own ci-workflow-sa.
+One Sensor lives in the central `ci-system` namespace (co-located with the shared EventBus +
+receive-only EventSource, as Argo Events requires) and carries one dependency + one trigger
+PER APP: each dependency filters that app's repo+branch+triggerPaths off the single central
+stream, and each trigger dispatches the SAME `<app>-ci-pipeline-template` INTO the project
+namespace (cross-ns), running as the project's own ci-workflow-sa. So 31 projects → 31 sensor
+pods (vs 86 if per-app).
 
-⚠️ Enabling this for a project while its old per-app sensor is still active = DOUBLE build.
-To migrate a project cleanly, also disable its per-app sensor (guard ci-sensor.yaml /
-ci-event-source.yaml with `{{ "{{- if not $.Values.centralEventing }}" }}`, or scale the old
-sensor to 0). See README / commit notes.
+⚠️ Enabling this for a project while its old per-app sensors are still active = DOUBLE build.
+Disable the project's per-app sensors as you migrate.
 */ -}}
-{{- if $.Values.centralEventing }}
-{{- range .Values.applications }}
----
+{{- if .Values.centralEventing }}
 apiVersion: argoproj.io/v1alpha1
 kind: Sensor
 metadata:
-  name: {{ $.Values.project }}-{{ include "app.serviceName" . }}-cs
+  name: {{ .Values.project }}-ci-sensor
   namespace: ci-system
   labels:
-    {{- include "app.labels" . | nindent 4 }}
+    {{- include "project.labels" . | nindent 4 }}
     app.kubernetes.io/component: ci-central-sensor
-    ci.xquare/project: {{ $.Values.project }}
+    ci.xquare/project: {{ .Values.project }}
 spec:
   eventBusName: ci-central-eventbus
   template:
@@ -35,15 +32,15 @@ spec:
           cpu: 10m
           memory: 30Mi
         limits:
-          cpu: 50m
-          memory: 60Mi
+          cpu: 100m
+          memory: 96Mi
   dependencies:
-    - name: gh
+    {{- range .Values.applications }}
+    - name: {{ include "app.serviceName" . }}
       eventName: webhook
       eventSourceName: github-central
       filters:
         script: |
-          if event.body['X-GitHub-Event'] == 'ping' then return true end
           if event.body['X-GitHub-Event'] ~= 'push' then return false end
           if event.body.repository == nil or event.body.repository.full_name ~= '{{ .github.owner }}/{{ .github.repo }}' then return false end
           if event.body.ref ~= 'refs/heads/{{ .github.branch }}' then return false end
@@ -108,26 +105,29 @@ spec:
           {{- else }}
           return true
           {{- end }}
+    {{- end }}
   triggers:
+    {{- range .Values.applications }}
     - retryStrategy:
         steps: 3
       template:
-        name: {{ include "app.serviceName" . }}-workflow-trigger
+        name: {{ include "app.serviceName" . }}-trigger
+        conditions: "{{ include "app.serviceName" . }}"
         k8s:
           operation: create
           parameters:
             - src:
-                dependencyName: gh
+                dependencyName: {{ include "app.serviceName" . }}
                 dataKey: body.X-GitHub-Event
                 value: ""
               dest: spec.arguments.parameters.0.value
             - src:
-                dependencyName: gh
+                dependencyName: {{ include "app.serviceName" . }}
                 dataKey: body.after
                 value: ""
               dest: spec.arguments.parameters.1.value
             - src:
-                dependencyName: gh
+                dependencyName: {{ include "app.serviceName" . }}
                 dataKey: body.after
                 value: ""
               dest: metadata.annotations.app\.kubernetes\.io/git-sha
@@ -156,5 +156,5 @@ spec:
                   strategy: OnPodCompletion
                   deleteDelayDuration: 72h
                 serviceAccountName: ci-workflow-sa
-{{- end }}
+    {{- end }}
 {{- end }}
