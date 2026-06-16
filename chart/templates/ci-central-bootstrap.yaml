@@ -11,7 +11,6 @@ IgnoreExtraneous means ArgoCD creates it once and never re-applies it (the Workf
 Completed), so it runs only at onboarding; all later builds come from pushes via the central
 sensor.
 */ -}}
-{{- if not .Values.notCentralEventing }}
 {{- range .Values.applications }}
 {{- /* Only NEVER-built apps (no real hash) bootstrap. Migrating an already-deployed app
        (hash set) builds nothing; once the first build sets the hash, this stops rendering and
@@ -45,6 +44,5 @@ spec:
     strategy: OnPodCompletion
     deleteDelayDuration: 72h
   serviceAccountName: ci-workflow-sa
-{{- end }}
 {{- end }}
 {{- end }}

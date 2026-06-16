@@ -1,18 +1,10 @@
 {{- /*
-Central CI sensor — ONE Sensor per PROJECT (not per app). Opt-in via `.Values.centralEventing`
-(default off): existing per-app EventSource/Sensor stay untouched until a project flips it.
-
-One Sensor lives in the central `ci-system` namespace (co-located with the shared EventBus +
-receive-only EventSource, as Argo Events requires) and carries one dependency + one trigger
-PER APP: each dependency filters that app's repo+branch+triggerPaths off the single central
-stream, and each trigger dispatches the SAME `<app>-ci-pipeline-template` INTO the project
-namespace (cross-ns), running as the project's own ci-workflow-sa. So 31 projects → 31 sensor
-pods (vs 86 if per-app).
-
-⚠️ Enabling this for a project while its old per-app sensors are still active = DOUBLE build.
-Disable the project's per-app sensors as you migrate.
+Central CI sensor — ONE Sensor per PROJECT, in the central `ci-system` namespace (co-located
+with the shared EventBus + receive-only EventSource, as Argo Events requires). Carries one
+dependency + one trigger PER APP: each dependency filters that app's repo+branch+triggerPaths
+off the single central stream; each trigger dispatches `<app>-ci-pipeline-template` INTO the
+project namespace (cross-ns), running as the project's own ci-workflow-sa.
 */ -}}
-{{- if not .Values.notCentralEventing }}
 apiVersion: argoproj.io/v1alpha1
 kind: Sensor
 metadata:
@@ -157,4 +149,3 @@ spec:
                   deleteDelayDuration: 72h
                 serviceAccountName: ci-workflow-sa
     {{- end }}
-{{- end }}
