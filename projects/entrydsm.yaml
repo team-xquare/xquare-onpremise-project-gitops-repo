@@ -1,0 +1,17 @@
+applications:
+  - name: entry-fe-admin-stag
+    build:
+      vite:
+        buildCommand: TYPE=stag npm install -g bun@1.3.5 && bun install --frozen-lockfile && bun x turbo build --filter=@entry/entry-admin
+        distPath: /apps/entry-admin/dist
+        nodeVersion: "20"
+    endpoints:
+      - port: 8080
+        routes:
+          - entryAdmin.dsmhs.kr
+    github:
+      branch: develop
+      hash: 8d19c92eb3f8d1297cb9aaae1441772f8450b334
+      installationId: "77967720"
+      owner: EntryDSM
+      repo: EntryDsm-Admission-2026
