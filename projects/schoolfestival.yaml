@@ -4,10 +4,20 @@ applications:
       docker:
         contextPath: .
         dockerfilePath: ./Dockerfile
+
+    resources:
+      requests:
+        cpu: 1000m
+        memory: 7Gi
+      limits:
+        cpu: 1200m
+        memory: 10Gi
+
     endpoints:
       - port: 25565
         routes:
           - dsmbattle.dsmhs.kr
+
     github:
       branch: main
       hash: a69e3dabb7c744dfeb5dd11931baa1bf9d11bce5
