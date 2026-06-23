@@ -10,7 +10,7 @@ applications:
           - dsmbattle.dsmhs.kr
     github:
       branch: main
-      hash: 4c1fdd8394b7ad732a0fd66d46eb7e91a744c3d3
+      hash: a69e3dabb7c744dfeb5dd11931baa1bf9d11bce5
       installationId: "142010628"
       owner: minecraft-festival
       repo: dsmbattle
