@@ -19,7 +19,7 @@ applications:
     endpoints:
       - port: 8080
         routes:
-          - daema-prod.dsmhs.kr
+          - daema-server-prod.dsmhs.kr
   - name: daema-server-stag
     github:
       owner: kangeunchan
@@ -35,7 +35,7 @@ applications:
     endpoints:
       - port: 8080
         routes:
-          - daema-stag.dsmhs.kr
+          - daema-server-stag.dsmhs.kr
 addons:
   - name: daema-mysql-prod
     type: postgresql
