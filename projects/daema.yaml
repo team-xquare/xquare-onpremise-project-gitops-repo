@@ -3,6 +3,38 @@ owners:
   - 162133680
   - 160982914
 applications:
+  - name: daema-client-prod
+    github:
+      owner: kangeunchan
+      repo: daema-coin-client
+      branch: main
+      installationId: "142275252"
+      triggerPaths:
+        - .
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 80
+        routes:
+          - daema.dsmhs.kr
+  - name: daema-client-stag
+    github:
+      owner: kangeunchan
+      repo: daema-coin-client
+      branch: main
+      installationId: "142275252"
+      triggerPaths:
+        - .
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 80
+        routes:
+          - daema-stag.dsmhs.kr
   - name: daema-server-prod
     github:
       owner: kangeunchan
