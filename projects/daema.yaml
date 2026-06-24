@@ -11,7 +11,7 @@ applications:
       installationId: "142275252"
       triggerPaths:
         - .
-      hash: 7fbd1234566737e9fb6fdb44fc737253e2573d50
+      hash: 9fc863f588ce5f03befc095c12ca4c7fad08e4fc
     build:
       docker:
         dockerfilePath: ./Dockerfile
