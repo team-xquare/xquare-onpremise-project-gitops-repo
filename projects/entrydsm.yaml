@@ -4,7 +4,7 @@ applications:
       vite:
         buildCommand: TYPE=stag npm install -g bun@1.3.5 && bun install --frozen-lockfile && bun x turbo build --filter=@entry/entry-admin
         distPath: /apps/entry-admin/dist
-        nodeVersion: "20"
+        nodeVersion: "22"
     endpoints:
       - port: 8080
         routes:
