@@ -1,7 +1,5 @@
 owners:
-  - 162944522
-  - 162133680
-  - 160982914
+  - 161235128
 applications:
   - name: daema-client-prod
     github:
@@ -9,8 +7,6 @@ applications:
       repo: daema-coin-client
       branch: main
       installationId: "142275252"
-      triggerPaths:
-        - .
       hash: edd925b0a1ff7890e29f2ef51cdcd3b2f6542519
     build:
       docker:
@@ -26,8 +22,6 @@ applications:
       repo: daema-coin-client
       branch: main
       installationId: "142275252"
-      triggerPaths:
-        - .
       hash: edd925b0a1ff7890e29f2ef51cdcd3b2f6542519
     build:
       docker:
@@ -43,8 +37,6 @@ applications:
       repo: daema-coin-server
       branch: main
       installationId: "142275252"
-      triggerPaths:
-        - .
       hash: 24f9a15f7ec9ede06589e3ef9ed0277043c46abf
     build:
       docker:
