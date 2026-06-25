@@ -7,7 +7,7 @@ applications:
       repo: daema-coin-client
       branch: main
       installationId: "142275252"
-      hash: 9c353533f2a377e41b0e647aa8af6c45b965d291
+      hash: eade9148f6164912544b65e50e92270b572fc574
     build:
       docker:
         dockerfilePath: ./Dockerfile
