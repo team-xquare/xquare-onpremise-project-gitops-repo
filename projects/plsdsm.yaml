@@ -5,9 +5,10 @@ applications:
       github:
         owner: PLsDsm
         repo: backend-v1
-        branch: main
+        branch: develop
         installationId: "139759859"
       build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
+        flask:
+            pythonVersion: "3.11"
+            buildCommand: ""
+            startCommand: gunicorn app:app
