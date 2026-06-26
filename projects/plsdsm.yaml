@@ -1,3 +1,13 @@
 owners:
     - 102520470
-applications: []
+applications:
+    - name: pls-backend
+      github:
+        owner: PLsDsm
+        repo: backend-v1
+        branch: main
+        installationId: "139759859"
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
