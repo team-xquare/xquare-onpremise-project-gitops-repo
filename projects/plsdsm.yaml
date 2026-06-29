@@ -12,3 +12,7 @@ applications:
             pythonVersion: "3.11"
             buildCommand: ""
             startCommand: gunicorn app:app
+addons:
+    - name: pls-db
+      type: mysql
+      storage: 1Gi
