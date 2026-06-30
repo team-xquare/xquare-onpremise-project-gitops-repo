@@ -15,7 +15,7 @@ applications:
           - backend-stag.dsmhs.kr
     github:
       branch: develop
-      hash: 184d2dce0621b8f7e8b488d4ec709436f9b71372
+      hash: 4faeeb4aeb508aeb2ed44729264fd3de960cdbb0
       installationId: "139759859"
       owner: PLsDsm
       repo: backend-v1
