@@ -12,7 +12,7 @@ applications:
         flask:
             pythonVersion: "3.11"
             buildCommand: ""
-            startCommand: gunicorn web:app
+            startCommand: uvicorn web:app
       endpoints:
         - port: 8000
 addons:
