@@ -1,19 +1,19 @@
 owners:
-    - 102520470
+  - 102520470
 applications:
-    - name: pls-backend
-      github:
-        owner: PLsDsm
-        repo: backend-v1
-        branch: develop
-        installationId: "139759859"
-        hash: 386e694cb465cdc67c9b3e67ea3902a85e802db0
-      build:
-        flask:
-            pythonVersion: "3.11"
-            buildCommand: ""
-            startCommand: uvicorn web:app
+  - name: pls-backend
+    github:
+      owner: PLsDsm
+      repo: backend-v1
+      branch: develop
+      installationId: "139759859"
+      hash: 386e694cb465cdc67c9b3e67ea3902a85e802db0
+    build:
+      flask:
+        pythonVersion: "3.11"
+        buildCommand: ""
+        startCommand: uvicorn web:app
 addons:
-    - name: pls-db
-      type: mysql
-      storage: 1Gi
+  - name: pls-db
+    type: mysql
+    storage: 1Gi
