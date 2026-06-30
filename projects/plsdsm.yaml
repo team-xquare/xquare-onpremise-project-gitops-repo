@@ -7,7 +7,7 @@ applications:
       repo: backend-v1
       branch: develop
       installationId: "139759859"
-      hash: 386e694cb465cdc67c9b3e67ea3902a85e802db0
+      hash: 184d2dce0621b8f7e8b488d4ec709436f9b71372
     build:
       flask:
         pythonVersion: "3.11"
