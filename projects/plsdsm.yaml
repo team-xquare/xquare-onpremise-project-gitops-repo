@@ -15,6 +15,8 @@ applications:
             startCommand: python -m uvicorn web:app --host 0.0.0.0 --port 8000
       endpoints:
         - port: 8000
+          routes:
+            - plsdsm-pls-backend.dsmhs.kr
 addons:
     - name: pls-db
       type: mysql
