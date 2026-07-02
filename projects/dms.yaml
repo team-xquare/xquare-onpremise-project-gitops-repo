@@ -121,7 +121,7 @@ applications:
       repo: DMS-Backend
       branch: develop
       installationId: "64597732"
-      hash: 65254593d6bb60ded075b5474e4035214bcba5ad
+      hash: cb902549c14b7bd77dd841b51e566a9c1eb1b08e
       triggerPaths:
         - dms-main/**
         - contracts/**
