@@ -1,61 +1,62 @@
 owners:
-  - 161235128
+    - 161235128
+    - 163130634
 applications:
-  - name: daema-client-prod
-    github:
-      owner: kangeunchan
-      repo: daema-coin-client
-      branch: main
-      installationId: "142275252"
-      hash: 5c0bb3b2ebf7a25a94b50caf2d3b3b9efae5b1a1
-    build:
-      docker:
-        dockerfilePath: ./Dockerfile
-        contextPath: .
-    endpoints:
-      - port: 80
-        routes:
-          - daema.dsmhs.kr
-  - name: daema-client-stag
-    github:
-      owner: kangeunchan
-      repo: daema-coin-client
-      branch: main
-      installationId: "142275252"
-      hash: 5c0bb3b2ebf7a25a94b50caf2d3b3b9efae5b1a1
-    build:
-      docker:
-        dockerfilePath: ./Dockerfile
-        contextPath: .
-    endpoints:
-      - port: 80
-        routes:
-          - daema-stag.dsmhs.kr
-  - name: daema-server-prod
-    github:
-      owner: kangeunchan
-      repo: daema-coin-server
-      branch: main
-      installationId: "142275252"
-      hash: 4b4a2027954c26d9743933e8e4899f7d7295c84b
-    build:
-      docker:
-        dockerfilePath: ./Dockerfile
-        contextPath: .
-    endpoints:
-      - port: 8080
-        routes:
-          - daema-server-prod.dsmhs.kr
+    - name: daema-client-prod
+      github:
+        owner: kangeunchan
+        repo: daema-coin-client
+        branch: main
+        installationId: "142275252"
+        hash: 5c0bb3b2ebf7a25a94b50caf2d3b3b9efae5b1a1
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 80
+          routes:
+            - daema.dsmhs.kr
+    - name: daema-client-stag
+      github:
+        owner: kangeunchan
+        repo: daema-coin-client
+        branch: main
+        installationId: "142275252"
+        hash: 5c0bb3b2ebf7a25a94b50caf2d3b3b9efae5b1a1
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 80
+          routes:
+            - daema-stag.dsmhs.kr
+    - name: daema-server-prod
+      github:
+        owner: kangeunchan
+        repo: daema-coin-server
+        branch: main
+        installationId: "142275252"
+        hash: 4b4a2027954c26d9743933e8e4899f7d7295c84b
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 8080
+          routes:
+            - daema-server-prod.dsmhs.kr
 addons:
-  - name: daema-mysql-prod
-    type: postgresql
-    storage: 2Gi
-  - name: daema-mysql-stag
-    type: postgresql
-    storage: 2Gi
-  - name: daema-redis-prod
-    type: redis
-    storage: 1Gi
-  - name: daema-redis-stag
-    type: redis
-    storage: 1Gi
+    - name: daema-mysql-prod
+      type: postgresql
+      storage: 2Gi
+    - name: daema-mysql-stag
+      type: postgresql
+      storage: 2Gi
+    - name: daema-redis-prod
+      type: redis
+      storage: 1Gi
+    - name: daema-redis-stag
+      type: redis
+      storage: 1Gi
