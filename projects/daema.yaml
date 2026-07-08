@@ -1,110 +1,110 @@
 owners:
-    - 161235128
-    - 163130634
+  - 161235128
+  - 163130634
 applications:
-    - name: daema-client-prod
-      github:
-        owner: kangeunchan
-        repo: daema-coin-client
-        branch: main
-        installationId: "142275252"
-        hash: 5c0bb3b2ebf7a25a94b50caf2d3b3b9efae5b1a1
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 80
-          routes:
-            - daema.dsmhs.kr
-    - name: daema-client-stag
-      github:
-        owner: kangeunchan
-        repo: daema-coin-client
-        branch: main
-        installationId: "142275252"
-        hash: 5c0bb3b2ebf7a25a94b50caf2d3b3b9efae5b1a1
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 80
-          routes:
-            - daema-stag.dsmhs.kr
-    - name: daema-seller-prod
-      github:
-        owner: kangeunchan
-        repo: daema-coin-client
-        branch: main
-        installationId: "142275252"
-        hash: 5c0bb3b2ebf7a25a94b50caf2d3b3b9efae5b1a1
-        triggerPaths:
-            - apps/seller/**
-            - libs/**
-            - package.json
-            - bun.lock
-            - turbo.json
-            - tsconfig.json
-            - tsconfig.base.json
-      build:
-        vite:
-            nodeVersion: "22"
-            buildCommand: export VITE_SELLER_API_BASE_URL=https://daema-server-prod.dsmhs.kr/api && npm install -g bun@1.3.14 && bun install --frozen-lockfile && bun run build --filter=@daema/seller
-            distPath: /apps/seller/dist
-      endpoints:
-        - port: 8080
-          routes:
-            - daema-seller.dsmhs.kr
-    - name: daema-admin-prod
-      github:
-        owner: kangeunchan
-        repo: daema-coin-client
-        branch: main
-        installationId: "142275252"
-        hash: 5c0bb3b2ebf7a25a94b50caf2d3b3b9efae5b1a1
-        triggerPaths:
-            - apps/admin/**
-            - libs/**
-            - package.json
-            - bun.lock
-            - turbo.json
-            - tsconfig.json
-            - tsconfig.base.json
-      build:
-        vite:
-            nodeVersion: "22"
-            buildCommand: export VITE_ADMIN_API_BASE_URL=https://daema-server-prod.dsmhs.kr/api && npm install -g bun@1.3.14 && bun install --frozen-lockfile && bun run build --filter=@daema/admin
-            distPath: /apps/admin/dist
-      endpoints:
-        - port: 8080
-          routes:
-            - daema-admin.dsmhs.kr
-    - name: daema-server-prod
-      github:
-        owner: kangeunchan
-        repo: daema-coin-server
-        branch: main
-        installationId: "142275252"
-        hash: 4b4a2027954c26d9743933e8e4899f7d7295c84b
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 8080
-          routes:
-            - daema-server-prod.dsmhs.kr
+  - name: daema-client-prod
+    github:
+      owner: kangeunchan
+      repo: daema-coin-client
+      branch: main
+      installationId: "142275252"
+      hash: 5c0bb3b2ebf7a25a94b50caf2d3b3b9efae5b1a1
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 80
+        routes:
+          - daema.dsmhs.kr
+  - name: daema-client-stag
+    github:
+      owner: kangeunchan
+      repo: daema-coin-client
+      branch: main
+      installationId: "142275252"
+      hash: 5c0bb3b2ebf7a25a94b50caf2d3b3b9efae5b1a1
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 80
+        routes:
+          - daema-stag.dsmhs.kr
+  - name: daema-seller-prod
+    github:
+      owner: kangeunchan
+      repo: daema-coin-client
+      branch: main
+      installationId: "142275252"
+      hash: 5c0bb3b2ebf7a25a94b50caf2d3b3b9efae5b1a1
+      triggerPaths:
+        - apps/seller/**
+        - libs/**
+        - package.json
+        - bun.lock
+        - turbo.json
+        - tsconfig.json
+        - tsconfig.base.json
+    build:
+      vite:
+        nodeVersion: "22"
+        buildCommand: export VITE_SELLER_API_BASE_URL=https://daema-server-prod.dsmhs.kr/api && npm install -g bun@1.3.14 && bun install --frozen-lockfile && bun run build --filter=@daema/seller
+        distPath: /apps/seller/dist
+    endpoints:
+      - port: 8080
+        routes:
+          - daema-seller.dsmhs.kr
+  - name: daema-admin-prod
+    github:
+      owner: kangeunchan
+      repo: daema-coin-client
+      branch: main
+      installationId: "142275252"
+      hash: 5c0bb3b2ebf7a25a94b50caf2d3b3b9efae5b1a1
+      triggerPaths:
+        - apps/admin/**
+        - libs/**
+        - package.json
+        - bun.lock
+        - turbo.json
+        - tsconfig.json
+        - tsconfig.base.json
+    build:
+      vite:
+        nodeVersion: "22"
+        buildCommand: export VITE_ADMIN_API_BASE_URL=https://daema-server-prod.dsmhs.kr/api && npm install -g bun@1.3.14 && bun install --frozen-lockfile && bun run build --filter=@daema/admin
+        distPath: /apps/admin/dist
+    endpoints:
+      - port: 8080
+        routes:
+          - daema-admin.dsmhs.kr
+  - name: daema-server-prod
+    github:
+      owner: kangeunchan
+      repo: daema-coin-server
+      branch: main
+      installationId: "142275252"
+      hash: 4b4a2027954c26d9743933e8e4899f7d7295c84b
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 8080
+        routes:
+          - daema-server-prod.dsmhs.kr
 addons:
-    - name: daema-mysql-prod
-      type: postgresql
-      storage: 2Gi
-    - name: daema-mysql-stag
-      type: postgresql
-      storage: 2Gi
-    - name: daema-redis-prod
-      type: redis
-      storage: 1Gi
-    - name: daema-redis-stag
-      type: redis
-      storage: 1Gi
+  - name: daema-mysql-prod
+    type: postgresql
+    storage: 2Gi
+  - name: daema-mysql-stag
+    type: postgresql
+    storage: 2Gi
+  - name: daema-redis-prod
+    type: redis
+    storage: 1Gi
+  - name: daema-redis-stag
+    type: redis
+    storage: 1Gi
