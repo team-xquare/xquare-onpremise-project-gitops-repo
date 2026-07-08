@@ -86,7 +86,7 @@ applications:
       repo: daema-coin-server
       branch: main
       installationId: "142275252"
-      hash: 647d183221fb71df640f94167dea4becdd09d5cd
+      hash: 195902d06013d101e8d17c90759450aaf40dff79
     build:
       docker:
         dockerfilePath: ./Dockerfile
@@ -108,3 +108,6 @@ addons:
   - name: daema-redis-stag
     type: redis
     storage: 1Gi
+  - name: daema-seaweedfs-prod
+    type: seaweedfs
+    storage: 5Gi
