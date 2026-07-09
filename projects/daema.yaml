@@ -10,11 +10,12 @@ applications:
       installationId: "142275252"
       hash: 131f7aaecc866e8d7d41d637d8c761168dbcbe9b
     build:
-      docker:
-        dockerfilePath: ./Dockerfile
-        contextPath: .
+      vite:
+        nodeVersion: "22"
+        buildCommand: export VITE_CUSTOMER_API_BASE_URL=https://daema-server-prod.dsmhs.kr/api && npm install -g bun@1.3.14 && bun install --frozen-lockfile && bun run build --filter=@daema/customer
+        distPath: /apps/customer/dist
     endpoints:
-      - port: 80
+      - port: 8080
         routes:
           - daema.dsmhs.kr
   - name: daema-client-stag
@@ -25,11 +26,12 @@ applications:
       installationId: "142275252"
       hash: 131f7aaecc866e8d7d41d637d8c761168dbcbe9b
     build:
-      docker:
-        dockerfilePath: ./Dockerfile
-        contextPath: .
+      vite:
+        nodeVersion: "22"
+        buildCommand: export VITE_CUSTOMER_API_BASE_URL=https://daema-server-prod.dsmhs.kr/api && npm install -g bun@1.3.14 && bun install --frozen-lockfile && bun run build --filter=@daema/customer
+        distPath: /apps/customer/dist
     endpoints:
-      - port: 80
+      - port: 8080
         routes:
           - daema-stag.dsmhs.kr
   - name: daema-seller-prod
