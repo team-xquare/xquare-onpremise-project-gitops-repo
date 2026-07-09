@@ -24,7 +24,7 @@ applications:
       repo: daema-coin-client
       branch: main
       installationId: "142275252"
-      hash: b5f166b5ece7663216cf8e83b28348a9b560c08b
+      hash: 39434c72e71490cbdde058e3a48a3a5f66344be1
     build:
       vite:
         nodeVersion: "22"
