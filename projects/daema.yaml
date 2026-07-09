@@ -38,7 +38,7 @@ applications:
       repo: daema-coin-client
       branch: main
       installationId: "142275252"
-      hash: 2f2e68464b31b0ff26594e1acf0a47d2d261044a
+      hash: 649afd90a30be7409513b63aebbb61c35c056c50
       triggerPaths:
         - apps/seller/**
         - libs/**
