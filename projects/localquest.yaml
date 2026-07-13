@@ -1,16 +1,18 @@
 owners:
-  - 163987011
+    - 163987011
 applications:
-  - name: ai-api
-    github:
-      owner: Local-Quest
-      repo: AI
-      branch: main
-      installationId: "146217544"
-      hash: 344293554308b9f3c1c3f1fb4dc7fad0b7f3bc67
-    build:
-      docker:
-        dockerfilePath: ./Dockerfile
-        contextPath: .
-    endpoints:
-      - port: 8000
+    - name: ai-api
+      github:
+        owner: Local-Quest
+        repo: AI
+        branch: main
+        installationId: "146217544"
+        hash: 344293554308b9f3c1c3f1fb4dc7fad0b7f3bc67
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 8000
+          routes:
+            - localquest.dsmhs.kr
