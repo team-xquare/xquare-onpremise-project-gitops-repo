@@ -24,10 +24,9 @@ applications:
         installationId: "146226828"
         hash: 7c8eb3485b573e7643e3bf4150993ba5de93d517
       build:
-        vite:
-            nodeVersion: "20"
-            buildCommand: npm ci && npm run build
-            distPath: /dist
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
       endpoints:
         - port: 80
           routes:
