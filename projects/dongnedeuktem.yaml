@@ -1,31 +1,32 @@
 owners:
-    - 115498126
+  - 115498126
 applications:
-    - name: server
-      github:
-        owner: dongne-deuktem
-        repo: server
-        branch: main
-        installationId: "146226828"
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 3000
-          routes:
-            - dongne-deuktem-server.dsmhs.kr
-    - name: seller-web
-      github:
-        owner: dongne-deuktem
-        repo: seller-web
-        branch: main
-        installationId: "146226828"
-      build:
-        docker:
-            dockerfilePath: ./Dockerfile
-            contextPath: .
-      endpoints:
-        - port: 80
-          routes:
-            - dongne-deuktem-seller.dsmhs.kr
+  - name: server
+    github:
+      owner: dongne-deuktem
+      repo: server
+      branch: main
+      installationId: "146226828"
+      hash: f7ec2848694f554700a5154fc2d65c72dba5e10f
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 3000
+        routes:
+          - dongne-deuktem-server.dsmhs.kr
+  - name: seller-web
+    github:
+      owner: dongne-deuktem
+      repo: seller-web
+      branch: main
+      installationId: "146226828"
+    build:
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
+    endpoints:
+      - port: 80
+        routes:
+          - dongne-deuktem-seller.dsmhs.kr
