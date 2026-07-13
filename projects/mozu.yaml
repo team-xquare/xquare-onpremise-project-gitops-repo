@@ -2,9 +2,6 @@ owners:
     - 158432938
 applications: []
 addons:
-    - name: mozu-mozu-server-v2-prod-mysql
-      type: mysql
-      storage: 1Gi
     - name: mozu-redis
       type: redis
       storage: 1Gi
