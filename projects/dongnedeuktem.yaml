@@ -1,37 +1,33 @@
 owners:
-  - 115498126
+    - 115498126
 applications:
-  - name: server
-    github:
-      owner: dongne-deuktem
-      repo: server
-      branch: main
-      installationId: "146226828"
-      hash: 1766755cc828e61d1ff098040754a2192bc84489
-    build:
-      docker:
-        dockerfilePath: ./Dockerfile
-        contextPath: .
-    endpoints:
-      - port: 3000
-        routes:
-          - dongne-deuktem-server.dsmhs.kr
-  - name: seller-web
-    github:
-      owner: dongne-deuktem
-      repo: seller-web
-      branch: main
-      installationId: "146226828"
-      hash: 159b5ae1c0f68398bcf6f9c1a4e452fe7b5e8094
-    build:
-      docker:
-        dockerfilePath: ./Dockerfile
-        contextPath: .
-    endpoints:
-      - port: 80
-        routes:
-          - dongne-deuktem-seller.dsmhs.kr
-addons:
-  - name: postgres
-    type: postgresql
-    storage: 2Gi
+    - name: server
+      github:
+        owner: dongne-deuktem
+        repo: server
+        branch: main
+        installationId: "146226828"
+        hash: 1766755cc828e61d1ff098040754a2192bc84489
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 3000
+          routes:
+            - dongne-deuktem-server.dsmhs.kr
+    - name: seller-web
+      github:
+        owner: dongne-deuktem
+        repo: seller-web
+        branch: main
+        installationId: "146226828"
+        hash: 159b5ae1c0f68398bcf6f9c1a4e452fe7b5e8094
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 80
+          routes:
+            - dongne-deuktem-seller.dsmhs.kr
