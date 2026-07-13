@@ -1,7 +1,3 @@
 owners:
     - 158432938
 applications: []
-addons:
-    - name: mozu-redis
-      type: redis
-      storage: 1Gi
