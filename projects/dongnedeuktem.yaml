@@ -15,3 +15,17 @@ applications:
         - port: 3000
           routes:
             - dongne-deuktem-server.dsmhs.kr
+    - name: seller-web
+      github:
+        owner: dongne-deuktem
+        repo: seller-web
+        branch: main
+        installationId: "146226828"
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 80
+          routes:
+            - dongne-deuktem-seller.dsmhs.kr
