@@ -1,3 +1,15 @@
 owners:
     - 163987011
-applications: []
+applications:
+    - name: ai-api
+      github:
+        owner: Local-Quest
+        repo: AI
+        branch: main
+        installationId: "146217544"
+      build:
+        docker:
+            dockerfilePath: ./Dockerfile
+            contextPath: .
+      endpoints:
+        - port: 8000
