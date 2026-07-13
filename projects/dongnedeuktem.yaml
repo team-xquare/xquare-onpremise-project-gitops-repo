@@ -31,3 +31,7 @@ applications:
         - port: 80
           routes:
             - dongne-deuktem-seller.dsmhs.kr
+addons:
+    - name: postgres
+      type: postgresql
+      storage: 2Gi
