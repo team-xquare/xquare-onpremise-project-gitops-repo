@@ -7,7 +7,7 @@ applications:
       repo: AI
       branch: main
       installationId: "146217544"
-      hash: 10d721765ae3432c91b3ce5e6caae5af88ef0a80
+      hash: 98a8475bc81a3fc3df5ffb651d685d8b463594bf
     build:
       docker:
         dockerfilePath: ./Dockerfile
