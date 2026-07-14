@@ -16,6 +16,24 @@ applications:
       - port: 8000
         routes:
           - localquest.dsmhs.kr
+  - name: local-quest
+    build:
+      gradle:
+        buildCommand: ./gradlew clean build
+        jarOutputPath: build/libs/local_quest-0.0.1-SNAPSHOT.jar
+        javaVersion: "21"
+    endpoints:
+      - port: 8080
+        routes:
+          - localquest-spring.dsmhs.kr
+    github:
+      branch: master
+      hash: d29413408f7075bdba7fb45c78fe7eef8aecc310
+      installationId: "146487631"
+      owner: ajswldp
+      repo: local_quest
+      triggerPaths:
+        - src/main/**
 addons:
   - name: redis
     type: redis
