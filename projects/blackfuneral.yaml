@@ -1,7 +1,0 @@
-owners:
-    - 198728833
-applications: []
-addons:
-    - name: db
-      type: postgresql
-      storage: 2Gi
