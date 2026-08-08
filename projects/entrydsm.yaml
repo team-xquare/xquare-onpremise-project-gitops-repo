@@ -1,1 +1,17 @@
-applications: []
+applications:
+  - name: entry-fe-admin
+    build:
+      vite:
+        buildCommand: npm install -g bun@1.3.13 && bun install --frozen-lockfile && bun x turbo build --filter=entry-admin
+        distPath: /apps/entry-admin/dist
+        nodeVersion: "20"
+    endpoints:
+      - port: 8080
+        routes:
+          - www.entry-admin.dsmhs.kr
+    github:
+      branch: main
+      hash: 7d2cf69340d84bd8b2808f24f343cec909e7aca0
+      installationId: "77967720"
+      owner: EntryDSM
+      repo: EntryDsm-Admission-2026
