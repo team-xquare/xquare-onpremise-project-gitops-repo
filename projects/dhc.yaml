@@ -1,0 +1,5 @@
+applications: []
+addons:
+  - name: rabbitmq
+    storage: 1Gi
+    type: rabbitmq
