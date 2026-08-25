@@ -1,4 +1,22 @@
-applications: []
+applications:
+  - name: dhc-mq
+    build:
+      gradle:
+        buildCommand: ./gradlew build
+        jarOutputPath: ./build
+        javaVersion: "21"
+    endpoints:
+      - port: 1234
+        routes:
+          - asdf.dsmhs.kr
+    github:
+      branch: main
+      hash: c9f619762a8d9e9f2ab0c84570b34b78188524a9
+      installationId: "156393181"
+      owner: 12th-DHC
+      repo: dhc-noification
+      triggerPaths:
+        - src/**
 addons:
   - name: rabbitmq
     storage: 1Gi
