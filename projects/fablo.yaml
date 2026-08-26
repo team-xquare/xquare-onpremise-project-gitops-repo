@@ -7,7 +7,7 @@ applications:
       repo: Falletter-Backend
       branch: main
       installationId: "131283039"
-      hash: a15b408cdecd9b71a77c4d0d8cfd15b30ae3f986
+      hash: 7c8c96cf516fb414287ecfd7dbbdf8f0149ad90e
       triggerPaths:
         - src/**
     build:
