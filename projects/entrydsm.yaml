@@ -1,1 +1,17 @@
-applications: []
+applications:
+  - name: entrydsm-platform
+    build:
+      gradle:
+        buildCommand: bazel build //...
+        jarOutputPath: /tmp/bazel/output
+        javaVersion: "17"
+    endpoints:
+      - port: 8080
+        routes:
+          - entry.dsmhs.kr
+    github:
+      branch: develop
+      hash: 82cb3a86b034fe42997dee91dabf49bc61b65f38
+      installationId: "77967720"
+      owner: EntryDSM
+      repo: entrydsm-platform
