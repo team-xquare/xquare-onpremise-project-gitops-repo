@@ -7,7 +7,7 @@ applications:
       repo: dms-saeja-pwa
       branch: main
       installationId: "113972570"
-      hash: 0903ca925f63b0021613dc80d1c1b6c83fcc5d90
+      hash: 12f899e02ab03cf9927c5fbcb625b57b60e08ba4
     build:
       nodejs:
         nodeVersion: "22"
