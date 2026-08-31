@@ -1,16 +1,17 @@
 owners:
-    - 102520470
+  - 102520470
 applications:
-    - name: dms-saega
-      github:
-        owner: sungjujjang
-        repo: dms-saeja-pwa
-        branch: main
-        installationId: "113972570"
-      build:
-        nodejs:
-            nodeVersion: "22"
-            buildCommand: npm install && npm run build
-            startCommand: node server/index.js
-      endpoints:
-        - port: 4000
+  - name: dms-saega
+    github:
+      owner: sungjujjang
+      repo: dms-saeja-pwa
+      branch: main
+      installationId: "113972570"
+      hash: 0903ca925f63b0021613dc80d1c1b6c83fcc5d90
+    build:
+      nodejs:
+        nodeVersion: "22"
+        buildCommand: npm install && npm run build
+        startCommand: node server/index.js
+    endpoints:
+      - port: 4000
