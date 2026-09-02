@@ -47,3 +47,19 @@ applications:
       installationId: "77967720"
       owner: EntryDSM
       repo: EntryDsm-Admission-2026
+  - name: entry-fe-auth
+    build:
+      vite:
+        buildCommand: TYPE=stag npm install -g bun@1.3.11 && bun install --frozen-lockfile && bun x turbo build --filter=entry-auth
+        distPath: /apps/entry-auth/dist
+        nodeVersion: "20"
+    endpoints:
+      - port: 8080
+        routes:
+          - entry-auth.dsmhs.kr
+    github:
+      branch: main
+      hash: 7d2cf69340d84bd8b2808f24f343cec909e7aca0
+      installationId: "77967720"
+      owner: EntryDSM
+      repo: EntryDsm-Admission-2026
