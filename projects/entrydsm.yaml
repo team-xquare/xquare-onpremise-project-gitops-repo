@@ -79,3 +79,19 @@ applications:
       installationId: "77967720"
       owner: EntryDSM
       repo: EntryDsm-Admission-2026
+  - name: entry-fe-monitoring
+    build:
+      vite:
+        buildCommand: TYPE=stag npm install -g bun@1.3.11 && bun install --frozen-lockfile && bun x turbo build --filter=entry-monitoring
+        distPath: /apps/entry-monitoring/dist
+        nodeVersion: "20"
+    endpoints:
+      - port: 8080
+        routes:
+          - entry-monitoring.dsmhs.kr
+    github:
+      branch: main
+      hash: 7d2cf69340d84bd8b2808f24f343cec909e7aca0
+      installationId: "77967720"
+      owner: EntryDSM
+      repo: EntryDsm-Admission-2026
