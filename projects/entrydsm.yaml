@@ -2,7 +2,7 @@ applications:
   - name: entrydsm-platform
     build:
       docker:
-        dockerfilePath: .
+        dockerfilePath: Dockerfile
         contextPath: .
         buildArgs:
           SERVICE: gateway
