@@ -90,7 +90,7 @@ applications:
           - entry-monitoring.dsmhs.kr
     github:
       branch: main
-      hash: 7d2cf69340d84bd8b2808f24f343cec909e7aca0
+      hash: c4ad5439e9ca94ce45aabe7912cc2970e15fc161
       installationId: "77967720"
       owner: EntryDSM
       repo: EntryDsm-Admission-2026
