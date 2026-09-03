@@ -12,7 +12,7 @@ applications:
           - entry.dsmhs.kr
     github:
       branch: develop
-      hash: 82cb3a86b034fe42997dee91dabf49bc61b65f38
+      hash: 22e12769be0d773f3845850832bcd26f6c1e28fc
       installationId: "77967720"
       owner: EntryDSM
       repo: entrydsm-platform
