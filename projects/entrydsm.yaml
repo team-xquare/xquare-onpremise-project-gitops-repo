@@ -4,6 +4,8 @@ applications:
       docker:
         dockerfilePath: .
         contextPath: .
+        buildArgs:
+          SERVICE: gateway
     endpoints:
       - port: 443
         routes:
