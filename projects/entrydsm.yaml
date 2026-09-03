@@ -1,10 +1,9 @@
 applications:
   - name: entrydsm-platform
     build:
-      gradle:
-        buildCommand: bazel build //...
-        jarOutputPath: /tmp/bazel/output
-        javaVersion: "17"
+      docker:
+        dockerfilePath: ./Dockerfile
+        contextPath: .
     endpoints:
       - port: 443
         routes:
