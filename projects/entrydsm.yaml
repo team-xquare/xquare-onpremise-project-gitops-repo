@@ -2,7 +2,7 @@ applications:
   - name: entrydsm-platform
     build:
       docker:
-        dockerfilePath: ./Dockerfile
+        dockerfilePath: .
         contextPath: .
     endpoints:
       - port: 443
