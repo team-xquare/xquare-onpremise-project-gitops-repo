@@ -94,7 +94,7 @@ applications:
           - student-dms.dsmhs.kr
     github:
       branch: main
-      hash: 29f1c59588e0a640596f098f3280da7c425d531c
+      hash: 46c7709fee182c39b71fbc90bca68ef299b4e5d9
       installationId: "136187211"
       owner: yellowstarr0323
       repo: DMS-FE-Student
