@@ -1,4 +1,19 @@
-applications: []
+applications:
+  - name: deverytime
+    build:
+      docker:
+        contextPath: .
+        dockerfilePath: .
+    endpoints:
+      - port: 8080
+        routes:
+          - deverytime.develop.dsmhs.kr
+    github:
+      branch: develop
+      hash: 3d231f59b79661777198da2f2a34dffe7cc97e03
+      installationId: "162223671"
+      owner: DeveryTime
+      repo: DeveryTime-BE
 addons:
   - name: deverytime
     storage: 20Gi
