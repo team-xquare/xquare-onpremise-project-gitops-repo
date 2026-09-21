@@ -14,4 +14,7 @@ applications:
       installationId: "162223671"
       owner: DeveryTime
       repo: DeveryTime-BE
-addons: []
+addons:
+  - name: deverytime
+    storage: 1Gi
+    type: mysql
