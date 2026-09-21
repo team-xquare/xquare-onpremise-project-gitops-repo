@@ -3,7 +3,7 @@ applications:
     build:
       docker:
         contextPath: .
-        dockerfilePath: .
+        dockerfilePath: Dockerfile
     endpoints:
       - port: 8080
         routes:
