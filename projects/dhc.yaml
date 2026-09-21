@@ -21,3 +21,6 @@ addons:
   - name: rabbitmq
     storage: 1Gi
     type: rabbitmq
+  - name: jafd
+    storage: 1Gi
+    type: mysql
