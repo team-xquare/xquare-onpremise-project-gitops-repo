@@ -16,5 +16,5 @@ applications:
       repo: DeveryTime-BE
 addons:
   - name: deverytime
-    storage: 1Gi
+    storage: 5Gi
     type: mysql
