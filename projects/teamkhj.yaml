@@ -1,0 +1,5 @@
+applications: []
+addons:
+  - name: team-khj-db
+    storage: 4Gi
+    type: mysql
