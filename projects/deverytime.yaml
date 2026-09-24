@@ -10,7 +10,7 @@ applications:
           - deverytime.develop.dsmhs.kr
     github:
       branch: develop
-      hash: b7706d9cfef30859127cf5c74c3328f8c34960ad
+      hash: 25e93091c5126375e6bcda7b6e34d17ea8396d92
       installationId: "162223671"
       owner: DeveryTime
       repo: DeveryTime-BE
