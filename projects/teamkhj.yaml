@@ -1,4 +1,21 @@
-applications: []
+applications:
+  - name: team-khj
+    build:
+      docker:
+        contextPath: .
+        dockerfilePath: .
+    endpoints:
+      - port: 8000
+        routes:
+          - team-khj.dsmhs.kr
+    github:
+      branch: main
+      hash: 0e17a86664ef5331319af5a2e8b4fc966f8b9c00
+      installationId: "165147968"
+      owner: Team-K-H-J
+      repo: Team-K.H.J_BACKEND
+      triggerPaths:
+        - '**'
 addons:
   - name: team-khj-db
     storage: 4Gi
