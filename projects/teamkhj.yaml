@@ -8,6 +8,8 @@ applications:
       - port: 8000
         routes:
           - team-khj.dsmhs.kr
+      - port: 800
+        routes:
           - test.dsmhs.kr
     github:
       branch: main
