@@ -79,7 +79,7 @@ applications:
           - general-teacher-dms.dsmhs.kr
     github:
       branch: main
-      hash: b108b0fa78dea2a131dbe9f8edafd7b92dbfd1ca
+      hash: ee396f6b737bacaf2cc87d426e758b4ef6b00e0f
       installationId: "64597732"
       owner: team-aliens
       repo: DMS-Frontend
