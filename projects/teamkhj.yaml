@@ -13,7 +13,7 @@ applications:
           - test.dsmhs.kr
     github:
       branch: main
-      hash: 0e17a86664ef5331319af5a2e8b4fc966f8b9c00
+      hash: d7fd19533a7ed87a479683871943264208722ea4
       installationId: "165147968"
       owner: Team-K-H-J
       repo: Team-K.H.J_BACKEND
