@@ -16,3 +16,7 @@ applications:
       repo: HellSu-Club
       triggerPaths:
         - /HellSu-Club
+addons:
+  - name: postgres-db
+    storage: 20Gi
+    type: postgresql
