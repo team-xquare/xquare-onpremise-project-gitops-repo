@@ -1,0 +1,18 @@
+applications:
+  - name: hellsuclub
+    build:
+      docker:
+        contextPath: /HellSu-Club
+        dockerfilePath: /HellSu-Club
+    endpoints:
+      - port: 8000
+        routes:
+          - hell-su-club.dsmhs.kr
+    github:
+      branch: main
+      hash: b6ffe77efed3f4b080982c992c4e83dea4cc0e8d
+      installationId: "179216933"
+      owner: Heiji57
+      repo: HellSu-Club
+      triggerPaths:
+        - /HellSu-Club
